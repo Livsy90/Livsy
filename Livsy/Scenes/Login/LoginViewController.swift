@@ -1,0 +1,161 @@
+//
+//  LoginViewController.swift
+//  Livsy
+//
+//  Created by Artem on 07.07.2020.
+//  Copyright © 2020 Artem Mirzabekian. All rights reserved.
+//
+
+import UIKit
+
+protocol LoginDisplayLogic: class {
+    func displayLogin(viewModel: LoginModels.Login.ViewModel)
+    
+}
+
+final class LoginViewController: UIViewController {
+    
+    // MARK: - Public Properties
+    
+    var interactor: LoginBusinessLogic?
+    var router: (LoginRoutingLogic & LoginDataPassing)?
+    
+    // MARK: - Private Properties
+    
+    private let loginTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Username"
+        tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
+        tf.setLeftPaddingPoints(10)
+        tf.setRightPaddingPoints(10)
+        tf.layer.borderColor = #colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1)
+        tf.layer.cornerRadius = 5
+        tf.layer.borderWidth = 1
+        tf.font = UIFont.systemFont(ofSize: 14)
+        tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+        tf.textColor = .darkText
+        return tf
+    }()
+    
+    private let passwordTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Password"
+        tf.isSecureTextEntry = true
+        tf.layer.borderColor = #colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1)
+        tf.layer.borderWidth = 1
+        tf.layer.cornerRadius = 5
+        tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
+        tf.setLeftPaddingPoints(10)
+        tf.setRightPaddingPoints(10)
+        tf.font = UIFont.systemFont(ofSize: 14)
+        tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+        tf.textColor = .darkText
+        return tf
+    }()
+    
+    private let loginButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Login", for: .normal)
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 5
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
+        button.isEnabled = false
+        return button
+    }()
+    
+    private let dontHaveAccountButton: UIButton = {
+        let button = UIButton(type: .system)
+        
+        let attributedTitle = NSMutableAttributedString(string: "Don't have an account?  ", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        attributedTitle.append(NSAttributedString(string: "Sign Up", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.blue
+        ]))
+        
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        
+        button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
+        return button
+    }()
+    
+    // MARK: - Initializers
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    private func setup() {
+        LoginConfigurator.sharedInstance.configure(viewController: self)
+    }
+    
+    // MARK: - Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        title = "Login"
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setupInputFields()
+    }
+    
+    @objc private func handleTextInputChange() {
+        let isFormValid = loginTextField.text?.count ?? 0 > 0 && passwordTextField.text?.count ?? 0 > 0
+        
+        if isFormValid {
+            loginButton.isEnabled = true
+            loginButton.backgroundColor = UIColor.blue
+        } else {
+            loginButton.isEnabled = false
+            loginButton.backgroundColor = UIColor.gray
+        }
+    }
+    
+    @objc private func handleLogin() {
+        guard let username = loginTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        
+        interactor?.login(request: LoginModels.Login.Request(username: username, password: password))
+        
+    }
+    
+    @objc private func handleShowSignUp() {
+        // let signUpController = SignUpController()
+        // navigationController?.pushViewController(signUpController, animated: true)
+    }
+    
+    private func setupInputFields() {
+        let stackView = UIStackView(arrangedSubviews: [loginTextField, passwordTextField, loginButton])
+        
+        stackView.axis = .vertical
+        stackView.spacing = 10
+        stackView.distribution = .fillEqually
+        view.addSubview(dontHaveAccountButton)
+        view.addSubview(stackView)
+        stackView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 150, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 140)
+        
+        dontHaveAccountButton.anchor(top: stackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+    }
+}
+
+// MARK: - Login Display Logic
+extension LoginViewController: LoginDisplayLogic {
+    func displayLogin(viewModel: LoginModels.Login.ViewModel) {
+        if viewModel.error == nil {
+            navigationController?.popViewController(animated: true)
+        } else {
+            showAlertWithOneButton(title: "Username or password is wrong", message: nil, buttonTitle: "Close", buttonAction: nil)
+        }
+    }
+    
+    
+}
