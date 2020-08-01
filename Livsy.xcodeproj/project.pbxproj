@@ -18,6 +18,7 @@
 		C23261EA24D5CA7F00F670EE /* SignUpModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23261E324D5CA7F00F670EE /* SignUpModels.swift */; };
 		C23261EB24D5CA7F00F670EE /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23261E424D5CA7F00F670EE /* SignUpViewController.swift */; };
 		C23261EC24D5CA7F00F670EE /* SignUpInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23261E524D5CA7F00F670EE /* SignUpInteractor.swift */; };
+		C23261EE24D5D2AA00F670EE /* SignUpConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23261ED24D5D2AA00F670EE /* SignUpConfigurator.swift */; };
 		C2345BEE24B4F15200125976 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2345BE724B4F15100125976 /* LoginPresenter.swift */; };
 		C2345BEF24B4F15200125976 /* LoginWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2345BE824B4F15100125976 /* LoginWorker.swift */; };
 		C2345BF024B4F15200125976 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2345BE924B4F15100125976 /* LoginRouter.swift */; };
@@ -94,6 +95,7 @@
 		C23261E324D5CA7F00F670EE /* SignUpModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModels.swift; sourceTree = "<group>"; };
 		C23261E424D5CA7F00F670EE /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		C23261E524D5CA7F00F670EE /* SignUpInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInteractor.swift; sourceTree = "<group>"; };
+		C23261ED24D5D2AA00F670EE /* SignUpConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpConfigurator.swift; sourceTree = "<group>"; };
 		C2345BE724B4F15100125976 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		C2345BE824B4F15100125976 /* LoginWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorker.swift; sourceTree = "<group>"; };
 		C2345BE924B4F15100125976 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				C23261E324D5CA7F00F670EE /* SignUpModels.swift */,
 				C23261E424D5CA7F00F670EE /* SignUpViewController.swift */,
 				C23261E524D5CA7F00F670EE /* SignUpInteractor.swift */,
+				C23261ED24D5D2AA00F670EE /* SignUpConfigurator.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -520,6 +523,7 @@
 				C2BCF43224AB67E8008C28FD /* PostCommentRepliesPresenter.swift in Sources */,
 				C23D496B24AA4905007AEE32 /* PostCommentsCollectionViewCell.swift in Sources */,
 				C268CDC124A9380200949C4D /* BadgeBarButton.swift in Sources */,
+				C23261EE24D5D2AA00F670EE /* SignUpConfigurator.swift in Sources */,
 				C2765BB224A11F59008888B0 /* PostConfigurator.swift in Sources */,
 				C2345BF324B4F15200125976 /* LoginInteractor.swift in Sources */,
 				C268CDBF24A929E900949C4D /* PostCommentsCollectionView.swift in Sources */,
