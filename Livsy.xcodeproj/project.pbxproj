@@ -12,6 +12,12 @@
 		C2278E86249E77C200D9D582 /* PostListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2278E85249E77C200D9D582 /* PostListCollectionViewCell.swift */; };
 		C2278E88249E783D00D9D582 /* PostListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2278E87249E783D00D9D582 /* PostListCollectionView.swift */; };
 		C2278E8A249E821900D9D582 /* String+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2278E89249E821900D9D582 /* String+adds.swift */; };
+		C23261E724D5CA7F00F670EE /* SignUpPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23261E024D5CA7F00F670EE /* SignUpPresenter.swift */; };
+		C23261E824D5CA7F00F670EE /* SignUpWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23261E124D5CA7F00F670EE /* SignUpWorker.swift */; };
+		C23261E924D5CA7F00F670EE /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23261E224D5CA7F00F670EE /* SignUpRouter.swift */; };
+		C23261EA24D5CA7F00F670EE /* SignUpModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23261E324D5CA7F00F670EE /* SignUpModels.swift */; };
+		C23261EB24D5CA7F00F670EE /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23261E424D5CA7F00F670EE /* SignUpViewController.swift */; };
+		C23261EC24D5CA7F00F670EE /* SignUpInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23261E524D5CA7F00F670EE /* SignUpInteractor.swift */; };
 		C2345BEE24B4F15200125976 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2345BE724B4F15100125976 /* LoginPresenter.swift */; };
 		C2345BEF24B4F15200125976 /* LoginWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2345BE824B4F15100125976 /* LoginWorker.swift */; };
 		C2345BF024B4F15200125976 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2345BE924B4F15100125976 /* LoginRouter.swift */; };
@@ -82,6 +88,12 @@
 		C2278E85249E77C200D9D582 /* PostListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListCollectionViewCell.swift; sourceTree = "<group>"; };
 		C2278E87249E783D00D9D582 /* PostListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListCollectionView.swift; sourceTree = "<group>"; };
 		C2278E89249E821900D9D582 /* String+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+adds.swift"; sourceTree = "<group>"; };
+		C23261E024D5CA7F00F670EE /* SignUpPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPresenter.swift; sourceTree = "<group>"; };
+		C23261E124D5CA7F00F670EE /* SignUpWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpWorker.swift; sourceTree = "<group>"; };
+		C23261E224D5CA7F00F670EE /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
+		C23261E324D5CA7F00F670EE /* SignUpModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModels.swift; sourceTree = "<group>"; };
+		C23261E424D5CA7F00F670EE /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		C23261E524D5CA7F00F670EE /* SignUpInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInteractor.swift; sourceTree = "<group>"; };
 		C2345BE724B4F15100125976 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		C2345BE824B4F15100125976 /* LoginWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorker.swift; sourceTree = "<group>"; };
 		C2345BE924B4F15100125976 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
@@ -209,6 +221,19 @@
 			path = PostCollectionView;
 			sourceTree = "<group>";
 		};
+		C23261DE24D5CA6600F670EE /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				C23261E024D5CA7F00F670EE /* SignUpPresenter.swift */,
+				C23261E124D5CA7F00F670EE /* SignUpWorker.swift */,
+				C23261E224D5CA7F00F670EE /* SignUpRouter.swift */,
+				C23261E324D5CA7F00F670EE /* SignUpModels.swift */,
+				C23261E424D5CA7F00F670EE /* SignUpViewController.swift */,
+				C23261E524D5CA7F00F670EE /* SignUpInteractor.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
 		C2345BF424B4F15700125976 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -279,6 +304,7 @@
 		C2386F9F249E099F0076AED3 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				C23261DE24D5CA6600F670EE /* SignUp */,
 				C2345BF424B4F15700125976 /* Login */,
 				C268CDA824A928ED00949C4D /* PostComments */,
 				C2765B9424A11EE2008888B0 /* Post */,
@@ -468,6 +494,7 @@
 				C2C31A54249F68AB002AAB91 /* UIImageView+adds.swift in Sources */,
 				C2765B9E24A11F1A008888B0 /* PostWorker.swift in Sources */,
 				C23ACCAE24B9B62D00882E07 /* UserDefaults+adds.swift in Sources */,
+				C23261EB24D5CA7F00F670EE /* SignUpViewController.swift in Sources */,
 				C2345BF024B4F15200125976 /* LoginRouter.swift in Sources */,
 				C2345BF124B4F15200125976 /* LoginModels.swift in Sources */,
 				C2765B9F24A11F1A008888B0 /* PostRouter.swift in Sources */,
@@ -477,6 +504,7 @@
 				C2BCF43324AB67E8008C28FD /* PostCommentRepliesWorker.swift in Sources */,
 				C2BCF43E24AB80B2008C28FD /* RepliesCollectionViewCell.swift in Sources */,
 				C2278E88249E783D00D9D582 /* PostListCollectionView.swift in Sources */,
+				C23261E724D5CA7F00F670EE /* SignUpPresenter.swift in Sources */,
 				C2765BA224A11F1A008888B0 /* PostInteractor.swift in Sources */,
 				C2386F9A249E06740076AED3 /* Request.swift in Sources */,
 				C2386FAC249E09B50076AED3 /* PostListViewController.swift in Sources */,
@@ -507,6 +535,7 @@
 				C2386F7F249DF6EB0076AED3 /* SceneDelegate.swift in Sources */,
 				C2345BF224B4F15200125976 /* LoginViewController.swift in Sources */,
 				C2765B9D24A11F1A008888B0 /* PostPresenter.swift in Sources */,
+				C23261EC24D5CA7F00F670EE /* SignUpInteractor.swift in Sources */,
 				C2386FA8249E09B50076AED3 /* PostListPresenter.swift in Sources */,
 				C2278E7C249E2FD100D9D582 /* UIView+adds.swift in Sources */,
 				C2D6692024A3C3E600F6731F /* PostViewController.swift in Sources */,
@@ -518,9 +547,12 @@
 				C2BCF43924AB68D9008C28FD /* PostCommentRepliesConfigurator.swift in Sources */,
 				C2278E7E249E3AF700D9D582 /* Data+adds.swift in Sources */,
 				C2386FAF249E09CB0076AED3 /* PostListConfigurator.swift in Sources */,
+				C23261E924D5CA7F00F670EE /* SignUpRouter.swift in Sources */,
 				C2345BF624B4F17100125976 /* LoginConfigurator.swift in Sources */,
+				C23261E824D5CA7F00F670EE /* SignUpWorker.swift in Sources */,
 				C2765BA024A11F1A008888B0 /* PostModels.swift in Sources */,
 				C2345BEE24B4F15200125976 /* LoginPresenter.swift in Sources */,
+				C23261EA24D5CA7F00F670EE /* SignUpModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
