@@ -8,11 +8,7 @@
 
 import Foundation
 
-protocol SignUpWorkingLogic {
-
-}
-
-final class SignUpWorker: SignUpWorkingLogic {
+final class SignUpWorker {
   
   // MARK: - Private Properties
 
