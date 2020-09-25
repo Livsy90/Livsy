@@ -53,10 +53,10 @@ class RepliesCollectionView: UICollectionView, UICollectionViewDelegate, UIColle
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let commentCell = dequeueReusableCell(withReuseIdentifier: RepliesCollectionViewCell.reuseId, for: indexPath) as! RepliesCollectionViewCell
-        guard let content = comments[indexPath.row].content?.rendered else { return UICollectionViewCell()}
+        guard let content = comments[safe: indexPath.item]?.content?.rendered else { return UICollectionViewCell()}
         
-        commentCell.isParent = comments[indexPath.row].parent == 0 ? true : false
-        commentCell.nameLabel.text = comments[indexPath.row].authorName
+        commentCell.isParent = comments[indexPath.item].parent == 0 ? true : false
+        commentCell.nameLabel.text = comments[indexPath.item].authorName
         commentCell.content.text = String(htmlEncodedString: content)
         
         return commentCell
@@ -65,4 +65,5 @@ class RepliesCollectionView: UICollectionView, UICollectionViewDelegate, UIColle
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }

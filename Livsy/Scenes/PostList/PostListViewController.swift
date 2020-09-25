@@ -25,6 +25,7 @@ final class PostListViewController: UIViewController {
     private var refreshControl: UIRefreshControl!
     private var postCollectionView = PostListCollectionView()
     private var page = 0
+    private let activityIndicator = ActivityIndicator()
     
     // MARK: - Initializers
     
@@ -48,13 +49,13 @@ final class PostListViewController: UIViewController {
         super.viewDidLoad()
         setupCollectionView()
         setupRefreshControl()
-        setupNavigatipnBar()
+        setupNavigationBar()
         fetchPostList()
     }
     
     // MARK: - Private Methods
     
-    private func setupNavigatipnBar() {
+    private func setupNavigationBar() {
         title = "Livsy.me"
         if UserDefaults.standard.token == "" {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login", style: .plain, target: self, action: #selector(routeToLogin))
@@ -100,6 +101,7 @@ final class PostListViewController: UIViewController {
     }
     
     private func fetchPostList() {
+        activityIndicator.showIndicator(on: self)
         page += 1
         interactor?.fetchPostList(request: PostListModels.PostList.Request(page: page))
     }
@@ -118,6 +120,7 @@ extension PostListViewController: PostListDisplayLogic {
         postCollectionView.set(cells: posts)
         postCollectionView.reloadData()
         refreshControl.endRefreshing()
+        activityIndicator.hideIndicator()
     }
     
 }

@@ -23,10 +23,6 @@ struct PostPage: Codable {
     
 }
 
-
-
-
-
 struct PostComment: Codable {
     
     var id: Int
@@ -50,7 +46,6 @@ struct PostComment: Codable {
     }
     
 }
-
 
 enum PostModels {
     

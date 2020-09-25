@@ -26,18 +26,18 @@ final class PostRouter: PostRoutingLogic, PostDataPassing {
     func routeToPostComments() {
         let destinationVC = PostCommentsViewController()
         var destinationDS = destinationVC.router!.dataStore!
-        passDataToCustomerSummary(source: dataStore!, destination: &destinationDS)
-        navigateToCustomerSummary(source: viewController!, destination: destinationVC)
+        passDataToPostComments(source: dataStore!, destination: &destinationDS)
+        navigateToPostComments(source: viewController!, destination: destinationVC)
     }
     
-    func navigateToCustomerSummary(source: PostViewController, destination: PostCommentsViewController) {
+    func navigateToPostComments(source: PostViewController, destination: PostCommentsViewController) {
         let navController = UINavigationController(rootViewController: destination)
         navController.modalPresentationStyle = .fullScreen
         navController.modalTransitionStyle = .coverVertical
         viewController?.present(navController, animated: true, completion: nil)
     }
     
-    func passDataToCustomerSummary(source: PostDataStore, destination: inout PostCommentsDataStore) {
+    func passDataToPostComments(source: PostDataStore, destination: inout PostCommentsDataStore) {
         destination.commentsData = source.comments
         destination.postID = source.id
     }

@@ -1,14 +1,14 @@
 //
-//  LoginWorker.swift
+//  SplashWorker.swift
 //  Livsy
 //
-//  Created by Artem on 07.07.2020.
+//  Created by Artem on 23.09.2020.
 //  Copyright © 2020 Artem Mirzabekian. All rights reserved.
 //
 
 import Foundation
 
-final class LoginWorker {
+final class SplashWorker {
     
     let net: NetService = NetService.sharedInstanse
     let netManager: NetManager = NetManager.sharedInstanse

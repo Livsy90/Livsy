@@ -14,19 +14,19 @@ protocol PostDisplayLogic: class {
 }
 
 final class PostViewController: UIViewController {
-    
-    // MARK: - IBOutlets
-    
     // MARK: - Public Properties
     
     var interactor: PostBusinessLogic?
     var router: (PostRoutingLogic & PostDataPassing)?
     var id = 0
-    let textView = UITextView()
+    let textView = CustomTextView()
     let scrollView = UIScrollView()
     let postTitle = UILabel()
     
     // MARK: - Private Properties
+    
+    private var link = ""
+    private let activityIndicator = ActivityIndicator()
     
     // MARK: - Initializers
     
@@ -53,7 +53,7 @@ final class PostViewController: UIViewController {
         textViewSetup()
         fetchPost()
     }
-        
+    
     // MARK: - Private Methods
     
     private func scrollViewSetup() {
@@ -81,6 +81,7 @@ final class PostViewController: UIViewController {
         textView.anchor(top: postTitle.bottomAnchor, left: scrollView.leftAnchor, bottom: scrollView.bottomAnchor, right: scrollView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         textView.isScrollEnabled = false
         textView.isEditable = false
+        
         textView.font = UIFont.preferredFont(forTextStyle: .body)
         textView.textAlignment = .left
     }
@@ -91,16 +92,60 @@ final class PostViewController: UIViewController {
         navigationItem.rightBarButtonItem = barButton
     }
     
-    @objc private func routeToComments() {
-        router?.routeToPostComments()
-    }
-    
     private func fetchPost() {
+        activityIndicator.showIndicator(on: self)
         interactor?.fetchPostPage(request: PostModels.PostPage.Request())
     }
     
     private func fetchPostComments() {
         interactor?.fetchPostComments(request: PostModels.PostComments.Request())
+    }
+    
+    private func formatString(text: String, with width: Float) -> String {
+        
+        let iframe_texts = matches(for: ".*iframe.*", in: text);
+        var new_text = text;
+        
+        if iframe_texts.count > 0 {
+            
+            for iframe_text in iframe_texts {
+                let iframe_id = matches(for: "((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)", in: iframe_text);
+                
+                if iframe_id.count > 0 { //just in case there is another type of iframe
+                    
+                    new_text = new_text.replacingOccurrences(of: iframe_text, with:"<a href='https://www.youtube.com/watch?v=\(iframe_id[0])'><img src=\"https://img.youtube.com/vi/" + iframe_id[0] + "/maxresdefault.jpg\" alt=\"\" width=\"\(width)\" /></a>");
+                    
+                }
+            }
+            
+        } else {
+            print("there is no iframe in this text");
+        }
+        
+        return new_text;
+    }
+    
+    private func matches(for regex: String, in text: String) -> [String] {
+        
+        do {
+            let regex = try NSRegularExpression(pattern: regex,  options: .caseInsensitive)
+            let nsString = text as NSString
+            let results = regex.matches(in: text, range: NSRange(location: 0, length: nsString.length))
+            return results.map { nsString.substring(with: $0.range)}
+        } catch let error {
+            print("invalid regex: \(error.localizedDescription)")
+            return []
+        }
+    }
+    
+    @objc private func openURL() {
+        if let url = URL(string: link) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    @objc private func routeToComments() {
+        router?.routeToPostComments()
     }
     
     // MARK: - Requests
@@ -113,9 +158,11 @@ final class PostViewController: UIViewController {
 extension PostViewController: PostDisplayLogic {
     
     func displayPostPage(viewModel: PostModels.PostPage.ViewModel) {
+        let rect = self.view.window?.frame
         postTitle.text = router?.dataStore?.title ?? ""
-        textView.setHTMLFromString(htmlText: router?.dataStore?.content ?? "")
+        textView.setHTMLFromString(htmlText: formatString(text: router?.dataStore?.content ?? "", with: Float(rect?.size.width ?? 375)))
         fetchPostComments()
+        activityIndicator.hideIndicator()
     }
     
     func displayPostComments(viewModel: PostModels.PostComments.ViewModel) {

@@ -21,8 +21,8 @@ final class SignUpInteractor: SignUpBusinessLogic, SignUpDataStore {
   // MARK: - Public Properties
 
   var presenter: SignUpPresentationLogic?
-  lazy var worker: SignUpWorkingLogic = SignUpWorker()
-
+  var worker: SignUpWorker?
+    
   // MARK: - Private Properties
   
   // MARK: - Data Store
