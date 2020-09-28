@@ -13,7 +13,7 @@ struct ActivityIndicator {
     // MARK: Public Properties
     
     let activityIndicator = UIActivityIndicatorView()
-    let viewBackgroundLoading = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+   // let viewBackgroundLoading = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     
     
     // MARK: Public Methods
@@ -22,22 +22,21 @@ struct ActivityIndicator {
         
         activityIndicator.center = viewController.view.center
         activityIndicator.hidesWhenStopped = true
-//        activityIndicator.style = .large
+        activityIndicator.style = .large
         
-        viewBackgroundLoading.center = viewController.view.center
-        viewBackgroundLoading.backgroundColor = #colorLiteral(red: 0.370555222, green: 0.3705646992, blue: 0.3705595732, alpha: 1)
-        viewBackgroundLoading.layer.cornerRadius = 20
-        viewBackgroundLoading.alpha = 1
-        viewBackgroundLoading.clipsToBounds = true
+        //viewBackgroundLoading.center = viewController.view.center
+        //viewBackgroundLoading.backgroundColor = UIColor.init(named: "AIBackground")
+        //viewBackgroundLoading.layer.cornerRadius = 20
+        //viewBackgroundLoading.clipsToBounds = true
         
-        viewController.view.addSubview(viewBackgroundLoading)
+        //viewController.view.addSubview(viewBackgroundLoading)
         viewController.view.addSubview(activityIndicator)
         
         activityIndicator.startAnimating()
     }
     
     func hideIndicator() {
-        viewBackgroundLoading.removeFromSuperview()
+        //viewBackgroundLoading.removeFromSuperview()
         activityIndicator.stopAnimating()
     }
 }

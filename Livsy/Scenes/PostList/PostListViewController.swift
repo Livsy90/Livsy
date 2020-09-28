@@ -25,6 +25,7 @@ final class PostListViewController: UIViewController {
     private var refreshControl: UIRefreshControl!
     private var postCollectionView = PostListCollectionView()
     private var page = 0
+    private var isLoadMore = false
     private let activityIndicator = ActivityIndicator()
     
     // MARK: - Initializers
@@ -50,7 +51,7 @@ final class PostListViewController: UIViewController {
         setupCollectionView()
         setupRefreshControl()
         setupNavigationBar()
-        fetchPostList()
+        fetchPostList(isLoadMore: false)
     }
     
     // MARK: - Private Methods
@@ -65,7 +66,7 @@ final class PostListViewController: UIViewController {
     
     private func setupCollectionView() {
         view.addSubview(postCollectionView)
-        
+        postCollectionView.footerView.startAnimating()
         postCollectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
         postCollectionView.fetchIdCompletion = { [weak self] (id) in
@@ -73,9 +74,9 @@ final class PostListViewController: UIViewController {
             self.routeToPost(with: id)
         }
         
-        postCollectionView.loadMoreCompletion = { [weak self] in
+        postCollectionView.loadMoreCompletion = { [weak self] isLoadMore in
             guard let self = self else { return }
-            self.fetchPostList()
+            self.fetchPostList(isLoadMore: isLoadMore)
         }
     }
     
@@ -86,23 +87,22 @@ final class PostListViewController: UIViewController {
     private func setupRefreshControl() {
         refreshControl = UIRefreshControl()
         refreshControl.backgroundColor = .clear
-        refreshControl.tintColor = .darkGray
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         postCollectionView.addSubview(refreshControl)
     }
     
     @objc private func refreshData() {
         page = 0
-        fetchPostList()
+        fetchPostList(isLoadMore: false)
     }
     
     @objc private func routeToLogin() {
         router?.routeToLogin()
     }
     
-    private func fetchPostList() {
-        activityIndicator.showIndicator(on: self)
+    private func fetchPostList(isLoadMore: Bool) {
         page += 1
+        isLoadMore ? postCollectionView.footerView.startAnimating() : activityIndicator.showIndicator(on: self)
         interactor?.fetchPostList(request: PostListModels.PostList.Request(page: page))
     }
     
@@ -121,6 +121,7 @@ extension PostListViewController: PostListDisplayLogic {
         postCollectionView.reloadData()
         refreshControl.endRefreshing()
         activityIndicator.hideIndicator()
+        postCollectionView.footerView.stopAnimating()
     }
     
 }

@@ -16,6 +16,7 @@
 		C218FCF9251B5A6A002F9C68 /* SplashInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218FCF2251B5A6A002F9C68 /* SplashInteractor.swift */; };
 		C218FCFC251B5B81002F9C68 /* SplashConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218FCFB251B5B81002F9C68 /* SplashConfigurator.swift */; };
 		C218FD05251B8D1A002F9C68 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218FD04251B8D1A002F9C68 /* ActivityIndicator.swift */; };
+		C222F657252203DF0080D7DA /* PostListCollectionViewFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C222F656252203DF0080D7DA /* PostListCollectionViewFooterView.swift */; };
 		C2278E7C249E2FD100D9D582 /* UIView+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2278E7B249E2FD100D9D582 /* UIView+adds.swift */; };
 		C2278E7E249E3AF700D9D582 /* Data+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2278E7D249E3AF700D9D582 /* Data+adds.swift */; };
 		C2278E86249E77C200D9D582 /* PostListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2278E85249E77C200D9D582 /* PostListCollectionViewCell.swift */; };
@@ -104,6 +105,7 @@
 		C218FCF2251B5A6A002F9C68 /* SplashInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashInteractor.swift; sourceTree = "<group>"; };
 		C218FCFB251B5B81002F9C68 /* SplashConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashConfigurator.swift; sourceTree = "<group>"; };
 		C218FD04251B8D1A002F9C68 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		C222F656252203DF0080D7DA /* PostListCollectionViewFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListCollectionViewFooterView.swift; sourceTree = "<group>"; };
 		C2278E7B249E2FD100D9D582 /* UIView+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+adds.swift"; sourceTree = "<group>"; };
 		C2278E7D249E3AF700D9D582 /* Data+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+adds.swift"; sourceTree = "<group>"; };
 		C2278E85249E77C200D9D582 /* PostListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 			children = (
 				C2278E87249E783D00D9D582 /* PostListCollectionView.swift */,
 				C2278E85249E77C200D9D582 /* PostListCollectionViewCell.swift */,
+				C222F656252203DF0080D7DA /* PostListCollectionViewFooterView.swift */,
 			);
 			path = PostCollectionView;
 			sourceTree = "<group>";
@@ -566,6 +569,7 @@
 				C2BCF43724AB67E8008C28FD /* PostCommentRepliesInteractor.swift in Sources */,
 				C2345BEF24B4F15200125976 /* LoginWorker.swift in Sources */,
 				C218FCF6251B5A6A002F9C68 /* SplashRouter.swift in Sources */,
+				C222F657252203DF0080D7DA /* PostListCollectionViewFooterView.swift in Sources */,
 				C2BCF43524AB67E8008C28FD /* PostCommentRepliesModels.swift in Sources */,
 				C2ACD5C1251E254900204696 /* CustomTextView.swift in Sources */,
 				C2386FAA249E09B50076AED3 /* PostListRouter.swift in Sources */,

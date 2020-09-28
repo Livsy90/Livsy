@@ -24,10 +24,10 @@ class CommentInputAccessoryView: UIView {
     
     private let commentTextView: CommentInputTextView = {
         let tv = CommentInputTextView()
-        tv.layer.cornerRadius = 10
-        tv.backgroundColor = .white
-        tv.textColor = .darkText
-        tv.layer.borderColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
+        tv.layer.cornerRadius = 18
+        tv.backgroundColor = UIColor.init(named: "PostBackground")
+        tv.textColor = UIColor.init(named: "PostText")
+        tv.tintColor = UIColor.init(named: "NavBarTint")
         tv.layer.borderWidth = 1
         tv.isScrollEnabled = false
         tv.font = UIFont.systemFont(ofSize: 18)
@@ -37,7 +37,7 @@ class CommentInputAccessoryView: UIView {
     private let submitButton: UIButton = {
         let sb = UIButton(type: .system)
         sb.setTitle("Submit", for: .normal)
-        sb.setTitleColor(.black, for: .normal)
+        sb.setTitleColor(UIColor.init(named: "PostText"), for: .normal)
         sb.setTitleColor(.gray, for: .disabled)
         sb.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         sb.addTarget(self, action: #selector(handleSubmit), for: .touchUpInside)
@@ -49,7 +49,7 @@ class CommentInputAccessoryView: UIView {
         super.init(frame: frame)
         
         autoresizingMask = .flexibleHeight
-        backgroundColor = .white
+        backgroundColor = UIColor.init(named: "InputAC")
         
         addSubview(submitButton)
         submitButton.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor).isActive = true

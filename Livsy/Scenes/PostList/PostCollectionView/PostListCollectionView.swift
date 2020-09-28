@@ -13,17 +13,22 @@ class PostListCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
     var cells = [Post]()
     var isStopRefreshing = false
     var fetchIdCompletion: ((Int) -> Void)?
-    var loadMoreCompletion: (() -> Void)?
+    var loadMoreCompletion: ((Bool) -> Void)?
+    let footerView = UIActivityIndicatorView(style: .medium)
     
      init() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         super.init(frame: .zero, collectionViewLayout: layout)
         
-        backgroundColor = #colorLiteral(red: 1, green: 0.9347417841, blue: 0.848009174, alpha: 1)
+        footerView.color = .darkGray
+        footerView.hidesWhenStopped = true
+        backgroundColor = UIColor.init(named: "PostListBackground")
         delegate = self
         dataSource = self
         register(PostListCollectionViewCell.self, forCellWithReuseIdentifier: PostListCollectionViewCell.reuseId)
+        register(CollectionViewFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "Footer")
+                (collectionViewLayout as? UICollectionViewFlowLayout)?.footerReferenceSize = CGSize(width: bounds.width, height: 50)
         
         translatesAutoresizingMaskIntoConstraints = false
         layout.minimumLineSpacing = Constants.postListMinimumLineSpacing
@@ -37,6 +42,16 @@ class PostListCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
     func set(cells: [Post]) {
         self.cells = cells
     }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+            if kind == UICollectionView.elementKindSectionFooter {
+                let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath)
+                footer.addSubview(footerView)
+                footerView.frame = CGRect(x: 0, y: 0, width: collectionView.bounds.width, height: 50)
+                return footer
+            }
+            return UICollectionReusableView()
+        }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cells.count
@@ -66,7 +81,7 @@ class PostListCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
             break
         default:
             if indexPath.row == cells.count - 1 {
-                loadMoreCompletion?()
+                loadMoreCompletion?(true)
             }
         }
         

@@ -25,7 +25,7 @@ class PostListCollectionViewCell: UICollectionViewCell {
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 3
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        label.textColor = #colorLiteral(red: 0.2605174184, green: 0.2605243921, blue: 0.260520637, alpha: 1)
+        label.textColor = UIColor.init(named: "PostListText")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -33,7 +33,7 @@ class PostListCollectionViewCell: UICollectionViewCell {
     let smallDescriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = #colorLiteral(red: 0.6642242074, green: 0.6642400622, blue: 0.6642315388, alpha: 1)
+        label.textColor = UIColor.init(named: "PostListText")
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -65,7 +65,7 @@ class PostListCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.layer.cornerRadius = 10
-        self.layer.backgroundColor = UIColor.white.cgColor
+        self.layer.backgroundColor = UIColor.init(named: "PostListRow")?.cgColor
         self.layer.shadowRadius = 3
         self.layer.shadowOpacity = 0.2
         self.layer.shadowOffset = CGSize(width: 0, height: 0)

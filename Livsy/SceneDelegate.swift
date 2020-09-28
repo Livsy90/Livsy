@@ -28,6 +28,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             print("ViewController not found")
             return
         }
+        
+        UINavigationBar.appearance().tintColor = UIColor.init(named: "NavBarTint")
+        
         let rootNC = UINavigationController(rootViewController: rootVC)
         self.window?.rootViewController = rootNC
         self.window?.makeKeyAndVisible()

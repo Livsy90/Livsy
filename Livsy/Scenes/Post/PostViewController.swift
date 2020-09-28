@@ -27,6 +27,7 @@ final class PostViewController: UIViewController {
     
     private var link = ""
     private let activityIndicator = ActivityIndicator()
+    private let loadingCommentsIndicator = UIActivityIndicatorView()
     
     // MARK: - Initializers
     
@@ -48,6 +49,7 @@ final class PostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        showActivityIndicatorOnNavBarItem()
         scrollViewSetup()
         postTitleSetup()
         textViewSetup()
@@ -60,7 +62,7 @@ final class PostViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(textView)
         scrollView.addSubview(postTitle)
-        scrollView.backgroundColor = #colorLiteral(red: 0.9999561906, green: 0.9990209937, blue: 0.9686461091, alpha: 1)
+        scrollView.backgroundColor = UIColor.init(named: "PostBackground")
         scrollView.alwaysBounceVertical = true
         scrollView.isDirectionalLockEnabled = true
         scrollView.contentInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
@@ -81,12 +83,20 @@ final class PostViewController: UIViewController {
         textView.anchor(top: postTitle.bottomAnchor, left: scrollView.leftAnchor, bottom: scrollView.bottomAnchor, right: scrollView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         textView.isScrollEnabled = false
         textView.isEditable = false
+        textView.textColor = .systemGray6
         
         textView.font = UIFont.preferredFont(forTextStyle: .body)
         textView.textAlignment = .left
     }
     
+    private func showActivityIndicatorOnNavBarItem() {
+        loadingCommentsIndicator.hidesWhenStopped = true
+        loadingCommentsIndicator.startAnimating()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: loadingCommentsIndicator)
+    }
+    
     private func commentsButtonSetup() {
+        loadingCommentsIndicator.stopAnimating()
         guard let count = router?.dataStore?.comments.count else { return }
         let barButton = UIBarButtonItem(title: "Comments (\(count))", style: .plain, target: self, action: #selector(routeToComments))
         navigationItem.rightBarButtonItem = barButton
@@ -111,15 +121,12 @@ final class PostViewController: UIViewController {
             for iframe_text in iframe_texts {
                 let iframe_id = matches(for: "((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)", in: iframe_text);
                 
-                if iframe_id.count > 0 { //just in case there is another type of iframe
+                if iframe_id.count > 0 {
                     
                     new_text = new_text.replacingOccurrences(of: iframe_text, with:"<a href='https://www.youtube.com/watch?v=\(iframe_id[0])'><img src=\"https://img.youtube.com/vi/" + iframe_id[0] + "/maxresdefault.jpg\" alt=\"\" width=\"\(width)\" /></a>");
                     
                 }
             }
-            
-        } else {
-            print("there is no iframe in this text");
         }
         
         return new_text;
@@ -147,11 +154,7 @@ final class PostViewController: UIViewController {
     @objc private func routeToComments() {
         router?.routeToPostComments()
     }
-    
-    // MARK: - Requests
-    
-    // MARK: - IBActions
-    
+
 }
 
 // MARK: - Post Display Logic
