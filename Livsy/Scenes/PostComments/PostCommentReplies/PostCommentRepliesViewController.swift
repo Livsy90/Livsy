@@ -15,8 +15,6 @@ protocol PostCommentRepliesDisplayLogic: class {
 
 final class PostCommentRepliesViewController: UIViewController {
     
-    // MARK: - IBOutlets
-    
     // MARK: - Public Properties
     
     var interactor: PostCommentRepliesBusinessLogic?
@@ -24,7 +22,7 @@ final class PostCommentRepliesViewController: UIViewController {
     
     override var inputAccessoryView: UIView? {
         get {
-            if UserDefaults.standard.token != nil {
+            if UserDefaults.standard.token != "" {
                 return containerView
             } else {
                 return nil
@@ -46,8 +44,6 @@ final class PostCommentRepliesViewController: UIViewController {
         commentInputAccessoryView.delegate = self
         return commentInputAccessoryView
     }()
-    
-    private let addCommentButton = UIButton()
     
     // MARK: - Initializers
     
@@ -71,11 +67,10 @@ final class PostCommentRepliesViewController: UIViewController {
         super.viewDidLoad()
         setupCollectionView()
         showReplies(isReload: false)
-        doOnDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setupLoginButton()
+        setupNavBar()
     }
     
     override func viewWillLayoutSubviews() {
@@ -93,7 +88,7 @@ final class PostCommentRepliesViewController: UIViewController {
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
         
         if notification.name == UIResponder.keyboardWillHideNotification {
-            repliesCollectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+            repliesCollectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
         } else {
             repliesCollectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + 10, right: 10)
         }
@@ -101,36 +96,15 @@ final class PostCommentRepliesViewController: UIViewController {
         repliesCollectionView.scrollIndicatorInsets = repliesCollectionView.contentInset
     }
     
-    private func setupLoginButton() {
-        if UserDefaults.standard.token == nil || UserDefaults.standard.token == "" {
-            view.addSubview(self.addCommentButton)
-            addCommentButton.setTitleColor(.lightGray, for: .highlighted)
-            addCommentButton.setTitle("Login to comment", for: .normal)
-            addCommentButton.layer.cornerRadius = 5
-            addCommentButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
-            addCommentButton.clipsToBounds = true
-            addCommentButton.translatesAutoresizingMaskIntoConstraints = false
-            addCommentButton.addTarget(self, action: #selector(routeToLogin), for: .touchUpInside)
-            NSLayoutConstraint.activate([
-                addCommentButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-                addCommentButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -25),
-                addCommentButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
-                addCommentButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
-                addCommentButton.heightAnchor.constraint(equalToConstant: 60)
-            ])
-        } else {
-            addCommentButton.removeFromSuperview()
-        }
-        
-    }
-    
     @objc private func routeToLogin() {
         router?.routeToLogin()
     }
     
-    private func doOnDidLoad() {
-        view.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
+    private func setupNavBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(dismissSelf))
+        if UserDefaults.standard.token == "" {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login to comment", style: .plain, target: self, action: #selector(routeToLogin))
+        }
     }
     
     @objc private func dismissSelf() {
@@ -150,10 +124,6 @@ final class PostCommentRepliesViewController: UIViewController {
     private func submitComment(content: String) {
         interactor?.showSubmitReply(request: PostCommentRepliesModels.SubmitComment.Request(content: content, post: router?.dataStore?.postID ?? 0))
     }
-    
-    // MARK: - Requests
-    
-    // MARK: - IBActions
     
 }
 

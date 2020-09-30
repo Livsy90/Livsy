@@ -17,7 +17,7 @@ class RepliesCollectionView: UICollectionView, UICollectionViewDelegate, UIColle
         layout.scrollDirection = .vertical
         super.init(frame: .zero, collectionViewLayout: layout)
         
-        backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
+        backgroundColor = .listBackground
         delegate = self
         dataSource = self
         register(RepliesCollectionViewCell.self, forCellWithReuseIdentifier: RepliesCollectionViewCell.reuseId)

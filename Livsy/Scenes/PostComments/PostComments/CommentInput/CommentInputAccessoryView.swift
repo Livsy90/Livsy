@@ -29,8 +29,10 @@ class CommentInputAccessoryView: UIView {
         tv.textColor = UIColor.init(named: "PostText")
         tv.tintColor = UIColor.init(named: "NavBarTint")
         tv.layer.borderWidth = 1
+        tv.layer.borderColor = #colorLiteral(red: 0.5741485357, green: 0.5741624236, blue: 0.574154973, alpha: 1)
         tv.isScrollEnabled = false
         tv.font = UIFont.systemFont(ofSize: 18)
+        tv.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         return tv
     }()
     
@@ -73,7 +75,7 @@ class CommentInputAccessoryView: UIView {
     
     private func setupLineSeparatorView() {
         let lineSeparatorView = UIView()
-        lineSeparatorView.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
+        lineSeparatorView.backgroundColor = .listBackground
         addSubview(lineSeparatorView)
         lineSeparatorView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
     }

@@ -62,7 +62,7 @@ final class PostViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(textView)
         scrollView.addSubview(postTitle)
-        scrollView.backgroundColor = UIColor.init(named: "PostBackground")
+        scrollView.backgroundColor = .listBackground
         scrollView.alwaysBounceVertical = true
         scrollView.isDirectionalLockEnabled = true
         scrollView.contentInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
@@ -70,8 +70,8 @@ final class PostViewController: UIViewController {
     }
     
     private func postTitleSetup() {
-        postTitle.font = .systemFont(ofSize: 30, weight: .semibold)
-        postTitle.textColor = .darkText
+        postTitle.font = .systemFont(ofSize: 35, weight: .semibold)
+        postTitle.textColor = .authorName
         postTitle.lineBreakMode = .byWordWrapping
         postTitle.numberOfLines = 0
         postTitle.anchor(top: scrollView.topAnchor, left: scrollView.leftAnchor, bottom: textView.topAnchor, right: scrollView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
@@ -83,9 +83,9 @@ final class PostViewController: UIViewController {
         textView.anchor(top: postTitle.bottomAnchor, left: scrollView.leftAnchor, bottom: scrollView.bottomAnchor, right: scrollView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         textView.isScrollEnabled = false
         textView.isEditable = false
-        textView.textColor = .systemGray6
         
         textView.font = UIFont.preferredFont(forTextStyle: .body)
+        textView.textColor = .commentBody
         textView.textAlignment = .left
     }
     
@@ -111,40 +111,6 @@ final class PostViewController: UIViewController {
         interactor?.fetchPostComments(request: PostModels.PostComments.Request())
     }
     
-    private func formatString(text: String, with width: Float) -> String {
-        
-        let iframe_texts = matches(for: ".*iframe.*", in: text);
-        var new_text = text;
-        
-        if iframe_texts.count > 0 {
-            
-            for iframe_text in iframe_texts {
-                let iframe_id = matches(for: "((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)", in: iframe_text);
-                
-                if iframe_id.count > 0 {
-                    
-                    new_text = new_text.replacingOccurrences(of: iframe_text, with:"<a href='https://www.youtube.com/watch?v=\(iframe_id[0])'><img src=\"https://img.youtube.com/vi/" + iframe_id[0] + "/maxresdefault.jpg\" alt=\"\" width=\"\(width)\" /></a>");
-                    
-                }
-            }
-        }
-        
-        return new_text;
-    }
-    
-    private func matches(for regex: String, in text: String) -> [String] {
-        
-        do {
-            let regex = try NSRegularExpression(pattern: regex,  options: .caseInsensitive)
-            let nsString = text as NSString
-            let results = regex.matches(in: text, range: NSRange(location: 0, length: nsString.length))
-            return results.map { nsString.substring(with: $0.range)}
-        } catch let error {
-            print("invalid regex: \(error.localizedDescription)")
-            return []
-        }
-    }
-    
     @objc private func openURL() {
         if let url = URL(string: link) {
             UIApplication.shared.open(url)
@@ -161,9 +127,8 @@ final class PostViewController: UIViewController {
 extension PostViewController: PostDisplayLogic {
     
     func displayPostPage(viewModel: PostModels.PostPage.ViewModel) {
-        let rect = self.view.window?.frame
         postTitle.text = router?.dataStore?.title ?? ""
-        textView.setHTMLFromString(htmlText: formatString(text: router?.dataStore?.content ?? "", with: Float(rect?.size.width ?? 375)))
+        textView.setHTMLFromString(htmlText: router?.dataStore?.content ?? "", color: .postText)
         fetchPostComments()
         activityIndicator.hideIndicator()
     }

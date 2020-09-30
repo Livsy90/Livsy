@@ -50,8 +50,11 @@ final class PostListViewController: UIViewController {
         super.viewDidLoad()
         setupCollectionView()
         setupRefreshControl()
-        setupNavigationBar()
         fetchPostList(isLoadMore: false)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setupNavigationBar()
     }
     
     // MARK: - Private Methods

@@ -15,7 +15,7 @@ protocol PostCommentsDisplayLogic: class {
 }
 
 final class PostCommentsViewController: UIViewController {
-        
+    
     // MARK: - Public Properties
     
     var interactor: PostCommentsBusinessLogic?
@@ -23,7 +23,7 @@ final class PostCommentsViewController: UIViewController {
     
     override var inputAccessoryView: UIView? {
         get {
-            if UserDefaults.standard.token != nil {
+            if UserDefaults.standard.token != "" {
                 return containerView
             } else {
                 return nil
@@ -45,17 +45,6 @@ final class PostCommentsViewController: UIViewController {
     }()
     
     private let postCommentsCollectionView = PostCommentsCollectionView()
-    private let addCommentButton: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(.gray, for: .highlighted)
-        button.setTitle("Login to comment", for: .normal)
-        button.layer.cornerRadius = 5
-        button.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
-        button.clipsToBounds = true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(routeToLogin), for: .touchUpInside)
-        return button
-    }()
     
     // MARK: - Initializers
     
@@ -79,44 +68,44 @@ final class PostCommentsViewController: UIViewController {
         super.viewDidLoad()
         setupCollectionView()
         showComments(isReload: false)
-        doOnDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setupLoginButton()
+        setupNavBar()
     }
-    
+
     override func viewWillLayoutSubviews() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
-    
     // MARK: - Private Methods
     
     @objc private func adjustForKeyboard(notification: Notification) {
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-
+        
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
-
+        
         if notification.name == UIResponder.keyboardWillHideNotification {
-            postCommentsCollectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+            postCommentsCollectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
         } else {
             postCommentsCollectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + 10, right: 10)
         }
-
+        
         postCommentsCollectionView.scrollIndicatorInsets = postCommentsCollectionView.contentInset
     }
     
-    private func doOnDidLoad() {
-        view.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
+    private func setupNavBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(dismissSelf))
+        if UserDefaults.standard.token == "" {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login to comment", style: .plain, target: self, action: #selector(routeToLogin))
+        }
     }
     
     private func setupCollectionView() {
-           view.addSubview(postCommentsCollectionView)
+        view.addSubview(postCommentsCollectionView)
         postCommentsCollectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         postCommentsCollectionView.cellTappedCompletion = { [weak self] (comment, replies) in
             guard let self = self else { return }
@@ -125,26 +114,10 @@ final class PostCommentsViewController: UIViewController {
         postCommentsCollectionView.keyboardDismissMode = .interactive
     }
     
-    private func setupLoginButton() {
-        if UserDefaults.standard.token == nil {
-            view.addSubview(self.addCommentButton)
-            NSLayoutConstraint.activate([
-                addCommentButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-                addCommentButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -25),
-                addCommentButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
-                addCommentButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
-                addCommentButton.heightAnchor.constraint(equalToConstant: 60)
-            ])
-        } else {
-            addCommentButton.removeFromSuperview()
-        }
-        
-    }
-    
     private func showComments(isReload: Bool) {
         interactor?.showComments(request: PostCommentsModels.PostComments.Request(isReload: isReload))
     }
-
+    
     private func showReplies(comment: PostComment, replies: [PostComment]) {
         interactor?.showReplies(request: PostCommentsModels.Replies.Request(comment: comment, replies: replies))
     }
