@@ -44,6 +44,17 @@ final class PostCommentsViewController: UIViewController {
         return commentInputAccessoryView
     }()
     
+    private let noCommentsLabel: UILabel = {
+        let l = UILabel()
+        l.text = "Write the first comment"
+        l.textColor = UIColor.postText.withAlphaComponent(0.3)
+        l.lineBreakMode = .byWordWrapping
+        l.numberOfLines = 0
+        l.translatesAutoresizingMaskIntoConstraints = false
+        l.font = UIFont.boldSystemFont(ofSize: 30.0)
+        return l
+    }()
+    
     private let postCommentsCollectionView = PostCommentsCollectionView()
     
     // MARK: - Initializers
@@ -67,7 +78,9 @@ final class PostCommentsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
+        setupNoCommentslabel()
         showComments(isReload: false)
+        setupNoCommentslabel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,10 +110,16 @@ final class PostCommentsViewController: UIViewController {
         postCommentsCollectionView.scrollIndicatorInsets = postCommentsCollectionView.contentInset
     }
     
+    private func setupNoCommentslabel() {
+        view.addSubview(noCommentsLabel)
+        noCommentsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        noCommentsLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+    
     private func setupNavBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(dismissSelf))
         if UserDefaults.standard.token == "" {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login to comment", style: .plain, target: self, action: #selector(routeToLogin))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login to reply", style: .plain, target: self, action: #selector(routeToLogin))
         }
     }
     
@@ -144,6 +163,7 @@ extension PostCommentsViewController: PostCommentsDisplayLogic {
         guard let comments = router?.dataStore?.comments else { return } 
         postCommentsCollectionView.set(comments: comments)
         postCommentsCollectionView.reloadData()
+        noCommentsLabel.isHidden = !(router?.dataStore?.comments.isEmpty ?? true)
     }
     
     func diplsyReplies(viewModel: PostCommentsModels.Replies.ViewModel) {

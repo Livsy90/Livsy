@@ -13,7 +13,15 @@ struct Post: Codable { // codable для userDefaults
     let date: String
     let title: Title?
     let excerpt: Excerpt?
-    let images: Images?
+    let imgURL: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case date
+        case title
+        case excerpt
+        case imgURL = "fimg_url"
+    }
 }
     
 struct Title: Codable {
@@ -32,11 +40,6 @@ struct Excerpt: Codable {
     
 struct Guid: Codable {
     let rendered: String
-}
-
-struct Images: Codable {
-    let medium: String?
-    let large: String?
 }
 
 struct Constants {

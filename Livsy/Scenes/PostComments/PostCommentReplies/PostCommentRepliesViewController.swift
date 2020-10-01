@@ -23,7 +23,7 @@ final class PostCommentRepliesViewController: UIViewController {
     override var inputAccessoryView: UIView? {
         get {
             if UserDefaults.standard.token != "" {
-                return containerView
+                return containerView 
             } else {
                 return nil
             }

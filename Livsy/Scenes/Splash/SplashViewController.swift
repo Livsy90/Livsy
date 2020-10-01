@@ -13,15 +13,21 @@ protocol SplashDisplayLogic: class {
 }
 
 final class SplashViewController: UIViewController {
-    
-    // MARK: - IBOutlets
-    
+
     // MARK: - Public Properties
     
     var interactor: SplashBusinessLogic?
     var router: (SplashRoutingLogic & SplashDataPassing)?
     
     // MARK: - Private Properties
+    
+    private let label: UILabel = {
+        let l = UILabel()
+        l.text = "L"
+        l.textColor = .postListText
+        l.translatesAutoresizingMaskIntoConstraints = false
+        return l
+    }()
     
     // MARK: - Initializers
     
@@ -43,6 +49,7 @@ final class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
         checkToken()
     }
     
@@ -54,6 +61,12 @@ final class SplashViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    private func setupUI() {
+        view.backgroundColor = .listBackground
+        view.addSubview(label)
+        label.center = view.center
     }
     
     private func checkToken() {

@@ -46,8 +46,8 @@ extension UIColor {
         return UIColor.init(named: "CommentText") ?? .darkText
     }
     
-    static var Dark: UIColor {
-        return #colorLiteral(red: 0.1607843137, green: 0.1607843137, blue: 0.168627451, alpha: 1)
+    static var postListText: UIColor {
+        return UIColor.init(named: "PostListText") ?? .darkText
     }
     
     static var TextDark: UIColor {

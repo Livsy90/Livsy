@@ -59,7 +59,7 @@ class PostListCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = dequeueReusableCell(withReuseIdentifier: PostListCollectionViewCell.reuseId, for: indexPath) as! PostListCollectionViewCell
-        cell.set(imageUrl: cells[indexPath.row].images?.medium)
+        cell.set(imageUrl: cells[indexPath.row].imgURL)
         let description = cells[indexPath.row].excerpt?.rendered
         cell.nameLabel.text = cells[indexPath.row].title?.rendered
         cell.smallDescriptionLabel.text = String(htmlEncodedString: description ?? "")
