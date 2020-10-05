@@ -43,7 +43,7 @@ final class PostCommentsViewController: UIViewController {
         commentInputAccessoryView.delegate = self
         return commentInputAccessoryView
     }()
-    
+    private var safeArea: UILayoutGuide!
     private let noCommentsLabel: UILabel = {
         let l = UILabel()
         l.text = "Write the first comment"
@@ -54,8 +54,8 @@ final class PostCommentsViewController: UIViewController {
         l.font = UIFont.boldSystemFont(ofSize: 30.0)
         return l
     }()
-    
     private let postCommentsCollectionView = PostCommentsCollectionView()
+    private let tableView = UITableView()
     
     // MARK: - Initializers
     
@@ -77,7 +77,8 @@ final class PostCommentsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCollectionView()
+//         setupCollectionView()
+        setupTableView()
         setupNoCommentslabel()
         showComments(isReload: false)
         setupNoCommentslabel()
@@ -86,7 +87,7 @@ final class PostCommentsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         setupNavBar()
     }
-
+    
     override func viewWillLayoutSubviews() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -102,12 +103,30 @@ final class PostCommentsViewController: UIViewController {
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
         
         if notification.name == UIResponder.keyboardWillHideNotification {
-            postCommentsCollectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
+//            postCommentsCollectionView
+                tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         } else {
-            postCommentsCollectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + 10, right: 10)
+//            postCommentsCollectionView
+                tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
         }
         
-        postCommentsCollectionView.scrollIndicatorInsets = postCommentsCollectionView.contentInset
+//        postCommentsCollectionView.scrollIndicatorInsets = postCommentsCollectionView.contentInset
+        tableView.scrollIndicatorInsets = tableView.contentInset
+    }
+    
+    func setupTableView() {
+        tableView.showsHorizontalScrollIndicator = false
+        tableView.showsVerticalScrollIndicator = false
+        safeArea = view.layoutMarginsGuide
+        tableView.delegate = self
+        tableView.dataSource = self
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.anchor(top: safeArea.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        tableView.tableFooterView = UIView()
+        tableView.backgroundColor = .postListBackground
+        tableView.keyboardDismissMode = .interactive
+        tableView.register(UINib(nibName: CommentsTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.reuseIdentifier())
     }
     
     private func setupNoCommentslabel() {
@@ -117,6 +136,7 @@ final class PostCommentsViewController: UIViewController {
     }
     
     private func setupNavBar() {
+        view.backgroundColor = .postBackground
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(dismissSelf))
         if UserDefaults.standard.token == "" {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login to reply", style: .plain, target: self, action: #selector(routeToLogin))
@@ -160,9 +180,10 @@ final class PostCommentsViewController: UIViewController {
 extension PostCommentsViewController: PostCommentsDisplayLogic {
     
     func displayPostComments(viewModel: PostCommentsModels.PostComments.ViewModel) {
-        guard let comments = router?.dataStore?.comments else { return } 
-        postCommentsCollectionView.set(comments: comments)
-        postCommentsCollectionView.reloadData()
+//        guard let comments = router?.dataStore?.comments else { return }
+//          postCommentsCollectionView.set(comments: comments)
+//          postCommentsCollectionView.reloadData()
+        tableView.reloadData()
         noCommentsLabel.isHidden = !(router?.dataStore?.comments.isEmpty ?? true)
     }
     
@@ -187,5 +208,34 @@ extension PostCommentsViewController: CommentInputAccessoryViewDelegate {
     func didSubmit(for comment: String) {
         submitComment(content: comment)
     }
+    
+}
+
+extension PostCommentsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard let comments = router?.dataStore?.comments else { return }
+        showReplies(comment: comments[indexPath.row], replies: comments[indexPath.row].replies)
+    }
+    
+}
+
+extension PostCommentsViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        router?.dataStore?.comments.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let comment = router?.dataStore?.comments[indexPath.row] else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.reuseIdentifier(), for: indexPath) as? CommentsTableViewCell else { return UITableViewCell() }
+        cell.config(comment: comment)
+        return cell
+    }
+    
     
 }
