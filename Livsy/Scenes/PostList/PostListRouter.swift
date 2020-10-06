@@ -9,7 +9,7 @@
 import UIKit
 
 protocol PostListRoutingLogic {
-    func routeToPost(with postID: Int)
+    func routeToPost(id: Int, url: String)
     func routeToLogin()
 }
 
@@ -24,19 +24,23 @@ final class PostListRouter: PostListRoutingLogic, PostListDataPassing {
     weak var viewController: PostListViewController?
     var dataStore: PostListDataStore?
     
-    func routeToPost(with postID: Int) {
+    var imageView = WebImageView()
+    
+    func routeToPost(id: Int, url: String) {
         let destinationVC = PostViewController()
         var destinationDS = destinationVC.router!.dataStore!
-        passDataToCustomerSummary(postID: postID, source: dataStore!, destination: &destinationDS)
-        navigateToCustomerSummary(source: viewController!, destination: destinationVC)
+        passDataToPost(postID: id, imageURL: url, source: dataStore!, destination: &destinationDS)
+        navigateToPost(source: viewController!, destination: destinationVC)
     }
     
-    func navigateToCustomerSummary(source: PostListViewController, destination: PostViewController) {
+    func navigateToPost(source: PostListViewController, destination: PostViewController) {
         viewController?.navigationController?.pushViewController(destination, animated: true)
     }
     
-    func passDataToCustomerSummary(postID: Int, source: PostListDataStore, destination: inout PostDataStore) {
+    func passDataToPost(postID: Int, imageURL: String, source: PostListDataStore, destination: inout PostDataStore) {
         destination.id = postID
+        imageView.set(imageURL: imageURL)
+        destination.image = imageView.image ?? UIImage()
     }
     
     func routeToLogin() {

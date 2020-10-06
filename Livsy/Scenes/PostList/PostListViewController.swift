@@ -26,7 +26,6 @@ final class PostListViewController: UIViewController {
     private var postCollectionView = PostListCollectionView()
     private var page = 0
     private var isLoadMore = false
-    private let activityIndicator = ActivityIndicator()
     
     // MARK: - Initializers
     
@@ -72,9 +71,9 @@ final class PostListViewController: UIViewController {
         postCollectionView.footerView.startAnimating()
         postCollectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
-        postCollectionView.fetchIdCompletion = { [weak self] (id) in
+        postCollectionView.fetchIdCompletion = { [weak self] (id, url) in
             guard let self = self else { return }
-            self.routeToPost(with: id)
+            self.routeToPost(id: id, url: url)
         }
         
         postCollectionView.loadMoreCompletion = { [weak self] isLoadMore in
@@ -83,8 +82,8 @@ final class PostListViewController: UIViewController {
         }
     }
     
-    private func routeToPost(with id: Int) {
-        router?.routeToPost(with: id)
+    private func routeToPost(id: Int, url: String) {
+        router?.routeToPost(id: id, url: url)
     }
     
     private func setupRefreshControl() {
@@ -105,7 +104,7 @@ final class PostListViewController: UIViewController {
     
     private func fetchPostList(isLoadMore: Bool) {
         page += 1
-        isLoadMore ? postCollectionView.footerView.startAnimating() : activityIndicator.showIndicator(on: self)
+        isLoadMore ? postCollectionView.footerView.startAnimating() : {}()
         interactor?.fetchPostList(request: PostListModels.PostList.Request(page: page))
     }
     
@@ -123,7 +122,6 @@ extension PostListViewController: PostListDisplayLogic {
         postCollectionView.set(cells: posts)
         postCollectionView.reloadData()
         refreshControl.endRefreshing()
-        activityIndicator.hideIndicator()
         postCollectionView.footerView.stopAnimating()
     }
     

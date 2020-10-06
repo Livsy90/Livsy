@@ -28,6 +28,8 @@ final class PostViewController: UIViewController {
     private var link = ""
     private let activityIndicator = ActivityIndicator()
     private let loadingCommentsIndicator = UIActivityIndicatorView()
+    private let darkBlurredEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    private let lightBlurredEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     
     // MARK: - Initializers
     
@@ -50,19 +52,56 @@ final class PostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         showActivityIndicatorOnNavBarItem()
+        createGradientLayer()
         scrollViewSetup()
         postTitleSetup()
         textViewSetup()
         fetchPost()
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            
+            createGradientLayer()
+            view.bringSubviewToFront(scrollView)
+            
+        }
+    }
+    
     // MARK: - Private Methods
+    
+    private func createGradientLayer() {
+        let gradientLayer = CAGradientLayer()
+        
+        gradientLayer.frame = self.view.bounds
+        guard let color1 = router?.dataStore?.image.averageColor?.cgColor else { return }
+        gradientLayer.colors = [color1, UIColor.postBackground.cgColor, UIColor.postBackground.cgColor, UIColor.navBarTint.cgColor]
+        
+        self.view.layer.addSublayer(gradientLayer)
+        
+        let imageView = UIImageView(image: UIImage(named: "blur"))
+        imageView.frame = view.bounds
+        imageView.contentMode = .scaleToFill
+        view.addSubview(imageView)
+        if traitCollection.userInterfaceStyle == .light {
+            darkBlurredEffectView.removeFromSuperview()
+            lightBlurredEffectView.frame = imageView.bounds
+            view.addSubview(lightBlurredEffectView)
+        } else {
+            lightBlurredEffectView.removeFromSuperview()
+            darkBlurredEffectView.frame = imageView.bounds
+            view.addSubview(darkBlurredEffectView)
+        }
+
+    }
     
     private func scrollViewSetup() {
         view.addSubview(scrollView)
         scrollView.addSubview(textView)
         scrollView.addSubview(postTitle)
-        scrollView.backgroundColor = .listBackground
+        // scrollView.backgroundColor = .listBackground
         scrollView.alwaysBounceVertical = true
         scrollView.isDirectionalLockEnabled = true
         scrollView.contentInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
@@ -71,7 +110,7 @@ final class PostViewController: UIViewController {
     
     private func postTitleSetup() {
         postTitle.font = .systemFont(ofSize: 35, weight: .semibold)
-        postTitle.textColor = .authorName
+        postTitle.textColor = .postText
         postTitle.lineBreakMode = .byWordWrapping
         postTitle.numberOfLines = 0
         postTitle.anchor(top: scrollView.topAnchor, left: scrollView.leftAnchor, bottom: textView.topAnchor, right: scrollView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
@@ -120,7 +159,7 @@ final class PostViewController: UIViewController {
     @objc private func routeToComments() {
         router?.routeToPostComments()
     }
-
+    
 }
 
 // MARK: - Post Display Logic

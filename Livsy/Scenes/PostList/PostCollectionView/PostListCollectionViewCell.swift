@@ -44,36 +44,29 @@ class PostListCollectionViewCell: UICollectionViewCell {
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution = UIStackView.Distribution.equalSpacing
         stackView.alignment = UIStackView.Alignment.center
-        stackView.spacing = 8
+        stackView.spacing = 5
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(stackView)
-        stackView.addArrangedSubview(mainImageView)
-        stackView.addArrangedSubview(nameLabel)
-        translatesAutoresizingMaskIntoConstraints = false
-        stackView.addArrangedSubview(smallDescriptionLabel)
-        stackView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 20, paddingRight: 20, width: 0, height: 0)
-        mainImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.width * 0.19).isActive = true
-        mainImageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.width * 0.19).isActive = true
-        
+        setup()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.layer.cornerRadius = 10
+        self.layer.cornerRadius = 5
         self.layer.backgroundColor = UIColor.init(named: "PostListRow")?.cgColor
-        self.layer.shadowRadius = 3
+        self.clipsToBounds = false
+        self.layer.shadowRadius = 2
         self.layer.shadowOpacity = 0.2
         self.layer.shadowOffset = CGSize(width: 0, height: 0)
-        self.clipsToBounds = false
         DispatchQueue.main.async {
-            self.mainImageView.setRounded()
+            self.mainImageView.layer.masksToBounds = true
+            self.mainImageView.layer.cornerRadius = 5
+            self.mainImageView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         }
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -82,6 +75,18 @@ class PostListCollectionViewCell: UICollectionViewCell {
     
     func set(imageUrl: String?) {
         mainImageView.set(imageURL: imageUrl)
+    }
+    
+    private func setup() {
+        addSubview(stackView)
+        addSubview(mainImageView)
+        stackView.addArrangedSubview(nameLabel)
+        translatesAutoresizingMaskIntoConstraints = false
+        stackView.addArrangedSubview(smallDescriptionLabel)
+        mainImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        stackView.anchor(top: mainImageView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 20, paddingRight: 20, width: 0, height: bounds.height * 0.35)
+        mainImageView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        mainImageView.contentMode = .scaleToFill
     }
     
 }

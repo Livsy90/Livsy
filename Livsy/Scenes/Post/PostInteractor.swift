@@ -6,7 +6,7 @@
 //  Copyright © 2020 Artem Mirzabekian. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol PostBusinessLogic {
     func fetchPostPage(request: PostModels.PostPage.Request)
@@ -18,6 +18,7 @@ protocol PostDataStore {
     var content: String? { get set }
     var id: Int { get set }
     var comments: [PostComment] { get set }
+    var image: UIImage { get set }
 }
 
 final class PostInteractor: PostBusinessLogic, PostDataStore {
@@ -35,6 +36,8 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
     var content: String? = ""
     var id: Int = 1
     var comments: [PostComment] = []
+    var image = UIImage()
+    
     
     // MARK: - Business Logic
     

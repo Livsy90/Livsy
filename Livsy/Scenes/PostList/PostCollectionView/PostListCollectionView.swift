@@ -12,7 +12,7 @@ class PostListCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
     
     var cells = [Post]()
     var isStopRefreshing = false
-    var fetchIdCompletion: ((Int) -> Void)?
+    var fetchIdCompletion: ((Int, String) -> Void)?
     var loadMoreCompletion: ((Bool) -> Void)?
     let footerView = UIActivityIndicatorView(style: .medium)
     
@@ -72,7 +72,7 @@ class PostListCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        fetchIdCompletion?(cells[indexPath.row].id)
+        fetchIdCompletion?(cells[indexPath.row].id, cells[indexPath.row].imgURL ?? "")
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
