@@ -12,6 +12,13 @@ class PostListCollectionViewCell: UICollectionViewCell {
     
     static let reuseId = "PostListCollectionViewCell"
     
+    let darkView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        return view
+    }()
+    
     let mainImageView: WebImageView = {
         let imageView = WebImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -25,7 +32,7 @@ class PostListCollectionViewCell: UICollectionViewCell {
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 3
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        label.textColor = UIColor.init(named: "PostListText")
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -37,16 +44,6 @@ class PostListCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }()
-    
-    let stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = NSLayoutConstraint.Axis.vertical
-        stackView.distribution = UIStackView.Distribution.equalSpacing
-        stackView.alignment = UIStackView.Alignment.center
-        stackView.spacing = 5
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
     }()
     
     override init(frame: CGRect) {
@@ -78,13 +75,19 @@ class PostListCollectionViewCell: UICollectionViewCell {
     }
     
     private func setup() {
-        addSubview(stackView)
+        addSubview(smallDescriptionLabel)
         addSubview(mainImageView)
-        stackView.addArrangedSubview(nameLabel)
-        translatesAutoresizingMaskIntoConstraints = false
-        stackView.addArrangedSubview(smallDescriptionLabel)
+        mainImageView.addSubview(darkView)
+        mainImageView.addSubview(nameLabel)
+        nameLabel.centerXAnchor.constraint(equalTo: mainImageView.centerXAnchor).isActive = true
+        nameLabel.centerYAnchor.constraint(equalTo: mainImageView.centerYAnchor).isActive = true
+        nameLabel.widthAnchor.constraint(equalTo: mainImageView.widthAnchor, constant: 16).isActive = true
+        darkView.centerXAnchor.constraint(equalTo: mainImageView.centerXAnchor).isActive = true
+        darkView.centerYAnchor.constraint(equalTo: mainImageView.centerYAnchor).isActive = true
+        darkView.widthAnchor.constraint(equalTo: mainImageView.widthAnchor).isActive = true
+        darkView.heightAnchor.constraint(equalTo: mainImageView.heightAnchor).isActive = true
         mainImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        stackView.anchor(top: mainImageView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 20, paddingRight: 20, width: 0, height: bounds.height * 0.35)
+        smallDescriptionLabel.anchor(top: mainImageView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 16, paddingBottom: 16, paddingRight: 16, width: 0, height: bounds.height * 0.45)
         mainImageView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
         mainImageView.contentMode = .scaleToFill
     }

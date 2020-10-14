@@ -25,6 +25,7 @@ struct Headers {
         case PostComments
         case Login
         case CreateComment
+        case Register
         
         internal func dict() -> [String: String] {
             switch self {
@@ -48,6 +49,10 @@ struct Headers {
                 var dictionary: [String: String] = [:]
                 dictionary[FieldName.ContentType.rawValue] = FieldValue.Json.rawValue
                 dictionary[FieldName.Authorization.rawValue] = "Bearer \(UserDefaults.standard.token ?? "")"
+                return dictionary
+            case .Register:
+                var dictionary: [String: String] = [:]
+                dictionary[FieldName.ContentType.rawValue] = FieldValue.Json.rawValue
                 return dictionary
             }
         }

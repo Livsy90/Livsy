@@ -20,10 +20,9 @@ class PostListCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         super.init(frame: .zero, collectionViewLayout: layout)
-        
+        backgroundColor = .postListBackground
         footerView.color = .darkGray
         footerView.hidesWhenStopped = true
-        backgroundColor = UIColor.init(named: "PostListBackground")
         delegate = self
         dataSource = self
         register(PostListCollectionViewCell.self, forCellWithReuseIdentifier: PostListCollectionViewCell.reuseId)

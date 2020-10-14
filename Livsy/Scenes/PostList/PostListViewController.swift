@@ -62,6 +62,8 @@ final class PostListViewController: UIViewController {
         title = "Livsy.me"
         if UserDefaults.standard.token == "" {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login", style: .plain, target: self, action: #selector(routeToLogin))
+        } else {
+            self.navigationItem.setRightBarButton(nil, animated: true)
         }
         
     }
@@ -80,6 +82,7 @@ final class PostListViewController: UIViewController {
             guard let self = self else { return }
             self.fetchPostList(isLoadMore: isLoadMore)
         }
+        
     }
     
     private func routeToPost(id: Int, url: String) {

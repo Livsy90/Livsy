@@ -54,8 +54,8 @@ extension UIColor {
         return UIColor.init(named: "PostListBackground") ?? .darkText
     }
     
-    static var TextLight: UIColor {
-        return #colorLiteral(red: 0.4784313725, green: 0.4901960784, blue: 0.5176470588, alpha: 1)
+    static var inputAC: UIColor {
+        return UIColor.init(named: "InputAC") ?? .darkText 
     }
     
 }

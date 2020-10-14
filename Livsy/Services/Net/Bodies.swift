@@ -16,6 +16,7 @@ struct Bodies {
         case PostComments
         case Login(String, String)
         case CreateComment(String, Int, Int)
+        case Register(String, String, String)
         
         func bodyData() -> Data? {
             
@@ -34,6 +35,9 @@ struct Bodies {
                 return httpBody
             case .CreateComment(let content, let post, let parent):
                 guard let httpBody = try? JSONEncoder().encode(CreateCommentAPI.Request(content: content, post: post, parent: parent)) else { fatalError() }
+                return httpBody
+            case .Register(let username, let email, let password):
+                guard let httpBody = try? JSONEncoder().encode(RegisterAPI.Request(username: username, email: email, password: password)) else { fatalError() }
                 return httpBody
             }
         }
@@ -81,6 +85,17 @@ struct Bodies {
             var content: String
             var post: Int
             var parent: Int
+        }
+    }
+    
+    // MARK: RegisterAPI
+    
+    enum RegisterAPI {
+        typealias Response = RegisterRespose
+        struct Request: Encodable {
+            var username: String
+            var email: String
+            var password: String
         }
     }
     

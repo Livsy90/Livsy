@@ -129,8 +129,8 @@ final class LoginViewController: UIViewController {
     }
     
     @objc private func handleShowSignUp() {
-        // let signUpController = SignUpController()
-        // navigationController?.pushViewController(signUpController, animated: true)
+         let signUpController = RegisterViewController()
+         navigationController?.pushViewController(signUpController, animated: true)
     }
     
     private func setupInputFields() {
