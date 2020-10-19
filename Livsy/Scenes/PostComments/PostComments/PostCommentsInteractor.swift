@@ -38,16 +38,16 @@ final class PostCommentsInteractor: PostCommentsBusinessLogic, PostCommentsDataS
     // MARK: - Business Logic
     
     func showComments(request: PostCommentsModels.PostComments.Request) {
-        
+        let commentsCount = commentsData.count
         if request.isReload {
             worker?.fetchPostComments(id: postID, completion: { [weak self] (response, error) in
                 guard let self = self else { return }
                 self.commentsData = response ?? []
-                self.showSortedComments()
+                self.showSortedComments(isReload: (response?.count ?? 0 > commentsCount + 1) ? !request.isReload : request.isReload)
             })
             
         } else {
-            showSortedComments()
+            showSortedComments(isReload: request.isReload)
         }
         
     }
@@ -65,7 +65,7 @@ final class PostCommentsInteractor: PostCommentsBusinessLogic, PostCommentsDataS
         })
     }
     
-    private func showSortedComments() {
+    private func showSortedComments(isReload: Bool) {
         commentsData.forEach { comment  in
             guard comment.parent != 0,
                 let parentCommentIndex = (commentsData.firstIndex { parentComment in
@@ -75,7 +75,7 @@ final class PostCommentsInteractor: PostCommentsBusinessLogic, PostCommentsDataS
         }
         
         comments = commentsData.filter { $0.parent == 0 }
-        self.presenter?.presentPostComments(response: PostCommentsModels.PostComments.Response())
+        self.presenter?.presentPostComments(response: PostCommentsModels.PostComments.Response(isReload: isReload))
     }
     
 }

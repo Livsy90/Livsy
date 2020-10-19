@@ -46,11 +46,11 @@ enum PostCommentsModels {
         }
         
         struct Response {
-            
+            var isReload: Bool
         }
         
         struct ViewModel {
-            
+            var isReload: Bool
         }
     }
     

@@ -11,7 +11,7 @@ final class RegisterWorker {
     let net = NetService.sharedInstanse
     
     func register(username: String, email: String, password: String, completion: @escaping (Bodies.RegisterAPI.Response?, Error?) -> ()) {
-        let request = Request.RequestType.Register(username, email, password).get(path: "wp/v2/users/register")
+        let request = Request.RequestType.Register(username, email, password).get(path: API.postList)
         net.getData(with: request) { (data, error) in
             guard let data = data, error == nil else { return }
             do {

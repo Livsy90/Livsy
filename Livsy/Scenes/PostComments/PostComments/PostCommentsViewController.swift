@@ -183,7 +183,7 @@ extension PostCommentsViewController: PostCommentsDisplayLogic {
 //        guard let comments = router?.dataStore?.comments else { return }
 //          postCommentsCollectionView.set(comments: comments)
 //          postCommentsCollectionView.reloadData()
-        tableView.reloadData()
+        viewModel.isReload ? tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .middle) : tableView.reloadData()
         noCommentsLabel.isHidden = !(router?.dataStore?.comments.isEmpty ?? true)
     }
     

@@ -14,7 +14,8 @@ private let net: NetService = NetService()
 private init(){}
 
     func fetchPostComments(id: Int, completion: @escaping (Bodies.PostCommentsAPI.Response?, Error?) -> ()) {
-          let request = Request.RequestType.PostList.get(path: "wp/v2/comments/?post=\(id)&per_page=100")
+        let perPageQuery = "&per_page=100"
+        let request = Request.RequestType.PostList.get(path: "\(API.postComments)\(id)\(perPageQuery)")
           net.getData(with: request) { (data, error) in
               guard let data = data, error == nil else { return }
               do {
@@ -28,12 +29,13 @@ private init(){}
       }
     
     func createComment(content: String, post: Int, parent: Int, completion: @escaping (Bodies.CreateCommentAPI.Response?, Error?) -> ()) {
-        let request = Request.RequestType.CreateComment(content, post, parent).get(path: "wp/v2/comments/")
+        let request = Request.RequestType.CreateComment(content, post, parent).get(path: API.createComment)
         net.getData(with: request) { (data, error) in
             guard let data = data, error == nil else { return }
             do {
                 let response = try JSONDecoder().decode(Bodies.CreateCommentAPI.Response.self, from: data)
                 completion(response, nil)
+                print(response)
             } catch {
                 print(error)
                 completion(nil, error)
@@ -43,7 +45,7 @@ private init(){}
     }
     
     func login(login: String, password: String, completion: @escaping (Bodies.LoginAPI.Response?, Error?) -> ()) {
-        let request = Request.RequestType.Login(login, password).get(path: "jwt-auth/v1/token")
+        let request = Request.RequestType.Login(login, password).get(path: API.login)
         net.getData(with: request) { (data, error) in
             guard let data = data, error == nil else { return }
             do {

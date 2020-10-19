@@ -13,7 +13,7 @@ final class PostWorker {
     let netManager = NetManager.sharedInstanse
     
     func fetchPost(id: Int, completion: @escaping (Bodies.PostPageAPI.Response?, Error?) -> ()) {
-        let request = Request.RequestType.PostList.get(path: "wp/v2/posts/\(id)")
+        let request = Request.RequestType.PostList.get(path: "\(API.post)\(id)")
         net.getData(with: request) { (data, error) in
             guard let data = data, error == nil else { return }
             do {

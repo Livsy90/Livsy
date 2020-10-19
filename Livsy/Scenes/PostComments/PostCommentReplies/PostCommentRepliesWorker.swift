@@ -22,7 +22,7 @@ final class PostCommentRepliesWorker {
     }
     
     func fetchReplies(id: Int, completion: @escaping (Bodies.PostCommentsAPI.Response?, Error?) -> ()) {
-        let request = Request.RequestType.PostList.get(path: "wp/v2/comments/?parent=\(id)")
+        let request = Request.RequestType.PostList.get(path: "\(API.commentReplies)\(id)")
         net.getData(with: request) { (data, error) in
             guard let data = data, error == nil else { return }
             do {

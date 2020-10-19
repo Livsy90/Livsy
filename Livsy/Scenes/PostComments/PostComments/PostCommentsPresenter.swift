@@ -25,7 +25,7 @@ final class PostCommentsPresenter: PostCommentsPresentationLogic {
     // MARK: - Presentation Logic
     
     func presentPostComments(response: PostCommentsModels.PostComments.Response) {
-        viewController?.displayPostComments(viewModel: PostCommentsModels.PostComments.ViewModel())
+        viewController?.displayPostComments(viewModel: PostCommentsModels.PostComments.ViewModel(isReload: response.isReload))
     }
     
     func presentReplies(response: PostCommentsModels.Replies.Response) {
