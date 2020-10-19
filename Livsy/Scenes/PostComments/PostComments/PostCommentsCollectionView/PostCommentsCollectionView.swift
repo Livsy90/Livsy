@@ -57,11 +57,7 @@ class PostCommentsCollectionView: UICollectionView, UICollectionViewDelegate, UI
         let commentCell = dequeueReusableCell(withReuseIdentifier: PostCommentsCollectionViewCell.reuseId, for: indexPath) as! PostCommentsCollectionViewCell
         let repliesCount = comments[indexPath.row].replies.count
         
-        if repliesCount > 0 {
-            commentCell.repliesLabel.text = "Show replies (\(repliesCount))"
-        } else {
-            commentCell.repliesLabel.text = "Reply"
-        }
+        repliesCount > 0 ? (commentCell.repliesLabel.text = "Show replies (\(repliesCount))") :      (commentCell.repliesLabel.text = "Reply")
         
         commentCell.nameLabel.text = comments[indexPath.row].authorName
         guard let content = comments[indexPath.row].content?.rendered else { return UICollectionViewCell()}
