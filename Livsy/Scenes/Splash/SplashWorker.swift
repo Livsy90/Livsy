@@ -13,7 +13,7 @@ final class SplashWorker {
     let net: NetService = NetService.sharedInstanse
     let netManager: NetManager = NetManager.sharedInstanse
     
-    func login(login: String, password: String, completion: @escaping (Bodies.LoginAPI.Response?, Error?) -> ()) {
+    func login(login: String, password: String, completion: @escaping (Bodies.LoginAPI.Response?, CustomError?) -> ()) {
         netManager.login(login: login, password: password, completion: completion)
     }
     

@@ -10,7 +10,7 @@ import Foundation
 
 protocol PostListBusinessLogic {
     func fetchPostList(request: PostListModels.PostList.Request)
-    
+    func signOut()
 }
 
 protocol PostListDataStore {
@@ -42,5 +42,12 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
             let response = PostListModels.PostList.Response(error: error)
             self.presenter?.presentPostList(response: response)
         })
+    }
+    
+    func signOut() {
+        UserDefaults.standard.token = ""
+        UserDefaults.standard.username = ""
+        UserDefaults.standard.password = ""
+        presenter?.presentSignOut()
     }
 }

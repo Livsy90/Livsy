@@ -10,6 +10,7 @@ import UIKit
 
 protocol PostListDisplayLogic: class {
     func displayPostList(viewModel: PostListModels.PostList.ViewModel)
+    func displaySignOut()
 }
 
 final class PostListViewController: UIViewController {
@@ -63,7 +64,7 @@ final class PostListViewController: UIViewController {
         if UserDefaults.standard.token == "" {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login", style: .plain, target: self, action: #selector(routeToLogin))
         } else {
-            self.navigationItem.setRightBarButton(nil, animated: true)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign out", style: .plain, target: self, action: #selector(signOut))
         }
         
     }
@@ -96,6 +97,12 @@ final class PostListViewController: UIViewController {
         postCollectionView.addSubview(refreshControl)
     }
     
+    private func fetchPostList(isLoadMore: Bool) {
+        page += 1
+        isLoadMore ? postCollectionView.footerView.startAnimating() : {}()
+        interactor?.fetchPostList(request: PostListModels.PostList.Request(page: page))
+    }
+    
     @objc private func refreshData() {
         page = 0
         fetchPostList(isLoadMore: false)
@@ -105,10 +112,8 @@ final class PostListViewController: UIViewController {
         router?.routeToLogin()
     }
     
-    private func fetchPostList(isLoadMore: Bool) {
-        page += 1
-        isLoadMore ? postCollectionView.footerView.startAnimating() : {}()
-        interactor?.fetchPostList(request: PostListModels.PostList.Request(page: page))
+    @objc private func signOut() {
+        interactor?.signOut()
     }
     
     // MARK: - Requests
@@ -126,6 +131,11 @@ extension PostListViewController: PostListDisplayLogic {
         postCollectionView.reloadData()
         refreshControl.endRefreshing()
         postCollectionView.footerView.stopAnimating()
+    }
+    
+    func displaySignOut() {
+        setupNavigationBar()
+        router?.showSignOutAlert()
     }
     
 }

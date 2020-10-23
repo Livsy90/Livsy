@@ -10,6 +10,7 @@ import UIKit
 
 protocol PostListPresentationLogic {
     func presentPostList(response: PostListModels.PostList.Response)
+    func presentSignOut()
 }
 
 final class PostListPresenter: PostListPresentationLogic {
@@ -33,6 +34,10 @@ final class PostListPresenter: PostListPresentationLogic {
         }
         
         viewController?.displayPostList(viewModel: PostListModels.PostList.ViewModel(isStopRereshing: isStopRefreshing))
+    }
+    
+    func presentSignOut() {
+        viewController?.displaySignOut()
     }
     
 }

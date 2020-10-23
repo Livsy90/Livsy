@@ -12,6 +12,7 @@ protocol PostCommentsRoutingLogic {
     func routeToReplies()
     func routeToLogin()
     func dismissSelf()
+    func showAlert(with message: String)
 }
 
 protocol PostCommentsDataPassing {
@@ -55,6 +56,10 @@ final class PostCommentsRouter: PostCommentsRoutingLogic, PostCommentsDataPassin
     
     func dismissSelf() {
         viewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    func showAlert(with message: String) {
+        viewController?.showAlertWithOneButton(title: message, message: nil, buttonTitle: "OK", buttonAction: nil)
     }
     
 }

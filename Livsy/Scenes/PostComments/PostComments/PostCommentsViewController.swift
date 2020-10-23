@@ -197,7 +197,7 @@ extension PostCommentsViewController: PostCommentsDisplayLogic {
             containerView.clearCommentTextField()
             showComments(isReload: true)
         } else {
-            showAlertWithOneButton(title: "Error", message: "Please, check your comment", buttonTitle: "OK", buttonAction: nil)
+            router?.showAlert(with: viewModel.error?.message ?? "Oops.. Something went wrong!")
         }
     }
     

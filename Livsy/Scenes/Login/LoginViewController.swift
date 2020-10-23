@@ -153,7 +153,7 @@ extension LoginViewController: LoginDisplayLogic {
         if viewModel.error == nil {
             navigationController?.popViewController(animated: true)
         } else {
-            showAlertWithOneButton(title: "Username or password is wrong", message: nil, buttonTitle: "Close", buttonAction: nil)
+            router?.showAlert(with: viewModel.error?.message ?? "Username or password is wrong")
             loginButton.isUserInteractionEnabled = true
         }
     }

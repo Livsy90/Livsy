@@ -20,27 +20,12 @@ struct Headers {
     }
     
     enum Request {
-        case PostList
-        case PostPage
-        case PostComments
         case Login
         case CreateComment
         case Register
         
         internal func dict() -> [String: String] {
             switch self {
-            case .PostList:
-                var dictionary: [String: String] = [:]
-                dictionary[FieldName.ContentType.rawValue] = FieldValue.Json.rawValue
-                return dictionary
-            case .PostPage:
-                var dictionary: [String: String] = [:]
-                dictionary[FieldName.ContentType.rawValue] = FieldValue.Json.rawValue
-                return dictionary
-            case .PostComments:
-                var dictionary: [String: String] = [:]
-                dictionary[FieldName.ContentType.rawValue] = FieldValue.Json.rawValue
-                return dictionary
             case .Login:
                 var dictionary: [String: String] = [:]
                 dictionary[FieldName.ContentType.rawValue] = FieldValue.Json.rawValue

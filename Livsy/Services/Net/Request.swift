@@ -54,7 +54,6 @@ struct Request {
         }
         
         internal func addHeadersInRequest(headers: [String: String], urlRequest: URLRequest) -> URLRequest {
-            
             var requestWithHeaders = urlRequest
             for (name, value) in headers {
                 requestWithHeaders.setValue(value, forHTTPHeaderField: name)

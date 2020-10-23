@@ -10,7 +10,7 @@ import UIKit
 
 enum SplashModels {
     
-    // MARK: -
+    // MARK: Login
     
     enum Login {
         
@@ -20,12 +20,12 @@ enum SplashModels {
         }
         
         struct Response {
-            let error: Error?
+            let error: CustomError?
             
         }
         
         struct ViewModel {
-            let error: Error?
+            let error: CustomError?
         }
     }
     

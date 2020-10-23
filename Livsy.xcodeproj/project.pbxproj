@@ -86,6 +86,8 @@
 		C2BCF43E24AB80B2008C28FD /* RepliesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BCF43D24AB80B2008C28FD /* RepliesCollectionViewCell.swift */; };
 		C2C31A52249F5879002AAB91 /* WebImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C31A51249F5879002AAB91 /* WebImageView.swift */; };
 		C2C31A54249F68AB002AAB91 /* UIImageView+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C31A53249F68AB002AAB91 /* UIImageView+adds.swift */; };
+		C2D53D4F2542E75E00C13AD0 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D53D4E2542E75E00C13AD0 /* API.swift */; };
+		C2D53D512542E79100C13AD0 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D53D502542E79100C13AD0 /* CustomError.swift */; };
 		C2D6691E24A3B6F900F6731F /* UITextView+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6691D24A3B6F900F6731F /* UITextView+adds.swift */; };
 		C2D6692024A3C3E600F6731F /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6691F24A3C3E600F6731F /* PostViewController.swift */; };
 		C2D6756D2523742E001CE5AE /* UIColor+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6756C2523742E001CE5AE /* UIColor+adds.swift */; };
@@ -182,6 +184,8 @@
 		C2BCF43D24AB80B2008C28FD /* RepliesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepliesCollectionViewCell.swift; sourceTree = "<group>"; };
 		C2C31A51249F5879002AAB91 /* WebImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImageView.swift; sourceTree = "<group>"; };
 		C2C31A53249F68AB002AAB91 /* UIImageView+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+adds.swift"; sourceTree = "<group>"; };
+		C2D53D4E2542E75E00C13AD0 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		C2D53D502542E79100C13AD0 /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		C2D6691D24A3B6F900F6731F /* UITextView+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+adds.swift"; sourceTree = "<group>"; };
 		C2D6691F24A3C3E600F6731F /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		C2D6756C2523742E001CE5AE /* UIColor+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+adds.swift"; sourceTree = "<group>"; };
@@ -310,6 +314,7 @@
 		C2386F7B249DF6EB0076AED3 /* Livsy */ = {
 			isa = PBXGroup;
 			children = (
+				C2D53D4D2542E71B00C13AD0 /* API Models */,
 				C2278E79249E2F9800D9D582 /* Utils */,
 				C2386F9F249E099F0076AED3 /* Scenes */,
 				C2386F90249DF73A0076AED3 /* Services */,
@@ -459,6 +464,15 @@
 			path = RepliesCollectionView;
 			sourceTree = "<group>";
 		};
+		C2D53D4D2542E71B00C13AD0 /* API Models */ = {
+			isa = PBXGroup;
+			children = (
+				C2D53D4E2542E75E00C13AD0 /* API.swift */,
+				C2D53D502542E79100C13AD0 /* CustomError.swift */,
+			);
+			path = "API Models";
+			sourceTree = "<group>";
+		};
 		C2E3443E25373046000D07F2 /* Register */ = {
 			isa = PBXGroup;
 			children = (
@@ -592,6 +606,7 @@
 				C2386F7D249DF6EB0076AED3 /* AppDelegate.swift in Sources */,
 				C268CDB624A9290800949C4D /* PostCommentsInteractor.swift in Sources */,
 				C2BCF43724AB67E8008C28FD /* PostCommentRepliesInteractor.swift in Sources */,
+				C2D53D4F2542E75E00C13AD0 /* API.swift in Sources */,
 				C2345BEF24B4F15200125976 /* LoginWorker.swift in Sources */,
 				C2E3444925373060000D07F2 /* RegisterRouter.swift in Sources */,
 				C218FCF6251B5A6A002F9C68 /* SplashRouter.swift in Sources */,
@@ -627,6 +642,7 @@
 				C2386FA8249E09B50076AED3 /* PostListPresenter.swift in Sources */,
 				C2278E7C249E2FD100D9D582 /* UIView+adds.swift in Sources */,
 				C2D6692024A3C3E600F6731F /* PostViewController.swift in Sources */,
+				C2D53D512542E79100C13AD0 /* CustomError.swift in Sources */,
 				C2BCF43424AB67E8008C28FD /* PostCommentRepliesRouter.swift in Sources */,
 				C268CDB124A9290800949C4D /* PostCommentsPresenter.swift in Sources */,
 				C2386FAD249E09B50076AED3 /* PostListInteractor.swift in Sources */,

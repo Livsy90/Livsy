@@ -9,25 +9,21 @@
 import UIKit
 
 protocol LoginRoutingLogic {
-  
+    func showAlert(with message: String)
 }
 
 protocol LoginDataPassing {
-  var dataStore: LoginDataStore? { get }
+    var dataStore: LoginDataStore? { get }
 }
 
 final class LoginRouter: LoginRoutingLogic, LoginDataPassing {
-
-  // MARK: - Public Properties
-
-  weak var viewController: LoginViewController?
-  var dataStore: LoginDataStore?
-  
-  // MARK: - Private Properties
-
-  // MARK: - Routing Logic
-
-  // MARK: - Navigation
-
-  // MARK: - Passing data
+    
+    // MARK: - Public Properties
+    
+    weak var viewController: LoginViewController?
+    var dataStore: LoginDataStore?
+    
+    func showAlert(with message: String) {
+        viewController?.showAlertWithOneButton(title: String(htmlEncodedString: message) ?? "Error", message: nil, buttonTitle: "OK", buttonAction: nil)
+    }
 }

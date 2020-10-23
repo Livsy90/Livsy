@@ -78,11 +78,11 @@ enum PostCommentsModels {
         }
         
         struct Response {
-            var error: Error?
+            var error: CustomError?
         }
         
         struct ViewModel {
-            var error: Error?
+            var error: CustomError?
         }
     }
     

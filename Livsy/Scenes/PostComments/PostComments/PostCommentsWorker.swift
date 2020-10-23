@@ -13,7 +13,7 @@ final class PostCommentsWorker {
     private let net = NetService.sharedInstanse
     private let netManager = NetManager.sharedInstanse
     
-    func createComment(content: String, post: Int, parent: Int, completion: @escaping (Bodies.CreateCommentAPI.Response?, Error?) -> ()) {
+    func createComment(content: String, post: Int, parent: Int, completion: @escaping (Bodies.CreateCommentAPI.Response?, CustomError?) -> ()) {
         netManager.createComment(content: content, post: post, parent: parent, completion: completion)
     }
     
