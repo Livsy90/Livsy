@@ -11,7 +11,8 @@ import UIKit
 protocol PostListRoutingLogic {
     func routeToPost(id: Int, url: String)
     func routeToLogin()
-    func showSignOutAlert()
+    func showSignOutResultAlert()
+    func showSignOutQuestionAlert(completion: @escaping (() -> Void))
 }
 
 protocol PostListDataPassing {
@@ -53,8 +54,12 @@ final class PostListRouter: PostListRoutingLogic, PostListDataPassing {
         viewController?.navigationController?.pushViewController(destination, animated: true)
     }
     
-    func showSignOutAlert() {
-        viewController?.showAlertWithOneButton(title: "You are logged out", message: nil, buttonTitle: "OK", buttonAction: nil)
+    func showSignOutQuestionAlert(completion: @escaping (() -> Void)) {
+        viewController?.showAlertWithTwoButtons(title: "Are you sure?", firstButtonTitle: "Yes", secondButtonTitle: "No", firstButtonAction: completion, secondButtonAction: nil)
+    }
+    
+    func showSignOutResultAlert() {
+        viewController?.showNoButtonAlert(title: "You are logged out")
     }
     
 }

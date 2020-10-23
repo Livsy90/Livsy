@@ -10,6 +10,7 @@ import UIKit
 
 protocol LoginPresentationLogic {
     func presentLogin(response: LoginModels.Login.Response)
+    func presentResetPassword(response: LoginModels.ResetPassword.Response)
 }
 
 final class LoginPresenter: LoginPresentationLogic {
@@ -24,5 +25,9 @@ final class LoginPresenter: LoginPresentationLogic {
     
     func presentLogin(response: LoginModels.Login.Response) {
         viewController?.displayLogin(viewModel: LoginModels.Login.ViewModel(error: response.error))
+    }
+    
+    func presentResetPassword(response: LoginModels.ResetPassword.Response) {
+        viewController?.displayResetPassword(viewModel: LoginModels.ResetPassword.ViewModel(result: response.result, error: response.error))
     }
 }

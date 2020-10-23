@@ -10,7 +10,7 @@ import Foundation
 
 protocol LoginBusinessLogic {
     func login(request: LoginModels.Login.Request)
-    
+    func resetPassword(request: LoginModels.ResetPassword.Request)
 }
 
 protocol LoginDataStore {
@@ -43,4 +43,12 @@ final class LoginInteractor: LoginBusinessLogic, LoginDataStore {
             self.presenter?.presentLogin(response: LoginModels.Login.Response(error: error))
         })
     }
+    
+    func resetPassword(request: LoginModels.ResetPassword.Request) {
+        worker?.resetPassword(login: request.login, completion: { [weak self] (response, error) in
+            guard let self = self else { return }
+            self.presenter?.presentResetPassword(response: LoginModels.ResetPassword.Response(result: response?.message ?? "Message sent", error: error))
+        })
+    }
+    
 }

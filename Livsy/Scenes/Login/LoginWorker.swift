@@ -17,4 +17,8 @@ final class LoginWorker {
         netManager.login(login: login, password: password, completion: completion)
     }
     
+    func resetPassword(login: String, completion: @escaping (Bodies.PasswordResetAPI.Response?, CustomError?) -> ()) {
+        netManager.resetPassword(login: login, completion: completion)
+    }
+    
 }

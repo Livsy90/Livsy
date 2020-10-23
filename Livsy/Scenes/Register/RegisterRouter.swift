@@ -9,7 +9,7 @@
 import UIKit
 
 protocol RegisterRoutingLogic {
-  
+  func showAlert(with message: String)
 }
 
 protocol RegisterDataPassing {
@@ -23,11 +23,7 @@ final class RegisterRouter: RegisterRoutingLogic, RegisterDataPassing {
   weak var viewController: RegisterViewController?
   var dataStore: RegisterDataStore?
   
-  // MARK: - Private Properties
-
-  // MARK: - Routing Logic
-
-  // MARK: - Navigation
-
-  // MARK: - Passing data
+    func showAlert(with message: String) {
+        viewController?.showAlertWithOneButton(title: String(htmlEncodedString: message) ?? "Error", message: nil, buttonTitle: "OK", buttonAction: nil)
+    }
 }

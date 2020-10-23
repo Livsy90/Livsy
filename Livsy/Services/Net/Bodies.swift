@@ -17,6 +17,7 @@ struct Bodies {
         case Login(String, String)
         case CreateComment(String, Int, Int)
         case Register(String, String, String)
+        case PasswordReset(String)
         
         func bodyData() -> Data? {
             
@@ -38,6 +39,9 @@ struct Bodies {
                 return httpBody
             case .Register(let username, let email, let password):
                 guard let httpBody = try? JSONEncoder().encode(RegisterAPI.Request(username: username, email: email, password: password)) else { fatalError() }
+                return httpBody
+           case .PasswordReset(let login):
+                guard let httpBody = try? JSONEncoder().encode(PasswordResetAPI.Request(user_login: login)) else { fatalError() }
                 return httpBody
             }
         }
@@ -98,6 +102,15 @@ struct Bodies {
             var password: String
         }
     }
+    
+    // MARK: PasswordResetAPI
+       
+       enum PasswordResetAPI {
+           typealias Response = PasswordResetResponse
+           struct Request: Encodable {
+               var user_login: String
+           }
+       }
     
 }
 

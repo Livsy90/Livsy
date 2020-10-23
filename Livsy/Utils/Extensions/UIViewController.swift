@@ -70,5 +70,53 @@ extension UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
+    func showAlertWithTextField(
+        placeHolder: String,
+        title: String,
+        firstButtonTitle: String,
+        secondButtonTitle: String,
+        firstButtonAction: ((String) -> Void)?,
+        secondButtonAction: (() -> Void)?) {
+        
+        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        
+        alertController.addTextField { (textField) in
+            textField.placeholder = placeHolder
+        }
+        
+        let firstAlertButton = UIAlertAction(title: firstButtonTitle, style: .default) { (_) in
+            let textField = alertController.textFields![0]
+            firstButtonAction?(textField.text ?? "")
+        }
+        
+        let secondAlertButton = UIAlertAction(title: secondButtonTitle, style: .default) { (_) in
+            secondButtonAction?()
+        }
+        
+        firstAlertButton.isEnabled = (!(alertController.textFields![0].text?.isEmpty ?? true))
+        
+        NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: alertController.textFields![0], queue: OperationQueue.main, using:
+                {_ in
+                    
+                    let textCount = alertController.textFields![0].text?.trimmingCharacters(in: .whitespacesAndNewlines).count ?? 0
+        let textIsNotEmpty = textCount > 0
+                    firstAlertButton.isEnabled = textIsNotEmpty
+        })
+        
+        alertController.addAction(firstAlertButton)
+        alertController.addAction(secondAlertButton)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func showNoButtonAlert(title: String) {
+        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        present(alertController, animated: true, completion: nil)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+            alertController.dismiss(animated: true, completion: nil)
+        }
+    }
+    
 }
 

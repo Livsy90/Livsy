@@ -137,9 +137,9 @@ final class PostCommentsViewController: UIViewController {
     
     private func setupNavBar() {
         view.backgroundColor = .postBackground
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(dismissSelf))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(dismissSelf))
         if UserDefaults.standard.token == "" {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login to reply", style: .plain, target: self, action: #selector(routeToLogin))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Login to reply", style: .plain, target: self, action: #selector(routeToLogin))
         }
     }
     

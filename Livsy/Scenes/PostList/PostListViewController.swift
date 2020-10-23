@@ -64,7 +64,7 @@ final class PostListViewController: UIViewController {
         if UserDefaults.standard.token == "" {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login", style: .plain, target: self, action: #selector(routeToLogin))
         } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign out", style: .plain, target: self, action: #selector(signOut))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign out", style: .plain, target: self, action: #selector(showSignOutQuestion))
         }
         
     }
@@ -103,6 +103,10 @@ final class PostListViewController: UIViewController {
         interactor?.fetchPostList(request: PostListModels.PostList.Request(page: page))
     }
     
+    private func signOut() {
+        interactor?.signOut()
+    }
+    
     @objc private func refreshData() {
         page = 0
         fetchPostList(isLoadMore: false)
@@ -112,8 +116,8 @@ final class PostListViewController: UIViewController {
         router?.routeToLogin()
     }
     
-    @objc private func signOut() {
-        interactor?.signOut()
+    @objc private func showSignOutQuestion() {
+        router?.showSignOutQuestionAlert(completion: signOut)
     }
     
     // MARK: - Requests
@@ -135,7 +139,7 @@ extension PostListViewController: PostListDisplayLogic {
     
     func displaySignOut() {
         setupNavigationBar()
-        router?.showSignOutAlert()
+        router?.showSignOutResultAlert()
     }
     
 }

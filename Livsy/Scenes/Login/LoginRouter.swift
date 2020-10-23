@@ -9,7 +9,10 @@
 import UIKit
 
 protocol LoginRoutingLogic {
-    func showAlert(with message: String)
+    func showErrorAlert(with message: String, completion: @escaping (() -> Void))
+    func showResetPasswordAlert(completion: @escaping ((String) -> Void))
+    func showPasswordResultAlert(with message: String)
+    func showResetPasswordErrorAlert(with message: String)
 }
 
 protocol LoginDataPassing {
@@ -23,7 +26,20 @@ final class LoginRouter: LoginRoutingLogic, LoginDataPassing {
     weak var viewController: LoginViewController?
     var dataStore: LoginDataStore?
     
-    func showAlert(with message: String) {
+    func showErrorAlert(with message: String, completion: @escaping (() -> Void) ) {
+        viewController?.showAlertWithTwoButtons(title: String(htmlEncodedString: message) ?? "Error", firstButtonTitle: "OK", secondButtonTitle: "Forgot password?", firstButtonAction: nil, secondButtonAction: completion)
+    }
+    
+    func showResetPasswordAlert(completion: @escaping ((String) -> Void)) {
+        viewController?.showAlertWithTextField(placeHolder: "Login or email", title: "Forgot password?", firstButtonTitle: "Send instructions", secondButtonTitle: "Cancel", firstButtonAction: completion, secondButtonAction: nil)
+    }
+    
+    func showPasswordResultAlert(with message: String) {
+        viewController?.showAlertWithOneButton(title: message, message: nil, buttonTitle: "OK", buttonAction: nil)
+    }
+    
+    func showResetPasswordErrorAlert(with message: String) {
         viewController?.showAlertWithOneButton(title: String(htmlEncodedString: message) ?? "Error", message: nil, buttonTitle: "OK", buttonAction: nil)
     }
+
 }

@@ -10,7 +10,7 @@ import UIKit
 
 protocol LoginDisplayLogic: class {
     func displayLogin(viewModel: LoginModels.Login.ViewModel)
-    
+    func displayResetPassword(viewModel: LoginModels.ResetPassword.ViewModel)
 }
 
 final class LoginViewController: UIViewController {
@@ -21,6 +21,8 @@ final class LoginViewController: UIViewController {
     var router: (LoginRoutingLogic & LoginDataPassing)?
     
     // MARK: - Private Properties
+    
+    private let activityIndicator = ActivityIndicator()
     
     private let loginTextField: UITextField = {
         let tf = UITextField()
@@ -79,6 +81,17 @@ final class LoginViewController: UIViewController {
         return button
     }()
     
+    private let forgotPasswordButton: UIButton = {
+        let button = UIButton(type: .system)
+        
+        button.setTitle("Forgot password?", for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 14)
+        button.setTitleColor(.blueButton, for: .normal)
+        
+        button.addTarget(self, action: #selector(showResetPasswordAlert), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Initializers
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -105,7 +118,23 @@ final class LoginViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setupInputFields()
+        setupUI()
+    }
+    
+    private func setupUI() {
+        let stackView = UIStackView(arrangedSubviews: [loginTextField, passwordTextField, loginButton])
+        
+        stackView.axis = .vertical
+        stackView.spacing = 10
+        stackView.distribution = .fillEqually
+        view.addSubview(dontHaveAccountButton)
+        view.addSubview(forgotPasswordButton)
+        view.addSubview(stackView)
+        stackView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 150, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 140)
+        
+        forgotPasswordButton.anchor(top: stackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 20)
+        
+        dontHaveAccountButton.anchor(top: forgotPasswordButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 30)
     }
     
     @objc private func handleTextInputChange() {
@@ -125,7 +154,7 @@ final class LoginViewController: UIViewController {
         guard let password = passwordTextField.text else { return }
         loginButton.isUserInteractionEnabled = false
         interactor?.login(request: LoginModels.Login.Request(username: username, password: password))
-        
+        activityIndicator.showIndicator(on: self)
     }
     
     @objc private func handleShowSignUp() {
@@ -133,18 +162,14 @@ final class LoginViewController: UIViewController {
          navigationController?.pushViewController(signUpController, animated: true)
     }
     
-    private func setupInputFields() {
-        let stackView = UIStackView(arrangedSubviews: [loginTextField, passwordTextField, loginButton])
-        
-        stackView.axis = .vertical
-        stackView.spacing = 10
-        stackView.distribution = .fillEqually
-        view.addSubview(dontHaveAccountButton)
-        view.addSubview(stackView)
-        stackView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 150, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 140)
-        
-        dontHaveAccountButton.anchor(top: stackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+    @objc private func resetPassword(login: String) {
+        interactor?.resetPassword(request: LoginModels.ResetPassword.Request(login: login))
     }
+    
+    @objc private func showResetPasswordAlert() {
+        router?.showResetPasswordAlert(completion: resetPassword(login:))
+    }
+    
 }
 
 // MARK: - Login Display Logic
@@ -153,8 +178,17 @@ extension LoginViewController: LoginDisplayLogic {
         if viewModel.error == nil {
             navigationController?.popViewController(animated: true)
         } else {
-            router?.showAlert(with: viewModel.error?.message ?? "Username or password is wrong")
+            router?.showErrorAlert(with: viewModel.error?.message ?? "Username or password is wrong", completion: showResetPasswordAlert)
             loginButton.isUserInteractionEnabled = true
+        }
+    }
+    
+    func displayResetPassword(viewModel: LoginModels.ResetPassword.ViewModel) {
+        activityIndicator.hideIndicator()
+        if viewModel.error == nil {
+            router?.showPasswordResultAlert(with: viewModel.result)
+        } else {
+            router?.showResetPasswordErrorAlert(with: viewModel.error?.message ?? "Error")
         }
     }
     

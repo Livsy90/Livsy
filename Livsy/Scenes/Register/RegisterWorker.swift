@@ -9,18 +9,10 @@ import Foundation
 
 final class RegisterWorker {
     let net = NetService.sharedInstanse
+    let netManager: NetManager = NetManager.sharedInstanse
     
-    func register(username: String, email: String, password: String, completion: @escaping (Bodies.RegisterAPI.Response?, Error?) -> ()) {
-        let request = Request.RequestType.Register(username, email, password).get(path: API.postList)
-        net.getData(with: request) { (data, error) in
-            guard let data = data, error == nil else { return }
-            do {
-                let response = try JSONDecoder().decode(Bodies.RegisterAPI.Response.self, from: data)
-                completion(response, nil)
-            } catch {
-                completion(nil, error)
-            }
-        }
+    func register(username: String, email: String, password: String, completion: @escaping (Bodies.RegisterAPI.Response?, CustomError?) -> ()) {
+        netManager.register(username: username, email: email, password: password, completion: completion)
     }
     
 }

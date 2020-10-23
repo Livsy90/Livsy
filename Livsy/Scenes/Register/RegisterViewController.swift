@@ -103,7 +103,7 @@ final class RegisterViewController: UIViewController {
         super.viewDidLoad()
         setupInputFields()
         view.backgroundColor = .listBackground
-        title = "SignUp"
+        title = "Sign up"
     }
     
     // MARK: - Private Methods
@@ -146,7 +146,8 @@ extension RegisterViewController: RegisterDisplayLogic {
         if viewModel.error == nil {
             self.navigationController?.popViewController(animated: true)
         }  else {
-            showAlertWithOneButton(title: "Error", message: "", buttonTitle: "OK", buttonAction: nil)
+            router?.showAlert(with: viewModel.error?.message ?? "Error")
+            signupButton.isUserInteractionEnabled = true
         }
     }
     

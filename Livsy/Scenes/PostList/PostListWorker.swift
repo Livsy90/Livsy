@@ -10,18 +10,10 @@ import Foundation
 
 final class PostListWorker {
     let net: NetService = NetService.sharedInstanse
+    let netManager: NetManager = NetManager.sharedInstanse
     
     func fetchPostList(page: Int, completion: @escaping (Bodies.PostListAPI.Response?, Error?) -> ()) {
-        let request = Request.RequestType.PostList.get(path: "\(API.postList)\(page)")
-        net.getData(with: request) { (data, error) in
-            guard let data = data, error == nil else { return }
-            do {
-                let response = try JSONDecoder().decode(Bodies.PostListAPI.Response.self, from: data)
-                completion(response, nil)
-            } catch {
-                completion(nil, error)
-            }
-        }
+        netManager.fetchPostList(page: page, completion: completion)
     }
     
 }

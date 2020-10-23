@@ -21,12 +21,12 @@ enum RegisterModels {
         }
         
         struct Response {
-            let error: Error?
+            let error: CustomError?
             
         }
         
         struct ViewModel {
-            let error: Error?
+            let error: CustomError?
         }
     }
     

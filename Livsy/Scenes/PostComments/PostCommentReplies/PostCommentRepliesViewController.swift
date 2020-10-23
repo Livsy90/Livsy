@@ -101,9 +101,9 @@ final class PostCommentRepliesViewController: UIViewController {
     }
     
     private func setupNavBar() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(dismissSelf))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(dismissSelf))
         if UserDefaults.standard.token == "" {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login to comment", style: .plain, target: self, action: #selector(routeToLogin))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Login to comment", style: .done, target: self, action: #selector(routeToLogin))
         }
     }
     

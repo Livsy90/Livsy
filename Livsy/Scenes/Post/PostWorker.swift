@@ -9,20 +9,12 @@
 import Foundation
 
 final class PostWorker {
+    
     let net = NetService.sharedInstanse
     let netManager = NetManager.sharedInstanse
     
     func fetchPost(id: Int, completion: @escaping (Bodies.PostPageAPI.Response?, Error?) -> ()) {
-        let request = Request.RequestType.PostList.get(path: "\(API.post)\(id)")
-        net.getData(with: request) { (data, error) in
-            guard let data = data, error == nil else { return }
-            do {
-                let response = try JSONDecoder().decode(Bodies.PostPageAPI.Response.self, from: data)
-                completion(response, nil)
-            } catch {
-                completion(nil, error)
-            }
-        }
+        netManager.fetchPost(id: id, completion: completion)
     }
     
     func fetchPostComments(id: Int, completion: @escaping (Bodies.PostCommentsAPI.Response?, Error?) -> ()) {

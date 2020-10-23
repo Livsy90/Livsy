@@ -22,19 +22,14 @@ struct LoginResponse: Codable {
     }
 }
 
-struct LoginError {
-    var code: String
+struct PasswordResetResponse: Codable {
+    var code: Int
     var message: String
-    var data: LoginErrorData
-}
-
-struct LoginErrorData {
-    var status: Int
 }
 
 enum LoginModels {
     
-    // MARK: - 
+    // MARK: Login
     
     enum Login {
         
@@ -49,6 +44,26 @@ enum LoginModels {
         }
         
         struct ViewModel {
+            let error: CustomError?
+        }
+    }
+    
+    // MARK: ResetPassword
+    
+    enum ResetPassword {
+        
+        struct Request {
+            var login: String
+        }
+        
+        struct Response {
+            let result: String
+            let error: CustomError?
+            
+        }
+        
+        struct ViewModel {
+            let result: String
             let error: CustomError?
         }
     }
