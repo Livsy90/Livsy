@@ -16,4 +16,7 @@ final class PostListWorker {
         netManager.fetchPostList(page: page, completion: completion)
     }
     
+    func fetchSearchResults(searchTerms: String, completion: @escaping (Bodies.PostListAPI.Response?, Error?) -> ()) {
+        netManager.fetchSearchResults(searchTerms: searchTerms, completion: completion)
+    }
 }

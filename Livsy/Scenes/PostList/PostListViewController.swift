@@ -66,7 +66,7 @@ final class PostListViewController: UIViewController {
         } else {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign out", style: .plain, target: self, action: #selector(showSignOutQuestion))
         }
-        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Search", style: .plain, target: self, action: #selector(search))
     }
     
     private func setupCollectionView() {
@@ -120,9 +120,9 @@ final class PostListViewController: UIViewController {
         router?.showSignOutQuestionAlert(completion: signOut)
     }
     
-    // MARK: - Requests
-    
-    // MARK: - IBActions
+    @objc private func search() {
+        interactor?.search(request: PostListModels.PostList.Request(page: 1))
+    }
     
 }
 

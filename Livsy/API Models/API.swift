@@ -20,4 +20,5 @@ struct API {
     static let login = "jwt-auth/v1/token"
     static let signUp = "wp/v2/users/register"
     static let resetPassword = "wp/v2/users/lost-password"
+    static let search = "wp/v2/posts?search="
 }

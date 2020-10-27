@@ -19,6 +19,7 @@ protocol PostDataStore {
     var id: Int { get set }
     var comments: [PostComment] { get set }
     var image: UIImage { get set }
+    var averageColor: UIColor { get set }
 }
 
 final class PostInteractor: PostBusinessLogic, PostDataStore {
@@ -37,7 +38,7 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
     var id: Int = 1
     var comments: [PostComment] = []
     var image = UIImage()
-    
+    var averageColor: UIColor = .blueButton
     
     // MARK: - Business Logic
     
@@ -57,4 +58,5 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
             self.presenter?.presentPostComments(response: PostModels.PostComments.Response())
         })
     }
+    
 }

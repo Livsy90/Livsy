@@ -17,6 +17,7 @@ struct Request {
         case CreateComment(String, Int, Int)
         case Register(String, String, String)
         case PasswordReset(String)
+        case Search
         
         func get(path: String) -> URLRequest {
             guard let url = Server.getBaseUrl(path: path) else { fatalError() }
@@ -47,6 +48,8 @@ struct Request {
                 request.httpMethod = "POST"
                 body = Bodies.BodyType.PasswordReset(login).bodyData()
                 headers = Headers.Request.PasswordReset.dict()
+            case .Search:
+                request.httpMethod = "GET"
             }
             
             if request.httpMethod != "GET" {

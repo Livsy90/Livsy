@@ -30,6 +30,13 @@ final class PostViewController: UIViewController {
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         return view
     }()
+    let progressView: UIProgressView = {
+        let pv = UIProgressView(progressViewStyle: .bar)
+        pv.translatesAutoresizingMaskIntoConstraints = false
+      //  pv.transform = pv.transform.scaledBy(x: 1, y: 4)
+        return pv
+    }()
+    
     
     // MARK: - Private Properties
     
@@ -65,17 +72,16 @@ final class PostViewController: UIViewController {
         textViewSetup()
         setupHeader()
         fetchPost()
-        
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            
             createGradientLayer()
             view.bringSubviewToFront(scrollView)
             view.bringSubviewToFront(imageView)
+            view.bringSubviewToFront(progressView)
             
         }
     }
@@ -90,7 +96,7 @@ final class PostViewController: UIViewController {
         view.addSubview(imageView)
         darkView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 300)
         imageView.addSubview(darkView)
-
+        
         postTitleSetup()
         postTitle.frame = CGRect(x: 20, y: 400, width: UIScreen.main.bounds.width - 40, height: 200)
         postTitle.font = UIFont.systemFont(ofSize: 26)
@@ -102,7 +108,7 @@ final class PostViewController: UIViewController {
         let gradientLayer = CAGradientLayer()
         
         gradientLayer.frame = self.view.bounds
-        guard let color1 = router?.dataStore?.image.averageColor?.cgColor else { return }
+        guard let color1 = router?.dataStore?.averageColor.cgColor else { return }
         gradientLayer.colors = [color1, UIColor.postBackground.cgColor, UIColor.postBackground.cgColor, UIColor.navBarTint.cgColor]
         
         self.view.layer.addSublayer(gradientLayer)
@@ -111,16 +117,17 @@ final class PostViewController: UIViewController {
         imageView.frame = view.bounds
         imageView.contentMode = .scaleToFill
         view.addSubview(imageView)
-        if traitCollection.userInterfaceStyle == .light {
-            darkBlurredEffectView.removeFromSuperview()
-            lightBlurredEffectView.frame = imageView.bounds
-            view.addSubview(lightBlurredEffectView)
-        } else {
+        
+        switch traitCollection.userInterfaceStyle {
+        case .dark:
             lightBlurredEffectView.removeFromSuperview()
             darkBlurredEffectView.frame = imageView.bounds
             view.addSubview(darkBlurredEffectView)
+        default:
+            darkBlurredEffectView.removeFromSuperview()
+            lightBlurredEffectView.frame = imageView.bounds
+            view.addSubview(lightBlurredEffectView)
         }
-
     }
     
     private func scrollViewSetup() {
@@ -131,6 +138,12 @@ final class PostViewController: UIViewController {
         scrollView.isDirectionalLockEnabled = true
         scrollView.contentInset = UIEdgeInsets(top: 150, left: 20, bottom: 0, right: 20)
         scrollView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+    }
+    
+    private func setupProgressView() {
+        view.addSubview(progressView)
+        progressView.anchor(top: navigationController?.navigationBar.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 5)
+        progressView.progressTintColor = router?.dataStore?.averageColor
     }
     
     private func postTitleSetup() {
@@ -172,6 +185,22 @@ final class PostViewController: UIViewController {
         interactor?.fetchPostComments(request: PostModels.PostComments.Request())
     }
     
+    private func scaleHeader() {
+        let y = 300 - (scrollView.contentOffset.y + 300)
+        let height = min(max(y, 60), 400)
+        imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height)
+        darkView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height)
+        postTitle.frame = CGRect(x: 20, y: height - 100, width: UIScreen.main.bounds.size.width - 40, height: 100)
+    }
+    
+    private func changeProgressViewValue(scrollView: UIScrollView) {
+        if textView.contentSize.height > UIScreen.main.bounds.height {
+            let offset = scrollView.contentOffset
+            let percentageOfFullHeight = offset.y / (scrollView.contentSize.height - scrollView.frame.height)
+            progressView.setProgress(Float(percentageOfFullHeight), animated: true)
+        }
+    }
+    
     @objc private func openURL() {
         if let url = URL(string: link) {
             UIApplication.shared.open(url)
@@ -192,6 +221,7 @@ extension PostViewController: PostDisplayLogic {
         textView.setHTMLFromString(htmlText: router?.dataStore?.content ?? "", color: .postText)
         fetchPostComments()
         activityIndicator.hideIndicator()
+        setupProgressView()
     }
     
     func displayPostComments(viewModel: PostModels.PostComments.ViewModel) {
@@ -202,10 +232,7 @@ extension PostViewController: PostDisplayLogic {
 
 extension PostViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let y = 300 - (scrollView.contentOffset.y + 300)
-        let height = min(max(y, 60), 400)
-        imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height)
-        darkView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height)
-        postTitle.frame = CGRect(x: 20, y: height - 100, width: UIScreen.main.bounds.size.width - 40, height: 100)
+        scaleHeader()
+        changeProgressViewValue(scrollView: scrollView)
     }
 }

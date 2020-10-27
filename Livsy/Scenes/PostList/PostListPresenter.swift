@@ -24,16 +24,7 @@ final class PostListPresenter: PostListPresentationLogic {
     // MARK: - Presentation Logic
     
     func presentPostList(response: PostListModels.PostList.Response) {
-        var isStopRefreshing = false
-        
-        switch response.error == nil {
-        case true:
-            isStopRefreshing = false
-        case false:
-            isStopRefreshing = true
-        }
-        
-        viewController?.displayPostList(viewModel: PostListModels.PostList.ViewModel(isStopRereshing: isStopRefreshing))
+        viewController?.displayPostList(viewModel: PostListModels.PostList.ViewModel(isStopRereshing: response.error != nil))
     }
     
     func presentSignOut() {

@@ -10,6 +10,7 @@ import Foundation
 
 protocol PostListBusinessLogic {
     func fetchPostList(request: PostListModels.PostList.Request)
+    func search(request: PostListModels.PostList.Request)
     func signOut()
 }
 
@@ -49,5 +50,13 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
         UserDefaults.standard.username = ""
         UserDefaults.standard.password = ""
         presenter?.presentSignOut()
+    }
+    
+    func search(request: PostListModels.PostList.Request) {
+        worker?.fetchSearchResults(searchTerms: "тестовый", completion: { (response, error) in
+            self.postList = response ?? []
+            let response = PostListModels.PostList.Response(error: error)
+            self.presenter?.presentPostList(response: response)
+        })
     }
 }

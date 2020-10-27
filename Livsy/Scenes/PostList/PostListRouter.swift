@@ -43,6 +43,7 @@ final class PostListRouter: PostListRoutingLogic, PostListDataPassing {
         destination.id = postID
         imageView.set(imageURL: imageURL)
         destination.image = imageView.image ?? UIImage()
+        destination.averageColor = imageView.image?.averageColor ?? UIColor.blueButton
     }
     
     func routeToLogin() {

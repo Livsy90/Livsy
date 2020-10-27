@@ -133,4 +133,18 @@ class NetManager {
         }
     }
     
+    func fetchSearchResults(searchTerms: String, completion: @escaping (Bodies.PostListAPI.Response?, Error?) -> ()) {
+        print("wp/v2/posts?search=" + searchTerms)
+        let request = Request.RequestType.Search.get(path: "wp/v2/posts?search=\(searchTerms)")
+        net.getData(with: request) { (data, error) in
+            guard let data = data, error == nil else { return }
+            do {
+                let response = try JSONDecoder().decode(Bodies.PostListAPI.Response.self, from: data)
+                completion(response, nil)
+            } catch {
+                completion(nil, error)
+            }
+        }
+    }
+    
 }

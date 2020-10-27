@@ -6,7 +6,7 @@
 //  Copyright © 2020 Artem Mirzabekian. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct Server {
     static let urlString = "https://livsy.me/wp-json/"
@@ -20,6 +20,8 @@ struct Server {
 //           URLQueryItem(name: "", value: format)
 //        ]
 //        return components.url!
-       return URL(string: urlString + path)
+        let url = "\(urlString)\(path)"
+        let encodedURL = url.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed) ?? url
+        return URL(string: encodedURL)
     }
 }
