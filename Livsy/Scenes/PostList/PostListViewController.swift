@@ -10,6 +10,7 @@ import UIKit
 
 protocol PostListDisplayLogic: class {
     func displayPostList(viewModel: PostListModels.PostList.ViewModel)
+    func displayToken(viewModel: PostListModels.Login.ViewModel)
     func displaySignOut()
 }
 
@@ -23,6 +24,7 @@ final class PostListViewController: UIViewController {
     var router: (PostListRoutingLogic & PostListDataPassing)?
     
     // MARK: - Private Properties
+    
     private var refreshControl: UIRefreshControl!
     private var postCollectionView = PostListCollectionView()
     private var page = 0
@@ -50,6 +52,7 @@ final class PostListViewController: UIViewController {
         super.viewDidLoad()
         setupCollectionView()
         setupRefreshControl()
+        checkToken()
         fetchPostList(isLoadMore: false)
     }
     
@@ -86,6 +89,10 @@ final class PostListViewController: UIViewController {
         
     }
     
+    private func checkToken() {
+        interactor?.login(request: PostListModels.Login.Request(username: UserDefaults.standard.username ?? "" , password: UserDefaults.standard.password ?? ""))
+    }
+        
     private func routeToPost(id: Int, url: String) {
         router?.routeToPost(id: id, url: url)
     }
@@ -135,6 +142,10 @@ extension PostListViewController: PostListDisplayLogic {
         postCollectionView.reloadData()
         refreshControl.endRefreshing()
         postCollectionView.footerView.stopAnimating()
+    }
+    
+    func displayToken(viewModel: PostListModels.Login.ViewModel) {
+        
     }
     
     func displaySignOut() {

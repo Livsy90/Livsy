@@ -18,33 +18,30 @@ final class PostViewController: UIViewController {
     
     var interactor: PostBusinessLogic?
     var router: (PostRoutingLogic & PostDataPassing)?
-    var id = 0
-    let textView = CustomTextView()
-    let scrollView = UIScrollView()
-    let postTitle = UILabel()
-    let imageView = WebImageView()
-    let lblName = UILabel()
-    let darkView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        return view
-    }()
-    let progressView: UIProgressView = {
-        let pv = UIProgressView(progressViewStyle: .bar)
-        pv.translatesAutoresizingMaskIntoConstraints = false
-      //  pv.transform = pv.transform.scaledBy(x: 1, y: 4)
-        return pv
-    }()
-    
     
     // MARK: - Private Properties
     
-    private var link = ""
+    private var id = 0
     private let activityIndicator = ActivityIndicator()
     private let loadingCommentsIndicator = UIActivityIndicatorView()
     private let darkBlurredEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     private let lightBlurredEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+    private let textView = CustomTextView()
+    private let scrollView = UIScrollView()
+    private let postTitle = UILabel()
+    private let imageView = WebImageView()
+    private let lblName = UILabel()
+    private let darkView: UIView = {
+         let view = UIView()
+         view.translatesAutoresizingMaskIntoConstraints = false
+         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+         return view
+     }()
+    private let progressView: UIProgressView = {
+         let pv = UIProgressView(progressViewStyle: .bar)
+         pv.translatesAutoresizingMaskIntoConstraints = false
+         return pv
+     }()
     
     // MARK: - Initializers
     
@@ -82,7 +79,6 @@ final class PostViewController: UIViewController {
             view.bringSubviewToFront(scrollView)
             view.bringSubviewToFront(imageView)
             view.bringSubviewToFront(progressView)
-            
         }
     }
     
@@ -136,6 +132,7 @@ final class PostViewController: UIViewController {
         scrollView.delegate = self
         scrollView.alwaysBounceVertical = true
         scrollView.isDirectionalLockEnabled = true
+        scrollView.showsVerticalScrollIndicator = false
         scrollView.contentInset = UIEdgeInsets(top: 150, left: 20, bottom: 0, right: 20)
         scrollView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
@@ -166,7 +163,7 @@ final class PostViewController: UIViewController {
     private func showActivityIndicatorOnNavBarItem() {
         loadingCommentsIndicator.hidesWhenStopped = true
         loadingCommentsIndicator.startAnimating()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: loadingCommentsIndicator)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: loadingCommentsIndicator)
     }
     
     private func commentsButtonSetup() {
@@ -198,12 +195,6 @@ final class PostViewController: UIViewController {
             let offset = scrollView.contentOffset
             let percentageOfFullHeight = offset.y / (scrollView.contentSize.height - scrollView.frame.height)
             progressView.setProgress(Float(percentageOfFullHeight), animated: true)
-        }
-    }
-    
-    @objc private func openURL() {
-        if let url = URL(string: link) {
-            UIApplication.shared.open(url)
         }
     }
     

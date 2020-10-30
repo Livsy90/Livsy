@@ -19,4 +19,8 @@ final class PostListWorker {
     func fetchSearchResults(searchTerms: String, completion: @escaping (Bodies.PostListAPI.Response?, Error?) -> ()) {
         netManager.fetchSearchResults(searchTerms: searchTerms, completion: completion)
     }
+    
+    func login(login: String, password: String, completion: @escaping (Bodies.LoginAPI.Response?, CustomError?) -> ()) {
+        netManager.login(login: login, password: password, completion: completion)
+    }
 }

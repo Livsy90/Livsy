@@ -10,6 +10,7 @@ import UIKit
 
 protocol PostListPresentationLogic {
     func presentPostList(response: PostListModels.PostList.Response)
+    func presentToken(response: PostListModels.Login.Response)
     func presentSignOut()
 }
 
@@ -25,6 +26,10 @@ final class PostListPresenter: PostListPresentationLogic {
     
     func presentPostList(response: PostListModels.PostList.Response) {
         viewController?.displayPostList(viewModel: PostListModels.PostList.ViewModel(isStopRereshing: response.error != nil))
+    }
+    
+    func presentToken(response: PostListModels.Login.Response) {
+        viewController?.displayToken(viewModel: PostListModels.Login.ViewModel(error: response.error))
     }
     
     func presentSignOut() {

@@ -32,7 +32,7 @@ final class PostRouter: PostRoutingLogic, PostDataPassing {
     
     func navigateToPostComments(source: PostViewController, destination: PostCommentsViewController) {
         let navController = UINavigationController(rootViewController: destination)
-        navController.modalPresentationStyle = .automatic
+        navController.modalPresentationStyle = .fullScreen
         navController.modalTransitionStyle = .coverVertical
         viewController?.present(navController, animated: true, completion: nil)
     }

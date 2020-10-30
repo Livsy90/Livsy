@@ -24,20 +24,15 @@ final class SplashRouter: SplashRoutingLogic, SplashDataPassing {
     var dataStore: SplashDataStore?
     
     func routeToPostList() {
-        let destinationVC = PostListViewController()
-        var destinationDS = destinationVC.router!.dataStore!
-        passDataToPostList(source: dataStore!, destination: &destinationDS)
-        navigateToPostList(source: viewController!, destination: destinationVC)
+        let destinationVC = MainTabBarController()
+        navigateToTabBar(source: viewController!, destination: destinationVC)
     }
     
-    func navigateToPostList(source: SplashViewController, destination: PostListViewController) {
+    func navigateToTabBar(source: SplashViewController, destination: MainTabBarController) {
         let navController = UINavigationController(rootViewController: destination)
         navController.modalPresentationStyle = .fullScreen
         navController.modalTransitionStyle = .crossDissolve
-        viewController?.present(navController, animated: true, completion: nil)
+        viewController?.navigationController?.pushViewController(destination, animated: true)
     }
     
-    func passDataToPostList(source: SplashDataStore, destination: inout PostListDataStore) {
-      
-    }
 }

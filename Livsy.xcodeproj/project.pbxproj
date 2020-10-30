@@ -30,6 +30,14 @@
 		C2345BF224B4F15200125976 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2345BEB24B4F15100125976 /* LoginViewController.swift */; };
 		C2345BF324B4F15200125976 /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2345BEC24B4F15200125976 /* LoginInteractor.swift */; };
 		C2345BF624B4F17100125976 /* LoginConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2345BF524B4F17100125976 /* LoginConfigurator.swift */; };
+		C234943A254C333100E26ADC /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2349439254C333100E26ADC /* MainTabBarController.swift */; };
+		C2349444254C793100E26ADC /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234943D254C793100E26ADC /* ProfilePresenter.swift */; };
+		C2349445254C793100E26ADC /* ProfileWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234943E254C793100E26ADC /* ProfileWorker.swift */; };
+		C2349446254C793100E26ADC /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234943F254C793100E26ADC /* ProfileRouter.swift */; };
+		C2349447254C793100E26ADC /* ProfileModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2349440254C793100E26ADC /* ProfileModels.swift */; };
+		C2349448254C793100E26ADC /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2349441254C793100E26ADC /* ProfileViewController.swift */; };
+		C2349449254C793100E26ADC /* ProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2349442254C793100E26ADC /* ProfileInteractor.swift */; };
+		C234944B254C796F00E26ADC /* ProfileConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234944A254C796F00E26ADC /* ProfileConfigurator.swift */; };
 		C2386F7D249DF6EB0076AED3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2386F7C249DF6EB0076AED3 /* AppDelegate.swift */; };
 		C2386F7F249DF6EB0076AED3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2386F7E249DF6EB0076AED3 /* SceneDelegate.swift */; };
 		C2386F81249DF6EB0076AED3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2386F80249DF6EB0076AED3 /* ViewController.swift */; };
@@ -126,6 +134,14 @@
 		C2345BEB24B4F15100125976 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C2345BEC24B4F15200125976 /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
 		C2345BF524B4F17100125976 /* LoginConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginConfigurator.swift; sourceTree = "<group>"; };
+		C2349439254C333100E26ADC /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		C234943D254C793100E26ADC /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
+		C234943E254C793100E26ADC /* ProfileWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileWorker.swift; sourceTree = "<group>"; };
+		C234943F254C793100E26ADC /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
+		C2349440254C793100E26ADC /* ProfileModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModels.swift; sourceTree = "<group>"; };
+		C2349441254C793100E26ADC /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		C2349442254C793100E26ADC /* ProfileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInteractor.swift; sourceTree = "<group>"; };
+		C234944A254C796F00E26ADC /* ProfileConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileConfigurator.swift; sourceTree = "<group>"; };
 		C2386F79249DF6EB0076AED3 /* Livsy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Livsy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2386F7C249DF6EB0076AED3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C2386F7E249DF6EB0076AED3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -295,6 +311,28 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		C2349438254C331800E26ADC /* MainTabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				C2349439254C333100E26ADC /* MainTabBarController.swift */,
+			);
+			path = MainTabBarController;
+			sourceTree = "<group>";
+		};
+		C234943B254C791600E26ADC /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				C234943D254C793100E26ADC /* ProfilePresenter.swift */,
+				C234943E254C793100E26ADC /* ProfileWorker.swift */,
+				C234943F254C793100E26ADC /* ProfileRouter.swift */,
+				C2349440254C793100E26ADC /* ProfileModels.swift */,
+				C2349441254C793100E26ADC /* ProfileViewController.swift */,
+				C2349442254C793100E26ADC /* ProfileInteractor.swift */,
+				C234944A254C796F00E26ADC /* ProfileConfigurator.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		C2386F70249DF6EB0076AED3 = {
 			isa = PBXGroup;
 			children = (
@@ -352,6 +390,8 @@
 		C2386F9F249E099F0076AED3 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				C234943B254C791600E26ADC /* Profile */,
+				C2349438254C331800E26ADC /* MainTabBarController */,
 				C2E3443E25373046000D07F2 /* Register */,
 				C218FCEB251B5A32002F9C68 /* Splash */,
 				C2345BF424B4F15700125976 /* Login */,
@@ -579,13 +619,17 @@
 				C218FD05251B8D1A002F9C68 /* ActivityIndicator.swift in Sources */,
 				C2386F93249DF8800076AED3 /* Headers.swift in Sources */,
 				C268CDB424A9290800949C4D /* PostCommentsModels.swift in Sources */,
+				C234944B254C796F00E26ADC /* ProfileConfigurator.swift in Sources */,
 				C2E3444C25373060000D07F2 /* RegisterInteractor.swift in Sources */,
 				C2386F81249DF6EB0076AED3 /* ViewController.swift in Sources */,
+				C2349445254C793100E26ADC /* ProfileWorker.swift in Sources */,
+				C2349449254C793100E26ADC /* ProfileInteractor.swift in Sources */,
 				C2C31A54249F68AB002AAB91 /* UIImageView+adds.swift in Sources */,
 				C2765B9E24A11F1A008888B0 /* PostWorker.swift in Sources */,
 				C218FCF8251B5A6A002F9C68 /* SplashViewController.swift in Sources */,
 				C23ACCAE24B9B62D00882E07 /* UserDefaults+adds.swift in Sources */,
 				C2E3444A25373060000D07F2 /* RegisterModels.swift in Sources */,
+				C234943A254C333100E26ADC /* MainTabBarController.swift in Sources */,
 				C2345BF024B4F15200125976 /* LoginRouter.swift in Sources */,
 				C2345BF124B4F15200125976 /* LoginModels.swift in Sources */,
 				C2765B9F24A11F1A008888B0 /* PostRouter.swift in Sources */,
@@ -603,6 +647,7 @@
 				C218FCF4251B5A6A002F9C68 /* SplashPresenter.swift in Sources */,
 				C2EBC71E24D02F870066113D /* NetManager.swift in Sources */,
 				C23261F024D5D73B00F670EE /* Collection+safe.swift in Sources */,
+				C2349447254C793100E26ADC /* ProfileModels.swift in Sources */,
 				C2386F7D249DF6EB0076AED3 /* AppDelegate.swift in Sources */,
 				C268CDB624A9290800949C4D /* PostCommentsInteractor.swift in Sources */,
 				C2BCF43724AB67E8008C28FD /* PostCommentRepliesInteractor.swift in Sources */,
@@ -621,6 +666,7 @@
 				C23D496B24AA4905007AEE32 /* PostCommentsCollectionViewCell.swift in Sources */,
 				C2E3444825373060000D07F2 /* RegisterWorker.swift in Sources */,
 				C268CDC124A9380200949C4D /* BadgeBarButton.swift in Sources */,
+				C2349444254C793100E26ADC /* ProfilePresenter.swift in Sources */,
 				C2765BB224A11F59008888B0 /* PostConfigurator.swift in Sources */,
 				C2345BF324B4F15200125976 /* LoginInteractor.swift in Sources */,
 				C268CDBF24A929E900949C4D /* PostCommentsCollectionView.swift in Sources */,
@@ -638,6 +684,7 @@
 				C2386F7F249DF6EB0076AED3 /* SceneDelegate.swift in Sources */,
 				C2345BF224B4F15200125976 /* LoginViewController.swift in Sources */,
 				C2765B9D24A11F1A008888B0 /* PostPresenter.swift in Sources */,
+				C2349446254C793100E26ADC /* ProfileRouter.swift in Sources */,
 				C2E3444B25373060000D07F2 /* RegisterViewController.swift in Sources */,
 				C2386FA8249E09B50076AED3 /* PostListPresenter.swift in Sources */,
 				C2278E7C249E2FD100D9D582 /* UIView+adds.swift in Sources */,
@@ -655,6 +702,7 @@
 				C2386FAF249E09CB0076AED3 /* PostListConfigurator.swift in Sources */,
 				C2345BF624B4F17100125976 /* LoginConfigurator.swift in Sources */,
 				C2E3444725373060000D07F2 /* RegisterPresenter.swift in Sources */,
+				C2349448254C793100E26ADC /* ProfileViewController.swift in Sources */,
 				C2765BA024A11F1A008888B0 /* PostModels.swift in Sources */,
 				C2345BEE24B4F15200125976 /* LoginPresenter.swift in Sources */,
 			);

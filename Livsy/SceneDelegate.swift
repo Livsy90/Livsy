@@ -18,22 +18,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
-        
-        self.window = UIWindow(windowScene: windowScene)
-        //self.window =  UIWindow(frame: UIScreen.main.bounds)
-        
-        let storyboard = UIStoryboard(name: "Splash", bundle: nil)
-        guard let rootVC = storyboard.instantiateViewController(identifier: "SplashViewController") as? SplashViewController else {
-            print("ViewController not found")
-            return
-        }
-        
         UINavigationBar.appearance().tintColor = UIColor.init(named: "NavBarTint")
         
-        let rootNC = UINavigationController(rootViewController: rootVC)
-        self.window?.rootViewController = rootNC
-        self.window?.makeKeyAndVisible()
+        window = UIWindow(windowScene: windowScene)
+        //self.window =  UIWindow(frame: UIScreen.main.bounds)
+        
+//        let storyboard = UIStoryboard(name: "Splash", bundle: nil)
+//        guard let rootVC = storyboard.instantiateViewController(identifier: "SplashViewController") as? SplashViewController else {
+//            print("ViewController not found")
+//            return
+//        }
+        
+        window?.rootViewController = MainTabBarController()
+       // let rootNC = UINavigationController(rootViewController: rootVC)
+       // self.window?.rootViewController = rootNC
+        window?.makeKeyAndVisible()
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

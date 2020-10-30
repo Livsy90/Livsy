@@ -113,8 +113,8 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .listBackground
-        title = "Login"
         NotificationCenter.default.removeObserver(self)
+        title = "Login"
     }
     
     override func viewWillAppear(_ animated: Bool) {

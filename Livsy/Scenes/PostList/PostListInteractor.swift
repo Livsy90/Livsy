@@ -11,6 +11,7 @@ import Foundation
 protocol PostListBusinessLogic {
     func fetchPostList(request: PostListModels.PostList.Request)
     func search(request: PostListModels.PostList.Request)
+    func login(request: PostListModels.Login.Request)
     func signOut()
 }
 
@@ -45,6 +46,24 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
         })
     }
     
+    func login(request: PostListModels.Login.Request) {
+        worker?.login(login: request.username, password: request.password, completion: { [weak self] (response, error) in
+            guard let self = self else { return }
+            
+            if error == nil {
+                UserDefaults.standard.token = response?.token
+                UserDefaults.standard.username = response?.userDisplayName
+                UserDefaults.standard.password = request.password
+            } else {
+                UserDefaults.standard.token = ""
+                UserDefaults.standard.username = ""
+                UserDefaults.standard.password = ""
+            }
+            print(response?.token)
+            self.presenter?.presentToken(response: PostListModels.Login.Response(error: error))
+        })
+    }
+    
     func signOut() {
         UserDefaults.standard.token = ""
         UserDefaults.standard.username = ""
@@ -59,4 +78,5 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
             self.presenter?.presentPostList(response: response)
         })
     }
+    
 }

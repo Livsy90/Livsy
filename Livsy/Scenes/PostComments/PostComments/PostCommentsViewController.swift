@@ -43,7 +43,6 @@ final class PostCommentsViewController: UIViewController {
         commentInputAccessoryView.delegate = self
         return commentInputAccessoryView
     }()
-    private var safeArea: UILayoutGuide!
     private let noCommentsLabel: UILabel = {
         let l = UILabel()
         l.text = "Write the first comment"
@@ -56,6 +55,7 @@ final class PostCommentsViewController: UIViewController {
     }()
     private let postCommentsCollectionView = PostCommentsCollectionView()
     private let tableView = UITableView()
+    private var safeArea: UILayoutGuide!
     
     // MARK: - Initializers
     
@@ -77,7 +77,7 @@ final class PostCommentsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//         setupCollectionView()
+        //         setupCollectionView()
         setupTableView()
         setupNoCommentslabel()
         showComments(isReload: false)
@@ -103,14 +103,14 @@ final class PostCommentsViewController: UIViewController {
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
         
         if notification.name == UIResponder.keyboardWillHideNotification {
-//            postCommentsCollectionView
-                tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            //            postCommentsCollectionView
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         } else {
-//            postCommentsCollectionView
-                tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
+            //            postCommentsCollectionView
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
         }
         
-//        postCommentsCollectionView.scrollIndicatorInsets = postCommentsCollectionView.contentInset
+        //        postCommentsCollectionView.scrollIndicatorInsets = postCommentsCollectionView.contentInset
         tableView.scrollIndicatorInsets = tableView.contentInset
     }
     
@@ -180,9 +180,9 @@ final class PostCommentsViewController: UIViewController {
 extension PostCommentsViewController: PostCommentsDisplayLogic {
     
     func displayPostComments(viewModel: PostCommentsModels.PostComments.ViewModel) {
-//        guard let comments = router?.dataStore?.comments else { return }
-//          postCommentsCollectionView.set(comments: comments)
-//          postCommentsCollectionView.reloadData()
+        //        guard let comments = router?.dataStore?.comments else { return }
+        //          postCommentsCollectionView.set(comments: comments)
+        //          postCommentsCollectionView.reloadData()
         viewModel.isReload ? tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .middle) : tableView.reloadData()
         noCommentsLabel.isHidden = !(router?.dataStore?.comments.isEmpty ?? true)
     }

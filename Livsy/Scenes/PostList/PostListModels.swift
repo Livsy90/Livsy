@@ -77,6 +77,24 @@ enum PostListModels {
     struct ViewModel {
         let isStopRereshing: Bool
     }
+    
   }
+    
+    enum Login {
+        
+        struct Request {
+            var username: String
+            var password: String
+        }
+        
+        struct Response {
+            let error: CustomError?
+            
+        }
+        
+        struct ViewModel {
+            let error: CustomError?
+        }
+    }
   
 }
