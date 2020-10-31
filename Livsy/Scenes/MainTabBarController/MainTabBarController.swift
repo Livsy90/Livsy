@@ -28,11 +28,11 @@ class MainTabBarController: UITabBarController {
         let postListItem = UITabBarItem(title: postListVC.title, image: postListImage, selectedImage: postListImageSelected)
         postListVC.tabBarItem = postListItem
         
-        let profileVC = LoginViewController()
+        let profileVC = ProfileViewController()
         let profileNC = UINavigationController(rootViewController: profileVC)
         let profileImage = UIImage(systemName: "person")
         let profileImageSelected = UIImage(systemName: "person.fill")
-        let profileItem = UITabBarItem(title: "Login", image: profileImage, selectedImage: profileImageSelected)
+        let profileItem = UITabBarItem(title: "Profile", image: profileImage, selectedImage: profileImageSelected)
         profileVC.tabBarItem = profileItem
         
         let controllers = [postListNC, profileNC]

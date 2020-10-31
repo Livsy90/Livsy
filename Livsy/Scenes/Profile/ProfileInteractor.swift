@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ProfileBusinessLogic {
-  
+  func signOut()
 }
 
 protocol ProfileDataStore {
@@ -28,4 +28,11 @@ final class ProfileInteractor: ProfileBusinessLogic, ProfileDataStore {
   // MARK: - Data Store
 
   // MARK: - Business Logic
+    
+    func signOut() {
+        UserDefaults.standard.token = ""
+        UserDefaults.standard.username = ""
+        UserDefaults.standard.password = ""
+        presenter?.presentSignOut()
+    }
 }

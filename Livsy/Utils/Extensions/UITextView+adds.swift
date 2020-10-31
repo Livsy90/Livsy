@@ -12,19 +12,35 @@ extension UITextView {
     
     func setHTMLFromString(htmlText: String, color: UIColor) {
         let rect = self.window?.frame
-        let modifiedFont = String(format:"<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(self.font!.pointSize)\">%@</span>",formatString(text: htmlText, with: Float(rect?.size.width ?? 375)))
+        let modifiedFont = String(format:"<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(self.font!.pointSize)\">%@</span>",formatStringWithYTVideo(text: htmlText, with: Float(rect?.size.width ?? 375)))
         
-        let attrStr = try! NSAttributedString(
+        let attrStr = try! NSMutableAttributedString(
             data: modifiedFont.data(using: .unicode, allowLossyConversion: true)!,
             options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding:String.Encoding.utf8.rawValue],
             documentAttributes: nil)
         
-        self.attributedText = attrStr
+        self.attributedText = resizeImageInHTLLString(attrStr: attrStr)
         self.textColor = color
     }
     
-    private func formatString(text: String, with width: Float) -> String {
-        
+    private func resizeImageInHTLLString(attrStr: NSMutableAttributedString) -> NSMutableAttributedString {
+        attrStr.enumerateAttribute(NSAttributedString.Key.attachment, in: NSMakeRange(0, attrStr.length), options: .init(rawValue: 0), using: { (value, range, stop) in
+            if let attachement = value as? NSTextAttachment {
+                let image = attachement.image(forBounds: attachement.bounds, textContainer: NSTextContainer(), characterIndex: range.location)!
+                let screenSize: CGRect = UIScreen.main.bounds
+                if image.size.width > screenSize.width-20 {
+                    let scale = (screenSize.width-20)/image.size.width
+                    let newImage = image.resizeImage(scale: scale)
+                    let newAttribut = NSTextAttachment()
+                    newAttribut.image = newImage
+                    attrStr.addAttribute(NSAttributedString.Key.attachment, value: newAttribut, range: range)
+                }
+            }
+        })
+        return attrStr
+    }
+    
+    private func formatStringWithYTVideo(text: String, with width: Float) -> String {
         let iframeTexts = matches(for: ".*iframe.*", in: text);
         var newText = text;
         
@@ -56,6 +72,5 @@ extension UITextView {
             return []
         }
     }
-
     
 }

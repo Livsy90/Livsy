@@ -29,6 +29,11 @@ struct PasswordResetResponse: Codable {
 
 enum LoginModels {
     
+    enum Mode {
+        case toProfile
+        case toComments
+    }
+    
     // MARK: Login
     
     enum Login {
@@ -40,11 +45,12 @@ enum LoginModels {
         
         struct Response {
             let error: CustomError?
-            
+            var dismissMode: LoginModels.Mode
         }
         
         struct ViewModel {
             let error: CustomError?
+            var dismissMode: LoginModels.Mode
         }
     }
     

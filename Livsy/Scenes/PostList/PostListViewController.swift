@@ -50,27 +50,13 @@ final class PostListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Livsy"
         setupCollectionView()
         setupRefreshControl()
-        checkToken()
         fetchPostList(isLoadMore: false)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        setupNavigationBar()
-    }
-    
     // MARK: - Private Methods
-    
-    private func setupNavigationBar() {
-        title = "Livsy.me"
-        if UserDefaults.standard.token == "" {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login", style: .plain, target: self, action: #selector(routeToLogin))
-        } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign out", style: .plain, target: self, action: #selector(showSignOutQuestion))
-        }
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Search", style: .plain, target: self, action: #selector(search))
-    }
     
     private func setupCollectionView() {
         view.addSubview(postCollectionView)
@@ -149,7 +135,6 @@ extension PostListViewController: PostListDisplayLogic {
     }
     
     func displaySignOut() {
-        setupNavigationBar()
         router?.showSignOutResultAlert()
     }
     

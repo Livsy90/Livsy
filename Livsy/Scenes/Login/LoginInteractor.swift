@@ -14,7 +14,8 @@ protocol LoginBusinessLogic {
 }
 
 protocol LoginDataStore {
-    
+    var loginSceneDelegate: LoginSceneDelegate? { get set }
+    var dismissMode: LoginModels.Mode { get set }
 }
 
 final class LoginInteractor: LoginBusinessLogic, LoginDataStore {
@@ -28,6 +29,9 @@ final class LoginInteractor: LoginBusinessLogic, LoginDataStore {
     
     // MARK: - Data Store
     
+    weak var loginSceneDelegate: LoginSceneDelegate?
+    var dismissMode: LoginModels.Mode = .toProfile
+    
     // MARK: - Business Logic
     
     func login(request: LoginModels.Login.Request) {
@@ -40,7 +44,7 @@ final class LoginInteractor: LoginBusinessLogic, LoginDataStore {
                 UserDefaults.standard.password = request.password
             }
             
-            self.presenter?.presentLogin(response: LoginModels.Login.Response(error: error))
+            self.presenter?.presentLogin(response: LoginModels.Login.Response(error: error, dismissMode: self.dismissMode))
         })
     }
     

@@ -13,6 +13,10 @@ protocol LoginDisplayLogic: class {
     func displayResetPassword(viewModel: LoginModels.ResetPassword.ViewModel)
 }
 
+protocol LoginSceneDelegate: class {
+    func changelabel()
+}
+
 final class LoginViewController: UIViewController {
     
     // MARK: - Public Properties
@@ -176,8 +180,9 @@ final class LoginViewController: UIViewController {
 extension LoginViewController: LoginDisplayLogic {
     func displayLogin(viewModel: LoginModels.Login.ViewModel) {
         if viewModel.error == nil {
-            navigationController?.popViewController(animated: true)
+            router?.dismissSelf(mode: viewModel.dismissMode)
         } else {
+            activityIndicator.hideIndicator()
             router?.showErrorAlert(with: viewModel.error?.message ?? "Username or password is wrong", completion: showResetPasswordAlert)
             loginButton.isUserInteractionEnabled = true
         }

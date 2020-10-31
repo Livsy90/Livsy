@@ -24,7 +24,7 @@ final class LoginPresenter: LoginPresentationLogic {
     // MARK: - Presentation Logic
     
     func presentLogin(response: LoginModels.Login.Response) {
-        viewController?.displayLogin(viewModel: LoginModels.Login.ViewModel(error: response.error))
+        viewController?.displayLogin(viewModel: LoginModels.Login.ViewModel(error: response.error, dismissMode: response.dismissMode))
     }
     
     func presentResetPassword(response: LoginModels.ResetPassword.Response) {

@@ -24,3 +24,18 @@ extension UIImage {
         return UIColor(red: CGFloat(bitmap[0]) / 255, green: CGFloat(bitmap[1]) / 255, blue: CGFloat(bitmap[2]) / 255, alpha: CGFloat(bitmap[3]) / 255)
     }
 }
+
+extension UIImage {
+    
+    func resizeImage(scale: CGFloat) -> UIImage {
+        let newSize = CGSize(width: self.size.width*scale, height: self.size.height*scale)
+        let rect = CGRect(origin: CGPoint.zero, size: newSize)
+        
+        UIGraphicsBeginImageContext(newSize)
+        self.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!
+    }
+    
+}

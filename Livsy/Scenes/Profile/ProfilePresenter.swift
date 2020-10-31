@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ProfilePresentationLogic {
-  
+  func presentSignOut()
 }
 
 final class ProfilePresenter: ProfilePresentationLogic {
@@ -21,6 +21,8 @@ final class ProfilePresenter: ProfilePresentationLogic {
   // MARK: - Private Properties
 
   // MARK: - Presentation Logic
-  
+  func presentSignOut() {
+      viewController?.displaySignOut()
+  }
   
 }

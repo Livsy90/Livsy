@@ -242,13 +242,21 @@
 			path = Splash;
 			sourceTree = "<group>";
 		};
+		C21E74C9254D514A00F9F072 /* ActivityIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				C218FD04251B8D1A002F9C68 /* ActivityIndicator.swift */,
+			);
+			path = ActivityIndicator;
+			sourceTree = "<group>";
+		};
 		C2278E79249E2F9800D9D582 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				C21E74C9254D514A00F9F072 /* ActivityIndicator */,
 				C2EBC71C24D02F790066113D /* Managers */,
 				C268CDC224A93A4200949C4D /* Presentation */,
 				C2278E7A249E2FBA00D9D582 /* Extensions */,
-				C218FD04251B8D1A002F9C68 /* ActivityIndicator.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";

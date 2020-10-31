@@ -13,6 +13,7 @@ protocol LoginRoutingLogic {
     func showResetPasswordAlert(completion: @escaping ((String) -> Void))
     func showPasswordResultAlert(with message: String)
     func showResetPasswordErrorAlert(with message: String)
+    func dismissSelf(mode: LoginModels.Mode)
 }
 
 protocol LoginDataPassing {
@@ -40,6 +41,21 @@ final class LoginRouter: LoginRoutingLogic, LoginDataPassing {
     
     func showResetPasswordErrorAlert(with message: String) {
         viewController?.showAlertWithOneButton(title: String(htmlEncodedString: message) ?? "Error", message: nil, buttonTitle: "OK", buttonAction: nil)
+    }
+    
+    func dismissSelf(mode: LoginModels.Mode) {
+        switch mode {
+        case .toProfile:
+            let destinationDelegate = dataStore?.loginSceneDelegate
+            passDataToLoginScene(source: dataStore!, destination: destinationDelegate)
+            viewController?.dismiss(animated: true)
+        default:
+            viewController?.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    func passDataToLoginScene(source: LoginDataStore, destination: LoginSceneDelegate?) {
+        destination?.changelabel()
     }
 
 }

@@ -77,7 +77,6 @@ enum PostListModels {
     struct ViewModel {
         let isStopRereshing: Bool
     }
-    
   }
     
     enum Login {
