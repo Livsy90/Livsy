@@ -49,7 +49,6 @@
 		C2386F9A249E06740076AED3 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2386F99249E06740076AED3 /* Request.swift */; };
 		C2386F9C249E06AE0076AED3 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2386F9B249E06AE0076AED3 /* Server.swift */; };
 		C2386F9E249E09550076AED3 /* NetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2386F9D249E09550076AED3 /* NetService.swift */; };
-		C2386FA7249E09B50076AED3 /* PostList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2386FA0249E09B50076AED3 /* PostList.storyboard */; };
 		C2386FA8249E09B50076AED3 /* PostListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2386FA1249E09B50076AED3 /* PostListPresenter.swift */; };
 		C2386FA9249E09B50076AED3 /* PostListWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2386FA2249E09B50076AED3 /* PostListWorker.swift */; };
 		C2386FAA249E09B50076AED3 /* PostListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2386FA3249E09B50076AED3 /* PostListRouter.swift */; };
@@ -57,6 +56,7 @@
 		C2386FAC249E09B50076AED3 /* PostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2386FA5249E09B50076AED3 /* PostListViewController.swift */; };
 		C2386FAD249E09B50076AED3 /* PostListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2386FA6249E09B50076AED3 /* PostListInteractor.swift */; };
 		C2386FAF249E09CB0076AED3 /* PostListConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2386FAE249E09CB0076AED3 /* PostListConfigurator.swift */; };
+		C239A712254DAC2E000E7358 /* MainProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C239A711254DAC2E000E7358 /* MainProfileCell.swift */; };
 		C23ACCAE24B9B62D00882E07 /* UserDefaults+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23ACCAD24B9B62D00882E07 /* UserDefaults+adds.swift */; };
 		C23D496B24AA4905007AEE32 /* PostCommentsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23D496A24AA4905007AEE32 /* PostCommentsCollectionViewCell.swift */; };
 		C268CDB124A9290800949C4D /* PostCommentsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268CDAA24A9290800949C4D /* PostCommentsPresenter.swift */; };
@@ -69,7 +69,6 @@
 		C268CDBF24A929E900949C4D /* PostCommentsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268CDBE24A929E900949C4D /* PostCommentsCollectionView.swift */; };
 		C268CDC124A9380200949C4D /* BadgeBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268CDC024A9380200949C4D /* BadgeBarButton.swift */; };
 		C26F2D7C252C5234000F1939 /* UIImage+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26F2D7B252C5234000F1939 /* UIImage+adds.swift */; };
-		C2765B9C24A11F1A008888B0 /* Post.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2765B9524A11F1A008888B0 /* Post.storyboard */; };
 		C2765B9D24A11F1A008888B0 /* PostPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2765B9624A11F1A008888B0 /* PostPresenter.swift */; };
 		C2765B9E24A11F1A008888B0 /* PostWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2765B9724A11F1A008888B0 /* PostWorker.swift */; };
 		C2765B9F24A11F1A008888B0 /* PostRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2765B9824A11F1A008888B0 /* PostRouter.swift */; };
@@ -155,7 +154,6 @@
 		C2386F99249E06740076AED3 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		C2386F9B249E06AE0076AED3 /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		C2386F9D249E09550076AED3 /* NetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetService.swift; sourceTree = "<group>"; };
-		C2386FA0249E09B50076AED3 /* PostList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PostList.storyboard; sourceTree = "<group>"; };
 		C2386FA1249E09B50076AED3 /* PostListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListPresenter.swift; sourceTree = "<group>"; };
 		C2386FA2249E09B50076AED3 /* PostListWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListWorker.swift; sourceTree = "<group>"; };
 		C2386FA3249E09B50076AED3 /* PostListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListRouter.swift; sourceTree = "<group>"; };
@@ -163,6 +161,7 @@
 		C2386FA5249E09B50076AED3 /* PostListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListViewController.swift; sourceTree = "<group>"; };
 		C2386FA6249E09B50076AED3 /* PostListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListInteractor.swift; sourceTree = "<group>"; };
 		C2386FAE249E09CB0076AED3 /* PostListConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListConfigurator.swift; sourceTree = "<group>"; };
+		C239A711254DAC2E000E7358 /* MainProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProfileCell.swift; sourceTree = "<group>"; };
 		C23ACCAD24B9B62D00882E07 /* UserDefaults+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+adds.swift"; sourceTree = "<group>"; };
 		C23D496A24AA4905007AEE32 /* PostCommentsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentsCollectionViewCell.swift; sourceTree = "<group>"; };
 		C268CDAA24A9290800949C4D /* PostCommentsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentsPresenter.swift; sourceTree = "<group>"; };
@@ -175,7 +174,6 @@
 		C268CDBE24A929E900949C4D /* PostCommentsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentsCollectionView.swift; sourceTree = "<group>"; };
 		C268CDC024A9380200949C4D /* BadgeBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeBarButton.swift; sourceTree = "<group>"; };
 		C26F2D7B252C5234000F1939 /* UIImage+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+adds.swift"; sourceTree = "<group>"; };
-		C2765B9524A11F1A008888B0 /* Post.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Post.storyboard; sourceTree = "<group>"; };
 		C2765B9624A11F1A008888B0 /* PostPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPresenter.swift; sourceTree = "<group>"; };
 		C2765B9724A11F1A008888B0 /* PostWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWorker.swift; sourceTree = "<group>"; };
 		C2765B9824A11F1A008888B0 /* PostRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRouter.swift; sourceTree = "<group>"; };
@@ -283,7 +281,6 @@
 			isa = PBXGroup;
 			children = (
 				C2278E80249E6CC000D9D582 /* PostCollectionView */,
-				C2386FA0249E09B50076AED3 /* PostList.storyboard */,
 				C2386FA1249E09B50076AED3 /* PostListPresenter.swift */,
 				C2386FA2249E09B50076AED3 /* PostListWorker.swift */,
 				C2386FA3249E09B50076AED3 /* PostListRouter.swift */,
@@ -330,6 +327,7 @@
 		C234943B254C791600E26ADC /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				C239A710254DAAF1000E7358 /* MainProfileCell */,
 				C234943D254C793100E26ADC /* ProfilePresenter.swift */,
 				C234943E254C793100E26ADC /* ProfileWorker.swift */,
 				C234943F254C793100E26ADC /* ProfileRouter.swift */,
@@ -410,6 +408,14 @@
 			path = Scenes;
 			sourceTree = "<group>";
 		};
+		C239A710254DAAF1000E7358 /* MainProfileCell */ = {
+			isa = PBXGroup;
+			children = (
+				C239A711254DAC2E000E7358 /* MainProfileCell.swift */,
+			);
+			path = MainProfileCell;
+			sourceTree = "<group>";
+		};
 		C23B0AE625275F0800E7FBA4 /* PostCommentsTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -450,7 +456,6 @@
 		C2765B9424A11EE2008888B0 /* Post */ = {
 			isa = PBXGroup;
 			children = (
-				C2765B9524A11F1A008888B0 /* Post.storyboard */,
 				C2765B9624A11F1A008888B0 /* PostPresenter.swift */,
 				C2765B9724A11F1A008888B0 /* PostWorker.swift */,
 				C2765B9824A11F1A008888B0 /* PostRouter.swift */,
@@ -602,10 +607,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C2386FA7249E09B50076AED3 /* PostList.storyboard in Resources */,
 				C2386F89249DF6EC0076AED3 /* LaunchScreen.storyboard in Resources */,
 				C2386F86249DF6EC0076AED3 /* Assets.xcassets in Resources */,
-				C2765B9C24A11F1A008888B0 /* Post.storyboard in Resources */,
 				C2386F84249DF6EB0076AED3 /* Main.storyboard in Resources */,
 				C218FCF3251B5A6A002F9C68 /* Splash.storyboard in Resources */,
 				C2A7E8D0252B414B00ABF3D5 /* CommentsTableViewCell.xib in Resources */,
@@ -710,6 +713,7 @@
 				C2386FAF249E09CB0076AED3 /* PostListConfigurator.swift in Sources */,
 				C2345BF624B4F17100125976 /* LoginConfigurator.swift in Sources */,
 				C2E3444725373060000D07F2 /* RegisterPresenter.swift in Sources */,
+				C239A712254DAC2E000E7358 /* MainProfileCell.swift in Sources */,
 				C2349448254C793100E26ADC /* ProfileViewController.swift in Sources */,
 				C2765BA024A11F1A008888B0 /* PostModels.swift in Sources */,
 				C2345BEE24B4F15200125976 /* LoginPresenter.swift in Sources */,

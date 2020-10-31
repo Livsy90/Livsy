@@ -14,7 +14,7 @@ protocol LoginDisplayLogic: class {
 }
 
 protocol LoginSceneDelegate: class {
-    func changelabel()
+    func setupUIforLoggedIn()
 }
 
 final class LoginViewController: UIViewController {

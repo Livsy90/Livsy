@@ -55,7 +55,7 @@ final class LoginRouter: LoginRoutingLogic, LoginDataPassing {
     }
     
     func passDataToLoginScene(source: LoginDataStore, destination: LoginSceneDelegate?) {
-        destination?.changelabel()
+        destination?.setupUIforLoggedIn()
     }
 
 }
