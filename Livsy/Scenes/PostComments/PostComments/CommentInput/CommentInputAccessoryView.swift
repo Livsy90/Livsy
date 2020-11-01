@@ -22,6 +22,12 @@ class CommentInputAccessoryView: UIView {
         submitButton.isEnabled = false
     }
     
+    func enableButton() {
+        if commentTextView.text.count > 0 {
+            submitButton.isEnabled = true
+        }
+    }
+    
     private let commentTextView: CommentInputTextView = {
         let tv = CommentInputTextView()
         tv.layer.cornerRadius = 18
@@ -38,12 +44,14 @@ class CommentInputAccessoryView: UIView {
     
     private let submitButton: UIButton = {
         let sb = UIButton(type: .system)
-        sb.setTitle("Submit", for: .normal)
-        sb.setTitleColor(UIColor.init(named: "PostText"), for: .normal)
-        sb.setTitleColor(.gray, for: .disabled)
+       // sb.setTitle("Submit", for: .normal)
+        sb.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+       // sb.setTitleColor(UIColor.init(named: "PostText"), for: .normal)
+       // sb.setTitleColor(.gray, for: .disabled)
         sb.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         sb.addTarget(self, action: #selector(handleSubmit), for: .touchUpInside)
         sb.isEnabled = false
+        sb.tintColor = .blueButton
         return sb
     }()
     
@@ -55,10 +63,10 @@ class CommentInputAccessoryView: UIView {
         
         addSubview(submitButton)
         submitButton.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor).isActive = true
-        submitButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 50, height: 50)
+        submitButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
         
         addSubview(commentTextView)
-        commentTextView.anchor(top: topAnchor, left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: submitButton.leftAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 8, paddingRight: 8, width: 0, height: 0)
+        commentTextView.anchor(top: topAnchor, left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: submitButton.leftAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 8, paddingRight: 0, width: 0, height: 0)
         
         setupLineSeparatorView()
         
@@ -83,6 +91,7 @@ class CommentInputAccessoryView: UIView {
     @objc func handleSubmit() {
         guard let commentText = commentTextView.text else { return }
         delegate?.didSubmit(for: commentText)
+        submitButton.isEnabled = false
     }
     
     required init?(coder aDecoder: NSCoder) {

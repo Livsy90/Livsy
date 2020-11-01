@@ -59,7 +59,6 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
                 UserDefaults.standard.username = ""
                 UserDefaults.standard.password = ""
             }
-            print(response?.token)
             self.presenter?.presentToken(response: PostListModels.Login.Response(error: error))
         })
     }

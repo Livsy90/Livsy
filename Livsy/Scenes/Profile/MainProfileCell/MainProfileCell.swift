@@ -95,7 +95,7 @@ class MainProfileCell: UITableViewCell {
         stackView.addArrangedSubview(mainLabel)
         stackView.addArrangedSubview(list)
         stackView.addArrangedSubview(loginButton)
-        stackView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 50, paddingLeft: 40, paddingBottom: 20, paddingRight: 40, width: 0, height: 0)
+        stackView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 40, paddingLeft: 40, paddingBottom: 20, paddingRight: 40, width: 0, height: 0)
         loginButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         mainImageView.heightAnchor.constraint(equalToConstant: 130).isActive = true
     }

@@ -112,8 +112,14 @@ final class RegisterViewController: UIViewController {
         stackView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 150, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 180)
     }
     
+    func validateEmail(enteredEmail: String) -> Bool {
+        let emailFormat = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailFormat)
+        return emailPredicate.evaluate(with: enteredEmail)
+    }
+    
     @objc private func handleTextInputChange() {
-        let isFormValid = loginTextField.text?.count ?? 0 > 0 && passwordTextField.text?.count ?? 0 > 0
+        let isFormValid = loginTextField.text?.count ?? 0 > 0 && passwordTextField.text?.count ?? 0 > 0 && emailTextField.text?.count ?? 0 > 0 && validateEmail(enteredEmail: emailTextField.text ?? "")
         
         if isFormValid {
             signupButton.isEnabled = true
@@ -129,21 +135,24 @@ final class RegisterViewController: UIViewController {
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
         signupButton.isUserInteractionEnabled = false
+        signupButton.backgroundColor = #colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1)
         interactor?.register(request: RegisterModels.Register.Request(username: username, email: email, password: password))
     }
     
 }
 
 // MARK: - Register Display Logic
+
 extension RegisterViewController: RegisterDisplayLogic {
+    
     func displayLogin(viewModel: RegisterModels.Register.ViewModel) {
         if viewModel.error == nil {
             self.navigationController?.popViewController(animated: true)
         }  else {
             router?.showAlert(with: viewModel.error?.message ?? "Error")
             signupButton.isUserInteractionEnabled = true
+            signupButton.backgroundColor = .blueButton
         }
     }
-    
     
 }

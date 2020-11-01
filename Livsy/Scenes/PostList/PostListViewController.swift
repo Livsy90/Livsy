@@ -51,6 +51,7 @@ final class PostListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Livsy"
+        checkToken()
         setupCollectionView()
         setupRefreshControl()
         fetchPostList(isLoadMore: false)

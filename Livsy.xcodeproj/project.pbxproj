@@ -99,7 +99,6 @@
 		C2D6691E24A3B6F900F6731F /* UITextView+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6691D24A3B6F900F6731F /* UITextView+adds.swift */; };
 		C2D6692024A3C3E600F6731F /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6691F24A3C3E600F6731F /* PostViewController.swift */; };
 		C2D6756D2523742E001CE5AE /* UIColor+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6756C2523742E001CE5AE /* UIColor+adds.swift */; };
-		C2E3444625373060000D07F2 /* Register.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2E3443F25373060000D07F2 /* Register.storyboard */; };
 		C2E3444725373060000D07F2 /* RegisterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E3444025373060000D07F2 /* RegisterPresenter.swift */; };
 		C2E3444825373060000D07F2 /* RegisterWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E3444125373060000D07F2 /* RegisterWorker.swift */; };
 		C2E3444925373060000D07F2 /* RegisterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E3444225373060000D07F2 /* RegisterRouter.swift */; };
@@ -205,7 +204,6 @@
 		C2D6691D24A3B6F900F6731F /* UITextView+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+adds.swift"; sourceTree = "<group>"; };
 		C2D6691F24A3C3E600F6731F /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		C2D6756C2523742E001CE5AE /* UIColor+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+adds.swift"; sourceTree = "<group>"; };
-		C2E3443F25373060000D07F2 /* Register.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Register.storyboard; sourceTree = "<group>"; };
 		C2E3444025373060000D07F2 /* RegisterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPresenter.swift; sourceTree = "<group>"; };
 		C2E3444125373060000D07F2 /* RegisterWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterWorker.swift; sourceTree = "<group>"; };
 		C2E3444225373060000D07F2 /* RegisterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouter.swift; sourceTree = "<group>"; };
@@ -532,7 +530,6 @@
 		C2E3443E25373046000D07F2 /* Register */ = {
 			isa = PBXGroup;
 			children = (
-				C2E3443F25373060000D07F2 /* Register.storyboard */,
 				C2E3444025373060000D07F2 /* RegisterPresenter.swift */,
 				C2E3444125373060000D07F2 /* RegisterWorker.swift */,
 				C2E3444225373060000D07F2 /* RegisterRouter.swift */,
@@ -615,7 +612,6 @@
 				C2386F84249DF6EB0076AED3 /* Main.storyboard in Resources */,
 				C218FCF3251B5A6A002F9C68 /* Splash.storyboard in Resources */,
 				C2A7E8D0252B414B00ABF3D5 /* CommentsTableViewCell.xib in Resources */,
-				C2E3444625373060000D07F2 /* Register.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -31,10 +31,11 @@ final class PostRouter: PostRoutingLogic, PostDataPassing {
     }
     
     func navigateToPostComments(source: PostViewController, destination: PostCommentsViewController) {
-        let navController = UINavigationController(rootViewController: destination)
-        navController.modalPresentationStyle = .fullScreen
-        navController.modalTransitionStyle = .coverVertical
-        viewController?.present(navController, animated: true, completion: nil)
+//        let navController = UINavigationController(rootViewController: destination)
+//        navController.modalPresentationStyle = .overCurrentContext
+//        navController.modalTransitionStyle = .coverVertical
+//        viewController?.present(navController, animated: true)
+        viewController?.navigationController?.pushViewController(destination, animated: true)
     }
     
     func passDataToPostComments(source: PostDataStore, destination: inout PostCommentsDataStore) {

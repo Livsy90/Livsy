@@ -67,7 +67,7 @@ class PostListCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: Constants.postListItemWidth, height: frame.height * 0.3)
+        return CGSize(width: Constants.postListItemWidth, height: Constants.postListItemWHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

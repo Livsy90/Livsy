@@ -101,9 +101,21 @@ final class PostCommentRepliesViewController: UIViewController {
     }
     
     private func setupNavBar() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(dismissSelf))
+        title = "Comments"
         if UserDefaults.standard.token == "" {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Login to comment", style: .done, target: self, action: #selector(routeToLogin))
+            let loginButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 120, height: 30))
+            loginButton.setTitle("Login to reply", for: .normal)
+            loginButton.layer.cornerRadius = 8
+            loginButton.layer.borderWidth = 1
+            loginButton.layer.borderColor = UIColor.blueButton.cgColor
+            loginButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+            loginButton.setTitleColor(.blueButton, for: .normal)
+            loginButton.addTarget(self, action: #selector(routeToLogin), for: .touchUpInside)
+            loginButton.isEnabled = false
+            let item =  UIBarButtonItem(customView: loginButton)
+            navigationItem.rightBarButtonItem = item
+        } else {
+            navigationItem.rightBarButtonItem = nil
         }
     }
     
@@ -142,6 +154,7 @@ extension PostCommentRepliesViewController: PostCommentRepliesDisplayLogic {
             containerView.clearCommentTextField()
             showReplies(isReload: true)
         } else {
+            containerView.enableButton()
             router?.showAlert(with: viewModel.error?.message ?? "Oops.. Something went wrong!")
         }
     }

@@ -23,6 +23,7 @@ final class ProfileViewController: UIViewController {
     
     private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     private let greetingsText = "Login or sign up to:"
+    private let username = UserDefaults.standard.username
     
     private let bubbleImage: UIImage = {
         let symbolImage = UIImage(systemName: "captions.bubble.fill")
@@ -57,6 +58,12 @@ final class ProfileViewController: UIViewController {
         setupTableView()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        if username != UserDefaults.standard.username {
+            tableView.softReload()
+        }
+    }
+    
     // MARK: - Private Methods
     
     private func setupTableView() {
@@ -64,6 +71,7 @@ final class ProfileViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
+        tableView.showsVerticalScrollIndicator = false
         tableView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         tableView.register(MainProfileCell.self, forCellReuseIdentifier: "cellId")
         tableView.register(UINib(nibName: CommentsTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.reuseIdentifier())
@@ -76,9 +84,9 @@ final class ProfileViewController: UIViewController {
     private func showSignOutQuestion() {
         router?.showSignOutQuestionAlert(completion: signOut)
     }
-        
+    
     @objc private func handleLogin() {
-        switch UserDefaults.standard.token != "" {
+        switch UserDefaults.standard.username != "" {
         case true:
             showSignOutQuestion()
         default:
@@ -138,9 +146,9 @@ extension ProfileViewController: UITableViewDataSource {
         let token = UserDefaults.standard.token
         switch section {
         case 0:
-          return ""
+            return ""
         default:
-          return token == "" ? "" : "Comments"
+            return token == "" ? "" : "Comments"
         }
         
     }
@@ -148,7 +156,7 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let name = UserDefaults.standard.username else { return UITableViewCell() }
         let comment = PostComment(id: 1, parent: 1, authorName: "Livsy", content: Content(rendered: "Here is my comment!", protected: true), replies: [])
-       
+        
         guard let commentCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.reuseIdentifier(), for: indexPath) as? CommentsTableViewCell else { return UITableViewCell() }
         commentCell.config(comment: comment, isReplyButtonHidden: true)
         
@@ -156,7 +164,7 @@ extension ProfileViewController: UITableViewDataSource {
         mainCell.selectionStyle = .none
         mainCell.config(mainImage: (name == "" ? bubbleImage : avatarImage), mainLabelText: (name == "" ? greetingsText : name), isListHidden: name != "", loginButtonTitle: (name == "" ? "Continue" : "Sign out"))
         mainCell.loginCompletion = { [weak self] in
-        guard let self = self else { return }
+            guard let self = self else { return }
             self.handleLogin()
         }
         

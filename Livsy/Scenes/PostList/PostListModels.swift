@@ -47,6 +47,8 @@ struct Constants {
     static let leftDistanceToView: CGFloat = 20
     static let rightDistanceToView: CGFloat = 20
     static let postListMinimumLineSpacing: CGFloat = 20
+    static let postListItemWHeight: CGFloat = 260
+    static let postListImageHeight: CGFloat = 130
     static let postListItemWidth = (UIScreen.main.bounds.width - Constants.leftDistanceToView - Constants.rightDistanceToView - (Constants.postListMinimumLineSpacing / 2))// / 2
     static var imageWidth: CGFloat = {
         var width = CGFloat()

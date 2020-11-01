@@ -75,23 +75,28 @@ final class PostCommentsViewController: UIViewController {
     
     // MARK: - Lifecycle
     
+    override func viewWillLayoutSubviews() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //         setupCollectionView()
+        title = "Comments"
+        view.backgroundColor = .postBackground
         setupTableView()
         setupNoCommentslabel()
         showComments(isReload: false)
         setupNoCommentslabel()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         setupNavBar()
-    }
-    
-    override func viewWillLayoutSubviews() {
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+        UIView.animate(withDuration: 1, animations: {
+                   
+               })
     }
     
     // MARK: - Private Methods
@@ -136,10 +141,20 @@ final class PostCommentsViewController: UIViewController {
     }
     
     private func setupNavBar() {
-        view.backgroundColor = .postBackground
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(dismissSelf))
         if UserDefaults.standard.token == "" {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Login to reply", style: .done, target: self, action: #selector(routeToLogin))
+            let loginButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 120, height: 30))
+            loginButton.setTitle("Login to reply", for: .normal)
+            loginButton.layer.cornerRadius = 8
+            loginButton.layer.borderWidth = 1
+            loginButton.layer.borderColor = UIColor.blueButton.cgColor
+            loginButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+            loginButton.setTitleColor(.blueButton, for: .normal)
+            loginButton.addTarget(self, action: #selector(routeToLogin), for: .touchUpInside)
+            loginButton.isEnabled = false
+            let item =  UIBarButtonItem(customView: loginButton)
+            navigationItem.rightBarButtonItem = item
+        } else {
+            navigationItem.rightBarButtonItem = nil
         }
     }
     
@@ -197,6 +212,7 @@ extension PostCommentsViewController: PostCommentsDisplayLogic {
             containerView.clearCommentTextField()
             showComments(isReload: true)
         } else {
+            containerView.enableButton()
             router?.showAlert(with: viewModel.error?.message ?? "Oops.. Something went wrong!")
         }
     }
@@ -212,6 +228,7 @@ extension PostCommentsViewController: CommentInputAccessoryViewDelegate {
 }
 
 extension PostCommentsViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -236,6 +253,5 @@ extension PostCommentsViewController: UITableViewDataSource {
         cell.config(comment: comment, isReplyButtonHidden: false)
         return cell
     }
-    
     
 }

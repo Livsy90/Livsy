@@ -34,10 +34,11 @@ final class PostCommentsRouter: PostCommentsRoutingLogic, PostCommentsDataPassin
     }
     
     func navigateToReplies(source: PostCommentsViewController, destination: PostCommentRepliesViewController) {
-        let navController = UINavigationController(rootViewController: destination)
-        navController.modalPresentationStyle = .fullScreen
-        navController.modalTransitionStyle = .coverVertical
-        viewController?.present(navController, animated: true, completion: nil)
+//        let navController = UINavigationController(rootViewController: destination)
+//        navController.modalPresentationStyle = .fullScreen
+//        navController.modalTransitionStyle = .coverVertical
+//        viewController?.present(navController, animated: true, completion: nil)
+        viewController?.navigationController?.pushViewController(destination, animated: true)
     }
     
     func passDataToReplies(source: PostCommentsDataStore, destination: inout PostCommentRepliesDataStore) {
@@ -47,15 +48,28 @@ final class PostCommentsRouter: PostCommentsRoutingLogic, PostCommentsDataPassin
     
     func routeToLogin() {
         let destinationVC = LoginViewController()
+        var destinationDS = destinationVC.router!.dataStore!
         navigateToLogin(source: viewController!, destination: destinationVC)
+        passDataToLoginScene(source: dataStore!, destination: &destinationDS)
     }
     
     func navigateToLogin(source: PostCommentsViewController, destination: LoginViewController) {
         viewController?.navigationController?.pushViewController(destination, animated: true)
     }
     
+    func passDataToLoginScene(source: PostCommentsDataStore, destination: inout LoginDataStore) {
+        destination.dismissMode = .toComments
+    }
+    
     func dismissSelf() {
-        viewController?.dismiss(animated: true, completion: nil)
+        let destinationVC = PostViewController()
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToPostScene(destination: &destinationDS)
+       // viewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    func passDataToPostScene(destination: inout PostDataStore) {
+        destination.isTabBarHidden = true
     }
     
     func showAlert(with message: String) {
