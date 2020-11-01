@@ -59,6 +59,7 @@
 		C239A712254DAC2E000E7358 /* MainProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C239A711254DAC2E000E7358 /* MainProfileCell.swift */; };
 		C23ACCAE24B9B62D00882E07 /* UserDefaults+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23ACCAD24B9B62D00882E07 /* UserDefaults+adds.swift */; };
 		C23D496B24AA4905007AEE32 /* PostCommentsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23D496A24AA4905007AEE32 /* PostCommentsCollectionViewCell.swift */; };
+		C250E668254EA6BB009E5E03 /* UITableView+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C250E667254EA6BB009E5E03 /* UITableView+adds.swift */; };
 		C268CDB124A9290800949C4D /* PostCommentsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268CDAA24A9290800949C4D /* PostCommentsPresenter.swift */; };
 		C268CDB224A9290800949C4D /* PostCommentsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268CDAB24A9290800949C4D /* PostCommentsWorker.swift */; };
 		C268CDB324A9290800949C4D /* PostCommentsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268CDAC24A9290800949C4D /* PostCommentsRouter.swift */; };
@@ -164,6 +165,7 @@
 		C239A711254DAC2E000E7358 /* MainProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProfileCell.swift; sourceTree = "<group>"; };
 		C23ACCAD24B9B62D00882E07 /* UserDefaults+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+adds.swift"; sourceTree = "<group>"; };
 		C23D496A24AA4905007AEE32 /* PostCommentsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentsCollectionViewCell.swift; sourceTree = "<group>"; };
+		C250E667254EA6BB009E5E03 /* UITableView+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+adds.swift"; sourceTree = "<group>"; };
 		C268CDAA24A9290800949C4D /* PostCommentsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentsPresenter.swift; sourceTree = "<group>"; };
 		C268CDAB24A9290800949C4D /* PostCommentsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentsWorker.swift; sourceTree = "<group>"; };
 		C268CDAC24A9290800949C4D /* PostCommentsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentsRouter.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 				C23261EF24D5D73B00F670EE /* Collection+safe.swift */,
 				C2D6756C2523742E001CE5AE /* UIColor+adds.swift */,
 				C26F2D7B252C5234000F1939 /* UIImage+adds.swift */,
+				C250E667254EA6BB009E5E03 /* UITableView+adds.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -673,6 +676,7 @@
 				C2E3444E253730D4000D07F2 /* RegisterConfigurator.swift in Sources */,
 				C2ACD5C1251E254900204696 /* CustomTextView.swift in Sources */,
 				C2386FAA249E09B50076AED3 /* PostListRouter.swift in Sources */,
+				C250E668254EA6BB009E5E03 /* UITableView+adds.swift in Sources */,
 				C2BCF43224AB67E8008C28FD /* PostCommentRepliesPresenter.swift in Sources */,
 				C23D496B24AA4905007AEE32 /* PostCommentsCollectionViewCell.swift in Sources */,
 				C2E3444825373060000D07F2 /* RegisterWorker.swift in Sources */,

@@ -29,9 +29,7 @@ final class RegisterViewController: UIViewController {
         tf.backgroundColor = .postBackground
         tf.setLeftPaddingPoints(10)
         tf.setRightPaddingPoints(10)
-        tf.layer.borderColor = #colorLiteral(red: 0.5704585314, green: 0.5704723597, blue: 0.5704649091, alpha: 1)
-        tf.layer.cornerRadius = 5
-        tf.layer.borderWidth = 1
+        tf.layer.cornerRadius = 8
         tf.font = UIFont.systemFont(ofSize: 14)
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         tf.textColor = .postText
@@ -44,9 +42,7 @@ final class RegisterViewController: UIViewController {
         tf.backgroundColor = .postBackground
         tf.setLeftPaddingPoints(10)
         tf.setRightPaddingPoints(10)
-        tf.layer.borderColor = #colorLiteral(red: 0.5704585314, green: 0.5704723597, blue: 0.5704649091, alpha: 1)
-        tf.layer.cornerRadius = 5
-        tf.layer.borderWidth = 1
+        tf.layer.cornerRadius = 8
         tf.font = UIFont.systemFont(ofSize: 14)
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         tf.textColor = .postText
@@ -57,9 +53,7 @@ final class RegisterViewController: UIViewController {
         let tf = UITextField()
         tf.placeholder = "Password"
         tf.isSecureTextEntry = true
-        tf.layer.borderColor = #colorLiteral(red: 0.5704585314, green: 0.5704723597, blue: 0.5704649091, alpha: 1)
-        tf.layer.borderWidth = 1
-        tf.layer.cornerRadius = 5
+        tf.layer.cornerRadius = 8
         tf.backgroundColor = .postBackground
         tf.setLeftPaddingPoints(10)
         tf.setRightPaddingPoints(10)
@@ -72,8 +66,8 @@ final class RegisterViewController: UIViewController {
     private let signupButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("SignUp", for: .normal)
-        button.backgroundColor = .gray
-        button.layer.cornerRadius = 5
+        button.backgroundColor = #colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1)
+        button.layer.cornerRadius = 8
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
@@ -126,7 +120,7 @@ final class RegisterViewController: UIViewController {
             signupButton.backgroundColor = .blueButton
         } else {
             signupButton.isEnabled = false
-            signupButton.backgroundColor = .gray
+            signupButton.backgroundColor = #colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1)
         }
     }
     

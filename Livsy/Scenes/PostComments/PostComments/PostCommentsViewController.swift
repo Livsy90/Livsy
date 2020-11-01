@@ -54,7 +54,7 @@ final class PostCommentsViewController: UIViewController {
         return l
     }()
     private let postCommentsCollectionView = PostCommentsCollectionView()
-    private let tableView = UITableView()
+    private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     private var safeArea: UILayoutGuide!
     
     // MARK: - Initializers
@@ -139,7 +139,7 @@ final class PostCommentsViewController: UIViewController {
         view.backgroundColor = .postBackground
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(dismissSelf))
         if UserDefaults.standard.token == "" {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Login to reply", style: .plain, target: self, action: #selector(routeToLogin))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Login to reply", style: .done, target: self, action: #selector(routeToLogin))
         }
     }
     
@@ -233,7 +233,7 @@ extension PostCommentsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let comment = router?.dataStore?.comments[indexPath.row] else { return UITableViewCell() }
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.reuseIdentifier(), for: indexPath) as? CommentsTableViewCell else { return UITableViewCell() }
-        cell.config(comment: comment)
+        cell.config(comment: comment, isReplyButtonHidden: false)
         return cell
     }
     

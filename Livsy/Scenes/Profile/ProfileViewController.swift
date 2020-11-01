@@ -21,7 +21,7 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Private Properties
     
-    private let tableView = UITableView()
+    private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     private let greetingsText = "Login or sign up to:"
     
     private let bubbleImage: UIImage = {
@@ -63,11 +63,10 @@ final class ProfileViewController: UIViewController {
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorColor = .clear
         tableView.tableFooterView = UIView()
         tableView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         tableView.register(MainProfileCell.self, forCellReuseIdentifier: "cellId")
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")
+        tableView.register(UINib(nibName: CommentsTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.reuseIdentifier())
     }
     
     private func signOut() {
@@ -95,7 +94,7 @@ extension ProfileViewController: ProfileDisplayLogic {
     
     func displaySignOut() {
         router?.showSignOutResultAlert()
-        tableView.reloadData()
+        tableView.reloadWithAnimation()
     }
     
 }
@@ -103,7 +102,7 @@ extension ProfileViewController: ProfileDisplayLogic {
 extension ProfileViewController: LoginSceneDelegate {
     
     func setupUIforLoggedIn() {
-        tableView.reloadData()
+        tableView.reloadWithAnimation()
     }
     
 }
@@ -113,15 +112,21 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
 }
 
 extension ProfileViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return 1
         default:
-            return 10
+            return UserDefaults.standard.token == "" ? 0 : 10
         }
     }
     
@@ -130,30 +135,36 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let token = UserDefaults.standard.token
         switch section {
         case 0:
           return ""
         default:
-          return UserDefaults.standard.token == "" ? "" : "Comments"
+          return token == "" ? "" : "Comments"
         }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let text = UserDefaults.standard.username else { return UITableViewCell() }
-        let cell1 = tableView.dequeueReusableCell(withIdentifier: "DefaultCell")!
-        cell1.textLabel?.text  = "  J!"
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! MainProfileCell
-        cell.selectionStyle = .none
-        cell.config(mainImage: (text == "" ? bubbleImage : avatarImage), mainLabelText: (text == "" ? greetingsText : text), isListHidden: text != "", loginButtonTitle: (text == "" ? "Continue" : "Sign out"))
-        cell.loginCompletion = { [weak self] in
+        guard let name = UserDefaults.standard.username else { return UITableViewCell() }
+        let comment = PostComment(id: 1, parent: 1, authorName: "Livsy", content: Content(rendered: "Here is my comment!", protected: true), replies: [])
+       
+        guard let commentCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.reuseIdentifier(), for: indexPath) as? CommentsTableViewCell else { return UITableViewCell() }
+        commentCell.config(comment: comment, isReplyButtonHidden: true)
+        
+        guard let mainCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as? MainProfileCell else { return UITableViewCell() }
+        mainCell.selectionStyle = .none
+        mainCell.config(mainImage: (name == "" ? bubbleImage : avatarImage), mainLabelText: (name == "" ? greetingsText : name), isListHidden: name != "", loginButtonTitle: (name == "" ? "Continue" : "Sign out"))
+        mainCell.loginCompletion = { [weak self] in
         guard let self = self else { return }
             self.handleLogin()
         }
+        
         switch indexPath.section {
         case 0:
-            return cell
+            return mainCell
         default:
-            return cell1
+            return commentCell
         }
     }
     

@@ -9,9 +9,7 @@
 import UIKit
 
 class MainProfileCell: UITableViewCell {
-    class func reuseIdentifier() -> String {
-        return "UserPhotoCellIdentifier"
-    }
+    
    var loginCompletion: (() -> Void)?
     
    private let list: UILabel = {
@@ -30,7 +28,7 @@ class MainProfileCell: UITableViewCell {
     private let loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .blueButton
-        button.layer.cornerRadius = 5
+        button.layer.cornerRadius = 8
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
