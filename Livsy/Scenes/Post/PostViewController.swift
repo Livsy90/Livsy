@@ -71,15 +71,6 @@ final class PostViewController: UIViewController {
         fetchPost()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        guard let hidden = router?.dataStore?.isTabBarHidden else { return }
-        if hidden {
-          setTabBarHidden(false)
-          interactor?.setTabBarHiddenValue(isHidden: false)
-        }
-    }
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
@@ -207,8 +198,6 @@ final class PostViewController: UIViewController {
     }
     
     @objc private func routeToComments() {
-        interactor?.setTabBarHiddenValue(isHidden: true)
-        setTabBarHidden(true)
         router?.routeToPostComments()
     }
     

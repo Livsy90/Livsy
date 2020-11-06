@@ -10,6 +10,7 @@ import UIKit
 
 protocol CommentInputAccessoryViewDelegate {
     func didSubmit(for comment: String)
+    func routeToLoginScene()
 }
 
 class CommentInputAccessoryView: UIView {
@@ -69,7 +70,10 @@ class CommentInputAccessoryView: UIView {
         commentTextView.anchor(top: topAnchor, left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: submitButton.leftAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 8, paddingRight: 0, width: 0, height: 0)
         
         setupLineSeparatorView()
-        
+        commentTextView.textInputLoginCompletion = { [weak self ] in
+            guard let self = self else { return }
+            self.handleLogin()
+        }
         commentTextView.textInputCompletion = { [weak self] (isEmpty) in
             guard let self = self else { return }
             self.submitButton.isEnabled = !isEmpty
@@ -86,6 +90,10 @@ class CommentInputAccessoryView: UIView {
         lineSeparatorView.backgroundColor = .listBackground
         addSubview(lineSeparatorView)
         lineSeparatorView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+    }
+    
+    func handleLogin() {
+        delegate?.routeToLoginScene()
     }
     
     @objc func handleSubmit() {

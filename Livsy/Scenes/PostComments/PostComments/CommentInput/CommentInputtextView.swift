@@ -11,6 +11,7 @@ import UIKit
 class CommentInputTextView: UITextView, UITextViewDelegate {
     
     var textInputCompletion: ((Bool) -> Void)?
+    var textInputLoginCompletion: (() -> Void)?
     
     private let placeholderLabel: UILabel = {
         let label = UILabel()
@@ -31,7 +32,7 @@ class CommentInputTextView: UITextView, UITextViewDelegate {
         }
         return size
     }
-
+    
     override var text: String! {
         didSet {
             invalidateIntrinsicContentSize()
@@ -48,7 +49,7 @@ class CommentInputTextView: UITextView, UITextViewDelegate {
         delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleTextChange), name: UITextView.textDidChangeNotification, object: nil)
-         
+        
         addSubview(placeholderLabel)
         placeholderLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 8, paddingLeft: 14, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
@@ -56,7 +57,16 @@ class CommentInputTextView: UITextView, UITextViewDelegate {
     @objc func handleTextChange() {
         placeholderLabel.isHidden = !self.text.isEmpty
         textInputCompletion?(self.text.isEmpty)
-     
+        
+    }
+    
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        if UserDefaults.standard.token == "" {
+            textInputLoginCompletion?()
+            return false
+        } else {
+            return true
+        }
     }
     
     func textViewDidChange(_ textView: UITextView) {

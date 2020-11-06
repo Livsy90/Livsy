@@ -23,11 +23,7 @@ final class PostCommentsViewController: UIViewController {
     
     override var inputAccessoryView: UIView? {
         get {
-            if UserDefaults.standard.token != "" {
                 return containerView
-            } else {
-                return nil
-            }
         }
     }
     
@@ -93,10 +89,6 @@ final class PostCommentsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         setupNavBar()
-        
-        UIView.animate(withDuration: 1, animations: {
-                   
-               })
     }
     
     // MARK: - Private Methods
@@ -223,6 +215,10 @@ extension PostCommentsViewController: CommentInputAccessoryViewDelegate {
     
     func didSubmit(for comment: String) {
         submitComment(content: comment)
+    }
+    
+    func routeToLoginScene() {
+        router?.routeToLogin()
     }
     
 }

@@ -11,7 +11,6 @@ import UIKit
 protocol PostBusinessLogic {
     func fetchPostPage(request: PostModels.PostPage.Request)
     func fetchPostComments(request: PostModels.PostComments.Request)
-    func setTabBarHiddenValue(isHidden: Bool)
 }
 
 protocol PostDataStore {
@@ -21,7 +20,6 @@ protocol PostDataStore {
     var comments: [PostComment] { get set }
     var image: UIImage { get set }
     var averageColor: UIColor { get set }
-    var isTabBarHidden: Bool { get set }
 }
 
 final class PostInteractor: PostBusinessLogic, PostDataStore {
@@ -41,7 +39,6 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
     var comments: [PostComment] = []
     var image = UIImage()
     var averageColor: UIColor = .blueButton
-    var isTabBarHidden: Bool = false
     
     // MARK: - Business Logic
     
@@ -60,10 +57,6 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
             self.comments = comments ?? []
             self.presenter?.presentPostComments(response: PostModels.PostComments.Response())
         })
-    }
-    
-    func setTabBarHiddenValue(isHidden: Bool) {
-        isTabBarHidden = isHidden
     }
     
 }

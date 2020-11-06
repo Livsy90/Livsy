@@ -33,16 +33,16 @@ class CommentsTableViewCell: UITableViewCell {
         return "CommentsTableViewCellID"
     }
     
-    
     class func nibName() -> String {
         return "CommentsTableViewCell"
     }
     
     func config(comment: PostComment, isReplyButtonHidden: Bool) {
         comment.replies.count == 0 ? (repliesLabel.text = "Reply") : (repliesLabel.text = "Show replies (\(comment.replies.count))")
-        authorNameLabel.text = String(htmlEncodedString: comment.authorName)
-        contentLabel.text = String(htmlEncodedString: comment.content?.rendered ?? "")
+        authorNameLabel.text = comment.authorName.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+        contentLabel.text = comment.content?.rendered?.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
         repliesLabel.isHidden = isReplyButtonHidden
+        
     }
     
 }

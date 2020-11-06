@@ -167,5 +167,8 @@ extension PostCommentRepliesViewController: CommentInputAccessoryViewDelegate {
         submitComment(content: comment)
     }
     
+    func routeToLoginScene() {
+        router?.routeToLogin()
+    }
     
 }

@@ -47,5 +47,6 @@ class WebImageView: UIImageView {
             self.image = UIImage(data: data)
         }
     }
+    
 }
 

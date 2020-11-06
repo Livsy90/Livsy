@@ -90,12 +90,12 @@ class MainProfileCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
 
-        addSubview(stackView)
+        contentView.addSubview(stackView)
         stackView.addArrangedSubview(mainImageView)
         stackView.addArrangedSubview(mainLabel)
         stackView.addArrangedSubview(list)
         stackView.addArrangedSubview(loginButton)
-        stackView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 40, paddingLeft: 40, paddingBottom: 20, paddingRight: 40, width: 0, height: 0)
+        stackView.anchor(top: contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, paddingTop: 40, paddingLeft: 40, paddingBottom: 20, paddingRight: 40, width: 0, height: 0)
         loginButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         mainImageView.heightAnchor.constraint(equalToConstant: 130).isActive = true
     }

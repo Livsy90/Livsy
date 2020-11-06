@@ -62,14 +62,7 @@ final class PostCommentsRouter: PostCommentsRoutingLogic, PostCommentsDataPassin
     }
     
     func dismissSelf() {
-        let destinationVC = PostViewController()
-        var destinationDS = destinationVC.router!.dataStore!
-        passDataToPostScene(destination: &destinationDS)
        // viewController?.dismiss(animated: true, completion: nil)
-    }
-    
-    func passDataToPostScene(destination: inout PostDataStore) {
-        destination.isTabBarHidden = true
     }
     
     func showAlert(with message: String) {
