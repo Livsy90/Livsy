@@ -10,7 +10,7 @@ import UIKit
 
 protocol ProfileDisplayLogic: class {
     func displaySignOut()
-    func displayUserComments(viewModel: ProfileModels.UserComments.ViewModel)
+    func displayFavPosts(viewModel: ProfileModels.FavoritePosts.ViewModel)
 }
 
 final class ProfileViewController: UIViewController {
@@ -59,8 +59,9 @@ final class ProfileViewController: UIViewController {
         setupTableView()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        fetchUserComments()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchFavPosts()
     }
     
     // MARK: - Private Methods
@@ -73,19 +74,23 @@ final class ProfileViewController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         tableView.register(MainProfileCell.self, forCellReuseIdentifier: "cellId")
-        tableView.register(UINib(nibName: CommentsTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.reuseIdentifier())
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")
     }
     
     private func signOut() {
         interactor?.signOut()
     }
     
-    private func fetchUserComments() {
-        UserDefaults.standard.token == "" ? tableView.softReload() : interactor?.showComments(request: ProfileModels.UserComments.Request())
+    private func fetchFavPosts() {
+        interactor?.showFavPosts(request: ProfileModels.FavoritePosts.Request())
     }
     
     private func showSignOutQuestion() {
         router?.showSignOutQuestionAlert(completion: signOut)
+    }
+    
+    private func routeToPost(id: Int, url: String) {
+        router?.routeToPost(id: id, url: url)
     }
     
     @objc private func handleLogin() {
@@ -108,7 +113,7 @@ extension ProfileViewController: ProfileDisplayLogic {
         tableView.reloadWithAnimation()
     }
     
-    func displayUserComments(viewModel: ProfileModels.UserComments.ViewModel) {
+    func displayFavPosts(viewModel: ProfileModels.FavoritePosts.ViewModel) {
         tableView.softReload()
     }
     
@@ -129,7 +134,9 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let posts = router?.dataStore?.favoritePosts ?? []
         tableView.deselectRow(at: indexPath, animated: true)
+        routeToPost(id: posts[indexPath.row].id, url: posts[indexPath.row].imgURL ?? "")
     }
     
 }
@@ -141,7 +148,7 @@ extension ProfileViewController: UITableViewDataSource {
         case 0:
             return 1
         default:
-            return UserDefaults.standard.token == "" ? 0 : router?.dataStore?.comments.count ?? 0
+            return router?.dataStore?.favoritePosts.count ?? 0
         }
     }
     
@@ -150,12 +157,12 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let token = UserDefaults.standard.token
+        let posts = router?.dataStore?.favoritePosts ?? []
         switch section {
         case 0:
             return ""
         default:
-            return token == "" ? "" : "Comments"
+            return posts.count == 0 ? "No favorite posts yet" : "Favorite posts"
         }
         
     }
@@ -163,18 +170,16 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let name = UserDefaults.standard.username else { return UITableViewCell() }
         
-        var comment = PostComment(id: 0, parent: 0, authorName: "Livsy")
+        var comment = Post(id: 0, date: "", title: Title(rendered: "Hi"), excerpt: nil, imgURL: "")
         
-        let comments = router?.dataStore?.comments
+        let comments = router?.dataStore?.favoritePosts
         if comments?.count ?? 0 > 0 {
-            comment = comments?[indexPath.row] ?? PostComment(id: 0, parent: 0, authorName: "Livsy")
+            comment = comments?[indexPath.row] ?? Post(id: 0, date: "", title: Title(rendered: "Hi"), excerpt: nil, imgURL: "")
             
         }
         
-        
-        guard let commentCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.reuseIdentifier(), for: indexPath) as? CommentsTableViewCell else { return UITableViewCell() }
-        
-        commentCell.config(comment: comment, isReplyButtonHidden: true)
+        let commentCell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell")!
+        commentCell.textLabel?.text = comment.title?.rendered
         
         guard let mainCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as? MainProfileCell else { return UITableViewCell() }
         mainCell.selectionStyle = .none

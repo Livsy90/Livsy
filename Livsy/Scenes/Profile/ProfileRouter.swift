@@ -12,6 +12,7 @@ protocol ProfileRoutingLogic {
     func showSignOutResultAlert()
     func showSignOutQuestionAlert(completion: @escaping (() -> Void))
     func routeToLogin()
+    func routeToPost(id: Int, url: String)
 }
 
 protocol ProfileDataPassing {
@@ -24,6 +25,7 @@ final class ProfileRouter: ProfileRoutingLogic, ProfileDataPassing {
     
     weak var viewController: ProfileViewController?
     var dataStore: ProfileDataStore?
+
     
     func showSignOutQuestionAlert(completion: @escaping (() -> Void)) {
         viewController?.showAlertWithTwoButtons(title: "Are you sure?", firstButtonTitle: "Yes", secondButtonTitle: "No", firstButtonAction: completion, secondButtonAction: nil)
@@ -49,5 +51,24 @@ final class ProfileRouter: ProfileRoutingLogic, ProfileDataPassing {
     
     func passDataToLoginScene(source: ProfileDataStore, destination: inout LoginDataStore) {
         destination.loginSceneDelegate = viewController
+    }
+    
+    func routeToPost(id: Int, url: String) {
+        let destinationVC = PostViewController()
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToPost(postID: id, imageURL: url, source: dataStore!, destination: &destinationDS)
+        navigateToPost(source: viewController!, destination: destinationVC)
+    }
+    
+    func navigateToPost(source: ProfileViewController, destination: PostViewController) {
+        viewController?.navigationController?.pushViewController(destination, animated: true)
+    }
+    
+    func passDataToPost(postID: Int, imageURL: String, source: ProfileDataStore, destination: inout PostDataStore) {
+        destination.id = postID
+        let imageView = source.imageView
+        imageView?.set(imageURL: imageURL)
+        destination.image = imageView?.image ?? UIImage()
+        destination.averageColor = imageView?.image?.averageColor ?? UIColor.blueButton
     }
 }

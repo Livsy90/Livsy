@@ -13,8 +13,8 @@ final class ProfileWorker {
     private let net = NetService.sharedInstanse
     private let netManager = NetManager.sharedInstanse
     
-    func fetchUserComments(completion: @escaping (Bodies.PostCommentsAPI.Response?, Error?) -> ()) {
-        netManager.fetchUserComments(completion: completion)
+    func fetchFavoritePosts(postsIds: String, completion: @escaping (Bodies.PostListAPI.Response?, Error?) -> ()) {
+        netManager.fetchFavoritePosts(postsIds: postsIds, completion: completion)
     }
     
 }

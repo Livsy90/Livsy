@@ -10,11 +10,12 @@ import Foundation
 
 protocol ProfileBusinessLogic {
     func signOut()
-    func showComments(request: ProfileModels.UserComments.Request)
+    func showFavPosts(request: ProfileModels.FavoritePosts.Request)
 }
 
 protocol ProfileDataStore {
-    var comments: [PostComment] { get set }
+    var favoritePosts: [Post] { get set }
+    var imageView: WebImageView? { get set }
 }
 
 final class ProfileInteractor: ProfileBusinessLogic, ProfileDataStore {
@@ -28,7 +29,8 @@ final class ProfileInteractor: ProfileBusinessLogic, ProfileDataStore {
     
     // MARK: - Data Store
     
-    var comments: [PostComment] = []
+    var favoritePosts: [Post] = []
+    var imageView: WebImageView? = WebImageView()
     
     // MARK: - Business Logic
     
@@ -39,11 +41,20 @@ final class ProfileInteractor: ProfileBusinessLogic, ProfileDataStore {
         presenter?.presentSignOut()
     }
     
-    func showComments(request: ProfileModels.UserComments.Request) {
-        worker?.fetchUserComments(completion: { [weak self] (response, error) in
-            guard let self = self else { return }
-            self.comments = response ?? []
-            self.presenter?.presentUserComments(response: ProfileModels.UserComments.Response())
-        })
+    func showFavPosts(request: ProfileModels.FavoritePosts.Request) {
+        let favList = UserDefaults.favPosts ?? []
+        let stringArray = favList.map(String.init).joined(separator: ",")
+        
+        if !stringArray.isEmpty {
+            worker?.fetchFavoritePosts(postsIds: stringArray, completion: { [weak self] (response, error) in
+                guard let self = self else { return }
+                self.favoritePosts = response ?? []
+                self.presenter?.presentFavPosts(response: ProfileModels.FavoritePosts.Response())
+            })
+        } else {
+            favoritePosts = []
+            presenter?.presentFavPosts(response: ProfileModels.FavoritePosts.Response())
+        }
     }
+    
 }

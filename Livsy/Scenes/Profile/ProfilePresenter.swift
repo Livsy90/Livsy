@@ -10,7 +10,7 @@ import UIKit
 
 protocol ProfilePresentationLogic {
     func presentSignOut()
-    func presentUserComments(response: ProfileModels.UserComments.Response)
+    func presentFavPosts(response: ProfileModels.FavoritePosts.Response)
 }
 
 final class ProfilePresenter: ProfilePresentationLogic {
@@ -26,8 +26,8 @@ final class ProfilePresenter: ProfilePresentationLogic {
         viewController?.displaySignOut()
     }
     
-    func presentUserComments(response: ProfileModels.UserComments.Response) {
-        viewController?.displayUserComments(viewModel: ProfileModels.UserComments.ViewModel())
+    func presentFavPosts(response: ProfileModels.FavoritePosts.Response) {
+        viewController?.displayFavPosts(viewModel: ProfileModels.FavoritePosts.ViewModel())
     }
     
 }

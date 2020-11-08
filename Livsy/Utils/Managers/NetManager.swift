@@ -37,19 +37,15 @@ class NetManager {
         
     }
     
-    func fetchUserComments(completion: @escaping (Bodies.PostCommentsAPI.Response?, Error?) -> ()) {
-        let perPageQuery = "&per_page=100"
-        guard let user = UserDefaults.standard.username else { return }
-        let request = Request.RequestType.PostComments.get(path: "\(API.userComments)\(user)")
-        
+    func fetchFavoritePosts(postsIds: String, completion: @escaping (Bodies.PostListAPI.Response?, Error?) -> ()) {
+        let request = Request.RequestType.PostList.get(path: "\(API.favPosts)\(postsIds)")
         net.getData(with: request) { (data, error) in
-            print(data?.toString)
             guard let data = data, error == nil else { return }
             do {
-                let response = try JSONDecoder().decode(Bodies.PostCommentsAPI.Response.self, from: data)
+                let response = try JSONDecoder().decode(Bodies.PostListAPI.Response.self, from: data)
                 completion(response, nil)
             } catch {
-                completion([], error)
+                completion(nil, error)
             }
         }
         

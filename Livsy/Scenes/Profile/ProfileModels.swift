@@ -12,7 +12,7 @@ enum ProfileModels {
     
     // MARK: -
     
-    enum UserComments {
+    enum FavoritePosts {
         
         struct Request {
         }

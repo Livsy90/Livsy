@@ -31,18 +31,24 @@ final class PostViewController: UIViewController {
     private let postTitle = UILabel()
     private let imageView = WebImageView()
     private let lblName = UILabel()
-    private let favButton = UIButton()
     private let darkView: UIView = {
-         let view = UIView()
-         view.translatesAutoresizingMaskIntoConstraints = false
-         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-         return view
-     }()
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        return view
+    }()
     private let progressView: UIProgressView = {
-         let pv = UIProgressView(progressViewStyle: .bar)
-         pv.translatesAutoresizingMaskIntoConstraints = false
-         return pv
-     }()
+        let pv = UIProgressView(progressViewStyle: .bar)
+        pv.translatesAutoresizingMaskIntoConstraints = false
+        return pv
+    }()
+    private let favButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(savePostToFav), for: .touchUpInside)
+        button.tintColor = .navBarTint
+        return button
+    }()
     
     // MARK: - Initializers
     
@@ -69,12 +75,13 @@ final class PostViewController: UIViewController {
         scrollViewSetup()
         textViewSetup()
         setupHeader()
+        setupFavButton()
         fetchPost()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-       // tabBarController?.tabBar.isHidden = false
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupProgressView()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -142,10 +149,16 @@ final class PostViewController: UIViewController {
         scrollView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
+    private func setupFavButton() {
+        view.addSubview(favButton)
+        favButton.anchor(top: nil, left: nil, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 75, paddingRight: 12, width: 0, height: 0)
+    }
+    
     private func setupProgressView() {
         view.addSubview(progressView)
         progressView.anchor(top: navigationController?.navigationBar.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 5)
-        progressView.progressTintColor = router?.dataStore?.averageColor
+        let color = router?.dataStore?.averageColor ?? .blueButton
+        progressView.progressTintColor = color
     }
     
     private func postTitleSetup() {
@@ -175,14 +188,7 @@ final class PostViewController: UIViewController {
         loadingCommentsIndicator.stopAnimating()
         guard let count = router?.dataStore?.comments.count else { return }
         let barButton = UIBarButtonItem(title: "Comments (\(count))", style: .done, target: self, action: #selector(routeToComments))
-        
-        favButton.setImage(UserDefaults.favPosts?.contains(router?.dataStore?.id ?? 99999) ?? false ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart"), for: .normal)
-        favButton.tintColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
-        favButton.addTarget(self, action: #selector(savePostToFav), for: .touchUpInside)
-        favButton.isEnabled = false
-        let favItem =  UIBarButtonItem(customView: favButton)
-        
-        navigationItem.rightBarButtonItems = [favItem, barButton]
+        navigationItem.rightBarButtonItem = barButton
     }
     
     private func fetchPost() {
@@ -210,6 +216,19 @@ final class PostViewController: UIViewController {
         }
     }
     
+    private func setFavImage(isFavorite: Bool) {
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 38, weight: .medium, scale: .medium)
+        let circleHeart = UIImage(systemName: "heart", withConfiguration: largeConfig)
+        let circleHeartFill = UIImage(systemName: "heart.fill", withConfiguration: largeConfig)
+        
+        switch isFavorite {
+        case true:
+            favButton.setImage(circleHeartFill, for: .normal)
+        default:
+            favButton.setImage(circleHeart, for: .normal)
+        }
+    }
+    
     @objc private func routeToComments() {
         router?.routeToPostComments()
     }
@@ -218,15 +237,14 @@ final class PostViewController: UIViewController {
         var array = UserDefaults.favPosts ?? []
         
         if array.contains(router?.dataStore?.id ?? 99999) {
-           array = array.filter { $0 != router?.dataStore?.id ?? 99999 }
+            array = array.filter { $0 != router?.dataStore?.id ?? 99999 }
             UserDefaults.standard.set(array, forKey: "favPosts")
-            favButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            setFavImage(isFavorite: false)
         } else {
             array.append(router?.dataStore?.id ?? 0)
             UserDefaults.standard.set(array, forKey: "favPosts")
-            favButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            setFavImage(isFavorite: true)
         }
-        print(UserDefaults.favPosts)
     }
     
 }
@@ -239,7 +257,7 @@ extension PostViewController: PostDisplayLogic {
         textView.setHTMLFromString(htmlText: router?.dataStore?.content ?? "", color: .postText)
         fetchPostComments()
         activityIndicator.hideIndicator()
-        setupProgressView()
+        setFavImage(isFavorite: UserDefaults.favPosts?.contains(router?.dataStore?.id ?? 99999) ?? false)
     }
     
     func displayPostComments(viewModel: PostModels.PostComments.ViewModel) {

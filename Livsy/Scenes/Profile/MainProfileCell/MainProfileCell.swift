@@ -97,11 +97,11 @@ class MainProfileCell: UITableViewCell {
         stackView.addArrangedSubview(loginButton)
         stackView.anchor(top: contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, paddingTop: 40, paddingLeft: 40, paddingBottom: 20, paddingRight: 40, width: 0, height: 0)
         loginButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        mainImageView.heightAnchor.constraint(equalToConstant: 130).isActive = true
+        mainImageView.heightAnchor.constraint(equalToConstant: 110).isActive = true
     }
     
     private func setupList() {
-        let arrayOfLines = ["Leave comments", "See your profile information", "Get list of all the comments you left"]
+        let arrayOfLines = ["Leave comments", "See your profile information"]
         for value in arrayOfLines {
             list.text = ("\(list.text ?? "") • \(value)\n")
         }
