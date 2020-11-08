@@ -24,8 +24,26 @@ class NetManager {
     
     func fetchPostComments(id: Int, completion: @escaping (Bodies.PostCommentsAPI.Response?, Error?) -> ()) {
         let perPageQuery = "&per_page=100"
-        let request = Request.RequestType.PostList.get(path: "\(API.postComments)\(id)\(perPageQuery)")
+        let request = Request.RequestType.PostComments.get(path: "\(API.postComments)\(id)\(perPageQuery)")
         net.getData(with: request) { (data, error) in
+            guard let data = data, error == nil else { return }
+            do {
+                let response = try JSONDecoder().decode(Bodies.PostCommentsAPI.Response.self, from: data)
+                completion(response, nil)
+            } catch {
+                completion([], error)
+            }
+        }
+        
+    }
+    
+    func fetchUserComments(completion: @escaping (Bodies.PostCommentsAPI.Response?, Error?) -> ()) {
+        let perPageQuery = "&per_page=100"
+        guard let user = UserDefaults.standard.username else { return }
+        let request = Request.RequestType.PostComments.get(path: "\(API.userComments)\(user)")
+        
+        net.getData(with: request) { (data, error) in
+            print(data?.toString)
             guard let data = data, error == nil else { return }
             do {
                 let response = try JSONDecoder().decode(Bodies.PostCommentsAPI.Response.self, from: data)

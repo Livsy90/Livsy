@@ -9,22 +9,19 @@
 import UIKit
 
 enum ProfileModels {
-  
-  // MARK: - 
-  
-  enum Something {
     
-    struct Request {
-      
+    // MARK: -
+    
+    enum UserComments {
+        
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
     }
     
-    struct Response {
-      
-    }
-    
-    struct ViewModel {
-      
-    }
-  }
-  
 }

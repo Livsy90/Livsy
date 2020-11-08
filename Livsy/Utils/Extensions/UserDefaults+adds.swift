@@ -18,6 +18,8 @@ extension UserDefaults {
         static let password = "password"
         
         static let token = "token"
+        
+        static let favPosts = "favPosts"
     }
     
     var username: String? {
@@ -44,6 +46,15 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: Key.token)
+        }
+    }
+    
+    static var favPosts: [Int]? {
+        get {
+            return standard.array(forKey: Key.favPosts) as? [Int]
+        }
+        set(v) {
+            standard.set(v, forKey: Key.favPosts)
         }
     }
     

@@ -8,13 +8,13 @@
 
 import Foundation
 
-protocol ProfileWorkingLogic {
-
-}
-
-final class ProfileWorker: ProfileWorkingLogic {
-  
-  // MARK: - Private Properties
-
-  // MARK: - Working Logic
+final class ProfileWorker {
+    
+    private let net = NetService.sharedInstanse
+    private let netManager = NetManager.sharedInstanse
+    
+    func fetchUserComments(completion: @escaping (Bodies.PostCommentsAPI.Response?, Error?) -> ()) {
+        netManager.fetchUserComments(completion: completion)
+    }
+    
 }

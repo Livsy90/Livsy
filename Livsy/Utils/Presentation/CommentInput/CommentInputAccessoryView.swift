@@ -47,6 +47,7 @@ class CommentInputAccessoryView: UIView {
         let sb = UIButton(type: .system)
        // sb.setTitle("Submit", for: .normal)
         sb.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+        sb.setImage(UIImage(systemName: "zzz"), for: .disabled)
        // sb.setTitleColor(UIColor.init(named: "PostText"), for: .normal)
        // sb.setTitleColor(.gray, for: .disabled)
         sb.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)

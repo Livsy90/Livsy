@@ -10,6 +10,7 @@ import UIKit
 
 protocol ProfileDisplayLogic: class {
     func displaySignOut()
+    func displayUserComments(viewModel: ProfileModels.UserComments.ViewModel)
 }
 
 final class ProfileViewController: UIViewController {
@@ -59,7 +60,7 @@ final class ProfileViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        tableView.softReload()
+        fetchUserComments()
     }
     
     // MARK: - Private Methods
@@ -77,6 +78,10 @@ final class ProfileViewController: UIViewController {
     
     private func signOut() {
         interactor?.signOut()
+    }
+    
+    private func fetchUserComments() {
+        UserDefaults.standard.token == "" ? tableView.softReload() : interactor?.showComments(request: ProfileModels.UserComments.Request())
     }
     
     private func showSignOutQuestion() {
@@ -101,6 +106,10 @@ extension ProfileViewController: ProfileDisplayLogic {
     func displaySignOut() {
         router?.showSignOutResultAlert()
         tableView.reloadWithAnimation()
+    }
+    
+    func displayUserComments(viewModel: ProfileModels.UserComments.ViewModel) {
+        tableView.softReload()
     }
     
 }
@@ -132,7 +141,7 @@ extension ProfileViewController: UITableViewDataSource {
         case 0:
             return 1
         default:
-            return UserDefaults.standard.token == "" ? 0 : 10
+            return UserDefaults.standard.token == "" ? 0 : router?.dataStore?.comments.count ?? 0
         }
     }
     
@@ -153,9 +162,18 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let name = UserDefaults.standard.username else { return UITableViewCell() }
-        let comment = PostComment(id: 1, parent: 1, authorName: "Livsy", content: Content(rendered: "Here is my comment!", protected: true), replies: [])
+        
+        var comment = PostComment(id: 0, parent: 0, authorName: "Livsy")
+        
+        let comments = router?.dataStore?.comments
+        if comments?.count ?? 0 > 0 {
+            comment = comments?[indexPath.row] ?? PostComment(id: 0, parent: 0, authorName: "Livsy")
+            
+        }
+        
         
         guard let commentCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.reuseIdentifier(), for: indexPath) as? CommentsTableViewCell else { return UITableViewCell() }
+        
         commentCell.config(comment: comment, isReplyButtonHidden: true)
         
         guard let mainCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as? MainProfileCell else { return UITableViewCell() }

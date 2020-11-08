@@ -9,20 +9,25 @@
 import UIKit
 
 protocol ProfilePresentationLogic {
-  func presentSignOut()
+    func presentSignOut()
+    func presentUserComments(response: ProfileModels.UserComments.Response)
 }
 
 final class ProfilePresenter: ProfilePresentationLogic {
-
-  // MARK: - Public Properties
-
-  weak var viewController: ProfileDisplayLogic?
-
-  // MARK: - Private Properties
-
-  // MARK: - Presentation Logic
-  func presentSignOut() {
-      viewController?.displaySignOut()
-  }
-  
+    
+    // MARK: - Public Properties
+    
+    weak var viewController: ProfileDisplayLogic?
+    
+    // MARK: - Private Properties
+    
+    // MARK: - Presentation Logic
+    func presentSignOut() {
+        viewController?.displaySignOut()
+    }
+    
+    func presentUserComments(response: ProfileModels.UserComments.Response) {
+        viewController?.displayUserComments(viewModel: ProfileModels.UserComments.ViewModel())
+    }
+    
 }

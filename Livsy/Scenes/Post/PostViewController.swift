@@ -31,6 +31,7 @@ final class PostViewController: UIViewController {
     private let postTitle = UILabel()
     private let imageView = WebImageView()
     private let lblName = UILabel()
+    private let favButton = UIButton()
     private let darkView: UIView = {
          let view = UIView()
          view.translatesAutoresizingMaskIntoConstraints = false
@@ -174,7 +175,14 @@ final class PostViewController: UIViewController {
         loadingCommentsIndicator.stopAnimating()
         guard let count = router?.dataStore?.comments.count else { return }
         let barButton = UIBarButtonItem(title: "Comments (\(count))", style: .done, target: self, action: #selector(routeToComments))
-        navigationItem.rightBarButtonItem = barButton
+        
+        favButton.setImage(UserDefaults.favPosts?.contains(router?.dataStore?.id ?? 99999) ?? false ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart"), for: .normal)
+        favButton.tintColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        favButton.addTarget(self, action: #selector(savePostToFav), for: .touchUpInside)
+        favButton.isEnabled = false
+        let favItem =  UIBarButtonItem(customView: favButton)
+        
+        navigationItem.rightBarButtonItems = [favItem, barButton]
     }
     
     private func fetchPost() {
@@ -204,6 +212,21 @@ final class PostViewController: UIViewController {
     
     @objc private func routeToComments() {
         router?.routeToPostComments()
+    }
+    
+    @objc private func savePostToFav() {
+        var array = UserDefaults.favPosts ?? []
+        
+        if array.contains(router?.dataStore?.id ?? 99999) {
+           array = array.filter { $0 != router?.dataStore?.id ?? 99999 }
+            UserDefaults.standard.set(array, forKey: "favPosts")
+            favButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        } else {
+            array.append(router?.dataStore?.id ?? 0)
+            UserDefaults.standard.set(array, forKey: "favPosts")
+            favButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        }
+        print(UserDefaults.favPosts)
     }
     
 }

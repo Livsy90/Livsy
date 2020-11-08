@@ -21,4 +21,5 @@ struct API {
     static let signUp = "wp/v2/users/register"
     static let resetPassword = "wp/v2/users/lost-password"
     static let search = "wp/v2/posts?search="
+    static let userComments = "wp/v2/comments/?author_name="
 }
