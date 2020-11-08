@@ -71,6 +71,11 @@ final class PostViewController: UIViewController {
         fetchPost()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+       // tabBarController?.tabBar.isHidden = false
+    }
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
@@ -168,7 +173,7 @@ final class PostViewController: UIViewController {
     private func commentsButtonSetup() {
         loadingCommentsIndicator.stopAnimating()
         guard let count = router?.dataStore?.comments.count else { return }
-        let barButton = UIBarButtonItem(title: "Comments (\(count))", style: .plain, target: self, action: #selector(routeToComments))
+        let barButton = UIBarButtonItem(title: "Comments (\(count))", style: .done, target: self, action: #selector(routeToComments))
         navigationItem.rightBarButtonItem = barButton
     }
     

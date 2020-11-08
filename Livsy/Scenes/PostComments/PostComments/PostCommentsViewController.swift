@@ -21,18 +21,8 @@ final class PostCommentsViewController: UIViewController {
     var interactor: PostCommentsBusinessLogic?
     var router: (PostCommentsRoutingLogic & PostCommentsDataPassing)?
     
-    override var inputAccessoryView: UIView? {
-        get {
-                return containerView
-        }
-    }
-    
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
-    
     // MARK: - Private Properties
-    
+    private var bottomConstraint = NSLayoutConstraint()
     private lazy var containerView: CommentInputAccessoryView = {
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         let commentInputAccessoryView = CommentInputAccessoryView(frame: frame)
@@ -49,10 +39,9 @@ final class PostCommentsViewController: UIViewController {
         l.font = UIFont.boldSystemFont(ofSize: 30.0)
         return l
     }()
-    private let postCommentsCollectionView = PostCommentsCollectionView()
     private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     private var safeArea: UILayoutGuide!
-    
+
     // MARK: - Initializers
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -85,9 +74,17 @@ final class PostCommentsViewController: UIViewController {
         setupNoCommentslabel()
         showComments(isReload: false)
         setupNoCommentslabel()
+        setupInputView()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        tabBarController?.tabBar.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         setupNavBar()
     }
     
@@ -98,16 +95,20 @@ final class PostCommentsViewController: UIViewController {
         
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
-        
         if notification.name == UIResponder.keyboardWillHideNotification {
-            //            postCommentsCollectionView
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            bottomConstraint.constant = 0
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         } else {
-            //            postCommentsCollectionView
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
+            bottomConstraint.constant = -keyboardViewEndFrame.height
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + 50, right: 0)
         }
         
-        //        postCommentsCollectionView.scrollIndicatorInsets = postCommentsCollectionView.contentInset
+        UIView.animate(withDuration: 0, delay: 0, options: .curveEaseOut) {
+            self.view.layoutIfNeeded()
+        } completion: { (completed) in
+            
+        }
+        
         tableView.scrollIndicatorInsets = tableView.contentInset
     }
     
@@ -118,12 +119,22 @@ final class PostCommentsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.anchor(top: safeArea.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         tableView.tableFooterView = UIView()
         tableView.backgroundColor = .postListBackground
-        tableView.keyboardDismissMode = .interactive
+        tableView.keyboardDismissMode = .onDrag
         tableView.register(UINib(nibName: CommentsTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.reuseIdentifier())
+    }
+    
+    private func setupInputView() {
+        view.addSubview(containerView)
+        containerView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        
+        let bCons = NSLayoutConstraint(item: containerView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
+        bottomConstraint = bCons
+        view.addConstraint(bottomConstraint)
     }
     
     private func setupNoCommentslabel() {
@@ -148,16 +159,6 @@ final class PostCommentsViewController: UIViewController {
         } else {
             navigationItem.rightBarButtonItem = nil
         }
-    }
-    
-    private func setupCollectionView() {
-        view.addSubview(postCommentsCollectionView)
-        postCommentsCollectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        postCommentsCollectionView.cellTappedCompletion = { [weak self] (comment, replies) in
-            guard let self = self else { return }
-            self.showReplies(comment: comment, replies: replies)
-        }
-        postCommentsCollectionView.keyboardDismissMode = .interactive
     }
     
     private func showComments(isReload: Bool) {

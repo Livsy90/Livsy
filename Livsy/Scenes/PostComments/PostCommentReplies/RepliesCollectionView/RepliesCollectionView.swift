@@ -57,7 +57,7 @@ class RepliesCollectionView: UICollectionView, UICollectionViewDelegate, UIColle
         
         commentCell.isParent = comments[indexPath.item].parent == 0 ? true : false
         commentCell.nameLabel.text = comments[indexPath.item].authorName
-        commentCell.content.text = String(htmlEncodedString: content)
+        commentCell.content.text = content.pureString()
         
         return commentCell
     }

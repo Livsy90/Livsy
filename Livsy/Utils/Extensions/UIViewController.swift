@@ -130,7 +130,7 @@ extension UIViewController {
                 UIView.animate(withDuration: duration, animations: {
                     self.tabBarController?.tabBar.frame = CGRect(x: frame.origin.x, y: y, width: frame.width, height: frame.height)
                 })
-                return
+               // return
             }
         }
         self.tabBarController?.tabBar.isHidden = hidden

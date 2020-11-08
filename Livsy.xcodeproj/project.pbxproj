@@ -447,6 +447,7 @@
 		C268CDC224A93A4200949C4D /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				C2A5B9E924B364A9004BE928 /* CommentInput */,
 				C2ACD5C0251E254900204696 /* CustomTextView.swift */,
 				C2C31A51249F5879002AAB91 /* WebImageView.swift */,
 				C268CDC024A9380200949C4D /* BadgeBarButton.swift */,
@@ -496,7 +497,6 @@
 			isa = PBXGroup;
 			children = (
 				C23B0AE625275F0800E7FBA4 /* PostCommentsTableViewCell */,
-				C2A5B9E924B364A9004BE928 /* CommentInput */,
 				C268CDBB24A929A300949C4D /* PostCommentsCollectionView */,
 				C268CDAA24A9290800949C4D /* PostCommentsPresenter.swift */,
 				C268CDAB24A9290800949C4D /* PostCommentsWorker.swift */,

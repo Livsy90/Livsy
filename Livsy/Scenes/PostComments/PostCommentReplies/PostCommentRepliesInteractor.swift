@@ -15,6 +15,7 @@ protocol PostCommentRepliesBusinessLogic {
 
 protocol PostCommentRepliesDataStore {
     var replies: [PostComment] { get set }
+    var parentComment: PostComment? { get set }
     var postID: Int { get set }
 }
 
@@ -30,22 +31,25 @@ final class PostCommentRepliesInteractor: PostCommentRepliesBusinessLogic, PostC
     // MARK: - Data Store
     
     var replies: [PostComment] = []
+    var parentComment: PostComment?
     var postID: Int = 0
     
     // MARK: - Business Logic
     
     func showReplies(request: PostCommentRepliesModels.PostCommentReplies.Request) {
-        
         if request.isReload {
             worker?.fetchReplies(id: replies.first?.id ?? 0, completion: { [weak self] (response, error) in
                 guard let self = self else { return }
                 guard let parentComment = self.replies.first else { return }
-                
+                self.parentComment = parentComment
                 self.replies = response ?? []
-                self.replies.insert(parentComment, at: 0)
+                self.replies.remove(at: 0)
                 self.presenter?.presentReplies(response: PostCommentRepliesModels.PostCommentReplies.Response())
             })
         } else {
+            guard let parentComment = self.replies.first else { return }
+            self.parentComment = parentComment
+            
             self.presenter?.presentReplies(response: PostCommentRepliesModels.PostCommentReplies.Response())
         }
         

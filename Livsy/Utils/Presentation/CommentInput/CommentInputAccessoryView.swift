@@ -32,11 +32,11 @@ class CommentInputAccessoryView: UIView {
     private let commentTextView: CommentInputTextView = {
         let tv = CommentInputTextView()
         tv.layer.cornerRadius = 18
-        tv.backgroundColor = UIColor.init(named: "PostBackground")
-        tv.textColor = UIColor.init(named: "PostText")
+        tv.backgroundColor = .inputTextView
+        tv.textColor = .postText
         tv.tintColor = UIColor.init(named: "NavBarTint")
-        tv.layer.borderWidth = 1
-        tv.layer.borderColor = #colorLiteral(red: 0.5741485357, green: 0.5741624236, blue: 0.574154973, alpha: 1)
+        //tv.layer.borderWidth = 1
+        //tv.layer.borderColor = #colorLiteral(red: 0.5741485357, green: 0.5741624236, blue: 0.574154973, alpha: 1)
         tv.isScrollEnabled = false
         tv.font = UIFont.systemFont(ofSize: 18)
         tv.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)

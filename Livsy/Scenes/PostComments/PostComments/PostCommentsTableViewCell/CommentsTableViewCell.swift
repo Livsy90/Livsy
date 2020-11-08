@@ -38,10 +38,11 @@ class CommentsTableViewCell: UITableViewCell {
     }
     
     func config(comment: PostComment, isReplyButtonHidden: Bool) {
-        comment.replies.count == 0 ? (repliesLabel.text = "Reply") : (repliesLabel.text = "Show replies (\(comment.replies.count))")
-        authorNameLabel.text = comment.authorName.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
-        contentLabel.text = comment.content?.rendered?.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
-        repliesLabel.isHidden = isReplyButtonHidden
+        let repliesText = comment.replies.count == 1 ? "reply" : "replies"
+        repliesLabel.text = "••• \(comment.replies.count) \(repliesText)"
+        authorNameLabel.text = comment.authorName.pureString()
+        contentLabel.text = comment.content?.rendered?.pureString()
+        repliesLabel.isHidden = isReplyButtonHidden || comment.replies.count == 0
         
     }
     

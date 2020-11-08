@@ -100,6 +100,12 @@ final class RegisterViewController: UIViewController {
         title = "Sign up"
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if UserDefaults.standard.token != "" {
+            navigationController?.popViewController(animated: false)
+        }
+    }
+    
     // MARK: - Private Methods
     
     private func setupInputFields() {

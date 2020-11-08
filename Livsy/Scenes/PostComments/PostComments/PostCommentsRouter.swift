@@ -34,10 +34,6 @@ final class PostCommentsRouter: PostCommentsRoutingLogic, PostCommentsDataPassin
     }
     
     func navigateToReplies(source: PostCommentsViewController, destination: PostCommentRepliesViewController) {
-//        let navController = UINavigationController(rootViewController: destination)
-//        navController.modalPresentationStyle = .fullScreen
-//        navController.modalTransitionStyle = .coverVertical
-//        viewController?.present(navController, animated: true, completion: nil)
         viewController?.navigationController?.pushViewController(destination, animated: true)
     }
     
@@ -47,6 +43,7 @@ final class PostCommentsRouter: PostCommentsRoutingLogic, PostCommentsDataPassin
     }
     
     func routeToLogin() {
+//        viewController?.tabBarController?.selectedIndex = 1
         let destinationVC = LoginViewController()
         var destinationDS = destinationVC.router!.dataStore!
         navigateToLogin(source: viewController!, destination: destinationVC)
@@ -62,7 +59,7 @@ final class PostCommentsRouter: PostCommentsRoutingLogic, PostCommentsDataPassin
     }
     
     func dismissSelf() {
-       // viewController?.dismiss(animated: true, completion: nil)
+        viewController?.dismiss(animated: true, completion: nil)
     }
     
     func showAlert(with message: String) {

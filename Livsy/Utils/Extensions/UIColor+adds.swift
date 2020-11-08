@@ -62,4 +62,8 @@ extension UIColor {
         return UIColor.init(named: "TitleGray") ?? .darkText
     }
     
+    static var inputTextView: UIColor {
+        return UIColor.init(named: "InputTextView") ?? .darkText
+    }
+    
 }

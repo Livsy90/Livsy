@@ -26,12 +26,20 @@ final class PostCommentRepliesRouter: PostCommentRepliesRoutingLogic, PostCommen
     var dataStore: PostCommentRepliesDataStore?
     
     func routeToLogin() {
+       // viewController?.tabBarController?.selectedIndex = 1
+        
         let destinationVC = LoginViewController()
+        var destinationDS = destinationVC.router!.dataStore!
         navigateToLogin(source: viewController!, destination: destinationVC)
+        passDataToLoginScene(source: dataStore!, destination: &destinationDS)
     }
     
     func navigateToLogin(source: PostCommentRepliesViewController, destination: LoginViewController) {
         viewController?.navigationController?.pushViewController(destination, animated: true)
+    }
+    
+    func passDataToLoginScene(source: PostCommentRepliesDataStore, destination: inout LoginDataStore) {
+        destination.dismissMode = .toComments
     }
     
     func dismissSelf() {

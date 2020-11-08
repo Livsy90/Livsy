@@ -20,39 +20,42 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="752" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7GL-pu-tvM">
-                        <rect key="frame" x="16" y="16" width="40" height="27"/>
+                        <rect key="frame" x="16" y="16" width="40" height="21"/>
                         <color key="tintColor" name="PostListText"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="UOH-vP-0hz">
-                        <rect key="frame" x="16" y="59" width="400" height="46"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="UOH-vP-0hz">
+                        <rect key="frame" x="16" y="87" width="400" height="18"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32n-Wv-y1J">
-                                <rect key="frame" x="0.0" y="0.0" width="37.5" height="18"/>
-                                <color key="tintColor" name="PostText"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uIX-Me-eOY">
-                                <rect key="frame" x="0.0" y="28" width="39" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uIX-Me-eOY">
+                                <rect key="frame" x="361" y="0.0" width="39" height="18"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                     </stackView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32n-Wv-y1J">
+                        <rect key="frame" x="16" y="53" width="400" height="18"/>
+                        <color key="tintColor" name="PostText"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <color key="tintColor" systemColor="systemIndigoColor"/>
                 <constraints>
                     <constraint firstItem="7GL-pu-tvM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="75A-LQ-Q1N"/>
+                    <constraint firstItem="32n-Wv-y1J" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="D5d-WG-pnT"/>
                     <constraint firstItem="7GL-pu-tvM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Pg1-Kc-WzR"/>
                     <constraint firstItem="UOH-vP-0hz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="RCO-Dh-BWG"/>
+                    <constraint firstAttribute="trailing" secondItem="32n-Wv-y1J" secondAttribute="trailing" constant="16" id="XHR-i9-D5D"/>
+                    <constraint firstItem="32n-Wv-y1J" firstAttribute="top" secondItem="7GL-pu-tvM" secondAttribute="bottom" constant="16" id="dek-QC-BgM"/>
                     <constraint firstAttribute="bottom" secondItem="UOH-vP-0hz" secondAttribute="bottom" constant="16" id="iTA-vw-4kU"/>
-                    <constraint firstItem="UOH-vP-0hz" firstAttribute="top" secondItem="7GL-pu-tvM" secondAttribute="bottom" constant="16" id="toF-Mu-gfo"/>
+                    <constraint firstItem="UOH-vP-0hz" firstAttribute="top" secondItem="32n-Wv-y1J" secondAttribute="bottom" constant="16" id="nJs-mX-3IN"/>
                     <constraint firstAttribute="trailing" secondItem="UOH-vP-0hz" secondAttribute="trailing" constant="16" id="zgr-p5-cdB"/>
                 </constraints>
             </tableViewCellContentView>

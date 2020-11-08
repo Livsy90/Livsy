@@ -57,11 +57,11 @@ class MainProfileCell: UITableViewCell {
     }()
     
     private let stackView: UIStackView = {
-        let sw = UIStackView()
-        sw.axis = .vertical
-        sw.spacing = 20
-        sw.distribution = .fill
-        return sw
+        let sv = UIStackView()
+        sv.axis = .vertical
+        sv.spacing = 20
+        sv.distribution = .fill
+        return sv
     }()
     
     private let bubbleImage: UIImage = {

@@ -59,9 +59,7 @@ final class ProfileViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if username != UserDefaults.standard.username {
-            tableView.softReload()
-        }
+        tableView.softReload()
     }
     
     // MARK: - Private Methods

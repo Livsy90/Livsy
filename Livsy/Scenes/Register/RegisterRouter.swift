@@ -24,6 +24,6 @@ final class RegisterRouter: RegisterRoutingLogic, RegisterDataPassing {
   var dataStore: RegisterDataStore?
   
     func showAlert(with message: String) {
-        viewController?.showAlertWithOneButton(title: String(htmlEncodedString: message) ?? "Error", message: nil, buttonTitle: "OK", buttonAction: nil)
+        viewController?.showAlertWithOneButton(title: message.pureString(), message: nil, buttonTitle: "OK", buttonAction: nil)
     }
 }

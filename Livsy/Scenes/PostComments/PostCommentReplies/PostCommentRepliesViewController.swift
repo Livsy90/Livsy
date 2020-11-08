@@ -20,24 +20,11 @@ final class PostCommentRepliesViewController: UIViewController {
     var interactor: PostCommentRepliesBusinessLogic?
     var router: (PostCommentRepliesRoutingLogic & PostCommentRepliesDataPassing)?
     
-    override var inputAccessoryView: UIView? {
-        get {
-            if UserDefaults.standard.token != "" {
-                return containerView 
-            } else {
-                return nil
-            }
-        }
-    }
-    
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
-    
     // MARK: - Private Properties
     
     private var repliesCollectionView = RepliesCollectionView()
-    
+    private var bottomConstraint = NSLayoutConstraint()
+    private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     private lazy var containerView: CommentInputAccessoryView = {
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         let commentInputAccessoryView = CommentInputAccessoryView(frame: frame)
@@ -65,7 +52,8 @@ final class PostCommentRepliesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCollectionView()
+        setupTableView()
+        setupInputView()
         showReplies(isReload: false)
     }
     
@@ -81,19 +69,51 @@ final class PostCommentRepliesViewController: UIViewController {
     
     // MARK: - Private Methods
     
+    func setupTableView() {
+        tableView.showsHorizontalScrollIndicator = false
+        tableView.showsVerticalScrollIndicator = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        tableView.tableFooterView = UIView()
+        tableView.backgroundColor = .postListBackground
+        tableView.keyboardDismissMode = .onDrag
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+        tableView.register(UINib(nibName: CommentsTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.reuseIdentifier())
+    }
+    
+    
+    private func setupInputView() {
+        view.addSubview(containerView)
+        containerView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        
+        let bCons = NSLayoutConstraint(item: containerView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
+        bottomConstraint = bCons
+        view.addConstraint(bottomConstraint)
+    }
+    
     @objc private func adjustForKeyboard(notification: Notification) {
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
-        
         if notification.name == UIResponder.keyboardWillHideNotification {
-            repliesCollectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+            bottomConstraint.constant = 0
         } else {
-            repliesCollectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + 10, right: 10)
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + 50, right: 0)
+            bottomConstraint.constant = -keyboardViewEndFrame.height
         }
         
-        repliesCollectionView.scrollIndicatorInsets = repliesCollectionView.contentInset
+        UIView.animate(withDuration: 0, delay: 0, options: .curveEaseOut) {
+            self.view.layoutIfNeeded()
+        } completion: { (completed) in
+            
+        }
+        
+        tableView.scrollIndicatorInsets = tableView.contentInset
     }
     
     @objc private func routeToLogin() {
@@ -144,9 +164,7 @@ final class PostCommentRepliesViewController: UIViewController {
 extension PostCommentRepliesViewController: PostCommentRepliesDisplayLogic {
     
     func displayReplies(request: PostCommentRepliesModels.PostCommentReplies.ViewModel) {
-        guard let comments = router?.dataStore?.replies else { return }
-        repliesCollectionView.set(comments: comments)
-        repliesCollectionView.reloadData()
+        tableView.reloadData()
     }
     
     func diplsySubmitCommentResult(viewModel: PostCommentRepliesModels.SubmitComment.ViewModel) {
@@ -171,4 +189,57 @@ extension PostCommentRepliesViewController: CommentInputAccessoryViewDelegate {
         router?.routeToLogin()
     }
     
+}
+ 
+extension PostCommentRepliesViewController: UITableViewDelegate {
+        
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return ""
+        default:
+            return "Replies"
+        }
+    }
+    
+}
+
+extension PostCommentRepliesViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        switch section {
+        case 0:
+            return 1
+        default:
+            return router?.dataStore?.replies.count ?? 0
+        }
+        
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let comment = router?.dataStore?.replies[indexPath.row] else { return UITableViewCell() }
+        guard let parentComment = router?.dataStore?.parentComment else { return UITableViewCell() }
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.reuseIdentifier(), for: indexPath) as? CommentsTableViewCell else { return UITableViewCell() }
+        
+        switch indexPath.section {
+        case 0:
+            cell.config(comment: parentComment, isReplyButtonHidden: true)
+            cell.selectionStyle = .none
+            return cell
+        default:
+            cell.config(comment: comment, isReplyButtonHidden: true)
+            cell.selectionStyle = .none
+            return cell
+        }
+    }
+
 }

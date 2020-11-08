@@ -61,7 +61,7 @@ class PostCommentsCollectionView: UICollectionView, UICollectionViewDelegate, UI
         
         commentCell.nameLabel.text = comments[indexPath.row].authorName
         guard let content = comments[indexPath.row].content?.rendered else { return UICollectionViewCell()}
-        commentCell.content.text = String(htmlEncodedString: content)
+        commentCell.content.text = content.pureString()
         
         return commentCell
     }

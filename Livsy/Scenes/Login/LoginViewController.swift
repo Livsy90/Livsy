@@ -123,6 +123,9 @@ final class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         setupUI()
+        if UserDefaults.standard.token != "" {
+            navigationController?.popViewController(animated: false)
+        }
     }
     
     private func setupUI() {

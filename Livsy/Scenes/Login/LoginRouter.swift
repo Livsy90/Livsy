@@ -28,7 +28,7 @@ final class LoginRouter: LoginRoutingLogic, LoginDataPassing {
     var dataStore: LoginDataStore?
     
     func showErrorAlert(with message: String, completion: @escaping (() -> Void) ) {
-        viewController?.showAlertWithTwoButtons(title: String(htmlEncodedString: message) ?? "Error", firstButtonTitle: "OK", secondButtonTitle: "Forgot password?", firstButtonAction: nil, secondButtonAction: completion)
+        viewController?.showAlertWithTwoButtons(title: message.pureString(), firstButtonTitle: "OK", secondButtonTitle: "Forgot password?", firstButtonAction: nil, secondButtonAction: completion)
     }
     
     func showResetPasswordAlert(completion: @escaping ((String) -> Void)) {
@@ -40,7 +40,7 @@ final class LoginRouter: LoginRoutingLogic, LoginDataPassing {
     }
     
     func showResetPasswordErrorAlert(with message: String) {
-        viewController?.showAlertWithOneButton(title: String(htmlEncodedString: message) ?? "Error", message: nil, buttonTitle: "OK", buttonAction: nil)
+        viewController?.showAlertWithOneButton(title: message.pureString(), message: nil, buttonTitle: "OK", buttonAction: nil)
     }
     
     func dismissSelf(mode: LoginModels.Mode) {

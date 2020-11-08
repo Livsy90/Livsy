@@ -61,7 +61,7 @@ class PostListCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
         cell.set(imageUrl: cells[indexPath.row].imgURL)
         let description = cells[indexPath.row].excerpt?.rendered
         cell.nameLabel.text = cells[indexPath.row].title?.rendered
-        cell.smallDescriptionLabel.text = String(htmlEncodedString: description ?? "")
+        cell.smallDescriptionLabel.text = description?.pureString()
         
         return cell
     }
