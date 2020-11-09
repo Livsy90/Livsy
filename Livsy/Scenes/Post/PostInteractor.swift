@@ -11,6 +11,7 @@ import UIKit
 protocol PostBusinessLogic {
     func fetchPostPage(request: PostModels.PostPage.Request)
     func fetchPostComments(request: PostModels.PostComments.Request)
+    func savePostToFav(request: PostModels.SaveToFavorites.Request)
 }
 
 protocol PostDataStore {
@@ -57,6 +58,22 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
             self.comments = comments ?? []
             self.presenter?.presentPostComments(response: PostModels.PostComments.Response())
         })
+    }
+    
+    func savePostToFav(request: PostModels.SaveToFavorites.Request) {
+        var array = UserDefaults.favPosts ?? []
+        var isFavorite = false
+        
+        if array.contains(id) {
+            array = array.filter { $0 != id }
+            UserDefaults.standard.set(array, forKey: "favPosts")
+            isFavorite = false
+        } else {
+            array.append(id)
+            UserDefaults.standard.set(array, forKey: "favPosts")
+            isFavorite = true
+        }
+        presenter?.presentPresentFavorites(response: PostModels.SaveToFavorites.Response(isFavorite: isFavorite))
     }
     
 }

@@ -19,6 +19,7 @@ protocol PostCommentsDataStore {
     var commentAndReplies: [PostComment] { get set }
     var comments: [PostComment] { get set }
     var postID: Int { get set }
+    var parentComment: PostComment { get set }
 }
 
 final class PostCommentsInteractor: PostCommentsBusinessLogic, PostCommentsDataStore {
@@ -34,6 +35,7 @@ final class PostCommentsInteractor: PostCommentsBusinessLogic, PostCommentsDataS
     var commentAndReplies: [PostComment] = []
     var comments: [PostComment] = []
     var postID: Int = 1
+    var parentComment: PostComment = PostComment(id: 00, parent: 00, authorName: "")
     
     // MARK: - Business Logic
     
@@ -54,7 +56,7 @@ final class PostCommentsInteractor: PostCommentsBusinessLogic, PostCommentsDataS
     
     func showReplies(request: PostCommentsModels.Replies.Request) {
         commentAndReplies = request.replies ?? []
-        commentAndReplies.insert(request.comment, at: 0)
+        parentComment = request.comment
         presenter?.presentReplies(response: PostCommentsModels.Replies.Response())
     }
     

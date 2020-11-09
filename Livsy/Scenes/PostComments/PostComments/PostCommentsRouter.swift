@@ -40,10 +40,10 @@ final class PostCommentsRouter: PostCommentsRoutingLogic, PostCommentsDataPassin
     func passDataToReplies(source: PostCommentsDataStore, destination: inout PostCommentRepliesDataStore) {
         destination.replies = source.commentAndReplies
         destination.postID = source.postID
+        destination.parentComment = source.parentComment
     }
     
     func routeToLogin() {
-//        viewController?.tabBarController?.selectedIndex = 1
         let destinationVC = LoginViewController()
         var destinationDS = destinationVC.router!.dataStore!
         navigateToLogin(source: viewController!, destination: destinationVC)

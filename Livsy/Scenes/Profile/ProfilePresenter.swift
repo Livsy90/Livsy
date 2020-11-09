@@ -11,6 +11,7 @@ import UIKit
 protocol ProfilePresentationLogic {
     func presentSignOut()
     func presentFavPosts(response: ProfileModels.FavoritePosts.Response)
+    func presentRemovedPost(response: ProfileModels.PostToRemove.Response)
 }
 
 final class ProfilePresenter: ProfilePresentationLogic {
@@ -28,6 +29,10 @@ final class ProfilePresenter: ProfilePresentationLogic {
     
     func presentFavPosts(response: ProfileModels.FavoritePosts.Response) {
         viewController?.displayFavPosts(viewModel: ProfileModels.FavoritePosts.ViewModel())
+    }
+    
+    func presentRemovedPost(response: ProfileModels.PostToRemove.Response) {
+        viewController?.displayPostRemoval(viewModel: ProfileModels.PostToRemove.ViewModel(indexPath: response.indexPath))
     }
     
 }

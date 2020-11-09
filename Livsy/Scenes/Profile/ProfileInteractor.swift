@@ -11,6 +11,7 @@ import Foundation
 protocol ProfileBusinessLogic {
     func signOut()
     func showFavPosts(request: ProfileModels.FavoritePosts.Request)
+    func removePost(request: ProfileModels.PostToRemove.Request)
 }
 
 protocol ProfileDataStore {
@@ -55,6 +56,14 @@ final class ProfileInteractor: ProfileBusinessLogic, ProfileDataStore {
             favoritePosts = []
             presenter?.presentFavPosts(response: ProfileModels.FavoritePosts.Response())
         }
+    }
+    
+    func removePost(request: ProfileModels.PostToRemove.Request) {
+        var array = UserDefaults.favPosts ?? []
+        array = array.filter { $0 != favoritePosts[request.indexPath.row].id }
+        UserDefaults.standard.set(array, forKey: "favPosts")
+        favoritePosts.remove(at: request.indexPath.row)
+        presenter?.presentRemovedPost(response: ProfileModels.PostToRemove.Response(indexPath: request.indexPath))
     }
     
 }

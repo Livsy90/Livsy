@@ -127,9 +127,9 @@ final class PostCommentRepliesViewController: UIViewController {
             loginButton.setTitle("Login to reply", for: .normal)
             loginButton.layer.cornerRadius = 8
             loginButton.layer.borderWidth = 1
-            loginButton.layer.borderColor = UIColor.blueButton.cgColor
+            loginButton.layer.borderColor = UIColor.navBarTint.cgColor
             loginButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-            loginButton.setTitleColor(.blueButton, for: .normal)
+            loginButton.setTitleColor(.navBarTint, for: .normal)
             loginButton.addTarget(self, action: #selector(routeToLogin), for: .touchUpInside)
             loginButton.isEnabled = false
             let item =  UIBarButtonItem(customView: loginButton)
@@ -164,7 +164,7 @@ final class PostCommentRepliesViewController: UIViewController {
 extension PostCommentRepliesViewController: PostCommentRepliesDisplayLogic {
     
     func displayReplies(request: PostCommentRepliesModels.PostCommentReplies.ViewModel) {
-        tableView.reloadData()
+        tableView.softReload()
     }
     
     func diplsySubmitCommentResult(viewModel: PostCommentRepliesModels.SubmitComment.ViewModel) {
@@ -202,7 +202,8 @@ extension PostCommentRepliesViewController: UITableViewDelegate {
         case 0:
             return ""
         default:
-            return "Replies"
+            guard let commentReplies = router?.dataStore?.replies else { return "Replies" }
+            return commentReplies.isEmpty ? "No replies yet" : "Replies"
         }
     }
     
@@ -225,9 +226,7 @@ extension PostCommentRepliesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let comment = router?.dataStore?.replies[indexPath.row] else { return UITableViewCell() }
         guard let parentComment = router?.dataStore?.parentComment else { return UITableViewCell() }
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.reuseIdentifier(), for: indexPath) as? CommentsTableViewCell else { return UITableViewCell() }
         
         switch indexPath.section {
@@ -236,7 +235,11 @@ extension PostCommentRepliesViewController: UITableViewDataSource {
             cell.selectionStyle = .none
             return cell
         default:
-            cell.config(comment: comment, isReplyButtonHidden: true)
+            if !(router?.dataStore?.replies.isEmpty ?? true) {
+                guard let commArray = router?.dataStore?.replies else { return UITableViewCell() }
+                let comment = commArray[indexPath.row]
+                cell.config(comment: comment, isReplyButtonHidden: true)
+            }
             cell.selectionStyle = .none
             return cell
         }

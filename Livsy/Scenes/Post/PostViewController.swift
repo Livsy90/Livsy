@@ -11,6 +11,7 @@ import UIKit
 protocol PostDisplayLogic: class {
     func displayPostPage(viewModel: PostModels.PostPage.ViewModel)
     func displayPostComments(viewModel: PostModels.PostComments.ViewModel)
+    func displayFavorites(viewModel: PostModels.SaveToFavorites.ViewModel)
 }
 
 final class PostViewController: UIViewController {
@@ -44,9 +45,9 @@ final class PostViewController: UIViewController {
     }()
     private let favButton: UIButton = {
         let button = UIButton()
+        button.tintColor = .authorName
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(savePostToFav), for: .touchUpInside)
-        button.tintColor = .navBarTint
         return button
     }()
     
@@ -79,6 +80,12 @@ final class PostViewController: UIViewController {
         fetchPost()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setFavImage(isFavorite: UserDefaults.favPosts?.contains(router?.dataStore?.id ?? 00) ?? false, animated: false)
+        fetchPostComments()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupProgressView()
@@ -91,6 +98,7 @@ final class PostViewController: UIViewController {
             view.bringSubviewToFront(scrollView)
             view.bringSubviewToFront(imageView)
             view.bringSubviewToFront(progressView)
+            view.bringSubviewToFront(favButton)
         }
     }
     
@@ -216,16 +224,16 @@ final class PostViewController: UIViewController {
         }
     }
     
-    private func setFavImage(isFavorite: Bool) {
+    private func setFavImage(isFavorite: Bool, animated: Bool) {
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 38, weight: .medium, scale: .medium)
-        let circleHeart = UIImage(systemName: "heart", withConfiguration: largeConfig)
-        let circleHeartFill = UIImage(systemName: "heart.fill", withConfiguration: largeConfig)
+        let circleHeart = UIImage(systemName: "bookmark", withConfiguration: largeConfig)
+        let circleHeartFill = UIImage(systemName: "bookmark.fill", withConfiguration: largeConfig)
         
         switch isFavorite {
         case true:
-            favButton.setImage(circleHeartFill, for: .normal)
+            favButton.setImageWithAnimation(circleHeartFill, animated: animated)
         default:
-            favButton.setImage(circleHeart, for: .normal)
+            favButton.setImageWithAnimation(circleHeart, animated: animated)
         }
     }
     
@@ -234,17 +242,9 @@ final class PostViewController: UIViewController {
     }
     
     @objc private func savePostToFav() {
-        var array = UserDefaults.favPosts ?? []
-        
-        if array.contains(router?.dataStore?.id ?? 99999) {
-            array = array.filter { $0 != router?.dataStore?.id ?? 99999 }
-            UserDefaults.standard.set(array, forKey: "favPosts")
-            setFavImage(isFavorite: false)
-        } else {
-            array.append(router?.dataStore?.id ?? 0)
-            UserDefaults.standard.set(array, forKey: "favPosts")
-            setFavImage(isFavorite: true)
-        }
+        interactor?.savePostToFav(request: PostModels.SaveToFavorites.Request())
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
     }
     
 }
@@ -253,15 +253,25 @@ final class PostViewController: UIViewController {
 extension PostViewController: PostDisplayLogic {
     
     func displayPostPage(viewModel: PostModels.PostPage.ViewModel) {
-        postTitle.text = router?.dataStore?.title ?? ""
-        textView.setHTMLFromString(htmlText: router?.dataStore?.content ?? "", color: .postText)
-        fetchPostComments()
+        guard let title = router?.dataStore?.title else { return }
+        guard let text = router?.dataStore?.content else { return }
+        postTitle.text = title
+        textView.setHTMLFromString(htmlText: text, color: .postText)
         activityIndicator.hideIndicator()
-        setFavImage(isFavorite: UserDefaults.favPosts?.contains(router?.dataStore?.id ?? 99999) ?? false)
     }
     
     func displayPostComments(viewModel: PostModels.PostComments.ViewModel) {
         commentsButtonSetup()
+    }
+    
+    func displayFavorites(viewModel: PostModels.SaveToFavorites.ViewModel) {
+        setFavImage(isFavorite: viewModel.isFavorite, animated: true)
+        if viewModel.isFavorite {
+            let pulse = PulseAnimation(numberOfPulse: 1, radius: 40, postion: favButton.center)
+            pulse.animationDuration = 0.7
+            pulse.backgroundColor = UIColor.authorName.cgColor
+            view.layer.insertSublayer(pulse, below: view.layer)
+        }
     }
     
 }

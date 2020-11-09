@@ -22,6 +22,9 @@
 		C2278E86249E77C200D9D582 /* PostListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2278E85249E77C200D9D582 /* PostListCollectionViewCell.swift */; };
 		C2278E88249E783D00D9D582 /* PostListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2278E87249E783D00D9D582 /* PostListCollectionView.swift */; };
 		C2278E8A249E821900D9D582 /* String+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2278E89249E821900D9D582 /* String+adds.swift */; };
+		C22FFB972559453D00416C15 /* UIButton+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22FFB962559453D00416C15 /* UIButton+adds.swift */; };
+		C22FFB9A2559716400416C15 /* FavPostsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22FFB992559716400416C15 /* FavPostsCell.swift */; };
+		C22FFB9D25597F0800416C15 /* PulseAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22FFB9C25597F0800416C15 /* PulseAnimation.swift */; };
 		C23261F024D5D73B00F670EE /* Collection+safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23261EF24D5D73B00F670EE /* Collection+safe.swift */; };
 		C2345BEE24B4F15200125976 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2345BE724B4F15100125976 /* LoginPresenter.swift */; };
 		C2345BEF24B4F15200125976 /* LoginWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2345BE824B4F15100125976 /* LoginWorker.swift */; };
@@ -125,6 +128,9 @@
 		C2278E85249E77C200D9D582 /* PostListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListCollectionViewCell.swift; sourceTree = "<group>"; };
 		C2278E87249E783D00D9D582 /* PostListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListCollectionView.swift; sourceTree = "<group>"; };
 		C2278E89249E821900D9D582 /* String+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+adds.swift"; sourceTree = "<group>"; };
+		C22FFB962559453D00416C15 /* UIButton+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+adds.swift"; sourceTree = "<group>"; };
+		C22FFB992559716400416C15 /* FavPostsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavPostsCell.swift; sourceTree = "<group>"; };
+		C22FFB9C25597F0800416C15 /* PulseAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseAnimation.swift; sourceTree = "<group>"; };
 		C23261EF24D5D73B00F670EE /* Collection+safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+safe.swift"; sourceTree = "<group>"; };
 		C2345BE724B4F15100125976 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		C2345BE824B4F15100125976 /* LoginWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorker.swift; sourceTree = "<group>"; };
@@ -274,6 +280,7 @@
 				C2D6756C2523742E001CE5AE /* UIColor+adds.swift */,
 				C26F2D7B252C5234000F1939 /* UIImage+adds.swift */,
 				C250E667254EA6BB009E5E03 /* UITableView+adds.swift */,
+				C22FFB962559453D00416C15 /* UIButton+adds.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -413,6 +420,7 @@
 			isa = PBXGroup;
 			children = (
 				C239A711254DAC2E000E7358 /* MainProfileCell.swift */,
+				C22FFB992559716400416C15 /* FavPostsCell.swift */,
 			);
 			path = MainProfileCell;
 			sourceTree = "<group>";
@@ -451,6 +459,7 @@
 				C2ACD5C0251E254900204696 /* CustomTextView.swift */,
 				C2C31A51249F5879002AAB91 /* WebImageView.swift */,
 				C268CDC024A9380200949C4D /* BadgeBarButton.swift */,
+				C22FFB9C25597F0800416C15 /* PulseAnimation.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -652,6 +661,7 @@
 				C2765BA224A11F1A008888B0 /* PostInteractor.swift in Sources */,
 				C2386F9A249E06740076AED3 /* Request.swift in Sources */,
 				C2386FAC249E09B50076AED3 /* PostListViewController.swift in Sources */,
+				C22FFB9D25597F0800416C15 /* PulseAnimation.swift in Sources */,
 				C2386FAB249E09B50076AED3 /* PostListModels.swift in Sources */,
 				C2BCF43C24AB80A4008C28FD /* RepliesCollectionView.swift in Sources */,
 				C218FCF4251B5A6A002F9C68 /* SplashPresenter.swift in Sources */,
@@ -701,12 +711,14 @@
 				C2278E7C249E2FD100D9D582 /* UIView+adds.swift in Sources */,
 				C2D6692024A3C3E600F6731F /* PostViewController.swift in Sources */,
 				C2D53D512542E79100C13AD0 /* CustomError.swift in Sources */,
+				C22FFB972559453D00416C15 /* UIButton+adds.swift in Sources */,
 				C2BCF43424AB67E8008C28FD /* PostCommentRepliesRouter.swift in Sources */,
 				C268CDB124A9290800949C4D /* PostCommentsPresenter.swift in Sources */,
 				C2386FAD249E09B50076AED3 /* PostListInteractor.swift in Sources */,
 				C218FCF7251B5A6A002F9C68 /* SplashModels.swift in Sources */,
 				C2A5B9EF24B37B20004BE928 /* UIViewController.swift in Sources */,
 				C2386FA9249E09B50076AED3 /* PostListWorker.swift in Sources */,
+				C22FFB9A2559716400416C15 /* FavPostsCell.swift in Sources */,
 				C2BCF43924AB68D9008C28FD /* PostCommentRepliesConfigurator.swift in Sources */,
 				C218FCF9251B5A6A002F9C68 /* SplashInteractor.swift in Sources */,
 				C2278E7E249E3AF700D9D582 /* Data+adds.swift in Sources */,

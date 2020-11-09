@@ -19,7 +19,7 @@ extension UIColor {
     }
     
     static var navBarTint: UIColor {
-        return UIColor.init(named: "NavBartint") ?? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        return UIColor.init(named: "NavBarTint") ?? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
     
     static var postBackground: UIColor {

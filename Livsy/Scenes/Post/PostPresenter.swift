@@ -11,6 +11,7 @@ import UIKit
 protocol PostPresentationLogic {
     func presentPostPage(response: PostModels.PostPage.Response)
     func presentPostComments(response: PostModels.PostComments.Response)
+    func presentPresentFavorites(response: PostModels.SaveToFavorites.Response)
 }
 
 final class PostPresenter: PostPresentationLogic {
@@ -29,5 +30,9 @@ final class PostPresenter: PostPresentationLogic {
     
     func presentPostComments(response: PostModels.PostComments.Response) {
         viewController?.displayPostComments(viewModel: PostModels.PostComments.ViewModel())
+    }
+    
+    func presentPresentFavorites(response: PostModels.SaveToFavorites.Response) {
+        viewController?.displayFavorites(viewModel: PostModels.SaveToFavorites.ViewModel(isFavorite: response.isFavorite))
     }
 }

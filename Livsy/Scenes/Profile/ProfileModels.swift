@@ -24,4 +24,16 @@ enum ProfileModels {
         }
     }
     
+    enum PostToRemove {
+        struct Request {
+            let indexPath: IndexPath
+        }
+        struct Response {
+            let indexPath: IndexPath
+        }
+        struct ViewModel {
+            let indexPath: IndexPath
+        }
+    }
+    
 }

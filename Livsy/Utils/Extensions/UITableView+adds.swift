@@ -32,7 +32,7 @@ extension UITableView {
     
     func softReload() {
         UIView.transition(with: self,
-                          duration: 0.3,
+                          duration: 0.2,
                           options: .transitionCrossDissolve,
                           animations: { self.reloadData() })
     }
