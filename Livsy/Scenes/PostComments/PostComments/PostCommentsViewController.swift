@@ -22,6 +22,7 @@ final class PostCommentsViewController: UIViewController {
     var router: (PostCommentsRoutingLogic & PostCommentsDataPassing)?
     
     // MARK: - Private Properties
+    private var refreshControl: UIRefreshControl!
     private var bottomConstraint = NSLayoutConstraint()
     private lazy var containerView: CommentInputAccessoryView = {
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
@@ -70,6 +71,7 @@ final class PostCommentsViewController: UIViewController {
         super.viewDidLoad()
         title = "Comments"
         view.backgroundColor = .postBackground
+        setupRefreshControl()
         setupTableView()
         setupNoCommentslabel()
         showComments(isReload: false)
@@ -80,7 +82,6 @@ final class PostCommentsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        tabBarController?.tabBar.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -112,7 +113,14 @@ final class PostCommentsViewController: UIViewController {
         tableView.scrollIndicatorInsets = tableView.contentInset
     }
     
-    func setupTableView() {
+    private func setupRefreshControl() {
+        refreshControl = UIRefreshControl()
+        refreshControl.backgroundColor = .clear
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+    }
+    
+   private func setupTableView() {
         tableView.showsHorizontalScrollIndicator = false
         tableView.showsVerticalScrollIndicator = false
         safeArea = view.layoutMarginsGuide
@@ -161,7 +169,7 @@ final class PostCommentsViewController: UIViewController {
         }
     }
     
-    private func showComments(isReload: Bool) {
+    private  func showComments(isReload: Bool) {
         interactor?.showComments(request: PostCommentsModels.PostComments.Request(isReload: isReload))
     }
     
@@ -181,6 +189,10 @@ final class PostCommentsViewController: UIViewController {
         router?.dismissSelf()
     }
     
+    @objc private func refreshData() {
+        interactor?.showComments(request: PostCommentsModels.PostComments.Request(isReload: true))
+    }
+    
 }
 
 // MARK: - PostComments Display Logic
@@ -188,9 +200,9 @@ final class PostCommentsViewController: UIViewController {
 extension PostCommentsViewController: PostCommentsDisplayLogic {
     
     func displayPostComments(viewModel: PostCommentsModels.PostComments.ViewModel) {
-       // viewModel.isReload ? tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .middle) : tableView.reloadData()
         tableView.softReload()
         noCommentsLabel.isHidden = !(router?.dataStore?.comments.isEmpty ?? true)
+        refreshControl.endRefreshing()
     }
     
     func diplsyReplies(viewModel: PostCommentsModels.Replies.ViewModel) {

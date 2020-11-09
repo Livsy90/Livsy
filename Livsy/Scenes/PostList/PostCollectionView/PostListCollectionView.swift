@@ -62,7 +62,6 @@ class PostListCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
         let description = cells[indexPath.row].excerpt?.rendered
         cell.nameLabel.text = cells[indexPath.row].title?.rendered
         cell.smallDescriptionLabel.text = description?.pureString()
-        
         return cell
     }
     

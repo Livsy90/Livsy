@@ -25,6 +25,7 @@ final class PostListViewController: UIViewController {
     
     // MARK: - Private Properties
     
+    private let searchController = UISearchController(searchResultsController: nil)
     private var refreshControl: UIRefreshControl!
     private var postCollectionView = PostListCollectionView()
     private var page = 0
@@ -52,6 +53,7 @@ final class PostListViewController: UIViewController {
         super.viewDidLoad()
         title = "Livsy"
         checkToken()
+        setupNavBar()
         setupCollectionView()
         setupRefreshControl()
         fetchPostList(isLoadMore: false)
@@ -73,6 +75,21 @@ final class PostListViewController: UIViewController {
             guard let self = self else { return }
             self.fetchPostList(isLoadMore: isLoadMore)
         }
+        
+    }
+    
+    private func setupNavBar() {
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Search"
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+        
+//        let showSearchButton = UIButton()
+//        showSearchButton.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+//        showSearchButton.tintColor = .navBarTint
+//        showSearchButton.addTarget(self, action: #selector(showSearchBar), for: .touchUpInside)
+//        let item =  UIBarButtonItem(customView: showSearchButton)
+//        navigationItem.rightBarButtonItem = item
         
     }
     
@@ -106,6 +123,11 @@ final class PostListViewController: UIViewController {
         fetchPostList(isLoadMore: false)
     }
     
+    @objc private func showSearchBar() {
+        present(searchController, animated: true, completion: nil)
+        searchController.searchBar.becomeFirstResponder()
+    }
+    
     @objc private func routeToLogin() {
         router?.routeToLogin()
     }
@@ -121,6 +143,7 @@ final class PostListViewController: UIViewController {
 }
 
 // MARK: - PostList Display Logic
+
 extension PostListViewController: PostListDisplayLogic {
     func displayPostList(viewModel: PostListModels.PostList.ViewModel) {
         guard let posts = router?.dataStore?.postList else { return }
@@ -139,4 +162,10 @@ extension PostListViewController: PostListDisplayLogic {
         router?.showSignOutResultAlert()
     }
     
+}
+
+extension PostListViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        interactor?.search(request: PostListModels.PostList.Request())
+    }
 }

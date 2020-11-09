@@ -22,6 +22,7 @@ final class PostCommentRepliesViewController: UIViewController {
     
     // MARK: - Private Properties
     
+    private var refreshControl: UIRefreshControl!
     private var repliesCollectionView = RepliesCollectionView()
     private var bottomConstraint = NSLayoutConstraint()
     private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
@@ -52,6 +53,7 @@ final class PostCommentRepliesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupRefreshControl()
         setupTableView()
         setupInputView()
         showReplies(isReload: false)
@@ -82,6 +84,13 @@ final class PostCommentRepliesViewController: UIViewController {
         tableView.keyboardDismissMode = .onDrag
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         tableView.register(UINib(nibName: CommentsTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.reuseIdentifier())
+    }
+    
+    private func setupRefreshControl() {
+        refreshControl = UIRefreshControl()
+        refreshControl.backgroundColor = .clear
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        tableView.addSubview(refreshControl)
     }
     
     
@@ -118,6 +127,10 @@ final class PostCommentRepliesViewController: UIViewController {
     
     @objc private func routeToLogin() {
         router?.routeToLogin()
+    }
+    
+    @objc private func refreshData() {
+        interactor?.showReplies(request: PostCommentRepliesModels.PostCommentReplies.Request(isReload: true))
     }
     
     private func setupNavBar() {
@@ -165,6 +178,7 @@ extension PostCommentRepliesViewController: PostCommentRepliesDisplayLogic {
     
     func displayReplies(request: PostCommentRepliesModels.PostCommentReplies.ViewModel) {
         tableView.softReload()
+        refreshControl.endRefreshing()
     }
     
     func diplsySubmitCommentResult(viewModel: PostCommentRepliesModels.SubmitComment.ViewModel) {

@@ -225,15 +225,15 @@ final class PostViewController: UIViewController {
     }
     
     private func setFavImage(isFavorite: Bool, animated: Bool) {
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 38, weight: .medium, scale: .medium)
-        let circleHeart = UIImage(systemName: "bookmark", withConfiguration: largeConfig)
-        let circleHeartFill = UIImage(systemName: "bookmark.fill", withConfiguration: largeConfig)
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 35, weight: .medium, scale: .medium)
+        let emptyBM = UIImage(systemName: "bookmark", withConfiguration: largeConfig)
+        let fillBM = UIImage(systemName: "bookmark.fill", withConfiguration: largeConfig)
         
         switch isFavorite {
         case true:
-            favButton.setImageWithAnimation(circleHeartFill, animated: animated)
+            favButton.setImageWithAnimation(fillBM, animated: animated)
         default:
-            favButton.setImageWithAnimation(circleHeart, animated: animated)
+            favButton.setImageWithAnimation(emptyBM, animated: animated)
         }
     }
     
