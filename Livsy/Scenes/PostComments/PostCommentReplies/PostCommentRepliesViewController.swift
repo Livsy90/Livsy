@@ -128,7 +128,7 @@ final class PostCommentRepliesViewController: UIViewController {
     
     private func scrollToRow(completion: (_ success: Bool) -> Void) {
         activityIndicator.showIndicator(on: self)
-        tableView.scrollToRow(at: IndexPath(item: 0, section: 1), at: .top, animated: true)
+        tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
         completion(true)
     }
     
