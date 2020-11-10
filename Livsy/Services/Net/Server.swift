@@ -11,6 +11,12 @@ import UIKit
 struct Server {
     static let urlString = "https://livsy.me/wp-json/"
     static func getBaseUrl(path: String) -> URL? {
+        let url = "\(urlString)\(path)"
+        let encodedURL = url.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed) ?? url
+        return URL(string: encodedURL)
+    }
+}
+
 //        var components = URLComponents()
 //        components.scheme = API.scheme
 //        components.host = API.host
@@ -20,8 +26,3 @@ struct Server {
 //           URLQueryItem(name: "", value: format)
 //        ]
 //        return components.url!
-        let url = "\(urlString)\(path)"
-        let encodedURL = url.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed) ?? url
-        return URL(string: encodedURL)
-    }
-}

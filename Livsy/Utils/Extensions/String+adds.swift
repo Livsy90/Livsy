@@ -54,8 +54,16 @@ extension String {
         return replacingOccurrences(of: "&#46;", with: ".", options: .regularExpression, range: nil)
     }
     
+    func handeLaquo() -> String {
+        return replacingOccurrences(of: "&#171;", with: "«", options: .regularExpression, range: nil)
+    }
+    
+    func handeRaquo() -> String {
+        return replacingOccurrences(of: "&#187;", with: "»", options: .regularExpression, range: nil)
+    }
+    
     func pureString() -> String {
-        return removeHTMLTags().handleHTMLEllipsel().handleHTMLDots()
+        return removeHTMLTags().handleHTMLEllipsel().handleHTMLDots() //.handeRaquo().handeLaquo()
     }
     
 }

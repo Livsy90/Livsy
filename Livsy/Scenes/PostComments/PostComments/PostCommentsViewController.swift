@@ -157,9 +157,9 @@ final class PostCommentsViewController: UIViewController {
             loginButton.setTitle("Login to reply", for: .normal)
             loginButton.layer.cornerRadius = 8
             loginButton.layer.borderWidth = 1
-            loginButton.layer.borderColor = UIColor.blueButton.cgColor
+            loginButton.layer.borderColor = UIColor.navBarTint.cgColor
             loginButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-            loginButton.setTitleColor(.blueButton, for: .normal)
+            loginButton.setTitleColor(.navBarTint, for: .normal)
             loginButton.addTarget(self, action: #selector(routeToLogin), for: .touchUpInside)
             loginButton.isEnabled = false
             let item =  UIBarButtonItem(customView: loginButton)

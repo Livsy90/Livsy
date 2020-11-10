@@ -10,6 +10,7 @@ import UIKit
 
 protocol PostRoutingLogic {
     func routeToPostComments()
+    func showAddToFavResultAlert(with text: String)
 }
 
 protocol PostDataPassing {
@@ -37,5 +38,9 @@ final class PostRouter: PostRoutingLogic, PostDataPassing {
     func passDataToPostComments(source: PostDataStore, destination: inout PostCommentsDataStore) {
         destination.commentsData = source.comments
         destination.postID = source.id
+    }
+    
+    func showAddToFavResultAlert(with text: String) {
+        viewController?.showNoButtonAlert(title: text)
     }
 }

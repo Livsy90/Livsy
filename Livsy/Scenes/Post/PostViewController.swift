@@ -45,7 +45,6 @@ final class PostViewController: UIViewController {
     }()
     private let favButton: UIButton = {
         let button = UIButton()
-        button.tintColor = .authorName
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(savePostToFav), for: .touchUpInside)
         return button
@@ -158,7 +157,9 @@ final class PostViewController: UIViewController {
     
     private func setupFavButton() {
         view.addSubview(favButton)
-        favButton.anchor(top: nil, left: nil, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 75, paddingRight: 12, width: 0, height: 0)
+        let color = router?.dataStore?.averageColor
+        favButton.tintColor = color ?? .systemGreen
+        favButton.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 45, paddingRight: 12, width: 0, height: 0)
     }
     
     private func setupProgressView() {
@@ -291,8 +292,12 @@ extension PostViewController: PostDisplayLogic {
         if viewModel.isFavorite {
             let pulse = PulseAnimation(numberOfPulse: 1, radius: 35, postion: favButton.center)
             pulse.animationDuration = 0.7
-            pulse.backgroundColor = UIColor.authorName.cgColor
+            let color = router?.dataStore?.averageColor.cgColor
+            pulse.backgroundColor = color ?? UIColor.systemGreen.cgColor
             view.layer.insertSublayer(pulse, below: view.layer)
+            router?.showAddToFavResultAlert(with: "Post added to favorite list")
+        } else {
+            router?.showAddToFavResultAlert(with: "Post removed from favorite list")
         }
     }
     
