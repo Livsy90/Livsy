@@ -223,6 +223,7 @@ extension PostCommentsViewController: PostCommentsDisplayLogic {
             showComments(isReload: true)
         } else {
             containerView.enableButton()
+            activityIndicator.hideIndicator()
             router?.showAlert(with: viewModel.error?.message ?? "Oops.. Something went wrong!")
         }
     }

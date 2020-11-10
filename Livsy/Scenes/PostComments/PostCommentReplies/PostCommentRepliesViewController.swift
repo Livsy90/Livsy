@@ -196,6 +196,7 @@ extension PostCommentRepliesViewController: PostCommentRepliesDisplayLogic {
         } else {
             containerView.enableButton()
             router?.showAlert(with: viewModel.error?.message ?? "Oops.. Something went wrong!")
+            activityIndicator.hideIndicator()
         }
     }
     
