@@ -10,19 +10,20 @@ import UIKit
 
 struct ActivityIndicator {
     
-    // MARK: Public Properties
-    
-    let activityIndicator = SpinnerView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-    let viewBackgroundLoading = UIView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
-    let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.regular)
+    private let activityIndicator = SpinnerView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+    private let viewBackgroundLoading = UIView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+    private let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.regular)
     
     // MARK: Public Methods
     
     func showIndicator(on viewController: UIViewController) {
         
         activityIndicator.center = viewController.view.center
-        //activityIndicator.hidesWhenStopped = true
-        //activityIndicator.style = .large
+        
+        UIView.animate(withDuration: 0.25) {
+            viewBackgroundLoading.alpha = 1
+            activityIndicator.alpha = 1
+        }
         
         viewBackgroundLoading.center = viewController.view.center
         viewBackgroundLoading.backgroundColor = .clear
@@ -35,29 +36,34 @@ struct ActivityIndicator {
         viewBackgroundLoading.addSubview(blurEffectView)
         viewController.view.addSubview(viewBackgroundLoading)
         viewController.view.addSubview(activityIndicator)
-        
-      //  activityIndicator.startAnimating()
     }
     
     func hideIndicator() {
-        viewBackgroundLoading.removeFromSuperview()
-        activityIndicator.removeFromSuperview()
+        UIView.animate(withDuration: 0.25) {
+            viewBackgroundLoading.alpha = 0
+            activityIndicator.alpha = 0
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            viewBackgroundLoading.removeFromSuperview()
+            activityIndicator.removeFromSuperview()
+        }
     }
     
 }
 
 class SpinnerView: UIView {
-
+    
     override var layer: CAShapeLayer {
         get {
             return super.layer as! CAShapeLayer
         }
     }
-
+    
     override class var layerClass: AnyClass {
         return CAShapeLayer.self
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.fillColor = nil
@@ -65,15 +71,15 @@ class SpinnerView: UIView {
         layer.lineWidth = 6
         setPath()
     }
-
+    
     override func didMoveToWindow() {
         animate()
     }
-
+    
     private func setPath() {
         layer.path = UIBezierPath(ovalIn: bounds.insetBy(dx: layer.lineWidth / 2, dy: layer.lineWidth / 2)).cgPath
     }
-
+    
     struct Pose {
         let secondsSincePriorPose: CFTimeInterval
         let start: CGFloat
@@ -84,7 +90,7 @@ class SpinnerView: UIView {
             self.length = length
         }
     }
-
+    
     class var poses: [Pose] {
         get {
             return [
@@ -99,17 +105,17 @@ class SpinnerView: UIView {
             ]
         }
     }
-
+    
     func animate() {
         var time: CFTimeInterval = 0
         var times = [CFTimeInterval]()
         var start: CGFloat = 0
         var rotations = [CGFloat]()
         var strokeEnds = [CGFloat]()
-
+        
         let poses = type(of: self).poses
         let totalSeconds = poses.reduce(0) { $0 + $1.secondsSincePriorPose }
-
+        
         for pose in poses {
             time += pose.secondsSincePriorPose
             times.append(time / totalSeconds)
@@ -117,17 +123,17 @@ class SpinnerView: UIView {
             rotations.append(start * 2 * .pi)
             strokeEnds.append(pose.length)
         }
-
+        
         times.append(times.last!)
         rotations.append(rotations[0])
         strokeEnds.append(strokeEnds[0])
-
+        
         animateKeyPath(keyPath: "strokeEnd", duration: totalSeconds, times: times, values: strokeEnds)
         animateKeyPath(keyPath: "transform.rotation", duration: totalSeconds, times: times, values: rotations)
-
+        
         animateStrokeHueWithDuration(duration: totalSeconds * 5)
     }
-
+    
     func animateKeyPath(keyPath: String, duration: CFTimeInterval, times: [CFTimeInterval], values: [CGFloat]) {
         let animation = CAKeyframeAnimation(keyPath: keyPath)
         animation.keyTimes = times as [NSNumber]?
@@ -137,7 +143,7 @@ class SpinnerView: UIView {
         animation.repeatCount = Float.infinity
         layer.add(animation, forKey: animation.keyPath)
     }
-
+    
     func animateStrokeHueWithDuration(duration: CFTimeInterval) {
         let count = 36
         let animation = CAKeyframeAnimation(keyPath: "strokeColor")
@@ -150,5 +156,5 @@ class SpinnerView: UIView {
         animation.repeatCount = Float.infinity
         layer.add(animation, forKey: animation.keyPath)
     }
-
+    
 }

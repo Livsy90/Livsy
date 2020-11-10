@@ -36,7 +36,7 @@ final class PostListViewController: UIViewController {
         v.isHidden = true
         return v
     }()
-    
+    private let activityIndicator = ActivityIndicator()
     private let searchController = UISearchController(searchResultsController: nil)
     private var refreshControl: UIRefreshControl!
     private var postCollectionView = PostListCollectionView()
@@ -66,7 +66,6 @@ final class PostListViewController: UIViewController {
         super.viewDidLoad()
         title = "Livsy"
         checkToken()
-        setupNavBar()
         setupCollectionView()
         setupRefreshControl()
         fetchPostList(isLoadMore: false)
@@ -74,6 +73,7 @@ final class PostListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupNavBar()
     }
     
     // MARK: - Private Methods
@@ -104,6 +104,10 @@ final class PostListViewController: UIViewController {
         searchController.searchBar.placeholder = "Search"
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        navigationController?.navigationBar.shadowImage = nil
+        navigationController?.navigationBar.tintColor = .navBarTint
     }
     
     private func checkToken() {
@@ -137,11 +141,6 @@ final class PostListViewController: UIViewController {
         fetchPostList(isLoadMore: false)
     }
     
-    @objc private func showSearchBar() {
-        present(searchController, animated: true, completion: nil)
-        searchController.searchBar.becomeFirstResponder()
-    }
-    
     @objc private func routeToLogin() {
         router?.routeToLogin()
     }
@@ -167,6 +166,7 @@ extension PostListViewController: PostListDisplayLogic {
         refreshControl.endRefreshing()
         postCollectionView.footerView.stopAnimating()
         nothingFoundImageView.isHidden = !posts.isEmpty
+        activityIndicator.hideIndicator()
     }
     
     func displayToken(viewModel: PostListModels.Login.ViewModel) {
@@ -185,11 +185,13 @@ extension PostListViewController: UISearchBarDelegate {
         searchTerms = searchBar.text ?? ""
         page = 0
         fetchPostList(isLoadMore: false)
+        activityIndicator.showIndicator(on: self)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         refreshData()
+        activityIndicator.showIndicator(on: self)
     }
     
 }

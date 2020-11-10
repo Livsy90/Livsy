@@ -141,7 +141,11 @@ final class PostCommentRepliesViewController: UIViewController {
     }
     
     private func setupNavBar() {
-        title = "Comments"
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        navigationController?.navigationBar.shadowImage = nil
+        navigationController?.navigationBar.tintColor = .navBarTint
+        
         if UserDefaults.standard.token == "" {
             let loginButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 120, height: 30))
             loginButton.setTitle("Login to reply", for: .normal)

@@ -26,6 +26,7 @@ final class ProfileViewController: UIViewController {
     private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     private let greetingsText = "Login or sign up to:"
     private let username = UserDefaults.standard.username
+    private let activityIndicator = ActivityIndicator()
     
     private let bubbleImage: UIImage = {
         let symbolImage = UIImage(systemName: "captions.bubble.fill")
@@ -64,6 +65,7 @@ final class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchFavPosts()
+        setupNavBar()
     }
     
     // MARK: - Private Methods
@@ -85,7 +87,15 @@ final class ProfileViewController: UIViewController {
     }
     
     private func fetchFavPosts() {
+        activityIndicator.showIndicator(on: self)
         interactor?.showFavPosts(request: ProfileModels.FavoritePosts.Request())
+    }
+    
+    private func setupNavBar() {
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        navigationController?.navigationBar.shadowImage = nil
+        navigationController?.navigationBar.tintColor = .navBarTint
     }
     
     private func showSignOutQuestion() {
@@ -118,6 +128,7 @@ extension ProfileViewController: ProfileDisplayLogic {
     
     func displayFavPosts(viewModel: ProfileModels.FavoritePosts.ViewModel) {
         tableView.softReload()
+        activityIndicator.hideIndicator()
     }
     
     func displayPostRemoval(viewModel: ProfileModels.PostToRemove.ViewModel) {
@@ -181,7 +192,7 @@ extension ProfileViewController: UITableViewDataSource {
             completionHandler(true)
         }
         deleteAction.image = UIImage(systemName: "trash.circle.fill")
-        deleteAction.backgroundColor = #colorLiteral(red: 0.5807225108, green: 0.066734083, blue: 0, alpha: 1)
+        deleteAction.backgroundColor = .systemRed
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     

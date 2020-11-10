@@ -49,6 +49,7 @@ final class PostViewController: UIViewController {
         button.addTarget(self, action: #selector(savePostToFav), for: .touchUpInside)
         return button
     }()
+
     
     // MARK: - Initializers
     
@@ -83,6 +84,10 @@ final class PostViewController: UIViewController {
         super.viewWillAppear(animated)
         setFavImage(isFavorite: UserDefaults.favPosts?.contains(router?.dataStore?.id ?? 00) ?? false, animated: false)
         fetchPostComments()
+        navigationController?.navigationBar.barStyle = .black
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.tintColor = .white
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -187,6 +192,7 @@ final class PostViewController: UIViewController {
     }
     
     private func showActivityIndicatorOnNavBarItem() {
+        loadingCommentsIndicator.color = .white
         loadingCommentsIndicator.hidesWhenStopped = true
         loadingCommentsIndicator.startAnimating()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: loadingCommentsIndicator)
@@ -238,18 +244,13 @@ final class PostViewController: UIViewController {
     }
     
     private func setAlphaForNB(scrollView: UIScrollView) {
-        switch scrollView.contentOffset.y > 5 {
+        switch scrollView.contentOffset.y > 0 - (self.topbarHeight + 10) {
         case true:
-            UIView.animate(withDuration: 0.3) {
-                self.navigationController?.navigationBar.alpha = 0.73
+            UIView.animate(withDuration: 0.25) {
+                self.postTitle.alpha = 0
             }
-            self.postTitle.alpha = 0
         default:
-            UIView.animate(withDuration: 0.3) {
-                self.navigationController?.navigationBar.alpha = 1
-            }
-            
-            UIView.animate(withDuration: 0.8) {
+            UIView.animate(withDuration: 0.25) {
                 self.postTitle.alpha = 1
             }
         }
@@ -307,3 +308,5 @@ extension PostViewController: UIScrollViewDelegate {
     }
     
 }
+
+
