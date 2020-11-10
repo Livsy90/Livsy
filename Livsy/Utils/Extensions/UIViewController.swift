@@ -96,12 +96,12 @@ extension UIViewController {
         firstAlertButton.isEnabled = (!(alertController.textFields![0].text?.isEmpty ?? true))
         
         NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: alertController.textFields![0], queue: OperationQueue.main, using:
-                {_ in
-                    
-                    let textCount = alertController.textFields![0].text?.trimmingCharacters(in: .whitespacesAndNewlines).count ?? 0
-        let textIsNotEmpty = textCount > 0
-                    firstAlertButton.isEnabled = textIsNotEmpty
-        })
+                                                {_ in
+                                                    
+                                                    let textCount = alertController.textFields![0].text?.trimmingCharacters(in: .whitespacesAndNewlines).count ?? 0
+                                                    let textIsNotEmpty = textCount > 0
+                                                    firstAlertButton.isEnabled = textIsNotEmpty
+                                                })
         
         alertController.addAction(firstAlertButton)
         alertController.addAction(secondAlertButton)
@@ -121,7 +121,12 @@ extension UIViewController {
 }
 
 extension UIViewController {
-
+    
+    var topbarHeight: CGFloat {
+        return (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0) +
+            (self.navigationController?.navigationBar.frame.height ?? 0.0)
+    }
+    
     func setTabBarHidden(_ hidden: Bool, animated: Bool = true, duration: TimeInterval = 0.3) {
         if animated {
             if let frame = self.tabBarController?.tabBar.frame {
@@ -130,16 +135,13 @@ extension UIViewController {
                 UIView.animate(withDuration: duration, animations: {
                     self.tabBarController?.tabBar.frame = CGRect(x: frame.origin.x, y: y, width: frame.width, height: frame.height)
                 })
-               // return
+                // return
             }
         }
         self.tabBarController?.tabBar.isHidden = hidden
     }
     
-    var topbarHeight: CGFloat {
-            return (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0) +
-                (self.navigationController?.navigationBar.frame.height ?? 0.0)
-        }
-
+    
+    
 }
 

@@ -38,6 +38,7 @@ final class PostRouter: PostRoutingLogic, PostDataPassing {
     func passDataToPostComments(source: PostDataStore, destination: inout PostCommentsDataStore) {
         destination.commentsData = source.comments
         destination.postID = source.id
+        destination.postTitle = source.title ?? ""
     }
     
     func showAddToFavResultAlert(with text: String) {

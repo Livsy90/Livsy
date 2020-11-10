@@ -26,6 +26,7 @@ final class PostCommentRepliesViewController: UIViewController {
     private var repliesCollectionView = RepliesCollectionView()
     private var bottomConstraint = NSLayoutConstraint()
     private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
+    private let activityIndicator = ActivityIndicator()
     private lazy var containerView: CommentInputAccessoryView = {
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         let commentInputAccessoryView = CommentInputAccessoryView(frame: frame)
@@ -125,6 +126,12 @@ final class PostCommentRepliesViewController: UIViewController {
         tableView.scrollIndicatorInsets = tableView.contentInset
     }
     
+    private func scrollToRow(completion: (_ success: Bool) -> Void) {
+        activityIndicator.showIndicator(on: self)
+        tableView.scrollToRow(at: IndexPath(item: 0, section: 1), at: .top, animated: true)
+        completion(true)
+    }
+    
     @objc private func routeToLogin() {
         router?.routeToLogin()
     }
@@ -179,6 +186,7 @@ extension PostCommentRepliesViewController: PostCommentRepliesDisplayLogic {
     func displayReplies(request: PostCommentRepliesModels.PostCommentReplies.ViewModel) {
         tableView.softReload()
         refreshControl.endRefreshing()
+        activityIndicator.hideIndicator()
     }
     
     func diplsySubmitCommentResult(viewModel: PostCommentRepliesModels.SubmitComment.ViewModel) {
@@ -196,7 +204,11 @@ extension PostCommentRepliesViewController: PostCommentRepliesDisplayLogic {
 extension PostCommentRepliesViewController: CommentInputAccessoryViewDelegate {
     
     func didSubmit(for comment: String) {
-        submitComment(content: comment)
+        scrollToRow { (success) in
+            if success {
+                self.submitComment(content: comment)
+            }
+        }
     }
     
     func routeToLoginScene() {

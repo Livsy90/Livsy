@@ -83,7 +83,6 @@ final class PostViewController: UIViewController {
         super.viewWillAppear(animated)
         setFavImage(isFavorite: UserDefaults.favPosts?.contains(router?.dataStore?.id ?? 00) ?? false, animated: false)
         fetchPostComments()
-        setAlphaForNB(scrollView: scrollView)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -239,19 +238,15 @@ final class PostViewController: UIViewController {
     }
     
     private func setAlphaForNB(scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > 5 {
-            
+        switch scrollView.contentOffset.y > 5 {
+        case true:
             UIView.animate(withDuration: 0.3) {
                 self.navigationController?.navigationBar.alpha = 0.73
             }
-            
             self.postTitle.alpha = 0
-            
-        } else {
-            
+        default:
             UIView.animate(withDuration: 0.3) {
                 self.navigationController?.navigationBar.alpha = 1
-                
             }
             
             UIView.animate(withDuration: 0.8) {
@@ -295,9 +290,9 @@ extension PostViewController: PostDisplayLogic {
             let color = router?.dataStore?.averageColor.cgColor
             pulse.backgroundColor = color ?? UIColor.systemGreen.cgColor
             view.layer.insertSublayer(pulse, below: view.layer)
-            router?.showAddToFavResultAlert(with: "Post added to favorite list")
+            router?.showAddToFavResultAlert(with: "Added to favorites")
         } else {
-            router?.showAddToFavResultAlert(with: "Post removed from favorite list")
+            router?.showAddToFavResultAlert(with: "Removed from favorites")
         }
     }
     

@@ -72,6 +72,10 @@ final class PostListViewController: UIViewController {
         fetchPostList(isLoadMore: false)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     // MARK: - Private Methods
     
     private func setupCollectionView() {

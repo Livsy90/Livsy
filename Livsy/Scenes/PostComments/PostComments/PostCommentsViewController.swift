@@ -41,6 +41,7 @@ final class PostCommentsViewController: UIViewController {
         return l
     }()
     private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
+    private let activityIndicator = ActivityIndicator()
     private var safeArea: UILayoutGuide!
 
     // MARK: - Initializers
@@ -181,6 +182,12 @@ final class PostCommentsViewController: UIViewController {
         interactor?.submitComment(request: PostCommentsModels.SubmitComment.Request(content: content, post: router?.dataStore?.postID ?? 1))
     }
     
+    private func scrollToRow(completion: (_ success: Bool) -> Void) {
+        activityIndicator.showIndicator(on: self)
+        tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+        completion(true)
+    }
+    
     @objc private func routeToLogin() {
         router?.routeToLogin()
     }
@@ -203,6 +210,7 @@ extension PostCommentsViewController: PostCommentsDisplayLogic {
         tableView.softReload()
         noCommentsLabel.isHidden = !(router?.dataStore?.comments.isEmpty ?? true)
         refreshControl.endRefreshing()
+        activityIndicator.hideIndicator()
     }
     
     func diplsyReplies(viewModel: PostCommentsModels.Replies.ViewModel) {
@@ -210,7 +218,6 @@ extension PostCommentsViewController: PostCommentsDisplayLogic {
     }
     
     func diplsySubmitCommentResult(viewModel: PostCommentsModels.SubmitComment.ViewModel) {
-        
         if viewModel.error == nil {
             containerView.clearCommentTextField()
             showComments(isReload: true)
@@ -225,7 +232,12 @@ extension PostCommentsViewController: PostCommentsDisplayLogic {
 extension PostCommentsViewController: CommentInputAccessoryViewDelegate {
     
     func didSubmit(for comment: String) {
-        submitComment(content: comment)
+        scrollToRow { (success) in
+            if success {
+                self.submitComment(content: comment)
+            }
+        }
+        
     }
     
     func routeToLoginScene() {
@@ -244,6 +256,11 @@ extension PostCommentsViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let comments = router?.dataStore?.comments else { return }
         showReplies(comment: comments[indexPath.row], replies: comments[indexPath.row].replies)
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let title = router?.dataStore?.postTitle
+        return "Replies on \"\(title ?? "post")\""
     }
     
 }

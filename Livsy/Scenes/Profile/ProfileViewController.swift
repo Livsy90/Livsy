@@ -57,7 +57,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "My profile"
+        title = "Profile"
         setupTableView()
     }
     

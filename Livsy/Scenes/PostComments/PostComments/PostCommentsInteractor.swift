@@ -20,6 +20,7 @@ protocol PostCommentsDataStore {
     var comments: [PostComment] { get set }
     var postID: Int { get set }
     var parentComment: PostComment { get set }
+    var postTitle: String { get set }
 }
 
 final class PostCommentsInteractor: PostCommentsBusinessLogic, PostCommentsDataStore {
@@ -36,6 +37,7 @@ final class PostCommentsInteractor: PostCommentsBusinessLogic, PostCommentsDataS
     var comments: [PostComment] = []
     var postID: Int = 1
     var parentComment: PostComment = PostComment(id: 00, parent: 00, authorName: "")
+    var postTitle: String = ""
     
     // MARK: - Business Logic
     
