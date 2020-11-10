@@ -26,7 +26,7 @@ final class ProfileViewController: UIViewController {
     private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     private let greetingsText = "Login or sign up to:"
     private let username = UserDefaults.standard.username
-    private let activityIndicator = ActivityIndicator()
+    private var isLoading = true
     
     private let bubbleImage: UIImage = {
         let symbolImage = UIImage(systemName: "captions.bubble.fill")
@@ -64,6 +64,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tableView.reloadData()
         fetchFavPosts()
         setupNavBar()
     }
@@ -87,7 +88,7 @@ final class ProfileViewController: UIViewController {
     }
     
     private func fetchFavPosts() {
-        activityIndicator.showIndicator(on: self)
+        isLoading = true
         interactor?.showFavPosts(request: ProfileModels.FavoritePosts.Request())
     }
     
@@ -127,8 +128,8 @@ extension ProfileViewController: ProfileDisplayLogic {
     }
     
     func displayFavPosts(viewModel: ProfileModels.FavoritePosts.ViewModel) {
+        isLoading = false
         tableView.softReload()
-        activityIndicator.hideIndicator()
     }
     
     func displayPostRemoval(viewModel: ProfileModels.PostToRemove.ViewModel) {
@@ -172,6 +173,30 @@ extension ProfileViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         2
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        switch section {
+        case 0:
+            return nil
+        default:
+            switch isLoading {
+            case true:
+                let view = UIView(frame: CGRect(x: self.view.center.x, y: 10, width: 40, height: 40))
+                let ai = UIActivityIndicatorView()
+                ai.startAnimating()
+                ai.center.x = self.view.center.x - 30
+                ai.center.y += 10
+                view.addSubview(ai)
+                return view
+            default:
+                return nil
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        40
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
