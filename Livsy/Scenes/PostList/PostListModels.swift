@@ -70,10 +70,11 @@ enum PostListModels {
     
     struct Request {
         var page: Int = 1
+        var searchTerms: String = ""
     }
     
     struct Response {
-        let error: Error?
+        let error: CustomError?
     }
     
     struct ViewModel {

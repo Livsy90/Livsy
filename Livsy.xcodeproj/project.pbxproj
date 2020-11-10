@@ -110,6 +110,7 @@
 		C2E3444C25373060000D07F2 /* RegisterInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E3444525373060000D07F2 /* RegisterInteractor.swift */; };
 		C2E3444E253730D4000D07F2 /* RegisterConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E3444D253730D4000D07F2 /* RegisterConfigurator.swift */; };
 		C2EBC71E24D02F870066113D /* NetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EBC71D24D02F870066113D /* NetManager.swift */; };
+		C2FFC6A4255A9DB1001B885E /* UICollectionView+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FFC6A3255A9DB1001B885E /* UICollectionView+adds.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -218,6 +219,7 @@
 		C2E3444525373060000D07F2 /* RegisterInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterInteractor.swift; sourceTree = "<group>"; };
 		C2E3444D253730D4000D07F2 /* RegisterConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterConfigurator.swift; sourceTree = "<group>"; };
 		C2EBC71D24D02F870066113D /* NetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetManager.swift; sourceTree = "<group>"; };
+		C2FFC6A3255A9DB1001B885E /* UICollectionView+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+adds.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -281,6 +283,7 @@
 				C26F2D7B252C5234000F1939 /* UIImage+adds.swift */,
 				C250E667254EA6BB009E5E03 /* UITableView+adds.swift */,
 				C22FFB962559453D00416C15 /* UIButton+adds.swift */,
+				C2FFC6A3255A9DB1001B885E /* UICollectionView+adds.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -651,6 +654,7 @@
 				C234943A254C333100E26ADC /* MainTabBarController.swift in Sources */,
 				C2345BF024B4F15200125976 /* LoginRouter.swift in Sources */,
 				C2345BF124B4F15200125976 /* LoginModels.swift in Sources */,
+				C2FFC6A4255A9DB1001B885E /* UICollectionView+adds.swift in Sources */,
 				C2765B9F24A11F1A008888B0 /* PostRouter.swift in Sources */,
 				C2386F95249E03760076AED3 /* Bodies.swift in Sources */,
 				C268CDB824A9292300949C4D /* PostCommentsConfigurator.swift in Sources */,

@@ -74,10 +74,7 @@ class PostListCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        switch isStopRefreshing {
-        case true:
-            break
-        default:
+        if !isStopRefreshing {
             if indexPath.row == cells.count - 1 {
                 loadMoreCompletion?(true)
             }

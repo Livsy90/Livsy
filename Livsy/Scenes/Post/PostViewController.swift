@@ -84,6 +84,7 @@ final class PostViewController: UIViewController {
         super.viewWillAppear(animated)
         setFavImage(isFavorite: UserDefaults.favPosts?.contains(router?.dataStore?.id ?? 00) ?? false, animated: false)
         fetchPostComments()
+        setAlphaForNB(scrollView: scrollView)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -112,7 +113,6 @@ final class PostViewController: UIViewController {
         view.addSubview(imageView)
         darkView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 300)
         imageView.addSubview(darkView)
-        
         postTitleSetup()
         postTitle.frame = CGRect(x: 20, y: 400, width: UIScreen.main.bounds.width - 40, height: 200)
         postTitle.font = UIFont.systemFont(ofSize: 26)
@@ -125,8 +125,7 @@ final class PostViewController: UIViewController {
         
         gradientLayer.frame = self.view.bounds
         guard let color1 = router?.dataStore?.averageColor.cgColor else { return }
-        gradientLayer.colors = [color1, UIColor.postBackground.cgColor, UIColor.postBackground.cgColor, UIColor.navBarTint.cgColor]
-        
+        gradientLayer.colors = [color1, UIColor.postBackground.cgColor, UIColor.postBackground.cgColor, UIColor.postBackground.cgColor, color1]
         self.view.layer.addSublayer(gradientLayer)
         
         let imageView = UIImageView(image: UIImage(named: "blur"))
@@ -164,7 +163,8 @@ final class PostViewController: UIViewController {
     
     private func setupProgressView() {
         view.addSubview(progressView)
-        progressView.anchor(top: navigationController?.navigationBar.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 5)
+        
+        progressView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: self.topbarHeight, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 3)
         let color = router?.dataStore?.averageColor ?? .blueButton
         progressView.progressTintColor = color
     }
@@ -210,7 +210,7 @@ final class PostViewController: UIViewController {
     
     private func scaleHeader() {
         let y = 300 - (scrollView.contentOffset.y + 300)
-        let height = min(max(y, 60), 400)
+        let height = min(max(y, self.topbarHeight), 400)
         imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height)
         darkView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height)
         postTitle.frame = CGRect(x: 20, y: height - 100, width: UIScreen.main.bounds.size.width - 40, height: 100)
@@ -225,15 +225,37 @@ final class PostViewController: UIViewController {
     }
     
     private func setFavImage(isFavorite: Bool, animated: Bool) {
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 35, weight: .medium, scale: .medium)
-        let emptyBM = UIImage(systemName: "bookmark", withConfiguration: largeConfig)
-        let fillBM = UIImage(systemName: "bookmark.fill", withConfiguration: largeConfig)
+        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .medium, scale: .medium)
+        let emptyBM = UIImage(systemName: "bookmark", withConfiguration: config)
+        let fillBM = UIImage(systemName: "bookmark.fill", withConfiguration: config)
         
         switch isFavorite {
         case true:
             favButton.setImageWithAnimation(fillBM, animated: animated)
         default:
             favButton.setImageWithAnimation(emptyBM, animated: animated)
+        }
+    }
+    
+    private func setAlphaForNB(scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > 5 {
+            
+            UIView.animate(withDuration: 0.3) {
+                self.navigationController?.navigationBar.alpha = 0.73
+            }
+            
+            self.postTitle.alpha = 0
+            
+        } else {
+            
+            UIView.animate(withDuration: 0.3) {
+                self.navigationController?.navigationBar.alpha = 1
+                
+            }
+            
+            UIView.animate(withDuration: 0.8) {
+                self.postTitle.alpha = 1
+            }
         }
     }
     
@@ -267,7 +289,7 @@ extension PostViewController: PostDisplayLogic {
     func displayFavorites(viewModel: PostModels.SaveToFavorites.ViewModel) {
         setFavImage(isFavorite: viewModel.isFavorite, animated: true)
         if viewModel.isFavorite {
-            let pulse = PulseAnimation(numberOfPulse: 1, radius: 40, postion: favButton.center)
+            let pulse = PulseAnimation(numberOfPulse: 1, radius: 35, postion: favButton.center)
             pulse.animationDuration = 0.7
             pulse.backgroundColor = UIColor.authorName.cgColor
             view.layer.insertSublayer(pulse, below: view.layer)
@@ -281,6 +303,7 @@ extension PostViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scaleHeader()
         changeProgressViewValue(scrollView: scrollView)
+        setAlphaForNB(scrollView: scrollView)
     }
     
 }

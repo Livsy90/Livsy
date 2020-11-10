@@ -25,10 +25,23 @@ final class PostListViewController: UIViewController {
     
     // MARK: - Private Properties
     
+    private var nothingFoundImageView: UIImageView = {
+        let config = UIImage.SymbolConfiguration(pointSize: 150, weight: .bold, scale: .large)
+        let image = UIImage(systemName: "doc.text.magnifyingglass", withConfiguration: config)
+        let v = UIImageView(image: image)
+        v.tintColor = #colorLiteral(red: 0.7540688515, green: 0.7540867925, blue: 0.7540771365, alpha: 1)
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.contentMode = .scaleAspectFit
+        v.clipsToBounds = true
+        v.isHidden = true
+        return v
+    }()
+    
     private let searchController = UISearchController(searchResultsController: nil)
     private var refreshControl: UIRefreshControl!
     private var postCollectionView = PostListCollectionView()
     private var page = 0
+    private var searchTerms = ""
     private var isLoadMore = false
     
     // MARK: - Initializers
@@ -76,6 +89,10 @@ final class PostListViewController: UIViewController {
             self.fetchPostList(isLoadMore: isLoadMore)
         }
         
+        postCollectionView.addSubview(nothingFoundImageView)
+        nothingFoundImageView.centerYAnchor.constraint(equalTo: postCollectionView.centerYAnchor, constant: -50).isActive = true
+        nothingFoundImageView.centerXAnchor.constraint(equalTo: postCollectionView.centerXAnchor).isActive = true
+        
     }
     
     private func setupNavBar() {
@@ -83,14 +100,6 @@ final class PostListViewController: UIViewController {
         searchController.searchBar.placeholder = "Search"
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
-        
-//        let showSearchButton = UIButton()
-//        showSearchButton.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
-//        showSearchButton.tintColor = .navBarTint
-//        showSearchButton.addTarget(self, action: #selector(showSearchBar), for: .touchUpInside)
-//        let item =  UIBarButtonItem(customView: showSearchButton)
-//        navigationItem.rightBarButtonItem = item
-        
     }
     
     private func checkToken() {
@@ -111,7 +120,7 @@ final class PostListViewController: UIViewController {
     private func fetchPostList(isLoadMore: Bool) {
         page += 1
         isLoadMore ? postCollectionView.footerView.startAnimating() : {}()
-        interactor?.fetchPostList(request: PostListModels.PostList.Request(page: page))
+        interactor?.fetchPostList(request: PostListModels.PostList.Request(page: page, searchTerms: searchTerms))
     }
     
     private func signOut() {
@@ -120,6 +129,7 @@ final class PostListViewController: UIViewController {
     
     @objc private func refreshData() {
         page = 0
+        searchTerms = ""
         fetchPostList(isLoadMore: false)
     }
     
@@ -149,9 +159,10 @@ extension PostListViewController: PostListDisplayLogic {
         guard let posts = router?.dataStore?.postList else { return }
         postCollectionView.isStopRefreshing = viewModel.isStopRereshing
         postCollectionView.set(cells: posts)
-        postCollectionView.reloadData()
+        postCollectionView.softReload()
         refreshControl.endRefreshing()
         postCollectionView.footerView.stopAnimating()
+        nothingFoundImageView.isHidden = !posts.isEmpty
     }
     
     func displayToken(viewModel: PostListModels.Login.ViewModel) {
@@ -165,7 +176,16 @@ extension PostListViewController: PostListDisplayLogic {
 }
 
 extension PostListViewController: UISearchBarDelegate {
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        interactor?.search(request: PostListModels.PostList.Request())
+        searchTerms = searchBar.text ?? ""
+        page = 0
+        fetchPostList(isLoadMore: false)
     }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        refreshData()
+    }
+    
 }

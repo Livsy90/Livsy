@@ -33,17 +33,22 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
     // MARK: - Business Logic
     
     func fetchPostList(request: PostListModels.PostList.Request) {
-        worker?.fetchPostList(page: request.page, completion: { [weak self] (postList, error) in
-            guard let self = self else { return }
-            if request.page != 1 {
-                self.postList.append(contentsOf: postList ?? [])
-            } else {
-                self.postList = postList ?? []
-            }
-                       
-            let response = PostListModels.PostList.Response(error: error)
-            self.presenter?.presentPostList(response: response)
-        })
+        if request.searchTerms != "" {
+            search(request: request)
+        } else {
+            worker?.fetchPostList(page: request.page, completion: { [weak self] (postList, error) in
+                guard let self = self else { return }
+                if request.page != 1 {
+                    self.postList.append(contentsOf: postList ?? [])
+                } else {
+                    self.postList = postList ?? []
+                }
+                           
+                let response = PostListModels.PostList.Response(error: error)
+                self.presenter?.presentPostList(response: response)
+            })
+        }
+        
     }
     
     func login(request: PostListModels.Login.Request) {
@@ -71,9 +76,10 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
     }
     
     func search(request: PostListModels.PostList.Request) {
-        worker?.fetchSearchResults(searchTerms: "тестовый", completion: { (response, error) in
+        worker?.fetchSearchResults(searchTerms: request.searchTerms, completion: { (response, error) in
             self.postList = response ?? []
-            let response = PostListModels.PostList.Response(error: error)
+            let customError = CustomError(code: "00", message: "searh", data: ErrorData(status: 00))
+            let response = PostListModels.PostList.Response(error: customError)
             self.presenter?.presentPostList(response: response)
         })
     }

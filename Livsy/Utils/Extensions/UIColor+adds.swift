@@ -23,7 +23,7 @@ extension UIColor {
     }
     
     static var postBackground: UIColor {
-        return UIColor.init(named: "PostBackground") ?? #colorLiteral(red: 0.4756349325, green: 0.4756467342, blue: 0.4756404161, alpha: 1)
+        return UIColor.init(named: "PostBackground") ?? #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
     }
     
     static var postText: UIColor {

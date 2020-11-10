@@ -12,11 +12,11 @@ final class PostListWorker {
     let net: NetService = NetService.sharedInstanse
     let netManager: NetManager = NetManager.sharedInstanse
     
-    func fetchPostList(page: Int, completion: @escaping (Bodies.PostListAPI.Response?, Error?) -> ()) {
+    func fetchPostList(page: Int, completion: @escaping (Bodies.PostListAPI.Response?, CustomError?) -> ()) {
         netManager.fetchPostList(page: page, completion: completion)
     }
     
-    func fetchSearchResults(searchTerms: String, completion: @escaping (Bodies.PostListAPI.Response?, Error?) -> ()) {
+    func fetchSearchResults(searchTerms: String, completion: @escaping (Bodies.PostListAPI.Response?, CustomError?) -> ()) {
         netManager.fetchSearchResults(searchTerms: searchTerms, completion: completion)
     }
     
