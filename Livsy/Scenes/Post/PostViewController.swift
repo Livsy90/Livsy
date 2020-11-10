@@ -49,7 +49,7 @@ final class PostViewController: UIViewController {
         button.addTarget(self, action: #selector(savePostToFav), for: .touchUpInside)
         return button
     }()
-
+    
     
     // MARK: - Initializers
     
@@ -69,25 +69,30 @@ final class PostViewController: UIViewController {
     
     // MARK: - Lifecycle
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         showActivityIndicatorOnNavBarItem()
         createGradientLayer()
         scrollViewSetup()
         textViewSetup()
-        setupHeader()
-        setupFavButton()
         fetchPost()
+        setupFavButton()
+        setupHeader()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setFavImage(isFavorite: UserDefaults.favPosts?.contains(router?.dataStore?.id ?? 00) ?? false, animated: false)
         fetchPostComments()
-        navigationController?.navigationBar.barStyle = .black
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.tintColor = .white
+        setupNavBar()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -121,6 +126,14 @@ final class PostViewController: UIViewController {
         postTitle.font = UIFont.systemFont(ofSize: 26)
         postTitle.clipsToBounds = true
         imageView.addSubview(postTitle)
+    }
+    
+    private func setupNavBar() {
+        setNeedsStatusBarAppearanceUpdate()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.tintColor = .white
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     private func createGradientLayer() {

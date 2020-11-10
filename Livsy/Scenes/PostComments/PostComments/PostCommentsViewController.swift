@@ -43,7 +43,7 @@ final class PostCommentsViewController: UIViewController {
     private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     private let activityIndicator = ActivityIndicator()
     private var safeArea: UILayoutGuide!
-
+    
     // MARK: - Initializers
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -58,6 +58,10 @@ final class PostCommentsViewController: UIViewController {
     
     private func setup() {
         PostCommentsConfigurator.sharedInstance.configure(viewController: self)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .default
     }
     
     // MARK: - Lifecycle
@@ -117,7 +121,7 @@ final class PostCommentsViewController: UIViewController {
         tableView.addSubview(refreshControl)
     }
     
-   private func setupTableView() {
+    private func setupTableView() {
         tableView.showsHorizontalScrollIndicator = false
         tableView.showsVerticalScrollIndicator = false
         safeArea = view.layoutMarginsGuide
@@ -149,7 +153,7 @@ final class PostCommentsViewController: UIViewController {
     }
     
     private func setupNavBar() {
-        navigationController?.navigationBar.barStyle = .default
+        setNeedsStatusBarAppearanceUpdate()
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.shadowImage = nil
         navigationController?.navigationBar.tintColor = .navBarTint

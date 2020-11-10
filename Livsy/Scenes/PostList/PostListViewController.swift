@@ -62,6 +62,14 @@ final class PostListViewController: UIViewController {
     
     // MARK: - Lifecycle
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .default
+    }
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        .fade
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Livsy"
@@ -74,6 +82,7 @@ final class PostListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavBar()
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     // MARK: - Private Methods
@@ -104,7 +113,6 @@ final class PostListViewController: UIViewController {
         searchController.searchBar.placeholder = "Search"
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
-        navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.shadowImage = nil
         navigationController?.navigationBar.tintColor = .navBarTint
@@ -113,7 +121,7 @@ final class PostListViewController: UIViewController {
     private func checkToken() {
         interactor?.login(request: PostListModels.Login.Request(username: UserDefaults.standard.username ?? "" , password: UserDefaults.standard.password ?? ""))
     }
-        
+    
     private func routeToPost(id: Int, url: String) {
         router?.routeToPost(id: id, url: url)
     }
@@ -194,4 +202,25 @@ extension PostListViewController: UISearchBarDelegate {
         activityIndicator.showIndicator(on: self)
     }
     
+}
+
+class NavigationController: UINavigationController {
+    
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        
+        if let topVC = viewControllers.last {
+            return topVC.preferredStatusBarStyle
+        }
+        
+        return .default
+    }
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        
+        if let topVC = viewControllers.last {
+            return topVC.preferredStatusBarUpdateAnimation
+        }
+        
+        return .slide // .fade, .none
+    }
 }

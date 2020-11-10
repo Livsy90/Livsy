@@ -22,7 +22,7 @@ class MainTabBarController: UITabBarController {
     
     private func setupViewControllers() {
         let postListVC = PostListViewController()
-        let postListNC = UINavigationController(rootViewController: postListVC)
+        let postListNC = NavigationController(rootViewController: postListVC)
         let postListImage = UIImage(systemName: "play")
         let postListImageSelected = UIImage(systemName: "play.fill")
         let postListItem = UITabBarItem(title: postListVC.title, image: postListImage, selectedImage: postListImageSelected)
