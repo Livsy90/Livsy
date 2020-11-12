@@ -23,4 +23,5 @@ struct API {
     static let search = "wp/v2/posts?search="
     static let userComments = "wp/v2/comments/?author_name="
     static let favPosts = "wp/v2/posts?include="
+    static let currentUserInfo = "wp/v2/users/me"
 }

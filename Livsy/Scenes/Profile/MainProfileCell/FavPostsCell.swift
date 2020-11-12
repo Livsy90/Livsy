@@ -25,7 +25,6 @@ class FavPostsCell: UITableViewCell {
     
     private let mainImageView: WebImageView = {
         let v = WebImageView()
-        v.tintColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
         v.translatesAutoresizingMaskIntoConstraints = false
         v.contentMode = .scaleToFill
         v.clipsToBounds = true

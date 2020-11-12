@@ -36,4 +36,35 @@ enum ProfileModels {
         }
     }
     
+    enum Avatar {
+        struct Request {
+        }
+        struct Response {
+        }
+        struct ViewModel {
+        }
+    }
+    
+}
+
+struct UserInfo: Codable {
+    var id: Int
+    var avatarURLs: avatarURLs
+    
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case avatarURLs = "avatar_urls"
+    }
+}
+
+struct avatarURLs: Codable {
+    var small: String
+    var madium: String
+    var large: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case small = "24"
+        case madium = "48"
+        case large = "96"
+    }
 }

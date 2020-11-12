@@ -74,7 +74,6 @@ final class PostCommentsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Comments"
         view.backgroundColor = .postBackground
         setupRefreshControl()
         setupTableView()
@@ -188,7 +187,9 @@ final class PostCommentsViewController: UIViewController {
     
     private func scrollToRow(completion: (_ success: Bool) -> Void) {
         activityIndicator.showIndicator(on: self)
-        tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+        if tableView.visibleCells.count > 0 {
+            tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+        }
         completion(true)
     }
     
@@ -237,7 +238,8 @@ extension PostCommentsViewController: PostCommentsDisplayLogic {
 extension PostCommentsViewController: CommentInputAccessoryViewDelegate {
     
     func didSubmit(for comment: String) {
-        scrollToRow { (success) in
+        scrollToRow { [weak self] (success) in
+            guard let self = self else { return }
             if success {
                 self.submitComment(content: comment)
             }
@@ -265,7 +267,7 @@ extension PostCommentsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let title = router?.dataStore?.postTitle
-        return "Replies on \"\(title ?? "post")\""
+        return title
     }
     
 }

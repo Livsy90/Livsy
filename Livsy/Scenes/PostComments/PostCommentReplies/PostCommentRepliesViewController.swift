@@ -128,7 +128,9 @@ final class PostCommentRepliesViewController: UIViewController {
     
     private func scrollToRow(completion: (_ success: Bool) -> Void) {
         activityIndicator.showIndicator(on: self)
-        tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+        if tableView.visibleCells.count > 0 {
+            tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+        }
         completion(true)
     }
     
@@ -209,10 +211,9 @@ extension PostCommentRepliesViewController: PostCommentRepliesDisplayLogic {
 extension PostCommentRepliesViewController: CommentInputAccessoryViewDelegate {
     
     func didSubmit(for comment: String) {
-        scrollToRow { (success) in
-            if success {
-                self.submitComment(content: comment)
-            }
+        scrollToRow { [weak self] (success) in
+            guard let self = self else { return }
+            self.submitComment(content: comment)
         }
     }
     
@@ -221,9 +222,9 @@ extension PostCommentRepliesViewController: CommentInputAccessoryViewDelegate {
     }
     
 }
- 
+
 extension PostCommentRepliesViewController: UITableViewDelegate {
-        
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }
@@ -275,5 +276,5 @@ extension PostCommentRepliesViewController: UITableViewDataSource {
             return cell
         }
     }
-
+    
 }

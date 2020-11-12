@@ -12,11 +12,14 @@ protocol ProfileBusinessLogic {
     func signOut()
     func showFavPosts(request: ProfileModels.FavoritePosts.Request)
     func removePost(request: ProfileModels.PostToRemove.Request)
+    func getAvatar(request: ProfileModels.Avatar.Request)
 }
 
 protocol ProfileDataStore {
     var favoritePosts: [Post] { get set }
-    var imageView: WebImageView? { get set }
+    var postImageView: WebImageView? { get set }
+    var avatar: WebImageView? { get set }
+    var url: String { get set }
 }
 
 final class ProfileInteractor: ProfileBusinessLogic, ProfileDataStore {
@@ -31,7 +34,9 @@ final class ProfileInteractor: ProfileBusinessLogic, ProfileDataStore {
     // MARK: - Data Store
     
     var favoritePosts: [Post] = []
-    var imageView: WebImageView? = WebImageView()
+    var postImageView: WebImageView? = WebImageView()
+    var avatar: WebImageView? = WebImageView()
+    var url: String = ""
     
     // MARK: - Business Logic
     
@@ -39,6 +44,7 @@ final class ProfileInteractor: ProfileBusinessLogic, ProfileDataStore {
         UserDefaults.standard.token = ""
         UserDefaults.standard.username = ""
         UserDefaults.standard.password = ""
+        url = ""
         presenter?.presentSignOut()
     }
     
@@ -64,6 +70,15 @@ final class ProfileInteractor: ProfileBusinessLogic, ProfileDataStore {
         UserDefaults.standard.set(array, forKey: "favPosts")
         favoritePosts.remove(at: request.indexPath.row)
         presenter?.presentRemovedPost(response: ProfileModels.PostToRemove.Response(indexPath: request.indexPath))
+    }
+    
+    func getAvatar(request: ProfileModels.Avatar.Request) {
+        worker?.fetchUserInfo(completion: { [weak self] (response, error) in
+            guard let self = self else { return }
+            self.url = response?.avatarURLs.large.getSecureGravatar() ?? ""
+            self.avatar?.set(imageURL: response?.avatarURLs.large.getSecureGravatar())
+            self.presenter?.presentAvatar(response: ProfileModels.Avatar.Response())
+        })
     }
     
 }

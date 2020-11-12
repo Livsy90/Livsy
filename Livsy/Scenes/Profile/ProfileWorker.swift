@@ -17,4 +17,8 @@ final class ProfileWorker {
         netManager.fetchFavoritePosts(postsIds: postsIds, completion: completion)
     }
     
+    func fetchUserInfo(completion: @escaping (Bodies.UserInfoAPI.Response?, CustomError?) -> ()) {
+        netManager.fetchUserInfo(completion: completion)
+    }
+    
 }

@@ -12,6 +12,7 @@ protocol ProfileDisplayLogic: class {
     func displaySignOut()
     func displayFavPosts(viewModel: ProfileModels.FavoritePosts.ViewModel)
     func displayPostRemoval(viewModel: ProfileModels.PostToRemove.ViewModel)
+    func displayAvatar(viewModel: ProfileModels.Avatar.ViewModel)
 }
 
 final class ProfileViewController: UIViewController {
@@ -23,20 +24,12 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Private Properties
     
+    private var isLoading = true
+    private var isLoggedIn = false
     private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     private let greetingsText = "Login or sign up to:"
     private let username = UserDefaults.standard.username
-    private var isLoading = true
-    
-    private let bubbleImage: UIImage = {
-        let symbolImage = UIImage(systemName: "captions.bubble.fill")
-        return symbolImage ?? UIImage()
-    }()
-    
-    private var avatarImage: UIImage = {
-        let symbolImage = UIImage(systemName: "person.circle.fill")
-        return symbolImage ?? UIImage()
-    }()
+    private let activityIndicator = ActivityIndicator()
     
     // MARK: - Initializers
     
@@ -87,6 +80,16 @@ final class ProfileViewController: UIViewController {
         interactor?.signOut()
     }
     
+    private func openURL() {
+        if let url = URL(string: "https://www.gravatar.com") {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    private func fetchAvatar() {
+        interactor?.getAvatar(request: ProfileModels.Avatar.Request())
+    }
+    
     private func fetchFavPosts() {
         isLoading = true
         interactor?.showFavPosts(request: ProfileModels.FavoritePosts.Request())
@@ -116,6 +119,15 @@ final class ProfileViewController: UIViewController {
         }
     }
     
+    @objc private func handleAvatarTap() {
+        switch UserDefaults.standard.username != "" {
+        case true:
+            router?.showAvatarQuestionAlert(completion: openURL)
+        default:
+            break
+        }
+    }
+    
 }
 
 // MARK: - Profile Display Logic
@@ -129,11 +141,17 @@ extension ProfileViewController: ProfileDisplayLogic {
     
     func displayFavPosts(viewModel: ProfileModels.FavoritePosts.ViewModel) {
         isLoading = false
-        tableView.softReload()
+        fetchAvatar()
     }
     
     func displayPostRemoval(viewModel: ProfileModels.PostToRemove.ViewModel) {
         tableView.deleteRows(at: [viewModel.indexPath], with: .automatic)
+    }
+    
+    func displayAvatar(viewModel: ProfileModels.Avatar.ViewModel) {
+        isLoggedIn ? tableView.reloadWithAnimation() : tableView.softReload()
+        isLoggedIn = false
+        activityIndicator.hideIndicator()
     }
     
 }
@@ -141,7 +159,9 @@ extension ProfileViewController: ProfileDisplayLogic {
 extension ProfileViewController: LoginSceneDelegate {
     
     func setupUIforLoggedIn() {
-        tableView.reloadWithAnimation()
+        isLoggedIn = true
+        activityIndicator.showIndicator(on: self)
+        fetchFavPosts()
     }
     
 }
@@ -155,7 +175,10 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let posts = router?.dataStore?.favoritePosts ?? []
         tableView.deselectRow(at: indexPath, animated: true)
-        routeToPost(id: posts[indexPath.row].id, url: posts[indexPath.row].imgURL ?? "")
+        
+        if indexPath.section == 1 {
+            routeToPost(id: posts[indexPath.row].id, url: posts[indexPath.row].imgURL ?? "")
+        }
     }
     
 }
@@ -237,10 +260,19 @@ extension ProfileViewController: UITableViewDataSource {
         guard let mainCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as? MainProfileCell else { return UITableViewCell() }
         
         mainCell.selectionStyle = .none
-        mainCell.config(mainImage: (name == "" ? bubbleImage : avatarImage), mainLabelText: (name == "" ? greetingsText : name), isListHidden: name != "", loginButtonTitle: (name == "" ? "Continue" : "Sign out"))
+        
+        let url = router?.dataStore?.url
+        
+        mainCell.config(url: url ?? "", mainLabelText: (name == "" ? greetingsText : name), isListHidden: name != "", loginButtonTitle: (name == "" ? "Continue" : "Sign out"), isRoundedImage: name != "")
+        
         mainCell.loginCompletion = { [weak self] in
             guard let self = self else { return }
             self.handleLogin()
+        }
+        
+        mainCell.avatarTapCompletion = { [weak self] in
+            guard let self = self else { return }
+            self.handleAvatarTap()
         }
         
         switch indexPath.section {

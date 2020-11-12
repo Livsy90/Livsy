@@ -66,4 +66,8 @@ extension String {
         return removeHTMLTags().handleHTMLEllipsel().handleHTMLDots() //.handeRaquo().handeLaquo()
     }
     
+    func getSecureGravatar() -> String {
+        replacingOccurrences(of: "http://1", with: "https://secure", options: .regularExpression, range: nil)
+    }
+    
 }

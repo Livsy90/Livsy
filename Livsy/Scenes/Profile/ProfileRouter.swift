@@ -13,6 +13,7 @@ protocol ProfileRoutingLogic {
     func showSignOutQuestionAlert(completion: @escaping (() -> Void))
     func routeToLogin()
     func routeToPost(id: Int, url: String)
+    func showAvatarQuestionAlert(completion: @escaping (() -> Void))
 }
 
 protocol ProfileDataPassing {
@@ -66,9 +67,13 @@ final class ProfileRouter: ProfileRoutingLogic, ProfileDataPassing {
     
     func passDataToPost(postID: Int, imageURL: String, source: ProfileDataStore, destination: inout PostDataStore) {
         destination.id = postID
-        let imageView = source.imageView
+        let imageView = source.postImageView
         imageView?.set(imageURL: imageURL)
         destination.image = imageView?.image ?? UIImage()
         destination.averageColor = imageView?.image?.averageColor ?? UIColor.blueButton
+    }
+    
+    func showAvatarQuestionAlert(completion: @escaping (() -> Void)) {
+        viewController?.showAlertWithTwoButtons(title: "This site is using Gravatar. Gravatar is a Globally Recognized Avatar. You can upload an image at gravatar.com using the same email as here, and then when you participate in any Gravatar-enabled site, your avatar will automatically follow you there.", firstButtonTitle: "Stay here", secondButtonTitle: "Go to gravatar.com", firstButtonAction: nil, secondButtonAction: completion)
     }
 }

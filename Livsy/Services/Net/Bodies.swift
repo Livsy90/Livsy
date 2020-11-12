@@ -18,6 +18,7 @@ struct Bodies {
         case CreateComment(String, Int, Int)
         case Register(String, String, String)
         case PasswordReset(String)
+        case UserInfo
         
         func bodyData() -> Data? {
             
@@ -42,6 +43,9 @@ struct Bodies {
                 return httpBody
            case .PasswordReset(let login):
                 guard let httpBody = try? JSONEncoder().encode(PasswordResetAPI.Request(user_login: login)) else { fatalError() }
+                return httpBody
+            case .UserInfo:
+                guard let httpBody = try? JSONEncoder().encode(UserInfoAPI.Request()) else { fatalError() }
                 return httpBody
             }
         }
@@ -112,6 +116,13 @@ struct Bodies {
            }
        }
     
+    // MARK: UserInfoAPI
+       
+       enum UserInfoAPI {
+           typealias Response = UserInfo
+           struct Request: Encodable {
+           }
+       }
 }
 
 

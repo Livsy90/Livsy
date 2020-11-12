@@ -162,4 +162,18 @@ class NetManager {
         }
     }
     
+    func fetchUserInfo(completion: @escaping (Bodies.UserInfoAPI.Response?, CustomError?) -> ()) {
+        let request = Request.RequestType.UserInfo.get(path: API.currentUserInfo)
+        net.getData(with: request) { (data, error) in
+            guard let data = data, error == nil else { return }
+            do {
+                let response = try JSONDecoder().decode(Bodies.UserInfoAPI.Response.self, from: data)
+                completion(response, nil)
+            } catch {
+                guard let cusotomError = self.decodeError(data: data) else { return }
+                completion(nil, cusotomError)
+            }
+        }
+    }
+    
 }

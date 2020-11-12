@@ -12,6 +12,7 @@ protocol ProfilePresentationLogic {
     func presentSignOut()
     func presentFavPosts(response: ProfileModels.FavoritePosts.Response)
     func presentRemovedPost(response: ProfileModels.PostToRemove.Response)
+    func presentAvatar(response: ProfileModels.Avatar.Response)
 }
 
 final class ProfilePresenter: ProfilePresentationLogic {
@@ -33,6 +34,10 @@ final class ProfilePresenter: ProfilePresentationLogic {
     
     func presentRemovedPost(response: ProfileModels.PostToRemove.Response) {
         viewController?.displayPostRemoval(viewModel: ProfileModels.PostToRemove.ViewModel(indexPath: response.indexPath))
+    }
+    
+    func presentAvatar(response: ProfileModels.Avatar.Response) {
+        viewController?.displayAvatar(viewModel: ProfileModels.Avatar.ViewModel())
     }
     
 }
