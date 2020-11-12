@@ -96,7 +96,7 @@ class MainProfileCell: UITableViewCell {
         contentView.addSubview(mainImageView)
         contentView.addSubview(stackView)
         mainImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        mainImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 40).isActive = true
+        mainImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 30).isActive = true
         stackView.addArrangedSubview(mainLabel)
         stackView.addArrangedSubview(list)
         stackView.addArrangedSubview(loginButton)

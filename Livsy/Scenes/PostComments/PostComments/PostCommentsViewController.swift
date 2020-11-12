@@ -75,8 +75,8 @@ final class PostCommentsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .postBackground
-        setupRefreshControl()
         setupTableView()
+        setupRefreshControl()
         setupNoCommentslabel()
         showComments(isReload: false)
         setupNoCommentslabel()
@@ -129,7 +129,7 @@ final class PostCommentsViewController: UIViewController {
         view.addSubview(tableView)
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.anchor(top: safeArea.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        tableView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         tableView.tableFooterView = UIView()
         tableView.backgroundColor = .postListBackground
         tableView.keyboardDismissMode = .onDrag

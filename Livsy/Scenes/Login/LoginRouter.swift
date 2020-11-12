@@ -28,7 +28,7 @@ final class LoginRouter: LoginRoutingLogic, LoginDataPassing {
     var dataStore: LoginDataStore?
     
     func showErrorAlert(with message: String, completion: @escaping (() -> Void) ) {
-        viewController?.showAlertWithTwoButtons(title: message.pureString(), firstButtonTitle: "OK", secondButtonTitle: "Forgot password?", firstButtonAction: nil, secondButtonAction: completion)
+        viewController?.showAlertWithTwoButtons(title: message.pureString(), firstButtonTitle: "Forgot password?", secondButtonTitle: "Try again", firstButtonAction: completion, secondButtonAction: nil)
     }
     
     func showResetPasswordAlert(completion: @escaping ((String) -> Void)) {

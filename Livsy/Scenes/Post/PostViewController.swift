@@ -79,6 +79,7 @@ final class PostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .postBackground
         showActivityIndicatorOnNavBarItem()
         createGradientLayer()
         scrollViewSetup()
@@ -140,8 +141,11 @@ final class PostViewController: UIViewController {
         let gradientLayer = CAGradientLayer()
         
         gradientLayer.frame = self.view.bounds
-        guard let color1 = router?.dataStore?.averageColor.cgColor else { return }
-        gradientLayer.colors = [color1, UIColor.postBackground.cgColor, UIColor.postBackground.cgColor, UIColor.postBackground.cgColor, color1]
+        guard let color = router?.dataStore?.averageColor else { return }
+        let cgColor1 = color.cgColor
+        let cgColor2 = color.withAlphaComponent(0.3).cgColor
+        let cgColor3 = color.withAlphaComponent(0.1).cgColor
+        gradientLayer.colors = [cgColor1, cgColor2, cgColor3, cgColor3, cgColor2]
         self.view.layer.addSublayer(gradientLayer)
         
         let imageView = UIImageView(image: UIImage(named: "blur"))
