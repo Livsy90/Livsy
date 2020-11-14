@@ -19,6 +19,7 @@ struct Request {
         case PasswordReset(String)
         case Search
         case UserInfo
+        case Tags
         
         func get(path: String) -> URLRequest {
             guard let url = Server.getBaseUrl(path: path) else { fatalError() }
@@ -55,6 +56,8 @@ struct Request {
                 request.httpMethod = "GET"
                 headers = Headers.Request.UserInfo.dict()
                 request = addHeadersInRequest(headers: headers, urlRequest: request)
+            case .Tags:
+                request.httpMethod = "GET"
             }
             
             if request.httpMethod != "GET" {

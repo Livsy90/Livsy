@@ -98,5 +98,18 @@ enum PostListModels {
             let error: CustomError?
         }
     }
+    
+    enum Tags {
+      
+      struct Request {
+      
+      }
+      
+      struct Response {
+      }
+      
+      struct ViewModel {
+      }
+    }
   
 }

@@ -123,6 +123,14 @@ struct Bodies {
            struct Request: Encodable {
            }
        }
+    
+    // MARK: TagsAPI
+       
+       enum TagsAPI {
+           typealias Response = [Tag]
+           struct Request: Encodable {
+           }
+       }
 }
 
 

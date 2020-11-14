@@ -13,6 +13,7 @@ protocol PostListRoutingLogic {
     func routeToLogin()
     func showSignOutResultAlert()
     func showSignOutQuestionAlert(completion: @escaping (() -> Void))
+    func routeTags()
 }
 
 protocol PostListDataPassing {
@@ -61,6 +62,38 @@ final class PostListRouter: PostListRoutingLogic, PostListDataPassing {
     
     func showSignOutResultAlert() {
         viewController?.showNoButtonAlert(title: "You are logged out")
+    }
+    
+    func routeTags() {
+        let destinationVC = TagsViewController()
+        var destinationDS = destinationVC.router!.dataStore!
+        
+        passDataToTagList(source: dataStore!, destination: &destinationDS)
+        navigateToTagList(source: viewController!, destination: destinationVC)
+        
+    }
+    
+    func navigateToTagList(source: PostListViewController, destination: TagsViewController) {
+        destination.modalPresentationStyle = .popover
+        
+        let popOverViewController = destination.popoverPresentationController
+        popOverViewController?.delegate = viewController
+        popOverViewController?.sourceView = viewController?.tagsButton
+        popOverViewController?.permittedArrowDirections = .down
+        popOverViewController?.backgroundColor = .clear
+        
+        guard
+            let buttonMidX = viewController?.tagsButton.bounds.midX,
+            let buttonMaxY = viewController?.tagsButton.bounds.minY
+            else { return }
+        
+        popOverViewController?.sourceRect = CGRect(x: buttonMidX, y: buttonMaxY, width: 0, height: 0)
+        
+        viewController?.present(destination, animated: true, completion: nil)
+    }
+    
+    func passDataToTagList(source: PostListDataStore, destination: inout TagsDataStore) {
+        destination.tags = source.tags
     }
     
 }

@@ -62,6 +62,13 @@
 		C239A712254DAC2E000E7358 /* MainProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C239A711254DAC2E000E7358 /* MainProfileCell.swift */; };
 		C23ACCAE24B9B62D00882E07 /* UserDefaults+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23ACCAD24B9B62D00882E07 /* UserDefaults+adds.swift */; };
 		C23D496B24AA4905007AEE32 /* PostCommentsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23D496A24AA4905007AEE32 /* PostCommentsCollectionViewCell.swift */; };
+		C24CA08725604D6E003B6521 /* TagsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24CA08025604D6E003B6521 /* TagsPresenter.swift */; };
+		C24CA08825604D6E003B6521 /* TagsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24CA08125604D6E003B6521 /* TagsWorker.swift */; };
+		C24CA08925604D6E003B6521 /* TagsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24CA08225604D6E003B6521 /* TagsRouter.swift */; };
+		C24CA08A25604D6E003B6521 /* TagsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24CA08325604D6E003B6521 /* TagsModels.swift */; };
+		C24CA08B25604D6E003B6521 /* TagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24CA08425604D6E003B6521 /* TagsViewController.swift */; };
+		C24CA08C25604D6E003B6521 /* TagsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24CA08525604D6E003B6521 /* TagsInteractor.swift */; };
+		C24CA09025604D86003B6521 /* TagsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24CA08F25604D86003B6521 /* TagsConfigurator.swift */; };
 		C250E668254EA6BB009E5E03 /* UITableView+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C250E667254EA6BB009E5E03 /* UITableView+adds.swift */; };
 		C268CDB124A9290800949C4D /* PostCommentsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268CDAA24A9290800949C4D /* PostCommentsPresenter.swift */; };
 		C268CDB224A9290800949C4D /* PostCommentsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268CDAB24A9290800949C4D /* PostCommentsWorker.swift */; };
@@ -171,6 +178,13 @@
 		C239A711254DAC2E000E7358 /* MainProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProfileCell.swift; sourceTree = "<group>"; };
 		C23ACCAD24B9B62D00882E07 /* UserDefaults+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+adds.swift"; sourceTree = "<group>"; };
 		C23D496A24AA4905007AEE32 /* PostCommentsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentsCollectionViewCell.swift; sourceTree = "<group>"; };
+		C24CA08025604D6E003B6521 /* TagsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsPresenter.swift; sourceTree = "<group>"; };
+		C24CA08125604D6E003B6521 /* TagsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsWorker.swift; sourceTree = "<group>"; };
+		C24CA08225604D6E003B6521 /* TagsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsRouter.swift; sourceTree = "<group>"; };
+		C24CA08325604D6E003B6521 /* TagsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsModels.swift; sourceTree = "<group>"; };
+		C24CA08425604D6E003B6521 /* TagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsViewController.swift; sourceTree = "<group>"; };
+		C24CA08525604D6E003B6521 /* TagsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsInteractor.swift; sourceTree = "<group>"; };
+		C24CA08F25604D86003B6521 /* TagsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsConfigurator.swift; sourceTree = "<group>"; };
 		C250E667254EA6BB009E5E03 /* UITableView+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+adds.swift"; sourceTree = "<group>"; };
 		C268CDAA24A9290800949C4D /* PostCommentsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentsPresenter.swift; sourceTree = "<group>"; };
 		C268CDAB24A9290800949C4D /* PostCommentsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentsWorker.swift; sourceTree = "<group>"; };
@@ -407,6 +421,7 @@
 		C2386F9F249E099F0076AED3 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				C24CA07E25604CE3003B6521 /* Tags */,
 				C234943B254C791600E26ADC /* Profile */,
 				C2349438254C331800E26ADC /* MainTabBarController */,
 				C2E3443E25373046000D07F2 /* Register */,
@@ -435,6 +450,20 @@
 				C2A7E8CE252B414B00ABF3D5 /* CommentsTableViewCell.xib */,
 			);
 			path = PostCommentsTableViewCell;
+			sourceTree = "<group>";
+		};
+		C24CA07E25604CE3003B6521 /* Tags */ = {
+			isa = PBXGroup;
+			children = (
+				C24CA08025604D6E003B6521 /* TagsPresenter.swift */,
+				C24CA08125604D6E003B6521 /* TagsWorker.swift */,
+				C24CA08225604D6E003B6521 /* TagsRouter.swift */,
+				C24CA08325604D6E003B6521 /* TagsModels.swift */,
+				C24CA08425604D6E003B6521 /* TagsViewController.swift */,
+				C24CA08525604D6E003B6521 /* TagsInteractor.swift */,
+				C24CA08F25604D86003B6521 /* TagsConfigurator.swift */,
+			);
+			path = Tags;
 			sourceTree = "<group>";
 		};
 		C268CDA824A928ED00949C4D /* PostComments */ = {
@@ -669,6 +698,7 @@
 				C2386FAB249E09B50076AED3 /* PostListModels.swift in Sources */,
 				C2BCF43C24AB80A4008C28FD /* RepliesCollectionView.swift in Sources */,
 				C218FCF4251B5A6A002F9C68 /* SplashPresenter.swift in Sources */,
+				C24CA08825604D6E003B6521 /* TagsWorker.swift in Sources */,
 				C2EBC71E24D02F870066113D /* NetManager.swift in Sources */,
 				C23261F024D5D73B00F670EE /* Collection+safe.swift in Sources */,
 				C2349447254C793100E26ADC /* ProfileModels.swift in Sources */,
@@ -694,11 +724,14 @@
 				C2349444254C793100E26ADC /* ProfilePresenter.swift in Sources */,
 				C2765BB224A11F59008888B0 /* PostConfigurator.swift in Sources */,
 				C2345BF324B4F15200125976 /* LoginInteractor.swift in Sources */,
+				C24CA08A25604D6E003B6521 /* TagsModels.swift in Sources */,
+				C24CA08C25604D6E003B6521 /* TagsInteractor.swift in Sources */,
 				C268CDBF24A929E900949C4D /* PostCommentsCollectionView.swift in Sources */,
 				C2C31A52249F5879002AAB91 /* WebImageView.swift in Sources */,
 				C218FCFC251B5B81002F9C68 /* SplashConfigurator.swift in Sources */,
 				C2278E8A249E821900D9D582 /* String+adds.swift in Sources */,
 				C2D6691E24A3B6F900F6731F /* UITextView+adds.swift in Sources */,
+				C24CA08725604D6E003B6521 /* TagsPresenter.swift in Sources */,
 				C2278E86249E77C200D9D582 /* PostListCollectionViewCell.swift in Sources */,
 				C2A5B9ED24B36545004BE928 /* CommentInputAccessoryView.swift in Sources */,
 				C2386F9C249E06AE0076AED3 /* Server.swift in Sources */,
@@ -715,6 +748,7 @@
 				C2278E7C249E2FD100D9D582 /* UIView+adds.swift in Sources */,
 				C2D6692024A3C3E600F6731F /* PostViewController.swift in Sources */,
 				C2D53D512542E79100C13AD0 /* CustomError.swift in Sources */,
+				C24CA09025604D86003B6521 /* TagsConfigurator.swift in Sources */,
 				C22FFB972559453D00416C15 /* UIButton+adds.swift in Sources */,
 				C2BCF43424AB67E8008C28FD /* PostCommentRepliesRouter.swift in Sources */,
 				C268CDB124A9290800949C4D /* PostCommentsPresenter.swift in Sources */,
@@ -725,8 +759,10 @@
 				C22FFB9A2559716400416C15 /* FavPostsCell.swift in Sources */,
 				C2BCF43924AB68D9008C28FD /* PostCommentRepliesConfigurator.swift in Sources */,
 				C218FCF9251B5A6A002F9C68 /* SplashInteractor.swift in Sources */,
+				C24CA08925604D6E003B6521 /* TagsRouter.swift in Sources */,
 				C2278E7E249E3AF700D9D582 /* Data+adds.swift in Sources */,
 				C2386FAF249E09CB0076AED3 /* PostListConfigurator.swift in Sources */,
+				C24CA08B25604D6E003B6521 /* TagsViewController.swift in Sources */,
 				C2345BF624B4F17100125976 /* LoginConfigurator.swift in Sources */,
 				C2E3444725373060000D07F2 /* RegisterPresenter.swift in Sources */,
 				C239A712254DAC2E000E7358 /* MainProfileCell.swift in Sources */,

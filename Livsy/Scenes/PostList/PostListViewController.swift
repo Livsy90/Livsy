@@ -12,6 +12,7 @@ protocol PostListDisplayLogic: class {
     func displayPostList(viewModel: PostListModels.PostList.ViewModel)
     func displayToken(viewModel: PostListModels.Login.ViewModel)
     func displaySignOut()
+    func displayTags(viewModel: PostListModels.Tags.ViewModel)
 }
 
 final class PostListViewController: UIViewController {
@@ -35,6 +36,16 @@ final class PostListViewController: UIViewController {
         v.clipsToBounds = true
         v.isHidden = true
         return v
+    }()
+     let tagsButton: UIButton = {
+        let button = UIButton()
+        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .medium, scale: .medium)
+        let listImage = UIImage(systemName: "list.bullet", withConfiguration: config)
+        button.setImage(listImage, for: .normal)
+        button.setImage(listImage, for: .highlighted)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(showTags), for: .touchUpInside)
+        return button
     }()
     private let activityIndicator = ActivityIndicator()
     private let searchController = UISearchController(searchResultsController: nil)
@@ -77,6 +88,8 @@ final class PostListViewController: UIViewController {
         setupCollectionView()
         setupRefreshControl()
         fetchPostList(isLoadMore: false)
+        setupTagsButton()
+        fetchTagList()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -139,14 +152,31 @@ final class PostListViewController: UIViewController {
         interactor?.fetchPostList(request: PostListModels.PostList.Request(page: page, searchTerms: searchTerms))
     }
     
+    private func fetchTagList() {
+        tagsButton.isEnabled = false
+        interactor?.fetchTags(request: PostListModels.Tags.Request())
+    }
+    
     private func signOut() {
         interactor?.signOut()
+    }
+    
+    private func setupTagsButton() {
+        view.addSubview(tagsButton)
+        tagsButton.tintColor = .gray
+        tagsButton.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 45, paddingRight: 12, width: 48, height: 48)
+        tagsButton.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
+        tagsButton.layer.cornerRadius = 12
+        tagsButton.layer.shadowRadius = 2
+        tagsButton.layer.shadowOpacity = 0.2
+        tagsButton.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
     
     @objc private func refreshData() {
         page = 0
         searchTerms = ""
         fetchPostList(isLoadMore: false)
+        fetchTagList()
     }
     
     @objc private func routeToLogin() {
@@ -159,6 +189,14 @@ final class PostListViewController: UIViewController {
     
     @objc private func search() {
         interactor?.search(request: PostListModels.PostList.Request(page: 1))
+    }
+    
+    @objc private func showTags() {
+        tagsButton.showAnimation { [weak self] in
+            guard let self = self else { return }
+            self.router?.routeTags()
+        }
+        
     }
     
 }
@@ -185,6 +223,10 @@ extension PostListViewController: PostListDisplayLogic {
         router?.showSignOutResultAlert()
     }
     
+    func displayTags(viewModel: PostListModels.Tags.ViewModel) {
+        tagsButton.isEnabled = true
+    }
+    
 }
 
 extension PostListViewController: UISearchBarDelegate {
@@ -203,6 +245,13 @@ extension PostListViewController: UISearchBarDelegate {
     }
     
 }
+
+extension PostListViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+}
+
 
 class NavigationController: UINavigationController {
     
@@ -224,3 +273,4 @@ class NavigationController: UINavigationController {
         return .slide // .fade, .none
     }
 }
+

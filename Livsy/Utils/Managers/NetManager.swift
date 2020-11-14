@@ -176,4 +176,19 @@ class NetManager {
         }
     }
     
+    func fetchTags(completion: @escaping (Bodies.TagsAPI.Response?, CustomError?) -> ()) {
+        let request = Request.RequestType.Tags.get(path: API.tags)
+        net.getData(with: request) { (data, error) in
+            guard let data = data else { return }
+            do {
+                let response = try JSONDecoder().decode(Bodies.TagsAPI.Response.self, from: data)
+                completion(response, nil)
+            } catch {
+                guard let cusotomError = self.decodeError(data: data) else { return }
+                completion(nil, cusotomError)
+            }
+        }
+        
+    }
+    
 }

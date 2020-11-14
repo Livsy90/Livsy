@@ -13,7 +13,7 @@ struct API {
     static let host = "livsy.me"
 
     static let postList = "wp/v2/posts?_embed&page="
-    static let post = "wp/v2/posts/"
+    static let post = "wp/v2/posts/" // postsByTag = "wp/v2/posts?tags="
     static let createComment = "wp/v2/comments/"
     static let postComments = "wp/v2/comments/?post="
     static let commentReplies = "wp/v2/comments/?parent="
@@ -24,4 +24,6 @@ struct API {
     static let userComments = "wp/v2/comments/?author_name="
     static let favPosts = "wp/v2/posts?include="
     static let currentUserInfo = "wp/v2/users/me"
+    static let tags = "wp/v2/tags"
+    
 }

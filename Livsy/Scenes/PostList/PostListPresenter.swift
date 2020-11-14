@@ -12,6 +12,7 @@ protocol PostListPresentationLogic {
     func presentPostList(response: PostListModels.PostList.Response)
     func presentToken(response: PostListModels.Login.Response)
     func presentSignOut()
+    func presentTags(response: PostListModels.Tags.Response)
 }
 
 final class PostListPresenter: PostListPresentationLogic {
@@ -34,6 +35,10 @@ final class PostListPresenter: PostListPresentationLogic {
     
     func presentSignOut() {
         viewController?.displaySignOut()
+    }
+    
+    func presentTags(response: PostListModels.Tags.Response) {
+        viewController?.displayTags(viewModel: PostListModels.Tags.ViewModel())
     }
     
 }

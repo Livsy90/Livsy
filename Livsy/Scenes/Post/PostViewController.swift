@@ -284,8 +284,8 @@ final class PostViewController: UIViewController {
     
     @objc private func savePostToFav() {
         interactor?.savePostToFav(request: PostModels.SaveToFavorites.Request())
-        let generator = UIImpactFeedbackGenerator(style: .light)
-        generator.impactOccurred()
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
     }
     
 }

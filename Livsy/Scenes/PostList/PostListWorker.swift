@@ -23,4 +23,8 @@ final class PostListWorker {
     func login(login: String, password: String, completion: @escaping (Bodies.LoginAPI.Response?, CustomError?) -> ()) {
         netManager.login(login: login, password: password, completion: completion)
     }
+    
+    func fetchTags(completion: @escaping (Bodies.TagsAPI.Response?, CustomError?) -> ()) {
+        netManager.fetchTags(completion: completion)
+    }
 }
