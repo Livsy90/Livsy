@@ -180,7 +180,12 @@ final class PostViewController: UIViewController {
         view.addSubview(favButton)
         let color = router?.dataStore?.averageColor
         favButton.tintColor = color ?? .systemGreen
-        favButton.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 45, paddingRight: 12, width: 0, height: 0)
+        favButton.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 45, paddingRight: 12, width: 48, height: 48)
+        favButton.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
+        favButton.layer.cornerRadius = 12
+        favButton.layer.shadowRadius = 2
+        favButton.layer.shadowOpacity = 0.2
+        favButton.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
     
     private func setupProgressView() {
