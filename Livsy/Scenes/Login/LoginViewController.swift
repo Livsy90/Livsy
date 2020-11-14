@@ -31,7 +31,7 @@ final class LoginViewController: UIViewController {
     private let loginTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Username"
-        tf.backgroundColor = .postBackground
+        tf.backgroundColor = .inputTextView
         tf.setLeftPaddingPoints(10)
         tf.setRightPaddingPoints(10)
        // tf.layer.borderColor = #colorLiteral(red: 0.5704585314, green: 0.5704723597, blue: 0.5704649091, alpha: 1)
@@ -50,7 +50,7 @@ final class LoginViewController: UIViewController {
         //tf.layer.borderColor = #colorLiteral(red: 0.5704585314, green: 0.5704723597, blue: 0.5704649091, alpha: 1)
       //  tf.layer.borderWidth = 1
         tf.layer.cornerRadius = 8
-        tf.backgroundColor = .postBackground
+        tf.backgroundColor = .inputTextView
         tf.setLeftPaddingPoints(10)
         tf.setRightPaddingPoints(10)
         tf.font = UIFont.systemFont(ofSize: 14)
@@ -116,7 +116,7 @@ final class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .listBackground
+        view.backgroundColor = .postBackground
         NotificationCenter.default.removeObserver(self)
         title = "Login"
     }

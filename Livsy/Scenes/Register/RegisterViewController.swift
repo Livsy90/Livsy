@@ -26,7 +26,7 @@ final class RegisterViewController: UIViewController {
     private let loginTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Username"
-        tf.backgroundColor = .postBackground
+        tf.backgroundColor = .inputTextView
         tf.setLeftPaddingPoints(10)
         tf.setRightPaddingPoints(10)
         tf.layer.cornerRadius = 8
@@ -39,7 +39,7 @@ final class RegisterViewController: UIViewController {
     private let emailTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Email"
-        tf.backgroundColor = .postBackground
+        tf.backgroundColor = .inputTextView
         tf.setLeftPaddingPoints(10)
         tf.setRightPaddingPoints(10)
         tf.layer.cornerRadius = 8
@@ -54,7 +54,7 @@ final class RegisterViewController: UIViewController {
         tf.placeholder = "Password"
         tf.isSecureTextEntry = true
         tf.layer.cornerRadius = 8
-        tf.backgroundColor = .postBackground
+        tf.backgroundColor = .inputTextView
         tf.setLeftPaddingPoints(10)
         tf.setRightPaddingPoints(10)
         tf.font = UIFont.systemFont(ofSize: 14)
@@ -96,7 +96,7 @@ final class RegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupInputFields()
-        view.backgroundColor = .listBackground
+        view.backgroundColor = .postBackground
         title = "Sign up"
     }
     
