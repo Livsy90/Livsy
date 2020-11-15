@@ -136,9 +136,6 @@ final class PostListViewController: UIViewController {
         navigationController?.navigationBar.shadowImage = nil
         navigationController?.navigationBar.tintColor = .navBarTint
         
-//
-//        self.navigationItem.titleView = activityIndicator
-//        activityIndicator.startAnimating()
         let tagsBotton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
         let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium, scale: .medium)
         let tagImage = UIImage(systemName: "tag.fill", withConfiguration: config)
@@ -170,8 +167,8 @@ final class PostListViewController: UIViewController {
         let rightItem =  UIBarButtonItem(customView: tagsButton)
         navigationItem.rightBarButtonItem = rightItem
         
-        fetchTagList(isTags: true)
-        fetchTagList(isTags: false)
+        fetchFilterList(isTags: true)
+        fetchFilterList(isTags: false)
     }
     
     private func checkToken() {
@@ -190,9 +187,7 @@ final class PostListViewController: UIViewController {
     }
     
     private func fetchPostList(isLoadMore: Bool) {
-        homeButton.isEnabled = false
-        categoriesButton.isEnabled = false
-        tagsButton.isEnabled = false
+        navigationController?.navigationBar.isUserInteractionEnabled = false
         byCategory = false
         byTag = false
         page += 1
@@ -206,8 +201,8 @@ final class PostListViewController: UIViewController {
         interactor?.fetchFilteredPostList(request: PostListModels.FilteredPostList.Request(isTag: isTag, page: page, id: id))
     }
     
-    private func fetchTagList(isTags: Bool) {
-        interactor?.fetchTags(request: PostListModels.Tags.Request(isTags: isTags))
+    private func fetchFilterList(isTags: Bool) {
+        interactor?.fetchFilterData(request: PostListModels.Tags.Request(isTags: isTags))
     }
     
     private func signOut() {
@@ -221,8 +216,8 @@ final class PostListViewController: UIViewController {
         byCategory = false
         byTag = false
         fetchPostList(isLoadMore: false)
-        fetchTagList(isTags: true)
-        fetchTagList(isTags: false)
+        fetchFilterList(isTags: true)
+        fetchFilterList(isTags: false)
         title = "Livsy"
         UIView.animate(withDuration: 0.3, animations: {
             self.homeButton.alpha = 0
@@ -242,6 +237,7 @@ final class PostListViewController: UIViewController {
     }
     
     @objc private func showTags() {
+        postCollectionView.isUserInteractionEnabled.toggle()
         tagsButton.showAnimation { [weak self] in
             guard let self = self else { return }
             self.router?.routeTags()
@@ -250,6 +246,7 @@ final class PostListViewController: UIViewController {
     }
     
     @objc func showCategories() {
+        postCollectionView.isUserInteractionEnabled.toggle()
         categoriesButton.showAnimation { [weak self] in
             guard let self = self else { return }
             self.router?.routeCategories()
@@ -272,6 +269,7 @@ extension PostListViewController: PostListDisplayLogic {
         postCollectionView.footerView.stopAnimating()
         nothingFoundImageView.isHidden = !posts.isEmpty
         activityIndicator.hideIndicator()
+        navigationController?.navigationBar.isUserInteractionEnabled = true
     }
     
     func displayToken(viewModel: PostListModels.Login.ViewModel) {
@@ -305,10 +303,6 @@ extension PostListViewController: PostListDisplayLogic {
                 self.homeButton.alpha = 0
             })
         }
-        
-        homeButton.isEnabled = true
-        categoriesButton.isEnabled = true
-        tagsButton.isEnabled = true
     }
     
 }

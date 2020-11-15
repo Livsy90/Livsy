@@ -13,7 +13,7 @@ protocol PostListBusinessLogic {
     func search(request: PostListModels.PostList.Request)
     func login(request: PostListModels.Login.Request)
     func signOut()
-    func fetchTags(request: PostListModels.Tags.Request)
+    func fetchFilterData(request: PostListModels.Tags.Request)
     func fetchFilteredPostList(request: PostListModels.FilteredPostList.Request)
 }
 
@@ -90,7 +90,7 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
         })
     }
     
-    func fetchTags(request: PostListModels.Tags.Request){
+    func fetchFilterData(request: PostListModels.Tags.Request){
         worker?.fetchTags(isTags: request.isTags, completion: { [weak self] (response, error) in
             guard let self = self else { return }
             request.isTags ? (self.tags = response ?? []) : (self.categories = response ?? [])
@@ -109,8 +109,15 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
                 self.postList = postList ?? []
             }
             
-            let response = PostListModels.FilteredPostList.Response(error: error)
-            self.presenter?.presentPostListByCategory(response: response)
+            if error == nil && postList?.isEmpty ?? true {
+                let error = CustomError(code: "", message: "something gone wrong...", data: ErrorData(status: 0))
+                let response = PostListModels.FilteredPostList.Response(error: error)
+                self.presenter?.presentPostListByCategory(response: response)
+            } else {
+                let response = PostListModels.FilteredPostList.Response(error: error)
+                self.presenter?.presentPostListByCategory(response: response)
+            }
+            
         })
     }
     
