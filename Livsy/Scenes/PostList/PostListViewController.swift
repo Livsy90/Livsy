@@ -24,6 +24,9 @@ final class PostListViewController: UIViewController {
     var interactor: PostListBusinessLogic?
     var router: (PostListRoutingLogic & PostListDataPassing)?
     
+    var tagsButton = UIButton()
+    var categoriesButton = UIButton()
+
     // MARK: - Private Properties
     
     private var nothingFoundImageView: UIImageView = {
@@ -37,16 +40,7 @@ final class PostListViewController: UIViewController {
         v.isHidden = true
         return v
     }()
-     let tagsButton: UIButton = {
-        let button = UIButton()
-        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .medium, scale: .medium)
-        let listImage = UIImage(systemName: "list.bullet", withConfiguration: config)
-        button.setImage(listImage, for: .normal)
-        button.setImage(listImage, for: .highlighted)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(showTags), for: .touchUpInside)
-        return button
-    }()
+
     private let activityIndicator = ActivityIndicator()
     private let searchController = UISearchController(searchResultsController: nil)
     private var refreshControl: UIRefreshControl!
@@ -88,8 +82,6 @@ final class PostListViewController: UIViewController {
         setupCollectionView()
         setupRefreshControl()
         fetchPostList(isLoadMore: false)
-        setupTagsButton()
-        fetchTagList()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -129,6 +121,32 @@ final class PostListViewController: UIViewController {
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.shadowImage = nil
         navigationController?.navigationBar.tintColor = .navBarTint
+        
+//        let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+//        self.navigationItem.titleView = activityIndicator
+//        activityIndicator.startAnimating()
+        let tagsBotton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
+        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium, scale: .medium)
+        let tagImage = UIImage(systemName: "tag.fill", withConfiguration: config)
+        tagsBotton.setImage(tagImage, for: .normal)
+        tagsBotton.addTarget(self, action: #selector(showTags), for: .touchUpInside)
+        tagsBotton.isEnabled = false
+        tagsButton = tagsBotton
+        
+        let catButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
+        let listImage = UIImage(systemName: "list.bullet", withConfiguration: config)
+        catButton.setImage(listImage, for: .normal)
+        catButton.addTarget(self, action: #selector(showCategories), for: .touchUpInside)
+        catButton.isEnabled = false
+        categoriesButton = catButton
+        
+        let leftItem =  UIBarButtonItem(customView: categoriesButton)
+        navigationItem.leftBarButtonItem = leftItem
+        let rightItem =  UIBarButtonItem(customView: tagsButton)
+        navigationItem.rightBarButtonItem = rightItem
+        
+        fetchTagList(isTags: true)
+        fetchTagList(isTags: false)
     }
     
     private func checkToken() {
@@ -152,31 +170,20 @@ final class PostListViewController: UIViewController {
         interactor?.fetchPostList(request: PostListModels.PostList.Request(page: page, searchTerms: searchTerms))
     }
     
-    private func fetchTagList() {
-        tagsButton.isEnabled = false
-        interactor?.fetchTags(request: PostListModels.Tags.Request())
+    private func fetchTagList(isTags: Bool) {
+        interactor?.fetchTags(request: PostListModels.Tags.Request(isTags: isTags))
     }
     
     private func signOut() {
         interactor?.signOut()
     }
     
-    private func setupTagsButton() {
-        view.addSubview(tagsButton)
-        tagsButton.tintColor = .gray
-        tagsButton.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 45, paddingRight: 12, width: 48, height: 48)
-        tagsButton.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
-        tagsButton.layer.cornerRadius = 12
-        tagsButton.layer.shadowRadius = 2
-        tagsButton.layer.shadowOpacity = 0.2
-        tagsButton.layer.shadowOffset = CGSize(width: 0, height: 0)
-    }
-    
     @objc private func refreshData() {
         page = 0
         searchTerms = ""
         fetchPostList(isLoadMore: false)
-        fetchTagList()
+        fetchTagList(isTags: true)
+        fetchTagList(isTags: false)
     }
     
     @objc private func routeToLogin() {
@@ -192,12 +199,22 @@ final class PostListViewController: UIViewController {
     }
     
     @objc private func showTags() {
+        postCollectionView.isUserInteractionEnabled.toggle()
         tagsButton.showAnimation { [weak self] in
             guard let self = self else { return }
             self.router?.routeTags()
+            self.postCollectionView.isUserInteractionEnabled.toggle()
         }
-        
     }
+    
+    @objc func showCategories() {
+        postCollectionView.isUserInteractionEnabled.toggle()
+        categoriesButton.showAnimation { [weak self] in
+            guard let self = self else { return }
+            self.router?.routeCategories()
+            self.postCollectionView.isUserInteractionEnabled.toggle()
+        }
+      }
     
 }
 
@@ -224,7 +241,7 @@ extension PostListViewController: PostListDisplayLogic {
     }
     
     func displayTags(viewModel: PostListModels.Tags.ViewModel) {
-        tagsButton.isEnabled = true
+
     }
     
 }

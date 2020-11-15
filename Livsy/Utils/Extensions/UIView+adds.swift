@@ -42,8 +42,8 @@ extension UIView {
 
 public extension UIView {
     func showAnimation(_ completionBlock: @escaping () -> Void) {
-        let generator = UINotificationFeedbackGenerator()
-        generator.notificationOccurred(.success)
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
         isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.1,
                        delay: 0,

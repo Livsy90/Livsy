@@ -43,7 +43,7 @@ final class PostViewController: UIViewController {
         pv.translatesAutoresizingMaskIntoConstraints = false
         return pv
     }()
-    private let favButton: UIButton = {
+    private var favButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(savePostToFav), for: .touchUpInside)
@@ -85,7 +85,6 @@ final class PostViewController: UIViewController {
         scrollViewSetup()
         textViewSetup()
         fetchPost()
-        setupFavButton()
         setupHeader()
     }
     
@@ -176,18 +175,6 @@ final class PostViewController: UIViewController {
         scrollView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
-    private func setupFavButton() {
-        view.addSubview(favButton)
-        let color = router?.dataStore?.averageColor
-        favButton.tintColor = color ?? .systemGreen
-        favButton.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 45, paddingRight: 12, width: 48, height: 48)
-        favButton.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
-        favButton.layer.cornerRadius = 12
-        favButton.layer.shadowRadius = 2
-        favButton.layer.shadowOpacity = 0.2
-        favButton.layer.shadowOffset = CGSize(width: 0, height: 0)
-    }
-    
     private func setupProgressView() {
         view.addSubview(progressView)
         
@@ -220,11 +207,23 @@ final class PostViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: loadingCommentsIndicator)
     }
     
-    private func commentsButtonSetup() {
+    private func rightNavButtonSetup() {
         loadingCommentsIndicator.stopAnimating()
         guard let count = router?.dataStore?.comments.count else { return }
-        let barButton = UIBarButtonItem(title: "Comments (\(count))", style: .done, target: self, action: #selector(routeToComments))
-        navigationItem.rightBarButtonItem = barButton
+        let countLabelText = count == 0 ? "Comments" : "Comments: \(count)"
+        let barButton = UIBarButtonItem(title: countLabelText, style: .done, target: self, action: #selector(routeToComments))
+        
+        let catButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
+        catButton.addTarget(self, action: #selector(savePostToFav), for: .touchUpInside)
+        favButton = catButton
+        let leftItem =  UIBarButtonItem(customView: favButton)
+        navigationItem.leftBarButtonItems?.append(leftItem)
+        
+        let id = router?.dataStore?.id
+        let array = UserDefaults.favPosts ?? []
+        let isFavorite = array.contains(id ?? 00)
+        setFavImage(isFavorite: isFavorite, animated: false)
+        navigationItem.rightBarButtonItems = [leftItem, barButton]
     }
     
     private func fetchPost() {
@@ -256,6 +255,8 @@ final class PostViewController: UIViewController {
         let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .medium, scale: .medium)
         let emptyBM = UIImage(systemName: "bookmark", withConfiguration: config)
         let fillBM = UIImage(systemName: "bookmark.fill", withConfiguration: config)
+        
+        favButton.tintColor = isFavorite ? .systemRed : .white
         
         switch isFavorite {
         case true:
@@ -302,17 +303,12 @@ extension PostViewController: PostDisplayLogic {
     }
     
     func displayPostComments(viewModel: PostModels.PostComments.ViewModel) {
-        commentsButtonSetup()
+        rightNavButtonSetup()
     }
     
     func displayFavorites(viewModel: PostModels.SaveToFavorites.ViewModel) {
         setFavImage(isFavorite: viewModel.isFavorite, animated: true)
         if viewModel.isFavorite {
-            let pulse = PulseAnimation(numberOfPulse: 1, radius: 35, postion: favButton.center)
-            pulse.animationDuration = 0.7
-            let color = router?.dataStore?.averageColor.cgColor
-            pulse.backgroundColor = color ?? UIColor.systemGreen.cgColor
-            view.layer.insertSublayer(pulse, below: view.layer)
             router?.showAddToFavResultAlert(with: "Added to favorites")
         } else {
             router?.showAddToFavResultAlert(with: "Removed from favorites")

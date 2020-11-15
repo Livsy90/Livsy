@@ -19,6 +19,7 @@ protocol PostListBusinessLogic {
 protocol PostListDataStore {
     var postList: [Post] { get set }
     var tags: [Tag] { get set }
+    var categories: [Tag] { get set }
 }
 
 final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
@@ -32,6 +33,7 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
     
     var postList: [Post] = []
     var tags: [Tag] = []
+    var categories: [Tag] = []
     
     // MARK: - Business Logic
     
@@ -88,13 +90,11 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
     }
     
     func fetchTags(request: PostListModels.Tags.Request){
-        worker?.fetchTags { [weak self] (response, error) in
+        worker?.fetchTags(isTags: request.isTags, completion: { [weak self] (response, error) in
             guard let self = self else { return }
-            self.tags = response ?? []
-            
-            self.presenter?.presentTags(response: PostListModels.Tags.Response())
-            
-        }
+            request.isTags ? (self.tags = response ?? []) : (self.categories = response ?? [])
+            self.presenter?.presentTags(response: PostListModels.Tags.Response(isTags: request.isTags))
+        })
     }
     
 }

@@ -1,29 +1,30 @@
 //
-//  TagsViewController.swift
+//  CategoriesViewController.swift
 //  Livsy
 //
-//  Created by Artem on 14.11.2020.
+//  Created by Artem on 15.11.2020.
 //  Copyright © 2020 Artem Mirzabekian. All rights reserved.
 //
 
 import UIKit
 
-protocol TagsDisplayLogic: class {
-    func displayTags(viewModel: TagsModels.Tags.ViewModel)
+protocol CategoriesDisplayLogic: class {
+    
 }
 
-final class TagsViewController: UIViewController {
+final class CategoriesViewController: UIViewController {
     
     // MARK: - IBOutlets
     
     // MARK: - Public Properties
     
-    var interactor: TagsBusinessLogic?
-    var router: (TagsRoutingLogic & TagsDataPassing)?
+    var interactor: CategoriesBusinessLogic?
+    var router: (CategoriesRoutingLogic & CategoriesDataPassing)?
     
     // MARK: - Private Properties
     
     private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
+    
     // MARK: - Initializers
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -37,9 +38,9 @@ final class TagsViewController: UIViewController {
     }
     
     private func setup() {
-        let interactor = TagsInteractor()
-        let presenter = TagsPresenter()
-        let router = TagsRouter()
+        let interactor = CategoriesInteractor()
+        let presenter = CategoriesPresenter()
+        let router = CategoriesRouter()
         
         interactor.presenter = presenter
         presenter.viewController = self
@@ -53,21 +54,18 @@ final class TagsViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func viewWillLayoutSubviews() {
-        preferredContentSize = CGSize(width: 180, height: tableView.contentSize.height + 50)
+        preferredContentSize = CGSize(width: 250, height: tableView.contentSize.height + 50)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-      //  fetchtags()
         view.backgroundColor = .clear
     }
     
     // MARK: - Private Methods
     
-    @objc func fetchtags() {
-        interactor?.fetchTags(request: TagsModels.Tags.Request())
-    }
+    
     
     func setupTableView() {
         tableView.showsHorizontalScrollIndicator = false
@@ -95,21 +93,19 @@ final class TagsViewController: UIViewController {
 
 // MARK: - Tags Display Logic
 
-extension TagsViewController: TagsDisplayLogic {
-    func displayTags(viewModel: TagsModels.Tags.ViewModel) {
-        tableView.softReload()
-    }
+extension CategoriesViewController: CategoriesDisplayLogic {
+    
 }
 
 
-extension TagsViewController: UITableViewDataSource {
+extension CategoriesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        router?.dataStore?.tags.count ?? 0
+        router?.dataStore?.categories.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        guard let tags = router?.dataStore?.tags else { return cell }
+        guard let tags = router?.dataStore?.categories else { return cell }
         cell.textLabel?.text = tags[indexPath.row].name
         cell.separatorInset = .zero
         cell.contentView.alpha = 0.3
@@ -118,9 +114,8 @@ extension TagsViewController: UITableViewDataSource {
     
 }
 
-extension TagsViewController: UITableViewDelegate {
+extension CategoriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        "Tags"
+        "Categories"
     }
 }
-

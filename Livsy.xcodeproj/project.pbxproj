@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C20974BF2561374A00485464 /* CategoriesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20974B82561374A00485464 /* CategoriesPresenter.swift */; };
+		C20974C02561374A00485464 /* CategoriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20974B92561374A00485464 /* CategoriesWorker.swift */; };
+		C20974C12561374A00485464 /* CategoriesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20974BA2561374A00485464 /* CategoriesRouter.swift */; };
+		C20974C22561374A00485464 /* CategoriesModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20974BB2561374A00485464 /* CategoriesModels.swift */; };
+		C20974C32561374A00485464 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20974BC2561374A00485464 /* CategoriesViewController.swift */; };
+		C20974C42561374A00485464 /* CategoriesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20974BD2561374A00485464 /* CategoriesInteractor.swift */; };
+		C20974CA256144A100485464 /* Array+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20974C9256144A100485464 /* Array+adds.swift */; };
 		C218FCF3251B5A6A002F9C68 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C218FCEC251B5A6A002F9C68 /* Splash.storyboard */; };
 		C218FCF4251B5A6A002F9C68 /* SplashPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218FCED251B5A6A002F9C68 /* SplashPresenter.swift */; };
 		C218FCF5251B5A6A002F9C68 /* SplashWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218FCEE251B5A6A002F9C68 /* SplashWorker.swift */; };
@@ -121,6 +128,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C20974B82561374A00485464 /* CategoriesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesPresenter.swift; sourceTree = "<group>"; };
+		C20974B92561374A00485464 /* CategoriesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesWorker.swift; sourceTree = "<group>"; };
+		C20974BA2561374A00485464 /* CategoriesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesRouter.swift; sourceTree = "<group>"; };
+		C20974BB2561374A00485464 /* CategoriesModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesModels.swift; sourceTree = "<group>"; };
+		C20974BC2561374A00485464 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		C20974BD2561374A00485464 /* CategoriesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesInteractor.swift; sourceTree = "<group>"; };
+		C20974C9256144A100485464 /* Array+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+adds.swift"; sourceTree = "<group>"; };
 		C218FCEC251B5A6A002F9C68 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		C218FCED251B5A6A002F9C68 /* SplashPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashPresenter.swift; sourceTree = "<group>"; };
 		C218FCEE251B5A6A002F9C68 /* SplashWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashWorker.swift; sourceTree = "<group>"; };
@@ -247,6 +261,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C20974B52561372700485464 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				C20974B82561374A00485464 /* CategoriesPresenter.swift */,
+				C20974B92561374A00485464 /* CategoriesWorker.swift */,
+				C20974BA2561374A00485464 /* CategoriesRouter.swift */,
+				C20974BB2561374A00485464 /* CategoriesModels.swift */,
+				C20974BC2561374A00485464 /* CategoriesViewController.swift */,
+				C20974BD2561374A00485464 /* CategoriesInteractor.swift */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		C218FCEB251B5A32002F9C68 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +325,7 @@
 				C250E667254EA6BB009E5E03 /* UITableView+adds.swift */,
 				C22FFB962559453D00416C15 /* UIButton+adds.swift */,
 				C2FFC6A3255A9DB1001B885E /* UICollectionView+adds.swift */,
+				C20974C9256144A100485464 /* Array+adds.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -421,6 +449,7 @@
 		C2386F9F249E099F0076AED3 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				C20974B52561372700485464 /* Categories */,
 				C24CA07E25604CE3003B6521 /* Tags */,
 				C234943B254C791600E26ADC /* Profile */,
 				C2349438254C331800E26ADC /* MainTabBarController */,
@@ -689,6 +718,7 @@
 				C268CDB824A9292300949C4D /* PostCommentsConfigurator.swift in Sources */,
 				C2386F9E249E09550076AED3 /* NetService.swift in Sources */,
 				C2BCF43324AB67E8008C28FD /* PostCommentRepliesWorker.swift in Sources */,
+				C20974C32561374A00485464 /* CategoriesViewController.swift in Sources */,
 				C2BCF43E24AB80B2008C28FD /* RepliesCollectionViewCell.swift in Sources */,
 				C2278E88249E783D00D9D582 /* PostListCollectionView.swift in Sources */,
 				C2765BA224A11F1A008888B0 /* PostInteractor.swift in Sources */,
@@ -713,10 +743,13 @@
 				C222F657252203DF0080D7DA /* PostListCollectionViewFooterView.swift in Sources */,
 				C2A7E8CF252B414B00ABF3D5 /* CommentsTableViewCell.swift in Sources */,
 				C2BCF43524AB67E8008C28FD /* PostCommentRepliesModels.swift in Sources */,
+				C20974BF2561374A00485464 /* CategoriesPresenter.swift in Sources */,
 				C2E3444E253730D4000D07F2 /* RegisterConfigurator.swift in Sources */,
 				C2ACD5C1251E254900204696 /* CustomTextView.swift in Sources */,
 				C2386FAA249E09B50076AED3 /* PostListRouter.swift in Sources */,
 				C250E668254EA6BB009E5E03 /* UITableView+adds.swift in Sources */,
+				C20974C22561374A00485464 /* CategoriesModels.swift in Sources */,
+				C20974CA256144A100485464 /* Array+adds.swift in Sources */,
 				C2BCF43224AB67E8008C28FD /* PostCommentRepliesPresenter.swift in Sources */,
 				C23D496B24AA4905007AEE32 /* PostCommentsCollectionViewCell.swift in Sources */,
 				C2E3444825373060000D07F2 /* RegisterWorker.swift in Sources */,
@@ -762,7 +795,10 @@
 				C24CA08925604D6E003B6521 /* TagsRouter.swift in Sources */,
 				C2278E7E249E3AF700D9D582 /* Data+adds.swift in Sources */,
 				C2386FAF249E09CB0076AED3 /* PostListConfigurator.swift in Sources */,
+				C20974C42561374A00485464 /* CategoriesInteractor.swift in Sources */,
 				C24CA08B25604D6E003B6521 /* TagsViewController.swift in Sources */,
+				C20974C02561374A00485464 /* CategoriesWorker.swift in Sources */,
+				C20974C12561374A00485464 /* CategoriesRouter.swift in Sources */,
 				C2345BF624B4F17100125976 /* LoginConfigurator.swift in Sources */,
 				C2E3444725373060000D07F2 /* RegisterPresenter.swift in Sources */,
 				C239A712254DAC2E000E7358 /* MainProfileCell.swift in Sources */,

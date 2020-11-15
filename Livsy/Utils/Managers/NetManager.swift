@@ -176,8 +176,8 @@ class NetManager {
         }
     }
     
-    func fetchTags(completion: @escaping (Bodies.TagsAPI.Response?, CustomError?) -> ()) {
-        let request = Request.RequestType.Tags.get(path: API.tags)
+    func fetchTagsAndCategories(isTags: Bool, completion: @escaping (Bodies.TagsAPI.Response?, CustomError?) -> ()) {
+        let request = Request.RequestType.Tags.get(path: isTags ? API.tags : API.categories)
         net.getData(with: request) { (data, error) in
             guard let data = data else { return }
             do {

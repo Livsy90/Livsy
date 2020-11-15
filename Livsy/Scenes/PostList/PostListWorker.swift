@@ -24,7 +24,7 @@ final class PostListWorker {
         netManager.login(login: login, password: password, completion: completion)
     }
     
-    func fetchTags(completion: @escaping (Bodies.TagsAPI.Response?, CustomError?) -> ()) {
-        netManager.fetchTags(completion: completion)
+    func fetchTags(isTags: Bool, completion: @escaping (Bodies.TagsAPI.Response?, CustomError?) -> ()) {
+        netManager.fetchTagsAndCategories(isTags: isTags, completion: completion)
     }
 }

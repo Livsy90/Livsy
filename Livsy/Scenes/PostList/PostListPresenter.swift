@@ -38,7 +38,7 @@ final class PostListPresenter: PostListPresentationLogic {
     }
     
     func presentTags(response: PostListModels.Tags.Response) {
-        viewController?.displayTags(viewModel: PostListModels.Tags.ViewModel())
+        viewController?.displayTags(viewModel: PostListModels.Tags.ViewModel(isTags: response.isTags))
     }
     
 }

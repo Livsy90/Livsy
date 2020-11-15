@@ -18,6 +18,6 @@ final class TagsWorker: TagsWorkingLogic {
     private let netManager = NetManager.sharedInstanse
     
     func fetchTags(completion: @escaping (Bodies.TagsAPI.Response?, CustomError?) -> ()) {
-        netManager.fetchTags(completion: completion)
+       // netManager.fetchTags(completion: completion)
     }
 }

@@ -14,6 +14,7 @@ protocol PostListRoutingLogic {
     func showSignOutResultAlert()
     func showSignOutQuestionAlert(completion: @escaping (() -> Void))
     func routeTags()
+    func routeCategories()
 }
 
 protocol PostListDataPassing {
@@ -79,12 +80,12 @@ final class PostListRouter: PostListRoutingLogic, PostListDataPassing {
         let popOverViewController = destination.popoverPresentationController
         popOverViewController?.delegate = viewController
         popOverViewController?.sourceView = viewController?.tagsButton
-        popOverViewController?.permittedArrowDirections = .down
+        popOverViewController?.permittedArrowDirections = .up
         popOverViewController?.backgroundColor = .clear
         
         guard
             let buttonMidX = viewController?.tagsButton.bounds.midX,
-            let buttonMaxY = viewController?.tagsButton.bounds.minY
+            let buttonMaxY = viewController?.tagsButton.bounds.maxY
             else { return }
         
         popOverViewController?.sourceRect = CGRect(x: buttonMidX, y: buttonMaxY, width: 0, height: 0)
@@ -95,5 +96,38 @@ final class PostListRouter: PostListRoutingLogic, PostListDataPassing {
     func passDataToTagList(source: PostListDataStore, destination: inout TagsDataStore) {
         destination.tags = source.tags
     }
+    
+    func routeCategories() {
+        let destinationVC = CategoriesViewController()
+        var destinationDS = destinationVC.router!.dataStore!
+        
+        passDataToCategories(source: dataStore!, destination: &destinationDS)
+        navigateToCategories(source: viewController!, destination: destinationVC)
+        
+    }
+    
+    func navigateToCategories(source: PostListViewController, destination: CategoriesViewController) {
+        destination.modalPresentationStyle = .popover
+        
+        let popOverViewController = destination.popoverPresentationController
+        popOverViewController?.delegate = viewController
+        popOverViewController?.sourceView = viewController?.categoriesButton
+        popOverViewController?.permittedArrowDirections = .up
+        popOverViewController?.backgroundColor = .clear
+        
+        guard
+            let buttonMidX = viewController?.categoriesButton.bounds.midX,
+            let buttonMaxY = viewController?.categoriesButton.bounds.maxY
+            else { return }
+        
+        popOverViewController?.sourceRect = CGRect(x: buttonMidX, y: buttonMaxY, width: 0, height: 0)
+        
+        viewController?.present(destination, animated: true, completion: nil)
+    }
+    
+    func passDataToCategories(source: PostListDataStore, destination: inout CategoriesDataStore) {
+        destination.categories = source.categories
+    }
+    
     
 }

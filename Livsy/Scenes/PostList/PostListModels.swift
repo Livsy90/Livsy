@@ -102,13 +102,15 @@ enum PostListModels {
     enum Tags {
       
       struct Request {
-      
+        var isTags: Bool
       }
       
       struct Response {
+        var isTags: Bool
       }
       
       struct ViewModel {
+        var isTags: Bool
       }
     }
   

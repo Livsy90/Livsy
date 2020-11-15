@@ -25,5 +25,5 @@ struct API {
     static let favPosts = "wp/v2/posts?include="
     static let currentUserInfo = "wp/v2/users/me"
     static let tags = "wp/v2/tags"
-    
+    static let categories = "wp/v2/categories"
 }
