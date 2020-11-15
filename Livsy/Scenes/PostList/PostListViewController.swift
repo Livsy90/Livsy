@@ -13,6 +13,7 @@ protocol PostListDisplayLogic: class {
     func displayToken(viewModel: PostListModels.Login.ViewModel)
     func displaySignOut()
     func displayTags(viewModel: PostListModels.Tags.ViewModel)
+    func displayPostListByCategory(viewModel: PostListModels.FilteredPostList.ViewModel)
 }
 
 final class PostListViewController: UIViewController {
@@ -40,6 +41,8 @@ final class PostListViewController: UIViewController {
         v.isHidden = true
         return v
     }()
+    
+    private var homeButton = UIButton()
 
     private let activityIndicator = ActivityIndicator()
     private let searchController = UISearchController(searchResultsController: nil)
@@ -48,6 +51,9 @@ final class PostListViewController: UIViewController {
     private var page = 0
     private var searchTerms = ""
     private var isLoadMore = false
+    private var byCategory: Bool = false
+    private var byTag: Bool = false
+    private var filterId: Int?
     
     // MARK: - Initializers
     
@@ -86,8 +92,8 @@ final class PostListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavBar()
         setNeedsStatusBarAppearanceUpdate()
+        setupNavBar()
     }
     
     // MARK: - Private Methods
@@ -104,7 +110,15 @@ final class PostListViewController: UIViewController {
         
         postCollectionView.loadMoreCompletion = { [weak self] isLoadMore in
             guard let self = self else { return }
-            self.fetchPostList(isLoadMore: isLoadMore)
+            
+            if self.byCategory {
+                self.fetchFilteredPostList(isLoadMore: isLoadMore, id: self.filterId ?? 00, isTag: self.byCategory)
+            } else if self.byTag {
+                self.fetchFilteredPostList(isLoadMore: isLoadMore, id: self.filterId ?? 00, isTag: self.byTag)
+            } else {
+                self.fetchPostList(isLoadMore: isLoadMore)
+            }
+            
         }
         
         postCollectionView.addSubview(nothingFoundImageView)
@@ -122,7 +136,7 @@ final class PostListViewController: UIViewController {
         navigationController?.navigationBar.shadowImage = nil
         navigationController?.navigationBar.tintColor = .navBarTint
         
-//        let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+//
 //        self.navigationItem.titleView = activityIndicator
 //        activityIndicator.startAnimating()
         let tagsBotton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
@@ -130,18 +144,29 @@ final class PostListViewController: UIViewController {
         let tagImage = UIImage(systemName: "tag.fill", withConfiguration: config)
         tagsBotton.setImage(tagImage, for: .normal)
         tagsBotton.addTarget(self, action: #selector(showTags), for: .touchUpInside)
-        tagsBotton.isEnabled = false
         tagsButton = tagsBotton
         
         let catButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
         let listImage = UIImage(systemName: "list.bullet", withConfiguration: config)
         catButton.setImage(listImage, for: .normal)
         catButton.addTarget(self, action: #selector(showCategories), for: .touchUpInside)
-        catButton.isEnabled = false
         categoriesButton = catButton
         
+        let hButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
+        let homeImage = UIImage(systemName: "house.fill", withConfiguration: config)
+        hButton.setImage(homeImage, for: .normal)
+        hButton.addTarget(self, action: #selector(refreshData), for: .touchUpInside)
+        homeButton = hButton
+        
+        if byTag || byCategory {
+            homeButton.alpha = 1
+        } else {
+            homeButton.alpha = 0
+        }
+        
         let leftItem =  UIBarButtonItem(customView: categoriesButton)
-        navigationItem.leftBarButtonItem = leftItem
+        let homeItem =  UIBarButtonItem(customView: homeButton)
+        navigationItem.leftBarButtonItems = [leftItem, homeItem]
         let rightItem =  UIBarButtonItem(customView: tagsButton)
         navigationItem.rightBarButtonItem = rightItem
         
@@ -165,9 +190,20 @@ final class PostListViewController: UIViewController {
     }
     
     private func fetchPostList(isLoadMore: Bool) {
+        homeButton.isEnabled = false
+        categoriesButton.isEnabled = false
+        tagsButton.isEnabled = false
+        byCategory = false
+        byTag = false
         page += 1
         isLoadMore ? postCollectionView.footerView.startAnimating() : {}()
         interactor?.fetchPostList(request: PostListModels.PostList.Request(page: page, searchTerms: searchTerms))
+    }
+    
+    private func fetchFilteredPostList(isLoadMore: Bool, id: Int, isTag: Bool) {
+        page += 1
+        isLoadMore ? postCollectionView.footerView.startAnimating() : {}()
+        interactor?.fetchFilteredPostList(request: PostListModels.FilteredPostList.Request(isTag: isTag, page: page, id: id))
     }
     
     private func fetchTagList(isTags: Bool) {
@@ -179,11 +215,18 @@ final class PostListViewController: UIViewController {
     }
     
     @objc private func refreshData() {
+        activityIndicator.showIndicator(on: self)
         page = 0
         searchTerms = ""
+        byCategory = false
+        byTag = false
         fetchPostList(isLoadMore: false)
         fetchTagList(isTags: true)
         fetchTagList(isTags: false)
+        title = "Livsy"
+        UIView.animate(withDuration: 0.3, animations: {
+            self.homeButton.alpha = 0
+        })
     }
     
     @objc private func routeToLogin() {
@@ -199,7 +242,6 @@ final class PostListViewController: UIViewController {
     }
     
     @objc private func showTags() {
-        postCollectionView.isUserInteractionEnabled.toggle()
         tagsButton.showAnimation { [weak self] in
             guard let self = self else { return }
             self.router?.routeTags()
@@ -208,7 +250,6 @@ final class PostListViewController: UIViewController {
     }
     
     @objc func showCategories() {
-        postCollectionView.isUserInteractionEnabled.toggle()
         categoriesButton.showAnimation { [weak self] in
             guard let self = self else { return }
             self.router?.routeCategories()
@@ -221,6 +262,7 @@ final class PostListViewController: UIViewController {
 // MARK: - PostList Display Logic
 
 extension PostListViewController: PostListDisplayLogic {
+    
     func displayPostList(viewModel: PostListModels.PostList.ViewModel) {
         guard let posts = router?.dataStore?.postList else { return }
         postCollectionView.isStopRefreshing = viewModel.isStopRereshing
@@ -244,6 +286,31 @@ extension PostListViewController: PostListDisplayLogic {
 
     }
     
+    func displayPostListByCategory(viewModel: PostListModels.FilteredPostList.ViewModel) {
+        guard let posts = router?.dataStore?.postList else { return }
+        postCollectionView.isStopRefreshing = viewModel.isStopRereshing
+        postCollectionView.set(cells: posts)
+        postCollectionView.softReload()
+        refreshControl.endRefreshing()
+        postCollectionView.footerView.stopAnimating()
+        nothingFoundImageView.isHidden = !posts.isEmpty
+        activityIndicator.hideIndicator()
+        
+        if byCategory || byTag {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.homeButton.alpha = 1
+            })
+        } else {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.homeButton.alpha = 0
+            })
+        }
+        
+        homeButton.isEnabled = true
+        categoriesButton.isEnabled = true
+        tagsButton.isEnabled = true
+    }
+    
 }
 
 extension PostListViewController: UISearchBarDelegate {
@@ -264,9 +331,39 @@ extension PostListViewController: UISearchBarDelegate {
 }
 
 extension PostListViewController: UIPopoverPresentationControllerDelegate {
+    
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
+    
+}
+
+extension PostListViewController: CategoriesViewControllerDelegate {
+    
+    func fetchPostListByCategory(id: Int) {
+        activityIndicator.showIndicator(on: self)
+        byCategory = true
+        byTag = false
+        page = 0
+        filterId = id
+        fetchFilteredPostList(isLoadMore: false, id: id, isTag: false)
+        title = router?.dataStore?.categories.first { $0.id == id }?.name
+    }
+    
+}
+
+extension PostListViewController: TagsViewControllerDelegate {
+    
+    func fetchPostListByTag(id: Int) {
+        activityIndicator.showIndicator(on: self)
+        byTag = true
+        byCategory = false
+        page = 0
+        filterId = id
+        fetchFilteredPostList(isLoadMore: false, id: id, isTag: true)
+        title = router?.dataStore?.tags.first { $0.id == id }?.name
+    }
+    
 }
 
 

@@ -13,6 +13,7 @@ protocol PostListPresentationLogic {
     func presentToken(response: PostListModels.Login.Response)
     func presentSignOut()
     func presentTags(response: PostListModels.Tags.Response)
+    func presentPostListByCategory(response: PostListModels.FilteredPostList.Response)
 }
 
 final class PostListPresenter: PostListPresentationLogic {
@@ -39,6 +40,10 @@ final class PostListPresenter: PostListPresentationLogic {
     
     func presentTags(response: PostListModels.Tags.Response) {
         viewController?.displayTags(viewModel: PostListModels.Tags.ViewModel(isTags: response.isTags))
+    }
+    
+    func presentPostListByCategory(response: PostListModels.FilteredPostList.Response) {
+        viewController?.displayPostListByCategory(viewModel: PostListModels.FilteredPostList.ViewModel(isStopRereshing: response.error != nil))
     }
     
 }

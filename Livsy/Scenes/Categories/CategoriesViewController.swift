@@ -12,12 +12,16 @@ protocol CategoriesDisplayLogic: class {
     
 }
 
+protocol CategoriesViewControllerDelegate: class {
+    func fetchPostListByCategory(id: Int)
+}
+
 final class CategoriesViewController: UIViewController {
     
     // MARK: - IBOutlets
     
     // MARK: - Public Properties
-    
+    weak var categoriesViewControllerDelegate: CategoriesViewControllerDelegate?
     var interactor: CategoriesBusinessLogic?
     var router: (CategoriesRoutingLogic & CategoriesDataPassing)?
     
@@ -110,6 +114,12 @@ extension CategoriesViewController: UITableViewDataSource {
         cell.separatorInset = .zero
         cell.contentView.alpha = 0.3
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let categoryId = router?.dataStore?.categories[indexPath.row].id
+        categoriesViewControllerDelegate?.fetchPostListByCategory(id: categoryId ?? 00)
+        dismiss(animated: true, completion: nil)
     }
     
 }

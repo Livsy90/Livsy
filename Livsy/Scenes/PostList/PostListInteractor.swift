@@ -14,6 +14,7 @@ protocol PostListBusinessLogic {
     func login(request: PostListModels.Login.Request)
     func signOut()
     func fetchTags(request: PostListModels.Tags.Request)
+    func fetchFilteredPostList(request: PostListModels.FilteredPostList.Request)
 }
 
 protocol PostListDataStore {
@@ -28,7 +29,7 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
     
     var presenter: PostListPresentationLogic?
     var worker: PostListWorker?
-   
+    
     // MARK: - Data Store
     
     var postList: [Post] = []
@@ -48,7 +49,7 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
                 } else {
                     self.postList = postList ?? []
                 }
-                           
+                
                 let response = PostListModels.PostList.Response(error: error)
                 self.presenter?.presentPostList(response: response)
             })
@@ -94,6 +95,22 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
             guard let self = self else { return }
             request.isTags ? (self.tags = response ?? []) : (self.categories = response ?? [])
             self.presenter?.presentTags(response: PostListModels.Tags.Response(isTags: request.isTags))
+        })
+    }
+    
+    func fetchFilteredPostList(request: PostListModels.FilteredPostList.Request) {
+        
+        worker?.fetchPostListByCategory(page: request.page, id: request.id, isTag: request.isTag, completion: { [weak self] (postList, error) in
+            
+            guard let self = self else { return }
+            if request.page != 1 && error == nil {
+                self.postList.append(contentsOf: postList ?? [Post(id: 00, date: "", title: Title(rendered: "title"), excerpt: Excerpt(rendered: "@@@", protected: true), imgURL: "")])
+            } else if error == nil {
+                self.postList = postList ?? []
+            }
+            
+            let response = PostListModels.FilteredPostList.Response(error: error)
+            self.presenter?.presentPostListByCategory(response: response)
         })
     }
     

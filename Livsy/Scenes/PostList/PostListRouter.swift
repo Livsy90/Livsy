@@ -76,7 +76,7 @@ final class PostListRouter: PostListRoutingLogic, PostListDataPassing {
     
     func navigateToTagList(source: PostListViewController, destination: TagsViewController) {
         destination.modalPresentationStyle = .popover
-        
+        destination.tagsViewControllerDelegate = viewController
         let popOverViewController = destination.popoverPresentationController
         popOverViewController?.delegate = viewController
         popOverViewController?.sourceView = viewController?.tagsButton
@@ -108,7 +108,7 @@ final class PostListRouter: PostListRoutingLogic, PostListDataPassing {
     
     func navigateToCategories(source: PostListViewController, destination: CategoriesViewController) {
         destination.modalPresentationStyle = .popover
-        
+        destination.categoriesViewControllerDelegate = viewController
         let popOverViewController = destination.popoverPresentationController
         popOverViewController?.delegate = viewController
         popOverViewController?.sourceView = viewController?.categoriesButton

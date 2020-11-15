@@ -11,7 +11,7 @@ import UIKit
 extension UICollectionView {
     func softReload() {
         UIView.transition(with: self,
-                          duration: 0.2,
+                          duration: 0.1,
                           options: .transitionCrossDissolve,
                           animations: { self.reloadData() })
     }

@@ -9,6 +9,7 @@
 import Foundation
 
 final class PostListWorker {
+    
     let net: NetService = NetService.sharedInstanse
     let netManager: NetManager = NetManager.sharedInstanse
     
@@ -27,4 +28,13 @@ final class PostListWorker {
     func fetchTags(isTags: Bool, completion: @escaping (Bodies.TagsAPI.Response?, CustomError?) -> ()) {
         netManager.fetchTagsAndCategories(isTags: isTags, completion: completion)
     }
+    
+    func fetchPostListByCategory(page: Int, id: Int, isTag: Bool, completion: @escaping (Bodies.PostListAPI.Response?, CustomError?) -> ()) {
+        netManager.fetchPostListByCategory(page: page, id: id, isTag: isTag, completion: completion)
+    }
+    
+    func fetchPostListByTag(id: Int, completion: @escaping (Bodies.PostListAPI.Response?, CustomError?) -> ()) {
+       // netManager.fetchPostListByTag(id: id, completion: completion)
+    }
+    
 }

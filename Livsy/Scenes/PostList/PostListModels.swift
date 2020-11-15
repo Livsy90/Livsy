@@ -82,6 +82,23 @@ enum PostListModels {
     }
   }
     
+    enum FilteredPostList {
+      
+      struct Request {
+        var isTag: Bool
+          var page: Int = 1
+          var id: Int
+      }
+      
+      struct Response {
+          let error: CustomError?
+      }
+      
+      struct ViewModel {
+          let isStopRereshing: Bool
+      }
+    }
+    
     enum Login {
         
         struct Request {

@@ -12,6 +12,10 @@ protocol TagsDisplayLogic: class {
     func displayTags(viewModel: TagsModels.Tags.ViewModel)
 }
 
+protocol TagsViewControllerDelegate: class {
+    func fetchPostListByTag(id: Int)
+}
+
 final class TagsViewController: UIViewController {
     
     // MARK: - IBOutlets
@@ -20,6 +24,7 @@ final class TagsViewController: UIViewController {
     
     var interactor: TagsBusinessLogic?
     var router: (TagsRoutingLogic & TagsDataPassing)?
+    weak var tagsViewControllerDelegate: TagsViewControllerDelegate?
     
     // MARK: - Private Properties
     
@@ -114,6 +119,12 @@ extension TagsViewController: UITableViewDataSource {
         cell.separatorInset = .zero
         cell.contentView.alpha = 0.3
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let tagId = router?.dataStore?.tags[indexPath.row].id
+        tagsViewControllerDelegate?.fetchPostListByTag(id: tagId ?? 00)
+        dismiss(animated: true, completion: nil)
     }
     
 }
