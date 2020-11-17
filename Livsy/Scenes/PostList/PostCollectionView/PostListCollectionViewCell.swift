@@ -53,15 +53,15 @@ class PostListCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.layer.cornerRadius = 8
-        self.layer.backgroundColor = UIColor.init(named: "PostListRow")?.cgColor
+        self.layer.cornerRadius = 15
+        self.layer.backgroundColor = UIColor.rowBackground.cgColor
         self.clipsToBounds = false
         self.layer.shadowRadius = 2
         self.layer.shadowOpacity = 0.2
         self.layer.shadowOffset = CGSize(width: 0, height: 0)
         DispatchQueue.main.async {
             self.mainImageView.layer.masksToBounds = true
-            self.mainImageView.layer.cornerRadius = 8
+            self.mainImageView.layer.cornerRadius = 15
             self.mainImageView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         }
     }
@@ -87,7 +87,7 @@ class PostListCollectionViewCell: UICollectionViewCell {
         darkView.widthAnchor.constraint(equalTo: mainImageView.widthAnchor).isActive = true
         darkView.heightAnchor.constraint(equalTo: mainImageView.heightAnchor).isActive = true
         mainImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: Constants.postListImageHeight)
-        smallDescriptionLabel.anchor(top: mainImageView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 16, paddingBottom: 10, paddingRight: 16, width: 0, height: 0)
+        smallDescriptionLabel.anchor(top: mainImageView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 16, paddingBottom: 5, paddingRight: 16, width: 0, height: 0)
         mainImageView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
         mainImageView.contentMode = .scaleAspectFill
     }

@@ -57,7 +57,6 @@ final class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
         fetchFavPosts()
         setupNavBar()
     }
@@ -66,6 +65,7 @@ final class ProfileViewController: UIViewController {
     
     private func setupTableView() {
         view.addSubview(tableView)
+        tableView.backgroundColor = .postListBackground
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
@@ -141,7 +141,7 @@ extension ProfileViewController: ProfileDisplayLogic {
     
     func displayFavPosts(viewModel: ProfileModels.FavoritePosts.ViewModel) {
         isLoading = false
-        fetchAvatar()
+        tableView.softReload()
     }
     
     func displayPostRemoval(viewModel: ProfileModels.PostToRemove.ViewModel) {
@@ -159,9 +159,7 @@ extension ProfileViewController: ProfileDisplayLogic {
 extension ProfileViewController: LoginSceneDelegate {
     
     func setupUIforLoggedIn() {
-        isLoggedIn = true
-        activityIndicator.showIndicator(on: self)
-        fetchFavPosts()
+        tableView.reloadWithAnimation()
     }
     
 }
@@ -234,14 +232,19 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] (action, sourceView, completionHandler) in
-            guard let self = self else { return }
-            self.interactor?.removePost(request: ProfileModels.PostToRemove.Request(indexPath: indexPath))
-            completionHandler(true)
+        switch indexPath.section {
+        case 0:
+            return nil
+        default:
+            let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] (action, sourceView, completionHandler) in
+                guard let self = self else { return }
+                self.interactor?.removePost(request: ProfileModels.PostToRemove.Request(indexPath: indexPath))
+                completionHandler(true)
+            }
+            deleteAction.image = UIImage(systemName: "trash.circle.fill")
+            deleteAction.backgroundColor = .systemRed
+            return UISwipeActionsConfiguration(actions: [deleteAction])
         }
-        deleteAction.image = UIImage(systemName: "trash.circle.fill")
-        deleteAction.backgroundColor = .systemRed
-        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -260,19 +263,12 @@ extension ProfileViewController: UITableViewDataSource {
         guard let mainCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as? MainProfileCell else { return UITableViewCell() }
         
         mainCell.selectionStyle = .none
-        
-        let url = router?.dataStore?.url
-        
-        mainCell.config(url: url ?? "", mainLabelText: (name == "" ? greetingsText : name), isListHidden: name != "", loginButtonTitle: (name == "" ? "Continue" : "Sign out"), isRoundedImage: name != "")
+            
+        mainCell.config(mainLabelText: (name == "" ? greetingsText : name), isListHidden: name != "", loginButtonTitle: (name == "" ? "Continue" : "Sign out"))
         
         mainCell.loginCompletion = { [weak self] in
             guard let self = self else { return }
             self.handleLogin()
-        }
-        
-        mainCell.avatarTapCompletion = { [weak self] in
-            guard let self = self else { return }
-            self.handleAvatarTap()
         }
         
         switch indexPath.section {

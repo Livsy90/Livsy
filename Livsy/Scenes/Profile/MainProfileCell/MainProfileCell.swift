@@ -11,7 +11,6 @@ import UIKit
 class MainProfileCell: UITableViewCell {
     
     var loginCompletion: (() -> Void)?
-    var avatarTapCompletion: (() -> Void)?
     
     private var mainImageView: WebImageView = {
         let v = WebImageView()
@@ -73,34 +72,17 @@ class MainProfileCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        DispatchQueue.main.async {
-            self.mainImageView.setRounded()
-            
-            UIView.animate(withDuration: 0.25) {
-                self.mainImageView.alpha = 1
-            }
-            
-        }
-        
-    }
-    
     override func prepareForReuse() {
         list.text = ""
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(mainImageView)
         contentView.addSubview(stackView)
-        mainImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        mainImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 30).isActive = true
         stackView.addArrangedSubview(mainLabel)
         stackView.addArrangedSubview(list)
         stackView.addArrangedSubview(loginButton)
-        stackView.anchor(top: mainImageView.bottomAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, paddingTop: 40, paddingLeft: 40, paddingBottom: 20, paddingRight: 40, width: 0, height: 0)
+        stackView.anchor(top: contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, paddingTop: 40, paddingLeft: 40, paddingBottom: 20, paddingRight: 40, width: 0, height: 0)
         loginButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
@@ -111,31 +93,12 @@ class MainProfileCell: UITableViewCell {
         }
     }
     
-    func config(url: String, mainLabelText: String, isListHidden: Bool, loginButtonTitle: String, isRoundedImage: Bool) {
+    func config(mainLabelText: String, isListHidden: Bool, loginButtonTitle: String) {
         setupList()
         mainLabel.text = mainLabelText
         loginButton.setTitle(loginButtonTitle, for: .normal)
         list.isHidden = isListHidden
-        switch url == "" {
-        case true:
-            mainImageView.set(imageURL: "https://secure.gravatar.com/avatar/a270c3449c79fe5687e2f15b5d728bd4?s=96&d=mm&r=g")
-        default:
-            configTapgesture()
-            mainImageView.set(imageURL: url)
-        }
-        
     }
-    
-    func configTapgesture() {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
-        mainImageView.isUserInteractionEnabled = true
-        mainImageView.addGestureRecognizer(tapGestureRecognizer)
-    }
-    
-    @objc func imageTapped() {
-        avatarTapCompletion?()
-    }
-    
     
     @objc func handleLogin() {
         loginCompletion?()

@@ -50,16 +50,16 @@ struct Constants {
     static let postListItemWHeight: CGFloat = 260
     static let postListImageHeight: CGFloat = 130
     static let postListItemWidth = (UIScreen.main.bounds.width - Constants.leftDistanceToView - Constants.rightDistanceToView - (Constants.postListMinimumLineSpacing / 2))// / 2
-    static var imageWidth: CGFloat = {
-        var width = CGFloat()
-        switch UIDevice.current.orientation.isLandscape {
-        case true:
-            width = UIScreen.main.bounds.height * 0.18
-        case false:
-            width = UIScreen.main.bounds.width * 0.18
-        }
-        return width
-    }()
+    static var imageWidth: CGFloat = UIScreen.main.bounds.height * 0.18
+//        var width = CGFloat()
+//        switch UIDevice.current.orientation.isLandscape {
+//        case true:
+//            width = UIScreen.main.bounds.height * 0.18
+//        case false:
+//            width = UIScreen.main.bounds.width * 0.18
+//        }
+//        return width
+//    }()
 }
 
 enum PostListModels {
