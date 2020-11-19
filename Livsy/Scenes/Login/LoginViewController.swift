@@ -34,9 +34,7 @@ final class LoginViewController: UIViewController {
         tf.backgroundColor = .inputTextView
         tf.setLeftPaddingPoints(10)
         tf.setRightPaddingPoints(10)
-       // tf.layer.borderColor = #colorLiteral(red: 0.5704585314, green: 0.5704723597, blue: 0.5704649091, alpha: 1)
         tf.layer.cornerRadius = 8
-       // tf.layer.borderWidth = 1
         tf.font = UIFont.systemFont(ofSize: 14)
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         tf.textColor = .postText
@@ -47,8 +45,6 @@ final class LoginViewController: UIViewController {
         let tf = UITextField()
         tf.placeholder = "Password"
         tf.isSecureTextEntry = true
-        //tf.layer.borderColor = #colorLiteral(red: 0.5704585314, green: 0.5704723597, blue: 0.5704649091, alpha: 1)
-      //  tf.layer.borderWidth = 1
         tf.layer.cornerRadius = 8
         tf.backgroundColor = .inputTextView
         tf.setLeftPaddingPoints(10)
@@ -124,7 +120,7 @@ final class LoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         setupUI()
         if UserDefaults.standard.token != "" {
-            navigationController?.popViewController(animated: false)
+            router?.dismissSelf(mode: router?.dataStore?.dismissMode ?? .toProfile)
         }
     }
     

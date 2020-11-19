@@ -10,6 +10,7 @@ import UIKit
 
 protocol RegisterPresentationLogic {
     func presentRegister(response: RegisterModels.Register.Response)
+    func presentLogin(response: RegisterModels.Login.Response)
 }
 
 final class RegisterPresenter: RegisterPresentationLogic {
@@ -22,5 +23,8 @@ final class RegisterPresenter: RegisterPresentationLogic {
         viewController?.displayLogin(viewModel: RegisterModels.Register.ViewModel(error: response.error))
     }
     
+    func presentLogin(response: RegisterModels.Login.Response) {
+        viewController?.displayLogin(viewModel: RegisterModels.Login.ViewModel(error: response.error, username: response.username, password: response.password))
+    }
     
 }

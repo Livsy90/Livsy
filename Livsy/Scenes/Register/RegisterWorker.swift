@@ -11,8 +11,12 @@ final class RegisterWorker {
     let net = NetService.sharedInstanse
     let netManager: NetManager = NetManager.sharedInstanse
     
-    func register(username: String, email: String, password: String, completion: @escaping (Bodies.RegisterAPI.Response?, CustomError?) -> ()) {
+    func register(username: String, email: String, password: String, completion: @escaping (Bodies.RegisterAPI.Response?, CustomSignUpError?) -> ()) {
         netManager.register(username: username, email: email, password: password, completion: completion)
+    }
+    
+    func login(login: String, password: String, completion: @escaping (Bodies.LoginAPI.Response?, CustomError?) -> ()) {
+        netManager.login(login: login, password: password, completion: completion)
     }
     
 }

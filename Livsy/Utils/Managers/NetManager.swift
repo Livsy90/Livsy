@@ -94,7 +94,7 @@ class NetManager {
         }
     }
     
-    func register(username: String, email: String, password: String, completion: @escaping (Bodies.RegisterAPI.Response?, CustomError?) -> ()) {
+    func register(username: String, email: String, password: String, completion: @escaping (Bodies.RegisterAPI.Response?, CustomSignUpError?) -> ()) {
         let request = Request.RequestType.Register(username, email, password).get(path: API.signUp)
         net.getData(with: request) { (data, error) in
             guard let data = data else { return }
@@ -102,8 +102,15 @@ class NetManager {
                 let response = try JSONDecoder().decode(Bodies.RegisterAPI.Response.self, from: data)
                 completion(response, nil)
             } catch {
-                guard let customError = self.decodeError(data: data) else { return }
-                completion(nil, customError)
+                
+                do {
+                    let customError = try JSONDecoder().decode(CustomSignUpError.self, from: data)
+                    completion(nil, customError)
+                } catch {
+                    let customError = CustomSignUpError(code: 000, message: "Error", data: ErrorData(status: 00))
+                    completion(nil, customError)
+                }
+                
             }
         }
     }

@@ -21,12 +21,32 @@ enum RegisterModels {
         }
         
         struct Response {
-            let error: CustomError?
+            let error: CustomSignUpError?
             
         }
         
         struct ViewModel {
+            let error: CustomSignUpError?
+        }
+    }
+    
+    enum Login {
+        
+        struct Request {
+            var username: String
+            var password: String
+        }
+        
+        struct Response {
             let error: CustomError?
+            var username: String
+            var password: String
+        }
+        
+        struct ViewModel {
+            let error: CustomError?
+            var username: String
+            var password: String
         }
     }
     

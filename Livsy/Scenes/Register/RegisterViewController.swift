@@ -10,6 +10,7 @@ import UIKit
 
 protocol RegisterDisplayLogic: class {
     func displayLogin(viewModel: RegisterModels.Register.ViewModel)
+    func displayLogin(viewModel: RegisterModels.Login.ViewModel)
 }
 
 final class RegisterViewController: UIViewController {
@@ -22,6 +23,8 @@ final class RegisterViewController: UIViewController {
     var router: (RegisterRoutingLogic & RegisterDataPassing)?
     
     // MARK: - Private Properties
+    
+    private let activityIndicator = ActivityIndicator()
     
     private let loginTextField: UITextField = {
         let tf = UITextField()
@@ -142,6 +145,7 @@ final class RegisterViewController: UIViewController {
         guard let password = passwordTextField.text else { return }
         signupButton.isUserInteractionEnabled = false
         signupButton.backgroundColor = #colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1)
+        activityIndicator.showIndicator(on: self)
         interactor?.register(request: RegisterModels.Register.Request(username: username, email: email, password: password))
     }
     
@@ -153,12 +157,23 @@ extension RegisterViewController: RegisterDisplayLogic {
     
     func displayLogin(viewModel: RegisterModels.Register.ViewModel) {
         if viewModel.error == nil {
-            self.navigationController?.popViewController(animated: true)
+            interactor?.login(request: RegisterModels.Login.Request(username: loginTextField.text ?? "", password: passwordTextField.text ?? ""))
         }  else {
+            activityIndicator.hideIndicator()
             router?.showAlert(with: viewModel.error?.message ?? "Error")
             signupButton.isUserInteractionEnabled = true
             signupButton.backgroundColor = .blueButton
         }
+    }
+    
+    func displayLogin(viewModel: RegisterModels.Login.ViewModel) {
+        activityIndicator.hideIndicator()
+        if viewModel.error == nil {
+            router?.dismissSelf(username: viewModel.username, password: viewModel.password)
+        } else {
+            router?.showAlert(with: viewModel.error?.message ?? "Error")
+        }
+        
     }
     
 }

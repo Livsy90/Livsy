@@ -17,3 +17,9 @@ struct CustomError: Codable {
 struct ErrorData: Codable {
     var status: Int
 }
+
+struct CustomSignUpError: Codable {
+    var code: Int
+    var message: String
+    var data: ErrorData
+}
