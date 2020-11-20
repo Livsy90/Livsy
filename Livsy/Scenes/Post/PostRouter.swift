@@ -57,13 +57,11 @@ final class PostRouter: PostRoutingLogic, PostDataPassing {
     }
     
     func sharePost() {
-        let firstActivityItem = dataStore?.title ?? ""
-        let secondActivityItem: NSURL = NSURL(string: dataStore?.postLink ?? "")!
+        let linkActivityItem: NSURL = NSURL(string: dataStore?.postLink ?? "")!
         let activityViewController : UIActivityViewController = UIActivityViewController(
-            activityItems: [firstActivityItem, secondActivityItem], applicationActivities: nil)
+            activityItems: [linkActivityItem], applicationActivities: nil)
         
         activityViewController.popoverPresentationController?.sourceView = viewController?.shareButton
-        
         activityViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
         activityViewController.popoverPresentationController?.sourceRect = CGRect(x: 150, y: 150, width: 0, height: 0)
         
