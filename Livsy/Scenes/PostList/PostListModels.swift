@@ -23,7 +23,7 @@ struct Post: Codable { // codable для userDefaults
         case imgURL = "fimg_url"
     }
 }
-    
+
 struct Title: Codable {
     let rendered: String
 }
@@ -37,67 +37,64 @@ struct Excerpt: Codable {
     let rendered: String?
     let protected: Bool
 }
-    
+
 struct Guid: Codable {
     let rendered: String
 }
 
 struct Constants {
+    static let width: CGFloat = InterfaceIdiom.isIpad ? (UIScreen.main.bounds.width / 3) : UIScreen.main.bounds.width
     static let topDistanceToView: CGFloat = 20
+    static let bottomDistanceToView: CGFloat = 20
     static let leftDistanceToView: CGFloat = 20
     static let rightDistanceToView: CGFloat = 20
     static let postListMinimumLineSpacing: CGFloat = 20
     static let postListItemWHeight: CGFloat = 260
     static let postListImageHeight: CGFloat = 130
-    static let postListItemWidth = (UIScreen.main.bounds.width - Constants.leftDistanceToView - Constants.rightDistanceToView - (Constants.postListMinimumLineSpacing / 2))// / 2
-    static var imageWidth: CGFloat = UIScreen.main.bounds.height * 0.18
-//        var width = CGFloat()
-//        switch UIDevice.current.orientation.isLandscape {
-//        case true:
-//            width = UIScreen.main.bounds.height * 0.18
-//        case false:
-//            width = UIScreen.main.bounds.width * 0.18
-//        }
-//        return width
-//    }()
+    static let postListItemWidth = (width - Constants.leftDistanceToView - Constants.rightDistanceToView - (Constants.postListMinimumLineSpacing / 2))// / 2
+    static var imageWidth: CGFloat = postListItemWidth
 }
 
 enum PostListModels {
-  
-  // MARK: - 
-  
-  enum PostList {
     
-    struct Request {
-        var page: Int = 1
-        var searchTerms: String = ""
+    // MARK: - PostList
+    
+    enum PostList {
+        
+        struct Request {
+            var page: Int = 1
+            var searchTerms: String = ""
+        }
+        
+        struct Response {
+            let error: CustomError?
+        }
+        
+        struct ViewModel {
+            let isStopRereshing: Bool
+        }
     }
     
-    struct Response {
-        let error: CustomError?
-    }
-    
-    struct ViewModel {
-        let isStopRereshing: Bool
-    }
-  }
+    // MARK: - FilteredPostList
     
     enum FilteredPostList {
-      
-      struct Request {
-        var isTag: Bool
-          var page: Int = 1
-          var id: Int
-      }
-      
-      struct Response {
-          let error: CustomError?
-      }
-      
-      struct ViewModel {
-          let isStopRereshing: Bool
-      }
+        
+        struct Request {
+            var isTag: Bool
+            var page: Int = 1
+            var id: Int
+        }
+        
+        struct Response {
+            let error: CustomError?
+        }
+        
+        struct ViewModel {
+            let isStopRereshing: Bool
+        }
     }
+    
+    // MARK: - Login
     
     enum Login {
         
@@ -116,19 +113,21 @@ enum PostListModels {
         }
     }
     
+    // MARK: - Tags
+    
     enum Tags {
-      
-      struct Request {
-        var isTags: Bool
-      }
-      
-      struct Response {
-        var isTags: Bool
-      }
-      
-      struct ViewModel {
-        var isTags: Bool
-      }
+        
+        struct Request {
+            var isTags: Bool
+        }
+        
+        struct Response {
+            var isTags: Bool
+        }
+        
+        struct ViewModel {
+            var isTags: Bool
+        }
     }
-  
+    
 }

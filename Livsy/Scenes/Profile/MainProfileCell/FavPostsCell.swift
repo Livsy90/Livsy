@@ -50,6 +50,7 @@ class FavPostsCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
+        backgroundColor = .rowBackground
         contentView.addSubview(mainImageView)
         mainImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         contentView.addSubview(titleLabel)

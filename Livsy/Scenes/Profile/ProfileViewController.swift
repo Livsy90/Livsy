@@ -259,13 +259,13 @@ extension ProfileViewController: UITableViewDataSource {
         
         guard let commentCell = tableView.dequeueReusableCell(withIdentifier: "favCellId", for: indexPath) as? FavPostsCell else { return UITableViewCell() }
         commentCell.config(post: post)
-        
+                
         guard let mainCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as? MainProfileCell else { return UITableViewCell() }
         
         mainCell.selectionStyle = .none
             
         mainCell.config(mainLabelText: (name == "" ? greetingsText : name), isListHidden: name != "", loginButtonTitle: (name == "" ? "Continue" : "Sign out"))
-        
+                
         mainCell.loginCompletion = { [weak self] in
             guard let self = self else { return }
             self.handleLogin()

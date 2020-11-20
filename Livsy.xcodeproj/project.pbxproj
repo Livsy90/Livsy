@@ -32,6 +32,7 @@
 		C22FFB972559453D00416C15 /* UIButton+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22FFB962559453D00416C15 /* UIButton+adds.swift */; };
 		C22FFB9A2559716400416C15 /* FavPostsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22FFB992559716400416C15 /* FavPostsCell.swift */; };
 		C22FFB9D25597F0800416C15 /* PulseAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22FFB9C25597F0800416C15 /* PulseAnimation.swift */; };
+		C23189542567BA430063794A /* InterfaceIdiom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23189532567BA430063794A /* InterfaceIdiom.swift */; };
 		C23261F024D5D73B00F670EE /* Collection+safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23261EF24D5D73B00F670EE /* Collection+safe.swift */; };
 		C2345BEE24B4F15200125976 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2345BE724B4F15100125976 /* LoginPresenter.swift */; };
 		C2345BEF24B4F15200125976 /* LoginWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2345BE824B4F15100125976 /* LoginWorker.swift */; };
@@ -153,6 +154,7 @@
 		C22FFB962559453D00416C15 /* UIButton+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+adds.swift"; sourceTree = "<group>"; };
 		C22FFB992559716400416C15 /* FavPostsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavPostsCell.swift; sourceTree = "<group>"; };
 		C22FFB9C25597F0800416C15 /* PulseAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseAnimation.swift; sourceTree = "<group>"; };
+		C23189532567BA430063794A /* InterfaceIdiom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceIdiom.swift; sourceTree = "<group>"; };
 		C23261EF24D5D73B00F670EE /* Collection+safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+safe.swift"; sourceTree = "<group>"; };
 		C2345BE724B4F15100125976 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		C2345BE824B4F15100125976 /* LoginWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorker.swift; sourceTree = "<group>"; };
@@ -521,6 +523,7 @@
 				C2C31A51249F5879002AAB91 /* WebImageView.swift */,
 				C268CDC024A9380200949C4D /* BadgeBarButton.swift */,
 				C22FFB9C25597F0800416C15 /* PulseAnimation.swift */,
+				C23189532567BA430063794A /* InterfaceIdiom.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -802,6 +805,7 @@
 				C2345BF624B4F17100125976 /* LoginConfigurator.swift in Sources */,
 				C2E3444725373060000D07F2 /* RegisterPresenter.swift in Sources */,
 				C239A712254DAC2E000E7358 /* MainProfileCell.swift in Sources */,
+				C23189542567BA430063794A /* InterfaceIdiom.swift in Sources */,
 				C2349448254C793100E26ADC /* ProfileViewController.swift in Sources */,
 				C2765BA024A11F1A008888B0 /* PostModels.swift in Sources */,
 				C2345BEE24B4F15200125976 /* LoginPresenter.swift in Sources */,

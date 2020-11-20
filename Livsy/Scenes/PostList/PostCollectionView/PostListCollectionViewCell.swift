@@ -56,9 +56,9 @@ class PostListCollectionViewCell: UICollectionViewCell {
         self.layer.cornerRadius = 15
         self.layer.backgroundColor = UIColor.rowBackground.cgColor
         self.clipsToBounds = false
-        self.layer.shadowRadius = 2
-        self.layer.shadowOpacity = 0.2
-        self.layer.shadowOffset = CGSize(width: 0, height: 0)
+//        self.layer.shadowRadius = 2
+//        self.layer.shadowOpacity = 0.2
+//        self.layer.shadowOffset = CGSize(width: 0, height: 0)
         DispatchQueue.main.async {
             self.mainImageView.layer.masksToBounds = true
             self.mainImageView.layer.cornerRadius = 15

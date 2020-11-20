@@ -78,6 +78,7 @@ class MainProfileCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
+        backgroundColor = .rowBackground
         contentView.addSubview(stackView)
         stackView.addArrangedSubview(mainLabel)
         stackView.addArrangedSubview(list)

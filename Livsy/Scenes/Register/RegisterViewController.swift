@@ -101,6 +101,7 @@ final class RegisterViewController: UIViewController {
         setupInputFields()
         view.backgroundColor = .postBackground
         title = "Sign up"
+        hideKeyboardWhenTappedAround()
     }
     
     override func viewWillAppear(_ animated: Bool) {
