@@ -14,7 +14,7 @@ extension UIButton {
         switch animated {
         case true:
             UIView.transition(with: self,
-                                   duration: 0.2,
+                                   duration: 0.35,
                                    options: .transitionFlipFromRight,
                                    animations: {
                                     self.setImage(image, for: .normal)

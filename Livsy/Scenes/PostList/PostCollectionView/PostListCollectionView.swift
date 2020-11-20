@@ -19,6 +19,7 @@ class PostListCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
      init() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = Constants.postListMinimumLineSpacing
         layout.sectionInset = UIEdgeInsets(top: Constants.topDistanceToView, left: Constants.leftDistanceToView, bottom: Constants.bottomDistanceToView, right: Constants.rightDistanceToView)
         super.init(frame: .zero, collectionViewLayout: layout)
         backgroundColor = .postListBackground
@@ -30,7 +31,6 @@ class PostListCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
         register(CollectionViewFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "Footer")
                 (collectionViewLayout as? UICollectionViewFlowLayout)?.footerReferenceSize = CGSize(width: bounds.width, height: 50)
         translatesAutoresizingMaskIntoConstraints = false
-        layout.minimumLineSpacing = Constants.postListMinimumLineSpacing
         alwaysBounceVertical = true
         showsHorizontalScrollIndicator = false
         showsVerticalScrollIndicator = false

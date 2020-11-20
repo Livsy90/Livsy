@@ -149,11 +149,11 @@ final class PostListViewController: UIViewController {
         catButton.addTarget(self, action: #selector(showCategories), for: .touchUpInside)
         categoriesButton = catButton
         
-        let hButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
-        let homeImage = UIImage(systemName: "house.fill", withConfiguration: config)
-        hButton.setImage(homeImage, for: .normal)
-        hButton.addTarget(self, action: #selector(refreshData), for: .touchUpInside)
-        homeButton = hButton
+        let backWardButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
+        let backWardImage = UIImage(systemName: "gobackward", withConfiguration: config)
+        backWardButton.setImage(backWardImage, for: .normal)
+        backWardButton.addTarget(self, action: #selector(refreshData), for: .touchUpInside)
+        homeButton = backWardButton
         
         if byTag || byCategory {
             homeButton.alpha = 1
@@ -237,21 +237,15 @@ final class PostListViewController: UIViewController {
     }
     
     @objc private func showTags() {
-        postCollectionView.isUserInteractionEnabled.toggle()
-        tagsButton.showAnimation { [weak self] in
-            guard let self = self else { return }
-            self.router?.routeTags()
-            self.postCollectionView.isUserInteractionEnabled.toggle()
-        }
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        router?.routeToTags()
     }
     
     @objc func showCategories() {
-        postCollectionView.isUserInteractionEnabled.toggle()
-        categoriesButton.showAnimation { [weak self] in
-            guard let self = self else { return }
-            self.router?.routeCategories()
-            self.postCollectionView.isUserInteractionEnabled.toggle()
-        }
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        router?.routeToCategories()
       }
     
 }

@@ -13,7 +13,7 @@ final class PostWorker {
     let net = NetService.sharedInstanse
     let netManager = NetManager.sharedInstanse
     
-    func fetchPost(id: Int, completion: @escaping (Bodies.PostPageAPI.Response?, Error?) -> ()) {
+    func fetchPost(id: Int, completion: @escaping (Bodies.PostPageAPI.Response?, CustomError?) -> ()) {
         netManager.fetchPost(id: id, completion: completion)
     }
     

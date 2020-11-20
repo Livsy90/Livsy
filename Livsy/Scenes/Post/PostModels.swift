@@ -12,15 +12,8 @@ import UIKit
 struct PostPage: Codable {
     let id: Int?
     let title: Title?
+    let link: String
     let content: Content?
-    
-    //    private enum CodingKeys: String, CodingKey {
-    //        case id
-    //        case title
-    //        case content
-    //
-    //    }
-    
 }
 
 struct PostComment: Codable {
@@ -30,13 +23,6 @@ struct PostComment: Codable {
     var authorName: String
     var content: Content?
     var replies: [PostComment] = []
-    //
-    //    init(id: Int, parent: Int, authorName: String, content: Content? = nil) {
-    //        self.id = id
-    //        self.parent = parent
-    //        self.authorName = authorName
-    //        self.content = content
-    //    }
     
     private enum CodingKeys: String, CodingKey {
         case id
@@ -52,15 +38,15 @@ enum PostModels {
     enum PostPage {
         
         struct Request {
-            
+            var error: CustomError?
         }
         
         struct Response {
-            
+            var error: CustomError?
         }
         
         struct ViewModel {
-            
+            var error: CustomError?
         }
     }
     

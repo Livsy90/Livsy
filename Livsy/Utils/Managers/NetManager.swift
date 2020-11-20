@@ -159,15 +159,16 @@ class NetManager {
         }
     }
     
-    func fetchPost(id: Int, completion: @escaping (Bodies.PostPageAPI.Response?, Error?) -> ()) {
+    func fetchPost(id: Int, completion: @escaping (Bodies.PostPageAPI.Response?, CustomError?) -> ()) {
         let request = Request.RequestType.PostList.get(path: "\(API.post)\(id)")
         net.getData(with: request) { (data, error) in
-            guard let data = data, error == nil else { return }
+            guard let data = data else { return }
             do {
                 let response = try JSONDecoder().decode(Bodies.PostPageAPI.Response.self, from: data)
                 completion(response, nil)
             } catch {
-                completion(nil, error)
+                guard let customError = self.decodeError(data: data) else { return }
+                completion(nil, customError)
             }
         }
     }

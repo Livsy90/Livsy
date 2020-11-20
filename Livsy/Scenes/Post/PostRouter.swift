@@ -11,6 +11,9 @@ import UIKit
 protocol PostRoutingLogic {
     func routeToPostComments()
     func showAddToFavResultAlert(with text: String)
+    func showErrorAlert(with message: String, completion: @escaping (() -> Void))
+    func dismissSelf()
+    func sharePost()
 }
 
 protocol PostDataPassing {
@@ -44,4 +47,32 @@ final class PostRouter: PostRoutingLogic, PostDataPassing {
     func showAddToFavResultAlert(with text: String) {
         viewController?.showNoButtonAlert(title: text)
     }
+    
+    func showErrorAlert(with message: String, completion: @escaping (() -> Void)) {
+        viewController?.showAlertWithTwoButtons(title: message, firstButtonTitle: "Dismiss", secondButtonTitle: "Retry", firstButtonAction: dismissSelf, secondButtonAction: completion)
+    }
+    
+    func dismissSelf() {
+        viewController?.navigationController?.popViewController(animated: true)
+    }
+    
+    func sharePost() {
+        let firstActivityItem = dataStore?.title ?? ""
+        let secondActivityItem: NSURL = NSURL(string: dataStore?.postLink ?? "")!
+        let activityViewController : UIActivityViewController = UIActivityViewController(
+            activityItems: [firstActivityItem, secondActivityItem], applicationActivities: nil)
+        
+        activityViewController.popoverPresentationController?.sourceView = viewController?.shareButton
+        
+        activityViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
+        activityViewController.popoverPresentationController?.sourceRect = CGRect(x: 150, y: 150, width: 0, height: 0)
+        
+        activityViewController.activityItemsConfiguration = [
+            UIActivity.ActivityType.message
+        ] as? UIActivityItemsConfigurationReading
+        
+        activityViewController.isModalInPresentation = true
+        viewController?.present(activityViewController, animated: true, completion: nil)
+    }
+    
 }

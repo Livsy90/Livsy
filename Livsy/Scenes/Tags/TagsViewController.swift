@@ -58,14 +58,24 @@ final class TagsViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func viewWillLayoutSubviews() {
-        preferredContentSize = CGSize(width: 180, height: tableView.contentSize.height + 50)
+        preferredContentSize = CGSize(width: 180, height: tableView.contentSize.height + 30)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-      //  fetchtags()
         view.backgroundColor = .clear
+        tableView.alpha = 0
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIView.transition(with: self.tableView,
+                          duration: 0.3,
+                          options: .transitionCrossDissolve,
+                          animations: { self.tableView.alpha = 1 })
+        
+        tableView.reloadWithAnimation()
     }
     
     // MARK: - Private Methods
@@ -84,7 +94,7 @@ final class TagsViewController: UIViewController {
         tableView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         tableView.tableFooterView = UIView()
         tableView.keyboardDismissMode = .onDrag
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         tableView.backgroundColor = .clear
@@ -96,7 +106,6 @@ final class TagsViewController: UIViewController {
     }
     
 }
-
 
 // MARK: - Tags Display Logic
 
@@ -117,7 +126,6 @@ extension TagsViewController: UITableViewDataSource {
         guard let tags = router?.dataStore?.tags else { return cell }
         cell.textLabel?.text = tags[indexPath.row].name
         cell.separatorInset = .zero
-        cell.contentView.alpha = 0.3
         return cell
     }
     

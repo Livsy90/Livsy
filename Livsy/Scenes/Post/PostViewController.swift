@@ -20,6 +20,8 @@ final class PostViewController: UIViewController {
     var interactor: PostBusinessLogic?
     var router: (PostRoutingLogic & PostDataPassing)?
     
+    var shareButton = UIButton()
+    
     // MARK: - Private Properties
     
     private var id = 0
@@ -32,6 +34,7 @@ final class PostViewController: UIViewController {
     private let postTitle = UILabel()
     private let imageView = WebImageView()
     private let lblName = UILabel()
+    private var favButton = UIButton()
     private let darkView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -43,13 +46,6 @@ final class PostViewController: UIViewController {
         pv.translatesAutoresizingMaskIntoConstraints = false
         return pv
     }()
-    private var favButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(savePostToFav), for: .touchUpInside)
-        return button
-    }()
-    
     
     // MARK: - Initializers
     
@@ -189,6 +185,10 @@ final class PostViewController: UIViewController {
         postTitle.numberOfLines = 0
     }
     
+    @objc private func share() {
+        router?.sharePost()
+    }
+    
     private func textViewSetup() {
         textView.backgroundColor = .clear
         textView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -40).isActive = true
@@ -207,23 +207,32 @@ final class PostViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: loadingCommentsIndicator)
     }
     
-    private func rightNavButtonSetup() {
+    private func rightNavItemsSetup() {
         loadingCommentsIndicator.stopAnimating()
         guard let count = router?.dataStore?.comments.count else { return }
         let countLabelText = count == 0 ? "Comments" : "Comments: \(count)"
-        let barButton = UIBarButtonItem(title: countLabelText, style: .done, target: self, action: #selector(routeToComments))
+        let commentsItem = UIBarButtonItem(title: countLabelText, style: .done, target: self, action: #selector(routeToComments))
         
-        let catButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
-        catButton.addTarget(self, action: #selector(savePostToFav), for: .touchUpInside)
-        favButton = catButton
-        let leftItem =  UIBarButtonItem(customView: favButton)
-        navigationItem.leftBarButtonItems?.append(leftItem)
+        let flameButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
+        flameButton.addTarget(self, action: #selector(savePostToFav), for: .touchUpInside)
+        favButton = flameButton
+        let favItem =  UIBarButtonItem(customView: favButton)
+        
+        let config = UIImage.SymbolConfiguration(pointSize: 22, weight: .medium, scale: .medium)
+        let shareImage = UIImage(systemName: "arrowshape.turn.up.right", withConfiguration: config)
+    
+        let shareButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
+        shareButton.addTarget(self, action: #selector(share), for: .touchUpInside)
+        shareButton.setImage(shareImage, for: .normal)
+        self.shareButton = shareButton
+        let shareItem =  UIBarButtonItem(customView: self.shareButton)
+        
         
         let id = router?.dataStore?.id
         let array = UserDefaults.favPosts ?? []
         let isFavorite = array.contains(id ?? 00)
         setFavImage(isFavorite: isFavorite, animated: false)
-        navigationItem.rightBarButtonItems = [leftItem, barButton]
+        navigationItem.rightBarButtonItems = [shareItem, favItem, commentsItem]
     }
     
     private func fetchPost() {
@@ -252,9 +261,9 @@ final class PostViewController: UIViewController {
     }
     
     private func setFavImage(isFavorite: Bool, animated: Bool) {
-        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .medium, scale: .medium)
-        let emptyBM = UIImage(systemName: "bookmark", withConfiguration: config)
-        let fillBM = UIImage(systemName: "bookmark.fill", withConfiguration: config)
+        let config = UIImage.SymbolConfiguration(pointSize: 22, weight: .medium, scale: .medium)
+        let emptyBM = UIImage(systemName: "flame", withConfiguration: config)
+        let fillBM = UIImage(systemName: "flame.fill", withConfiguration: config)
         
         favButton.tintColor = isFavorite ? .systemRed : .white
         
@@ -295,15 +304,22 @@ final class PostViewController: UIViewController {
 extension PostViewController: PostDisplayLogic {
     
     func displayPostPage(viewModel: PostModels.PostPage.ViewModel) {
-        guard let title = router?.dataStore?.title else { return }
-        guard let text = router?.dataStore?.content else { return }
-        postTitle.text = title
-        textView.setHTMLFromString(htmlText: text, color: .postText)
         activityIndicator.hideIndicator()
+        switch viewModel.error == nil {
+        case true:
+            guard let title = router?.dataStore?.title else { return }
+            guard let text = router?.dataStore?.content else { return }
+            postTitle.text = title
+            textView.setHTMLFromString(htmlText: text, color: .postText)
+        default:
+            router?.showErrorAlert(with: viewModel.error?.message ?? "", completion: fetchPost)
+        }
+        
+        
     }
     
     func displayPostComments(viewModel: PostModels.PostComments.ViewModel) {
-        rightNavButtonSetup()
+        rightNavItemsSetup()
     }
     
     func displayFavorites(viewModel: PostModels.SaveToFavorites.ViewModel) {

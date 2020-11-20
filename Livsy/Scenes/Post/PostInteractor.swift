@@ -21,6 +21,7 @@ protocol PostDataStore {
     var comments: [PostComment] { get set }
     var image: UIImage { get set }
     var averageColor: UIColor { get set }
+    var postLink: String { get set }
 }
 
 final class PostInteractor: PostBusinessLogic, PostDataStore {
@@ -40,6 +41,7 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
     var comments: [PostComment] = []
     var image = UIImage()
     var averageColor: UIColor = .blueButton
+    var postLink: String = "https://livsy.me"
     
     // MARK: - Business Logic
     
@@ -48,7 +50,8 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
             guard let self = self else { return }
             self.content = post?.content?.rendered
             self.title = post?.title?.rendered
-            self.presenter?.presentPostPage(response: PostModels.PostPage.Response())
+            self.postLink = post?.link ?? "https://livsy.me"
+            self.presenter?.presentPostPage(response: PostModels.PostPage.Response(error: error))
         })
     }
     
