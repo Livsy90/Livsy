@@ -32,7 +32,7 @@ final class PostCommentsViewController: UIViewController {
     }()
     private let noCommentsLabel: UILabel = {
         let l = UILabel()
-        l.text = "Write the first comment"
+        l.text = "Be the first"
         l.textColor = UIColor.postText.withAlphaComponent(0.3)
         l.lineBreakMode = .byWordWrapping
         l.numberOfLines = 0
@@ -146,9 +146,9 @@ final class PostCommentsViewController: UIViewController {
     }
     
     private func setupNoCommentslabel() {
-        view.addSubview(noCommentsLabel)
-        noCommentsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        noCommentsLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        tableView.addSubview(noCommentsLabel)
+        noCommentsLabel.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
+        noCommentsLabel.centerYAnchor.constraint(equalTo: tableView.centerYAnchor, constant: -50).isActive = true
     }
     
     private func setupNavBar() {
@@ -228,8 +228,8 @@ extension PostCommentsViewController: PostCommentsDisplayLogic {
             showComments(isReload: true)
         } else {
             containerView.enableButton()
-            activityIndicator.hideIndicator()
             router?.showAlert(with: viewModel.error?.message ?? "Oops.. Something went wrong!")
+            activityIndicator.hideIndicator()
         }
     }
     

@@ -78,6 +78,7 @@
 		C24CA08C25604D6E003B6521 /* TagsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24CA08525604D6E003B6521 /* TagsInteractor.swift */; };
 		C24CA09025604D86003B6521 /* TagsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24CA08F25604D86003B6521 /* TagsConfigurator.swift */; };
 		C250E668254EA6BB009E5E03 /* UITableView+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C250E667254EA6BB009E5E03 /* UITableView+adds.swift */; };
+		C259927D256C3CC70015E4FD /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = C259927C256C3CC70015E4FD /* Text.swift */; };
 		C268CDB124A9290800949C4D /* PostCommentsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268CDAA24A9290800949C4D /* PostCommentsPresenter.swift */; };
 		C268CDB224A9290800949C4D /* PostCommentsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268CDAB24A9290800949C4D /* PostCommentsWorker.swift */; };
 		C268CDB324A9290800949C4D /* PostCommentsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268CDAC24A9290800949C4D /* PostCommentsRouter.swift */; };
@@ -202,6 +203,7 @@
 		C24CA08525604D6E003B6521 /* TagsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsInteractor.swift; sourceTree = "<group>"; };
 		C24CA08F25604D86003B6521 /* TagsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsConfigurator.swift; sourceTree = "<group>"; };
 		C250E667254EA6BB009E5E03 /* UITableView+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+adds.swift"; sourceTree = "<group>"; };
+		C259927C256C3CC70015E4FD /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		C268CDAA24A9290800949C4D /* PostCommentsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentsPresenter.swift; sourceTree = "<group>"; };
 		C268CDAB24A9290800949C4D /* PostCommentsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentsWorker.swift; sourceTree = "<group>"; };
 		C268CDAC24A9290800949C4D /* PostCommentsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentsRouter.swift; sourceTree = "<group>"; };
@@ -524,6 +526,7 @@
 				C268CDC024A9380200949C4D /* BadgeBarButton.swift */,
 				C22FFB9C25597F0800416C15 /* PulseAnimation.swift */,
 				C23189532567BA430063794A /* InterfaceIdiom.swift */,
+				C259927C256C3CC70015E4FD /* Text.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -731,6 +734,7 @@
 				C2386FAB249E09B50076AED3 /* PostListModels.swift in Sources */,
 				C2BCF43C24AB80A4008C28FD /* RepliesCollectionView.swift in Sources */,
 				C218FCF4251B5A6A002F9C68 /* SplashPresenter.swift in Sources */,
+				C259927D256C3CC70015E4FD /* Text.swift in Sources */,
 				C24CA08825604D6E003B6521 /* TagsWorker.swift in Sources */,
 				C2EBC71E24D02F870066113D /* NetManager.swift in Sources */,
 				C23261F024D5D73B00F670EE /* Collection+safe.swift in Sources */,

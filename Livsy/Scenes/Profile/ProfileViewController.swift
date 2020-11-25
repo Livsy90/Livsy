@@ -203,13 +203,11 @@ extension ProfileViewController: UITableViewDataSource {
         default:
             switch isLoading {
             case true:
-                let view = UIView(frame: CGRect(x: self.view.center.x, y: 10, width: 40, height: 40))
-                let ai = UIActivityIndicatorView()
+                let ai = UIActivityIndicatorView(frame: CGRect(x: self.view.center.x, y: 10, width: 40, height: 40))
                 ai.startAnimating()
-                ai.center.x = self.view.center.x - 30
+                ai.center.x = self.view.center.x - 20
                 ai.center.y += 10
-                view.addSubview(ai)
-                return view
+                return ai
             default:
                 return nil
             }

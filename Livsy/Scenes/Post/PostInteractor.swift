@@ -49,7 +49,7 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
         worker?.fetchPost(id: id, completion: { [weak self] (post, error) in
             guard let self = self else { return }
             self.content = post?.content?.rendered
-            self.title = post?.title?.rendered
+            self.title = post?.title?.rendered.pureString()
             self.postLink = post?.link ?? "https://livsy.me"
             self.presenter?.presentPostPage(response: PostModels.PostPage.Response(error: error))
         })

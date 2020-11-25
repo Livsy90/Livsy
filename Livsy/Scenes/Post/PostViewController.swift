@@ -27,8 +27,6 @@ final class PostViewController: UIViewController {
     private var id = 0
     private let activityIndicator = ActivityIndicator()
     private let loadingCommentsIndicator = UIActivityIndicatorView()
-    private let darkBlurredEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-    private let lightBlurredEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     private let textView = CustomTextView()
     private let scrollView = UIScrollView()
     private let postTitle = UILabel()
@@ -96,17 +94,6 @@ final class PostViewController: UIViewController {
         setupProgressView()
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            createGradientLayer()
-            view.bringSubviewToFront(scrollView)
-            view.bringSubviewToFront(imageView)
-            view.bringSubviewToFront(progressView)
-            view.bringSubviewToFront(favButton)
-        }
-    }
-    
     // MARK: - Private Methods
     
     private func setupHeader() {
@@ -134,7 +121,6 @@ final class PostViewController: UIViewController {
     
     private func createGradientLayer() {
         let gradientLayer = CAGradientLayer()
-        
         gradientLayer.frame = self.view.bounds
         guard let color = router?.dataStore?.averageColor else { return }
         let cgColor1 = color.cgColor
@@ -142,22 +128,6 @@ final class PostViewController: UIViewController {
         let cgColor3 = color.withAlphaComponent(0.1).cgColor
         gradientLayer.colors = [cgColor1, cgColor2, cgColor3, cgColor3, cgColor2]
         self.view.layer.addSublayer(gradientLayer)
-        
-        let imageView = UIImageView(image: UIImage(named: "blur"))
-        imageView.frame = view.bounds
-        imageView.contentMode = .scaleToFill
-        view.addSubview(imageView)
-        
-        switch traitCollection.userInterfaceStyle {
-        case .dark:
-            lightBlurredEffectView.removeFromSuperview()
-            darkBlurredEffectView.frame = imageView.bounds
-            view.addSubview(darkBlurredEffectView)
-        default:
-            darkBlurredEffectView.removeFromSuperview()
-            lightBlurredEffectView.frame = imageView.bounds
-            view.addSubview(lightBlurredEffectView)
-        }
     }
     
     private func scrollViewSetup() {
@@ -304,7 +274,6 @@ final class PostViewController: UIViewController {
 extension PostViewController: PostDisplayLogic {
     
     func displayPostPage(viewModel: PostModels.PostPage.ViewModel) {
-        activityIndicator.hideIndicator()
         switch viewModel.error == nil {
         case true:
             guard let title = router?.dataStore?.title else { return }
@@ -314,7 +283,7 @@ extension PostViewController: PostDisplayLogic {
         default:
             router?.showErrorAlert(with: viewModel.error?.message ?? "", completion: fetchPost)
         }
-        
+        activityIndicator.hideIndicator()
         
     }
     

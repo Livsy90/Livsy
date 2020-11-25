@@ -65,17 +65,6 @@ final class TagsViewController: UIViewController {
         super.viewDidLoad()
         setupTableView()
         view.backgroundColor = .clear
-        tableView.alpha = 0
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        UIView.transition(with: self.tableView,
-                          duration: 0.3,
-                          options: .transitionCrossDissolve,
-                          animations: { self.tableView.alpha = 1 })
-        
-        tableView.reloadWithAnimation()
     }
     
     // MARK: - Private Methods

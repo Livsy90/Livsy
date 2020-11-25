@@ -160,10 +160,10 @@ extension RegisterViewController: RegisterDisplayLogic {
         if viewModel.error == nil {
             interactor?.login(request: RegisterModels.Login.Request(username: loginTextField.text ?? "", password: passwordTextField.text ?? ""))
         }  else {
-            activityIndicator.hideIndicator()
             router?.showAlert(with: viewModel.error?.message ?? "Error")
             signupButton.isUserInteractionEnabled = true
             signupButton.backgroundColor = .blueButton
+            activityIndicator.hideIndicator()
         }
     }
     

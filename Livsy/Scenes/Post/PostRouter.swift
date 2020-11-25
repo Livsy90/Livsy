@@ -57,8 +57,8 @@ final class PostRouter: PostRoutingLogic, PostDataPassing {
     }
     
     func sharePost() {
-        let linkActivityItem: NSURL = NSURL(string: dataStore?.postLink ?? "")!
-        let activityViewController : UIActivityViewController = UIActivityViewController(
+        let linkActivityItem = NSURL(string: dataStore?.postLink ?? "")!
+        let activityViewController = UIActivityViewController(
             activityItems: [linkActivityItem], applicationActivities: nil)
         
         activityViewController.popoverPresentationController?.sourceView = viewController?.shareButton

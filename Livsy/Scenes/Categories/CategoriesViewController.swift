@@ -65,22 +65,9 @@ final class CategoriesViewController: UIViewController {
         super.viewDidLoad()
         setupTableView()
         view.backgroundColor = .clear
-        tableView.alpha = 0
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        UIView.transition(with: self.tableView,
-                          duration: 0.3,
-                          options: .transitionCrossDissolve,
-                          animations: { self.tableView.alpha = 1 })
-        
-        tableView.reloadWithAnimation()
     }
     
     // MARK: - Private Methods
-    
-    
     
     func setupTableView() {
         tableView.showsHorizontalScrollIndicator = false
@@ -112,8 +99,8 @@ extension CategoriesViewController: CategoriesDisplayLogic {
     
 }
 
-
 extension CategoriesViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         router?.dataStore?.categories.count ?? 0
     }
@@ -135,7 +122,9 @@ extension CategoriesViewController: UITableViewDataSource {
 }
 
 extension CategoriesViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         "Categories"
     }
+    
 }

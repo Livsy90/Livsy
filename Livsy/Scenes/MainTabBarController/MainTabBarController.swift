@@ -25,7 +25,7 @@ class MainTabBarController: UITabBarController {
         let postListNC = NavigationController(rootViewController: postListVC)
         let postListImage = UIImage(systemName: "house")
         let postListImageSelected = UIImage(systemName: "house.fill")
-        let postListItem = UITabBarItem(title: "Home", image: postListImage, selectedImage: postListImageSelected)
+        let postListItem = UITabBarItem(title: "Livsy", image: postListImage, selectedImage: postListImageSelected)
         postListVC.tabBarItem = postListItem
         
         let profileVC = ProfileViewController()

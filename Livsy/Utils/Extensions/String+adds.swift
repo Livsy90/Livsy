@@ -61,9 +61,13 @@ extension String {
     func handeRaquo() -> String {
         return replacingOccurrences(of: "&#187;", with: "»", options: .regularExpression, range: nil)
     }
+    func handeHTMLDash() -> String {
+        return replacingOccurrences(of: "&#8212;", with: "-", options: .regularExpression, range: nil)
+    }
+    
     
     func pureString() -> String {
-        return removeHTMLTags().handleHTMLEllipsel().handleHTMLDots() //.handeRaquo().handeLaquo()
+        return removeHTMLTags().handleHTMLEllipsel().handleHTMLDots().handeHTMLDash() //.handeRaquo().handeLaquo()
     }
     
     func getSecureGravatar() -> String {

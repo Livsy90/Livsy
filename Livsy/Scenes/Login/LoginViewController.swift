@@ -182,19 +182,19 @@ extension LoginViewController: LoginDisplayLogic {
         if viewModel.error == nil {
             router?.dismissSelf(mode: viewModel.dismissMode)
         } else {
-            activityIndicator.hideIndicator()
             router?.showErrorAlert(with: viewModel.error?.message ?? "Username or password is wrong", completion: showResetPasswordAlert)
             loginButton.isUserInteractionEnabled = true
+            activityIndicator.hideIndicator()
         }
     }
     
     func displayResetPassword(viewModel: LoginModels.ResetPassword.ViewModel) {
-        activityIndicator.hideIndicator()
         if viewModel.error == nil {
             router?.showPasswordResultAlert(with: viewModel.result)
         } else {
             router?.showResetPasswordErrorAlert(with: viewModel.error?.message ?? "Error")
         }
+        activityIndicator.hideIndicator()
     }
     
 }
