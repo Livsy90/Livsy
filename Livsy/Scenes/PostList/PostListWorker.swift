@@ -33,4 +33,8 @@ final class PostListWorker {
         netManager.fetchPostListByCategory(page: page, id: id, isTag: isTag, completion: completion)
     }
     
+    func fetchPageList(completion: @escaping (Bodies.PostListAPI.Response?, CustomError?) -> ()) {
+        netManager.fetchPageList(completion: completion)
+    }
+    
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct Post: Codable { // codable для userDefaults
+struct Post: Codable {
     let id: Int
     let date: String
     let title: Title?
@@ -127,6 +127,34 @@ enum PostListModels {
         
         struct ViewModel {
             var isTags: Bool
+        }
+    }
+    
+    enum PageList {
+        
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
+    enum Post {
+        
+        struct Request {
+            var url: String
+            var id: Int
+        }
+        
+        struct Response {
+            var id: Int
+        }
+        
+        struct ViewModel {
+            var id: Int
         }
     }
     

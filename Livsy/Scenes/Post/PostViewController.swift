@@ -29,7 +29,7 @@ final class PostViewController: UIViewController {
     private let loadingCommentsIndicator = UIActivityIndicatorView()
     private let textView = CustomTextView()
     private let scrollView = UIScrollView()
-    private let postTitle = UILabel()
+    private let postTitleLabel = UILabel()
     private let imageView = WebImageView()
     private let lblName = UILabel()
     private var favButton = UIButton()
@@ -105,10 +105,10 @@ final class PostViewController: UIViewController {
         darkView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 300)
         imageView.addSubview(darkView)
         postTitleSetup()
-        postTitle.frame = CGRect(x: 20, y: 400, width: UIScreen.main.bounds.width - 40, height: 200)
-        postTitle.font = UIFont.systemFont(ofSize: 26)
-        postTitle.clipsToBounds = true
-        imageView.addSubview(postTitle)
+        postTitleLabel.frame = CGRect(x: 20, y: 400, width: UIScreen.main.bounds.width - 40, height: 200)
+        postTitleLabel.font = UIFont.systemFont(ofSize: 26)
+        postTitleLabel.clipsToBounds = true
+        imageView.addSubview(postTitleLabel)
     }
     
     private func setupNavBar() {
@@ -150,9 +150,9 @@ final class PostViewController: UIViewController {
     }
     
     private func postTitleSetup() {
-        postTitle.textColor = .white
-        postTitle.lineBreakMode = .byWordWrapping
-        postTitle.numberOfLines = 0
+        postTitleLabel.textColor = .white
+        postTitleLabel.lineBreakMode = .byWordWrapping
+        postTitleLabel.numberOfLines = 0
     }
     
     @objc private func share() {
@@ -219,7 +219,7 @@ final class PostViewController: UIViewController {
         let height = min(max(y, self.topbarHeight), 400)
         imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height)
         darkView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height)
-        postTitle.frame = CGRect(x: 20, y: height - 100, width: UIScreen.main.bounds.size.width - 40, height: 100)
+        postTitleLabel.frame = CGRect(x: 20, y: height - 100, width: UIScreen.main.bounds.size.width - 40, height: 100)
     }
     
     private func changeProgressViewValue(scrollView: UIScrollView) {
@@ -249,11 +249,11 @@ final class PostViewController: UIViewController {
         switch scrollView.contentOffset.y > 0 - (self.topbarHeight + 10) {
         case true:
             UIView.animate(withDuration: 0.25) {
-                self.postTitle.alpha = 0
+                self.postTitleLabel.alpha = 0
             }
         default:
             UIView.animate(withDuration: 0.25) {
-                self.postTitle.alpha = 1
+                self.postTitleLabel.alpha = 1
             }
         }
     }
@@ -278,7 +278,7 @@ extension PostViewController: PostDisplayLogic {
         case true:
             guard let title = router?.dataStore?.title else { return }
             guard let text = router?.dataStore?.content else { return }
-            postTitle.text = title
+            postTitleLabel.text = title
             textView.setHTMLFromString(htmlText: text, color: .postText)
         default:
             router?.showErrorAlert(with: viewModel.error?.message ?? "", completion: fetchPost)

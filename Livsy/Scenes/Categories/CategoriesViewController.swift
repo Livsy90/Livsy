@@ -21,13 +21,16 @@ final class CategoriesViewController: UIViewController {
     // MARK: - IBOutlets
     
     // MARK: - Public Properties
+    
     weak var categoriesViewControllerDelegate: CategoriesViewControllerDelegate?
     var interactor: CategoriesBusinessLogic?
     var router: (CategoriesRoutingLogic & CategoriesDataPassing)?
     
     // MARK: - Private Properties
     
-    private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
+    private let tableView = UITableView(frame: CGRect.zero, style: .grouped)
+    private let effect = UIBlurEffect(style: .systemUltraThinMaterial)
+    private let resizingMask: UIView.AutoresizingMask = [.flexibleWidth, .flexibleHeight]
     
     // MARK: - Initializers
     
@@ -58,7 +61,7 @@ final class CategoriesViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func viewWillLayoutSubviews() {
-        preferredContentSize = CGSize(width: 250, height: tableView.contentSize.height + 30)
+        preferredContentSize = CGSize(width: 180, height: tableView.contentSize.height)
     }
     
     override func viewDidLoad() {
@@ -69,7 +72,7 @@ final class CategoriesViewController: UIViewController {
     
     // MARK: - Private Methods
     
-    func setupTableView() {
+    private func setupTableView() {
         tableView.showsHorizontalScrollIndicator = false
         tableView.showsVerticalScrollIndicator = false
         tableView.delegate = self
@@ -83,11 +86,28 @@ final class CategoriesViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         tableView.backgroundColor = .clear
-        let blurEffect = UIBlurEffect(style: .regular)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        tableView.backgroundView = blurEffectView
-        tableView.backgroundView?.alpha = 0
-        tableView.separatorEffect = UIVibrancyEffect(blurEffect: blurEffect)
+        let backgroundView = UIView(frame: view.bounds)
+        backgroundView.autoresizingMask = resizingMask
+        backgroundView.addSubview(self.buildImageView())
+        backgroundView.addSubview(self.buildBlurView())
+        
+        tableView.backgroundView = backgroundView
+        tableView.separatorEffect = UIVibrancyEffect(blurEffect: effect)
+        tableView.isScrollEnabled = UIScreen.main.bounds.height < tableView.contentSize.height + 300
+    }
+    
+    private func buildImageView() -> UIImageView {
+        let imageView = UIImageView(image: UIImage(named: "img"))
+        imageView.frame = view.bounds
+        imageView.autoresizingMask = resizingMask
+        return imageView
+    }
+    
+    private func buildBlurView() -> UIVisualEffectView {
+        let blurView = UIVisualEffectView(effect: effect)
+        blurView.frame = view.bounds
+        blurView.autoresizingMask = resizingMask
+        return blurView
     }
     
 }
@@ -110,6 +130,7 @@ extension CategoriesViewController: UITableViewDataSource {
         guard let tags = router?.dataStore?.categories else { return cell }
         cell.textLabel?.text = tags[indexPath.row].name
         cell.separatorInset = .zero
+        cell.backgroundColor = .clear
         return cell
     }
     

@@ -60,7 +60,7 @@ class FavPostsCell: UITableViewCell {
     
     func config(post: Post) {
         mainImageView.set(imageURL: post.imgURL)
-        titleLabel.text = post.title?.rendered
+        titleLabel.text = post.title?.rendered.pureString()
     }
 
     required init?(coder aDecoder: NSCoder) {

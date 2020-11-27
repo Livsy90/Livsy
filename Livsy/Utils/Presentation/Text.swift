@@ -65,7 +65,12 @@ enum Text {
         static let favPosts = NSLocalizedString("Favorite posts", comment: "")
         static let signOut = NSLocalizedString("Sign out", comment: "")
         static let continueToLogin = NSLocalizedString("Continue", comment: "")
-        
+        static let supportEmail = NSLocalizedString("info@livsy.me", comment: "")
+        static let emailSent = NSLocalizedString("Email sent", comment: "")
+        static let appVersion = NSLocalizedString("App version", comment: "")
+        static let noMailAccount = NSLocalizedString("You have not set up the Mail app", comment: "")
+        static let feedbackSubject = NSLocalizedString("Feedback on the Livsy.me app", comment: "")
+        static let feedback = NSLocalizedString("Feedback", comment: "")
     }
     
     enum Tags {

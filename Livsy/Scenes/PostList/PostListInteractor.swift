@@ -15,12 +15,16 @@ protocol PostListBusinessLogic {
     func signOut()
     func fetchFilterData(request: PostListModels.Tags.Request)
     func fetchFilteredPostList(request: PostListModels.FilteredPostList.Request)
+    func fetchPageList(request: PostListModels.PageList.Request)
+    func showPost(request: PostListModels.Post.Request)
 }
 
 protocol PostListDataStore {
     var postList: [Post] { get set }
     var tags: [Tag] { get set }
     var categories: [Tag] { get set }
+    var pageList: [Post] { get set }
+    var imageView: WebImageView { get set }
 }
 
 final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
@@ -35,6 +39,8 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
     var postList: [Post] = []
     var tags: [Tag] = []
     var categories: [Tag] = []
+    var pageList: [Post] = []
+    var imageView: WebImageView = WebImageView()
     
     // MARK: - Business Logic
     
@@ -119,6 +125,19 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
             }
             
         })
+    }
+    
+    func fetchPageList(request: PostListModels.PageList.Request) {
+        worker?.fetchPageList(completion: { [weak self] (response, error) in
+            guard let self = self else { return }
+            self.pageList = response ?? []
+            self.presenter?.presentPageList(response: PostListModels.PageList.Response())
+        })
+    }
+    
+    func showPost(request: PostListModels.Post.Request) {
+        imageView.set(imageURL: request.url)
+        presenter?.presentPost(response: PostListModels.Post.Response(id: request.id))
     }
     
 }

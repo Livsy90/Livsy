@@ -14,6 +14,8 @@ protocol PostListPresentationLogic {
     func presentSignOut()
     func presentTags(response: PostListModels.Tags.Response)
     func presentPostListByCategory(response: PostListModels.FilteredPostList.Response)
+    func presentPageList(response: PostListModels.PageList.Response)
+    func presentPost(response: PostListModels.Post.Response)
 }
 
 final class PostListPresenter: PostListPresentationLogic {
@@ -44,6 +46,14 @@ final class PostListPresenter: PostListPresentationLogic {
     
     func presentPostListByCategory(response: PostListModels.FilteredPostList.Response) {
         viewController?.displayPostListByCategory(viewModel: PostListModels.FilteredPostList.ViewModel(isStopRereshing: response.error != nil))
+    }
+    
+    func presentPageList(response: PostListModels.PageList.Response) {
+        viewController?.displayPageList(viewModel: PostListModels.PageList.ViewModel())
+    }
+    
+    func presentPost(response: PostListModels.Post.Response) {
+        viewController?.displayPost(viewModel: PostListModels.Post.ViewModel(id: response.id))
     }
     
 }

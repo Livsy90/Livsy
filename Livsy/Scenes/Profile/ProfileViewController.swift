@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 
 protocol ProfileDisplayLogic: class {
     func displaySignOut()
@@ -53,6 +54,7 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         title = "Profile"
         setupTableView()
+        setupMailButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -102,12 +104,25 @@ final class ProfileViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .navBarTint
     }
     
+    private func setupMailButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Text.Profile.feedback, style: .plain, target: self, action: #selector(presentMailViewController))
+    }
+    
     private func showSignOutQuestion() {
         router?.showSignOutQuestionAlert(completion: signOut)
     }
     
     private func routeToPost(id: Int, url: String) {
         router?.routeToPost(id: id, url: url)
+    }
+    
+    private func getAppVersion() -> String {
+        guard
+            let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String,
+            let build = Bundle.main.infoDictionary!["CFBundleVersion"] as? String
+        else { return "" }
+        
+        return "\(version) (\(build))"
     }
     
     @objc private func handleLogin() {
@@ -126,6 +141,23 @@ final class ProfileViewController: UIViewController {
         default:
             break
         }
+    }
+    
+    @objc private func presentMailViewController() {
+        
+        if MFMailComposeViewController.canSendMail() {
+            
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients([Text.Profile.supportEmail])
+            let appVersion = getAppVersion()
+            mail.setSubject("\(Text.Profile.feedbackSubject) \(appVersion)")
+            mail.modalPresentationStyle = .automatic
+            present(mail, animated: true)
+        } else {
+            showAlertWithOneButton(title: Text.Profile.noMailAccount, message: nil, buttonTitle: Text.Common.ok, buttonAction: nil)
+        }
+        
     }
     
 }
@@ -203,9 +235,9 @@ extension ProfileViewController: UITableViewDataSource {
         default:
             switch isLoading {
             case true:
-                let ai = UIActivityIndicatorView(frame: CGRect(x: self.view.center.x, y: 10, width: 40, height: 40))
+                let ai = UIActivityIndicatorView(frame: CGRect(x: view.center.x, y: 10, width: 40, height: 40))
                 ai.startAnimating()
-                ai.center.x = self.view.center.x - 20
+                ai.center.x = view.center.x
                 ai.center.y += 10
                 return ai
             default:
@@ -257,13 +289,13 @@ extension ProfileViewController: UITableViewDataSource {
         
         guard let commentCell = tableView.dequeueReusableCell(withIdentifier: "favCellId", for: indexPath) as? FavPostsCell else { return UITableViewCell() }
         commentCell.config(post: post)
-                
+        
         guard let mainCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as? MainProfileCell else { return UITableViewCell() }
         
         mainCell.selectionStyle = .none
-            
+        
         mainCell.config(mainLabelText: (name == "" ? greetingsText : name), isListHidden: name != "", loginButtonTitle: (name == "" ? "Continue" : "Sign out"))
-                
+        
         mainCell.loginCompletion = { [weak self] in
             guard let self = self else { return }
             self.handleLogin()
@@ -278,3 +310,23 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
 }
+
+// MARK: - MFMailComposeViewController Delegate
+extension ProfileViewController: MFMailComposeViewControllerDelegate {
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        switch result {
+        case .cancelled, .saved, .failed:
+            controller.dismiss(animated: true, completion: nil)
+        case .sent:
+            controller.dismiss(animated: true) { [weak self] in
+                guard let self = self else { return }
+                self.showAlertWithOneButton(title: Text.Profile.emailSent, message: nil, buttonTitle: Text.Common.ok, buttonAction: nil)
+            }
+        @unknown default:
+            break
+        }
+    }
+    
+}
+

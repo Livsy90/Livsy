@@ -129,6 +129,20 @@ class NetManager {
         }
     }
     
+    func fetchPageList(completion: @escaping (Bodies.PostListAPI.Response?, CustomError?) -> ()) {
+        let request = Request.RequestType.PostList.get(path: "\(API.pageList)")
+        net.getData(with: request) { (data, error) in
+            guard let data = data, error == nil else { return }
+            do {
+                let response = try JSONDecoder().decode(Bodies.PostListAPI.Response.self, from: data)
+                completion(response, nil)
+            } catch {
+                guard let customError = self.decodeError(data: data) else { return }
+                completion(nil, customError)
+            }
+        }
+    }
+    
     func fetchPostListByCategory(page: Int, id: Int, isTag: Bool, completion: @escaping (Bodies.PostListAPI.Response?, CustomError?) -> ()) {
         let page = "&page=\(page)"
         let request = Request.RequestType.PostList.get(path: "\(isTag ? API.postsByTag : API.postsByCategoty)\(id)\(page)")
@@ -161,6 +175,20 @@ class NetManager {
     
     func fetchPost(id: Int, completion: @escaping (Bodies.PostPageAPI.Response?, CustomError?) -> ()) {
         let request = Request.RequestType.PostList.get(path: "\(API.post)\(id)")
+        net.getData(with: request) { (data, error) in
+            guard let data = data else { return }
+            do {
+                let response = try JSONDecoder().decode(Bodies.PostPageAPI.Response.self, from: data)
+                completion(response, nil)
+            } catch {
+                guard let customError = self.decodeError(data: data) else { return }
+                completion(nil, customError)
+            }
+        }
+    }
+    
+    func fetchPage(id: Int, completion: @escaping (Bodies.PostPageAPI.Response?, CustomError?) -> ()) {
+        let request = Request.RequestType.PostList.get(path: "\(API.pageList)/\(id)")
         net.getData(with: request) { (data, error) in
             guard let data = data else { return }
             do {

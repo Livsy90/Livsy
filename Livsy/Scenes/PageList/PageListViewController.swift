@@ -1,30 +1,30 @@
 //
-//  TagsViewController.swift
+//  PageListViewController.swift
 //  Livsy
 //
-//  Created by Artem on 14.11.2020.
+//  Created by Artem on 26.11.2020.
 //  Copyright © 2020 Artem Mirzabekian. All rights reserved.
 //
 
 import UIKit
 
-protocol TagsDisplayLogic: class {
-    func displayTags(viewModel: TagsModels.Tags.ViewModel)
+protocol PageListDisplayLogic: class {
+    
 }
 
-protocol TagsViewControllerDelegate: class {
-    func fetchPostListByTag(id: Int)
+protocol PageListViewControllerDelegate: class {
+    func routeToPage(id: Int)
 }
 
-final class TagsViewController: UIViewController {
+final class PageListViewController: UIViewController {
     
     // MARK: - IBOutlets
     
     // MARK: - Public Properties
     
-    var interactor: TagsBusinessLogic?
-    var router: (TagsRoutingLogic & TagsDataPassing)?
-    weak var tagsViewControllerDelegate: TagsViewControllerDelegate?
+    var interactor: PageListBusinessLogic?
+    var router: (PageListRoutingLogic & PageListDataPassing)?
+    weak var pageListViewControllerDelegate: PageListViewControllerDelegate?
     
     // MARK: - Private Properties
     
@@ -45,9 +45,9 @@ final class TagsViewController: UIViewController {
     }
     
     private func setup() {
-        let interactor = TagsInteractor()
-        let presenter = TagsPresenter()
-        let router = TagsRouter()
+        let interactor = PageListInteractor()
+        let presenter = PageListPresenter()
+        let router = PageListRouter()
         
         interactor.presenter = presenter
         presenter.viewController = self
@@ -71,10 +71,6 @@ final class TagsViewController: UIViewController {
     }
     
     // MARK: - Private Methods
-    
-    @objc func fetchtags() {
-        interactor?.fetchTags(request: TagsModels.Tags.Request())
-    }
     
     private func setupTableView() {
         tableView.showsHorizontalScrollIndicator = false
@@ -116,40 +112,40 @@ final class TagsViewController: UIViewController {
     
 }
 
+
 // MARK: - Tags Display Logic
 
-extension TagsViewController: TagsDisplayLogic {
-    func displayTags(viewModel: TagsModels.Tags.ViewModel) {
-        tableView.softReload()
-    }
+extension PageListViewController: PageListDisplayLogic {
+    
 }
 
-
-extension TagsViewController: UITableViewDataSource {
+extension PageListViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        router?.dataStore?.tags.count ?? 0
+        router?.dataStore?.pageList.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        guard let tags = router?.dataStore?.tags else { return cell }
-        cell.textLabel?.text = tags[indexPath.row].name
-        cell.backgroundColor = .clear
+        guard let tags = router?.dataStore?.pageList else { return cell }
+        cell.textLabel?.text = tags[indexPath.row].title?.rendered.pureString()
         cell.separatorInset = .zero
+        cell.backgroundColor = .clear
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let tagId = router?.dataStore?.tags[indexPath.row].id
-        tagsViewControllerDelegate?.fetchPostListByTag(id: tagId ?? 00)
+        let pageId = router?.dataStore?.pageList[indexPath.row].id ?? 2
+        pageListViewControllerDelegate?.routeToPage(id: pageId)
         dismiss(animated: true, completion: nil)
     }
     
 }
 
-extension TagsViewController: UITableViewDelegate {
+extension PageListViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        "Tags"
+        "Pages"
     }
+    
 }
-

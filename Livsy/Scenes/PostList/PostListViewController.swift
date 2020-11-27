@@ -14,6 +14,8 @@ protocol PostListDisplayLogic: class {
     func displaySignOut()
     func displayTags(viewModel: PostListModels.Tags.ViewModel)
     func displayPostListByCategory(viewModel: PostListModels.FilteredPostList.ViewModel)
+    func displayPageList(viewModel: PostListModels.PageList.ViewModel)
+    func displayPost(viewModel: PostListModels.Post.ViewModel)
 }
 
 final class PostListViewController: UIViewController {
@@ -27,6 +29,7 @@ final class PostListViewController: UIViewController {
     
     var tagsButton = UIButton()
     var categoriesButton = UIButton()
+    var pageListButton = UIButton()
 
     // MARK: - Private Properties
     
@@ -47,7 +50,7 @@ final class PostListViewController: UIViewController {
     private let activityIndicator = ActivityIndicator()
     private let searchController = UISearchController(searchResultsController: nil)
     private var refreshControl: UIRefreshControl!
-    private var postCollectionView = PostListCollectionView()
+     var postCollectionView = PostListCollectionView()
     private var page = 0
     private var searchTerms = ""
     private var isLoadMore = false
@@ -94,6 +97,9 @@ final class PostListViewController: UIViewController {
         super.viewWillAppear(animated)
         setNeedsStatusBarAppearanceUpdate()
         setupNavBar()
+        fetchPageList()
+        fetchFilterList(isTags: true)
+        fetchFilterList(isTags: false)
     }
     
     // MARK: - Private Methods
@@ -105,7 +111,7 @@ final class PostListViewController: UIViewController {
         
         postCollectionView.fetchIdCompletion = { [weak self] (id, url) in
             guard let self = self else { return }
-            self.routeToPost(id: id, url: url)
+            self.showPost(url: url, id: id)
         }
         
         postCollectionView.loadMoreCompletion = { [weak self] isLoadMore in
@@ -136,18 +142,25 @@ final class PostListViewController: UIViewController {
         navigationController?.navigationBar.shadowImage = nil
         navigationController?.navigationBar.tintColor = .navBarTint
         
-        let tagsBotton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
+        let tagsButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
         let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium, scale: .medium)
-        let tagImage = UIImage(systemName: "tag.fill", withConfiguration: config)
-        tagsBotton.setImage(tagImage, for: .normal)
-        tagsBotton.addTarget(self, action: #selector(showTags), for: .touchUpInside)
-        tagsButton = tagsBotton
+        let tagImage = UIImage(systemName: "tag", withConfiguration: config)
+        tagsButton.setImage(tagImage, for: .normal)
+        tagsButton.addTarget(self, action: #selector(showTags), for: .touchUpInside)
+        self.tagsButton = tagsButton
         
         let catButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
         let listImage = UIImage(systemName: "list.bullet", withConfiguration: config)
         catButton.setImage(listImage, for: .normal)
         catButton.addTarget(self, action: #selector(showCategories), for: .touchUpInside)
         categoriesButton = catButton
+        
+        let pagesBotton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
+        let pageImage = UIImage(systemName: "list.bullet.below.rectangle", withConfiguration: config)
+        pagesBotton.setImage(pageImage, for: .normal)
+        pagesBotton.addTarget(self, action: #selector(showPageList), for: .touchUpInside)
+        pageListButton = pagesBotton
+        
         
         let backWardButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
         let backWardImage = UIImage(systemName: "gobackward", withConfiguration: config)
@@ -161,22 +174,21 @@ final class PostListViewController: UIViewController {
             homeButton.alpha = 0
         }
         
-        let leftItem =  UIBarButtonItem(customView: categoriesButton)
-        let homeItem =  UIBarButtonItem(customView: homeButton)
-        navigationItem.leftBarButtonItems = [leftItem, homeItem]
-        let rightItem =  UIBarButtonItem(customView: tagsButton)
-        navigationItem.rightBarButtonItem = rightItem
-        
-        fetchFilterList(isTags: true)
-        fetchFilterList(isTags: false)
+        let categoriesItem = UIBarButtonItem(customView: categoriesButton)
+        let homeItem = UIBarButtonItem(customView: homeButton)
+        let tagsItem = UIBarButtonItem(customView: self.tagsButton)
+        let pagesItem = UIBarButtonItem(customView: pageListButton)
+
+        navigationItem.leftBarButtonItems = [homeItem]
+        navigationItem.rightBarButtonItems = [pagesItem, tagsItem, categoriesItem]
     }
     
     private func checkToken() {
         interactor?.login(request: PostListModels.Login.Request(username: UserDefaults.standard.username ?? "" , password: UserDefaults.standard.password ?? ""))
     }
     
-    private func routeToPost(id: Int, url: String) {
-        router?.routeToPost(id: id, url: url)
+    private func showPost(url: String, id: Int) {
+        interactor?.showPost(request: PostListModels.Post.Request(url: url, id: id))
     }
     
     private func setupRefreshControl() {
@@ -193,6 +205,10 @@ final class PostListViewController: UIViewController {
         page += 1
         isLoadMore ? postCollectionView.footerView.startAnimating() : {}()
         interactor?.fetchPostList(request: PostListModels.PostList.Request(page: page, searchTerms: searchTerms))
+    }
+    
+    private func fetchPageList() {
+        interactor?.fetchPageList(request: PostListModels.PageList.Request())
     }
     
     private func fetchFilteredPostList(isLoadMore: Bool, id: Int, isTag: Bool) {
@@ -248,6 +264,12 @@ final class PostListViewController: UIViewController {
         router?.routeToCategories()
       }
     
+    @objc private func showPageList() {
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        router?.routeToPageList()
+    }
+    
 }
 
 // MARK: - PostList Display Logic
@@ -297,6 +319,14 @@ extension PostListViewController: PostListDisplayLogic {
                 self.homeButton.alpha = 0
             })
         }
+    }
+    
+    func displayPageList(viewModel: PostListModels.PageList.ViewModel) {
+        
+    }
+    
+    func displayPost(viewModel: PostListModels.Post.ViewModel) {
+        router?.routeToPost(id: viewModel.id)
     }
     
 }
@@ -354,25 +384,11 @@ extension PostListViewController: TagsViewControllerDelegate {
     
 }
 
-
-class NavigationController: UINavigationController {
-    
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        
-        if let topVC = viewControllers.last {
-            return topVC.preferredStatusBarStyle
-        }
-        
-        return .default
+extension PostListViewController: PageListViewControllerDelegate {
+    func routeToPage(id: Int) {
+        router?.routeToPage(id: id)
     }
     
-    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        
-        if let topVC = viewControllers.last {
-            return topVC.preferredStatusBarUpdateAnimation
-        }
-        
-        return .slide // .fade, .none
-    }
+    
+    
 }
-

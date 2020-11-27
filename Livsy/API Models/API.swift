@@ -13,6 +13,7 @@ struct API {
     static let host = "livsy.me"
 
     static let postList = "wp/v2/posts?_embed&page="
+    static let pageList = "wp/v2/pages"
     static let postsByCategoty = "wp/v2/posts?_embed&categories="
     static let postsByTag = "wp/v2/posts?_embed&tags="
     static let post = "wp/v2/posts/" 

@@ -9,12 +9,14 @@
 import UIKit
 
 protocol PostListRoutingLogic {
-    func routeToPost(id: Int, url: String)
+    func routeToPost(id: Int)
     func routeToLogin()
     func showSignOutResultAlert()
     func showSignOutQuestionAlert(completion: @escaping (() -> Void))
     func routeToTags()
     func routeToCategories()
+    func routeToPageList()
+    func routeToPage(id: Int)
 }
 
 protocol PostListDataPassing {
@@ -27,13 +29,11 @@ final class PostListRouter: PostListRoutingLogic, PostListDataPassing {
     
     weak var viewController: PostListViewController?
     var dataStore: PostListDataStore?
-    
-    var imageView = WebImageView()
-    
-    func routeToPost(id: Int, url: String) {
+        
+    func routeToPost(id: Int) {
         let destinationVC = PostViewController()
         var destinationDS = destinationVC.router!.dataStore!
-        passDataToPost(postID: id, imageURL: url, source: dataStore!, destination: &destinationDS)
+        passDataToPost(postID: id, source: dataStore!, destination: &destinationDS)
         navigateToPost(source: viewController!, destination: destinationVC)
     }
     
@@ -41,11 +41,10 @@ final class PostListRouter: PostListRoutingLogic, PostListDataPassing {
         viewController?.navigationController?.pushViewController(destination, animated: true)
     }
     
-    func passDataToPost(postID: Int, imageURL: String, source: PostListDataStore, destination: inout PostDataStore) {
+    func passDataToPost(postID: Int, source: PostListDataStore, destination: inout PostDataStore) {
         destination.id = postID
-        imageView.set(imageURL: imageURL)
-        destination.image = imageView.image ?? UIImage()
-        destination.averageColor = imageView.image?.averageColor ?? UIColor.blueButton
+        destination.image = source.imageView.image ?? UIImage()
+        destination.averageColor = source.imageView.image?.averageColor ?? UIColor.blueButton
     }
     
     func routeToLogin() {
@@ -129,5 +128,52 @@ final class PostListRouter: PostListRoutingLogic, PostListDataPassing {
         destination.categories = source.categories
     }
     
+    func routeToPageList() {
+        let destinationVC = PageListViewController()
+        var destinationDS = destinationVC.router!.dataStore!
+        
+        passDataToPageList(source: dataStore!, destination: &destinationDS)
+        navigateToPageList(source: viewController!, destination: destinationVC)
+        
+    }
+    
+    func navigateToPageList(source: PostListViewController, destination: PageListViewController) {
+        destination.modalPresentationStyle = .popover
+        destination.pageListViewControllerDelegate = viewController
+        let popOverViewController = destination.popoverPresentationController
+        popOverViewController?.delegate = viewController
+        popOverViewController?.sourceView = viewController?.pageListButton
+        popOverViewController?.permittedArrowDirections = .up
+        popOverViewController?.backgroundColor = .clear
+        
+        guard
+            let buttonMidX = viewController?.pageListButton.bounds.midX,
+            let buttonMaxY = viewController?.pageListButton.bounds.maxY
+            else { return }
+        
+        popOverViewController?.sourceRect = CGRect(x: buttonMidX, y: buttonMaxY, width: 0, height: 0)
+        
+        viewController?.present(destination, animated: true, completion: nil)
+    }
+    
+    func passDataToPageList(source: PostListDataStore, destination: inout PageListDataStore) {
+        destination.pageList = source.pageList
+    }
+    
+    func routeToPage(id: Int) {
+        let destinationVC = PageViewController()
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToPage(id: id, source: dataStore!, destination: &destinationDS)
+        navigateToPage(source: viewController!, destination: destinationVC)
+    }
+    
+    func navigateToPage(source: PostListViewController, destination: PageViewController) {
+        viewController?.navigationController?.pushViewController(destination, animated: true)
+    }
+    
+    func passDataToPage(id: Int, source: PostListDataStore, destination: inout PageDataStore) {
+        destination.id = id
+        
+    }
     
 }
