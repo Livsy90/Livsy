@@ -32,7 +32,7 @@ class MainTabBarController: UITabBarController {
         let profileNC = NavigationController(rootViewController: profileVC)
         let profileImage = UIImage(systemName: "person")
         let profileImageSelected = UIImage(systemName: "person.fill")
-        let profileItem = UITabBarItem(title: "Profile", image: profileImage, selectedImage: profileImageSelected)
+        let profileItem = UITabBarItem(title: Text.Profile.profile, image: profileImage, selectedImage: profileImageSelected)
         profileVC.tabBarItem = profileItem
         
         let controllers = [postListNC, profileNC]

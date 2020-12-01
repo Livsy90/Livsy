@@ -20,13 +20,16 @@ enum Text {
         static let search = NSLocalizedString("Search", comment: "")
         static let save = NSLocalizedString("Save", comment: "")
         static let openVideo = NSLocalizedString("▶ Tap the video to open", comment: "")
+        static let yes = NSLocalizedString("Yes", comment: "")
+        static let no = NSLocalizedString("No", comment: "")
         
     }
     
     
     enum Post {
         
-        static let comment = NSLocalizedString("Comments", comment: "")
+        static let comment = NSLocalizedString("Comment:", comment: "")
+        static let comments = NSLocalizedString("Comments", comment: "")
         static let addedTF = NSLocalizedString("Added to favorites", comment: "")
         static let removedFF = NSLocalizedString("Removed from favorites", comment: "")
         
@@ -38,7 +41,7 @@ enum Text {
         static let loginToReply = NSLocalizedString("Login to reply", comment: "")
         static let reply = NSLocalizedString("reply", comment: "")
         static let replies = NSLocalizedString("replies", comment: "")
-        
+        static let noReplies = NSLocalizedString("no replies yet", comment: "")
     }
     
     enum Login {
@@ -46,6 +49,8 @@ enum Text {
         static let login = NSLocalizedString("Login", comment: "")
         static let forgotPassword = NSLocalizedString("Forgot password?", comment: "")
         static let dontHaveAccount = NSLocalizedString("Don't have an account?  ", comment: "")
+        static let sendInstructions = NSLocalizedString("Send instructions", comment: "")
+        static let logingOrEmail = NSLocalizedString("Login or email", comment: "")
         
     }
     
@@ -72,6 +77,10 @@ enum Text {
         static let noMailAccount = NSLocalizedString("You have not set up the Mail app", comment: "")
         static let feedbackSubject = NSLocalizedString("Feedback on the Livsy.me app", comment: "")
         static let feedback = NSLocalizedString("Feedback", comment: "")
+        static let loginOrSignUp = NSLocalizedString("Login or sign up to:", comment: "")
+        static let youAreLoggedOut = NSLocalizedString("You are logged out", comment: "")
+        static let areYouSure = NSLocalizedString("Are you sure?", comment: "")
+        
     }
     
     enum Tags {
@@ -88,7 +97,7 @@ enum Text {
     
     enum Pages {
         
-        static let pages = NSLocalizedString("Pages", comment: "Детализация факта")
+        static let pages = NSLocalizedString("Pages", comment: "")
     }
     
 }

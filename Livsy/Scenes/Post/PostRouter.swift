@@ -49,7 +49,7 @@ final class PostRouter: PostRoutingLogic, PostDataPassing {
     }
     
     func showErrorAlert(with message: String, completion: @escaping (() -> Void)) {
-        viewController?.showAlertWithTwoButtons(title: message, firstButtonTitle: "Dismiss", secondButtonTitle: "Retry", firstButtonAction: dismissSelf, secondButtonAction: completion)
+        viewController?.showAlertWithTwoButtons(title: message, firstButtonTitle: Text.Common.close, secondButtonTitle: Text.Common.tryAgain, firstButtonAction: dismissSelf, secondButtonAction: completion)
     }
     
     func dismissSelf() {

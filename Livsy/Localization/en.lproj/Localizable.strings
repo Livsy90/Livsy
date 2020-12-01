@@ -1,0 +1,139 @@
+/*
+  Localizable.strings
+  Livsy
+
+  Created by Artem on 01.12.2020.
+  Copyright © 2020 Artem Mirzabekian. All rights reserved.
+*/
+
+/* No comment provided by engineer. */
+"Cancel" = "Cancel";
+
+/* No comment provided by engineer. */
+"Close" = "Close";
+
+/* No comment provided by engineer. */
+"Try again" = "Try again";
+
+/* No comment provided by engineer. */
+"Search" = "Search";
+
+/* No comment provided by engineer. */
+"Save" = "Save";
+
+/* No comment provided by engineer. */
+"▶ Tap the video to open";
+
+/* No comment provided by engineer. */
+"Comments" = "Comments";
+
+/* No comment provided by engineer. */
+"Yes" = "Yes";
+
+/* No comment provided by engineer. */
+"No" = "No";
+
+/* No comment provided by engineer. */
+"You are logged out" = "You are logged out";
+
+/* No comment provided by engineer. */
+"Are you sure?" = "Are uou sure?";
+
+/* No comment provided by engineer. */
+"Comment:" = "Comment:";
+
+/* No comment provided by engineer. */
+"Added to favorites" = "Added to favorites";
+
+/* No comment provided by engineer. */
+"Removed from favorites" = "Removed from favorites";
+
+/* No comment provided by engineer. */
+"Be the first" = "Be the first";
+
+/* No comment provided by engineer. */
+"Login to reply" = "Login to reply";
+
+/* No comment provided by engineer. */
+"reply" = "reply";
+
+/* No comment provided by engineer. */
+"replies" = "replies";
+
+/* No comment provided by engineer. */
+"Login" = "Login";
+
+/* No comment provided by engineer. */
+"Forgot password?" = "Forgot password?";
+
+/* No comment provided by engineer. */
+"Don't have an account?  " = "Don't have an account?  ";
+
+/* No comment provided by engineer. */
+"Sign up" = "Sign up";
+
+/* No comment provided by engineer. */
+"Username" = "Username";
+
+/* No comment provided by engineer. */
+"Password" = "Password";
+
+/* No comment provided by engineer. */
+"Profile" = "Profile";
+
+/* No comment provided by engineer. */
+"Leave comments" = "Leave comments";
+
+/* No comment provided by engineer. */
+"See your profile information" = "See your profile information";
+
+/* No comment provided by engineer. */
+"No favorite posts yet" = "No favorite posts yet";
+
+/* No comment provided by engineer. */
+"Favorite posts" = "Favorite posts";
+
+/* No comment provided by engineer. */
+"Sign out" = "Sign out";
+
+/* No comment provided by engineer. */
+"Continue" = "Continue";
+
+/* No comment provided by engineer. */
+"info@livsy.me" = "info@livsy.me";
+
+/* No comment provided by engineer. */
+"Email sent" = "Email sent";
+
+/* No comment provided by engineer. */
+"Send instructions" = "Send instructions";
+
+/* No comment provided by engineer. */
+"Login or email" = "Логин или email";
+
+/* Язык в header запроса на сервер */
+"App version" = "App version";
+
+/* No comment provided by engineer. */
+"You have not set up the Mail app" = "You have not set up the Mail app";
+
+/* No comment provided by engineer. */
+"Feedback on the Livsy.me app" = "Feedback on the Livsy.me app";
+
+/* No comment provided by engineer. */
+"Feedback" = "Feedback";
+
+/* No comment provided by engineer. */
+"Tags" = "Tags";
+
+/* No comment provided by engineer. */
+"Categories" = "Categories";
+
+/* No comment provided by engineer. */
+"Pages" = "Pages";
+
+/* No comment provided by engineer. */
+"no replies yet" = "no replies yet";
+
+/* No comment provided by engineer. */
+"Login or sign up to:" = "Login or sign up to:";

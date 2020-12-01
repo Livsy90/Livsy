@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="752" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7GL-pu-tvM">
-                        <rect key="frame" x="16" y="16" width="40" height="21"/>
+                        <rect key="frame" x="16" y="16" width="40" height="37"/>
                         <color key="tintColor" name="PostListText"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                         <nil key="textColor"/>
@@ -38,7 +38,7 @@
                         </subviews>
                     </stackView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32n-Wv-y1J">
-                        <rect key="frame" x="16" y="53" width="400" height="18"/>
+                        <rect key="frame" x="16" y="69" width="400" height="18"/>
                         <color key="tintColor" name="PostText"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
@@ -55,7 +55,7 @@
                     <constraint firstAttribute="trailing" secondItem="32n-Wv-y1J" secondAttribute="trailing" constant="16" id="XHR-i9-D5D"/>
                     <constraint firstItem="32n-Wv-y1J" firstAttribute="top" secondItem="7GL-pu-tvM" secondAttribute="bottom" constant="16" id="dek-QC-BgM"/>
                     <constraint firstAttribute="bottom" secondItem="UOH-vP-0hz" secondAttribute="bottom" constant="16" id="iTA-vw-4kU"/>
-                    <constraint firstItem="UOH-vP-0hz" firstAttribute="top" secondItem="32n-Wv-y1J" secondAttribute="bottom" constant="16" id="nJs-mX-3IN"/>
+                    <constraint firstItem="UOH-vP-0hz" firstAttribute="top" secondItem="32n-Wv-y1J" secondAttribute="bottom" id="nJs-mX-3IN"/>
                     <constraint firstAttribute="trailing" secondItem="UOH-vP-0hz" secondAttribute="trailing" constant="16" id="zgr-p5-cdB"/>
                 </constraints>
             </tableViewCellContentView>

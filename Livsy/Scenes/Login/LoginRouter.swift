@@ -28,19 +28,19 @@ final class LoginRouter: LoginRoutingLogic, LoginDataPassing {
     var dataStore: LoginDataStore?
     
     func showErrorAlert(with message: String, completion: @escaping (() -> Void) ) {
-        viewController?.showAlertWithTwoButtons(title: message.pureString(), firstButtonTitle: "Forgot password?", secondButtonTitle: "Try again", firstButtonAction: completion, secondButtonAction: nil)
+        viewController?.showAlertWithTwoButtons(title: message.pureString(), firstButtonTitle: Text.Login.forgotPassword, secondButtonTitle: Text.Common.tryAgain, firstButtonAction: completion, secondButtonAction: nil)
     }
     
     func showResetPasswordAlert(completion: @escaping ((String) -> Void)) {
-        viewController?.showAlertWithTextField(placeHolder: "Login or email", title: "Forgot password?", firstButtonTitle: "Send instructions", secondButtonTitle: "Cancel", firstButtonAction: completion, secondButtonAction: nil)
+        viewController?.showAlertWithTextField(placeHolder: Text.Login.logingOrEmail, title: Text.Login.forgotPassword, firstButtonTitle: Text.Login.sendInstructions, secondButtonTitle: Text.Common.cancel, firstButtonAction: completion, secondButtonAction: nil)
     }
     
     func showPasswordResultAlert(with message: String) {
-        viewController?.showAlertWithOneButton(title: message, message: nil, buttonTitle: "OK", buttonAction: nil)
+        viewController?.showAlertWithOneButton(title: message, message: nil, buttonTitle: Text.Common.ok, buttonAction: nil)
     }
     
     func showResetPasswordErrorAlert(with message: String) {
-        viewController?.showAlertWithOneButton(title: message.pureString(), message: nil, buttonTitle: "OK", buttonAction: nil)
+        viewController?.showAlertWithOneButton(title: message.pureString(), message: nil, buttonTitle: Text.Common.ok, buttonAction: nil)
     }
     
     func dismissSelf(mode: LoginModels.Mode) {

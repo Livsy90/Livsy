@@ -63,7 +63,7 @@ final class PostCommentsRouter: PostCommentsRoutingLogic, PostCommentsDataPassin
     }
     
     func showAlert(with message: String) {
-        viewController?.showAlertWithOneButton(title: message, message: nil, buttonTitle: "OK", buttonAction: nil)
+        viewController?.showAlertWithOneButton(title: message, message: nil, buttonTitle: Text.Common.ok, buttonAction: nil)
     }
     
 }

@@ -32,7 +32,7 @@ final class PostCommentsViewController: UIViewController {
     }()
     private let noCommentsLabel: UILabel = {
         let l = UILabel()
-        l.text = "Be the first"
+        l.text = Text.Comments.beTheFirst
         l.textColor = UIColor.postText.withAlphaComponent(0.3)
         l.lineBreakMode = .byWordWrapping
         l.numberOfLines = 0
@@ -158,7 +158,7 @@ final class PostCommentsViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .navBarTint
         if UserDefaults.standard.token == "" {
             let loginButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 120, height: 30))
-            loginButton.setTitle("Login to reply", for: .normal)
+            loginButton.setTitle(Text.Comments.loginToReply, for: .normal)
             loginButton.layer.cornerRadius = 8
             loginButton.layer.borderWidth = 1
             loginButton.layer.borderColor = UIColor.navBarTint.cgColor

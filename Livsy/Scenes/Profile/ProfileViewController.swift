@@ -28,7 +28,7 @@ final class ProfileViewController: UIViewController {
     private var isLoading = true
     private var isLoggedIn = false
     private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
-    private let greetingsText = "Login or sign up to:"
+    private let greetingsText = Text.Profile.loginOrSignUp
     private let username = UserDefaults.standard.username
     private let activityIndicator = ActivityIndicator()
     
@@ -52,7 +52,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Profile"
+        title = Text.Profile.profile
         setupTableView()
         setupMailButton()
     }
@@ -256,7 +256,7 @@ extension ProfileViewController: UITableViewDataSource {
         case 0:
             return ""
         default:
-            return posts.count == 0 ? "No favorite posts yet" : "Favorite posts"
+            return posts.count == 0 ? Text.Profile.noFavPosts : Text.Profile.favPosts
         }
         
     }
@@ -294,7 +294,7 @@ extension ProfileViewController: UITableViewDataSource {
         
         mainCell.selectionStyle = .none
         
-        mainCell.config(mainLabelText: (name == "" ? greetingsText : name), isListHidden: name != "", loginButtonTitle: (name == "" ? "Continue" : "Sign out"))
+        mainCell.config(mainLabelText: (name == "" ? greetingsText : name), isListHidden: name != "", loginButtonTitle: (name == "" ? Text.Profile.continueToLogin : Text.Profile.signOut))
         
         mainCell.loginCompletion = { [weak self] in
             guard let self = self else { return }

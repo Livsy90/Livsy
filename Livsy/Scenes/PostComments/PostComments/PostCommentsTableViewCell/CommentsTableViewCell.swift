@@ -38,8 +38,8 @@ class CommentsTableViewCell: UITableViewCell {
     }
     
     func config(comment: PostComment, isReplyButtonHidden: Bool) {
-        let repliesText = comment.replies.count == 1 ? "reply" : "replies"
-        repliesLabel.text = "••• \(comment.replies.count) \(repliesText)"
+        let repliesText = comment.replies.count == 1 ? Text.Comments.reply : Text.Comments.replies
+        repliesLabel.text = "••• \(repliesText): \(comment.replies.count)"
         authorNameLabel.text = comment.authorName.pureString()
         contentLabel.text = comment.content?.rendered?.pureString()
         repliesLabel.isHidden = isReplyButtonHidden || comment.replies.count == 0

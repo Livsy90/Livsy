@@ -137,7 +137,7 @@ final class PostListViewController: UIViewController {
     
     private func setupNavBar() {
         searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.placeholder = Text.Common.search
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)

@@ -144,7 +144,7 @@ final class PostViewController: UIViewController {
     private func setupProgressView() {
         view.addSubview(progressView)
         
-        progressView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: self.topbarHeight, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 4)
+        progressView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: self.topbarHeight - 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 5)
         let color = router?.dataStore?.averageColor ?? .blueButton
         progressView.progressTintColor = color
     }
@@ -180,7 +180,7 @@ final class PostViewController: UIViewController {
     private func rightNavItemsSetup() {
         loadingCommentsIndicator.stopAnimating()
         guard let count = router?.dataStore?.comments.count else { return }
-        let countLabelText = count == 0 ? "Comments" : "Comments: \(count)"
+        let countLabelText = count == 0 ? Text.Post.comments : "\(Text.Post.comments): \(count)"
         let commentsItem = UIBarButtonItem(title: countLabelText, style: .done, target: self, action: #selector(routeToComments))
         
         let flameButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
@@ -294,9 +294,9 @@ extension PostViewController: PostDisplayLogic {
     func displayFavorites(viewModel: PostModels.SaveToFavorites.ViewModel) {
         setFavImage(isFavorite: viewModel.isFavorite, animated: true)
         if viewModel.isFavorite {
-            router?.showAddToFavResultAlert(with: "Added to favorites")
+            router?.showAddToFavResultAlert(with: Text.Post.addedTF)
         } else {
-            router?.showAddToFavResultAlert(with: "Removed from favorites")
+            router?.showAddToFavResultAlert(with: Text.Post.removedFF)
         }
     }
     

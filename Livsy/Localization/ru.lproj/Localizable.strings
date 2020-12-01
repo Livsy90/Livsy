@@ -1,0 +1,138 @@
+/* 
+  Localizable.strings
+  Livsy
+
+  Created by Artem on 01.12.2020.
+  Copyright © 2020 Artem Mirzabekian. All rights reserved.
+*/
+
+/* No comment provided by engineer. */
+"Cancel" = "Отмена";
+
+/* No comment provided by engineer. */
+"Close" = "Закрыть";
+
+/* No comment provided by engineer. */
+"Try again" = "Попробовать еще раз";
+
+/* No comment provided by engineer. */
+"Search" = "Поиск";
+
+/* No comment provided by engineer. */
+"Save" = "Сохранить";
+
+/* No comment provided by engineer. */
+"▶ Tap the video to open" = "▶ Тапните по видео, чтобы посмотреть";
+
+/* No comment provided by engineer. */
+"Comments" = "Комментарии";
+
+/* No comment provided by engineer. */
+"Are you sure?" = "Вы уверены?";
+
+/* No comment provided by engineer. */
+"Comment:" = "Комментарий:";
+
+/* No comment provided by engineer. */
+"You are logged out" = "Вы вышли из профиля";
+
+/* No comment provided by engineer. */
+"Yes" = "Да";
+
+/* No comment provided by engineer. */
+"No" = "Нет";
+
+/* No comment provided by engineer. */
+"Send instructions" = "Выслать инструкции";
+
+/* No comment provided by engineer. */
+"Added to favorites" = "Добавлено в избранное";
+
+/* No comment provided by engineer. */
+"Removed from favorites" = "Удалено из избранного";
+
+/* No comment provided by engineer. */
+"Be the first" = "Будьте первыми";
+
+/* No comment provided by engineer. */
+"Login to reply" = "Войти";
+
+/* No comment provided by engineer. */
+"reply" = "ответ";
+
+/* No comment provided by engineer. */
+"replies" = "ответы";
+
+/* No comment provided by engineer. */
+"Login" = "Вход";
+
+/* No comment provided by engineer. */
+"Forgot password?" = "Забыли пароль?";
+
+/* No comment provided by engineer. */
+"Don't have an account?  " = "Не зарегистрированы?  ";
+
+/* No comment provided by engineer. */
+"Sign up" = "Регистрация";
+
+/* No comment provided by engineer. */
+"Username" = "Имя пользователя";
+
+/* No comment provided by engineer. */
+"Password" = "Пароль";
+
+/* No comment provided by engineer. */
+"Profile" = "Профиль";
+
+/* No comment provided by engineer. */
+"Leave comments" = "Комментировать";
+
+/* No comment provided by engineer. */
+"See your profile information" = "Видеть информацию о своем профиле";
+
+/* No comment provided by engineer. */
+"No favorite posts yet" = "Пока в избранном ничего нет";
+
+/* No comment provided by engineer. */
+"Favorite posts" = "Избранное";
+
+/* No comment provided by engineer. */
+"Sign out" = "Выйти";
+
+/* No comment provided by engineer. */
+"Continue" = "Продолжить";
+
+/* No comment provided by engineer. */
+"info@livsy.me" = "info@livsy.me";
+
+/* No comment provided by engineer. */
+"Email sent" = "Письмо отправлено";
+
+/* Язык в header запроса на сервер */
+"App version" = "Версия приложения";
+
+/* No comment provided by engineer. */
+"You have not set up the Mail app" = "У вас не настроено приложение Почта";
+
+/* No comment provided by engineer. */
+"Feedback on the Livsy.me app" = "Обратная связь по приложению Livsy";
+
+/* No comment provided by engineer. */
+"Feedback" = "Обратная связь";
+
+/* No comment provided by engineer. */
+"Tags" = "Тэги";
+
+/* No comment provided by engineer. */
+"Categories" = "Категории";
+
+/* No comment provided by engineer. */
+"Pages" = "Страницы";
+
+/* No comment provided by engineer. */
+"no replies yet" = "пока нет ответов";
+
+/* No comment provided by engineer. */
+"Login or sign up to:" = "Войдите или зарегистрируйтесь, чтобы:";
+
+

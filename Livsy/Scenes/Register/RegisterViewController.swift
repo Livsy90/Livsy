@@ -28,7 +28,7 @@ final class RegisterViewController: UIViewController {
     
     private let loginTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Username"
+        tf.placeholder = Text.SignUp.username
         tf.backgroundColor = .inputTextView
         tf.setLeftPaddingPoints(10)
         tf.setRightPaddingPoints(10)
@@ -54,7 +54,7 @@ final class RegisterViewController: UIViewController {
     
     private let passwordTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Password"
+        tf.placeholder = Text.SignUp.password
         tf.isSecureTextEntry = true
         tf.layer.cornerRadius = 8
         tf.backgroundColor = .inputTextView
@@ -68,7 +68,7 @@ final class RegisterViewController: UIViewController {
     
     private let signupButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("SignUp", for: .normal)
+        button.setTitle(Text.SignUp.signUp, for: .normal)
         button.backgroundColor = #colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1)
         button.layer.cornerRadius = 8
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
@@ -100,7 +100,7 @@ final class RegisterViewController: UIViewController {
         super.viewDidLoad()
         setupInputFields()
         view.backgroundColor = .postBackground
-        title = "Sign up"
+        title = Text.SignUp.signUp
         hideKeyboardWhenTappedAround()
     }
     

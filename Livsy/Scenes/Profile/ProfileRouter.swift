@@ -29,11 +29,11 @@ final class ProfileRouter: ProfileRoutingLogic, ProfileDataPassing {
 
     
     func showSignOutQuestionAlert(completion: @escaping (() -> Void)) {
-        viewController?.showAlertWithTwoButtons(title: "Are you sure?", firstButtonTitle: "Yes", secondButtonTitle: "No", firstButtonAction: completion, secondButtonAction: nil)
+        viewController?.showAlertWithTwoButtons(title: Text.Profile.areYouSure, firstButtonTitle: Text.Common.yes, secondButtonTitle: Text.Common.no, firstButtonAction: completion, secondButtonAction: nil)
     }
     
     func showSignOutResultAlert() {
-        viewController?.showNoButtonAlert(title: "You are logged out")
+        viewController?.showNoButtonAlert(title: Text.Profile.youAreLoggedOut)
     }
     
     func routeToLogin() {

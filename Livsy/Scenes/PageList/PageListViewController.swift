@@ -145,7 +145,7 @@ extension PageListViewController: UITableViewDataSource {
 extension PageListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        "Pages"
+        Text.Pages.pages
     }
     
 }

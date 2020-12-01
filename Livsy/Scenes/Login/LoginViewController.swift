@@ -30,7 +30,7 @@ final class LoginViewController: UIViewController {
     
     private let loginTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Username"
+        tf.placeholder = Text.SignUp.username
         tf.backgroundColor = .inputTextView
         tf.setLeftPaddingPoints(10)
         tf.setRightPaddingPoints(10)
@@ -43,7 +43,7 @@ final class LoginViewController: UIViewController {
     
     private let passwordTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Password"
+        tf.placeholder = Text.SignUp.password
         tf.isSecureTextEntry = true
         tf.layer.cornerRadius = 8
         tf.backgroundColor = .inputTextView
@@ -57,7 +57,7 @@ final class LoginViewController: UIViewController {
     
     private let loginButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Login", for: .normal)
+        button.setTitle(Text.Login.login, for: .normal)
         button.backgroundColor = #colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1)
         button.layer.cornerRadius = 8
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
@@ -70,9 +70,9 @@ final class LoginViewController: UIViewController {
     private let dontHaveAccountButton: UIButton = {
         let button = UIButton(type: .system)
         
-        let attributedTitle = NSMutableAttributedString(string: "Don't have an account?  ", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        let attributedTitle = NSMutableAttributedString(string: Text.Login.dontHaveAccount, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
-        attributedTitle.append(NSAttributedString(string: "Sign Up", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.blueButton
+        attributedTitle.append(NSAttributedString(string: Text.SignUp.signUp, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.blueButton
         ]))
         
         button.setAttributedTitle(attributedTitle, for: .normal)
@@ -84,7 +84,7 @@ final class LoginViewController: UIViewController {
     private let forgotPasswordButton: UIButton = {
         let button = UIButton(type: .system)
         
-        button.setTitle("Forgot password?", for: .normal)
+        button.setTitle(Text.Login.forgotPassword, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 14)
         button.setTitleColor(.blueButton, for: .normal)
         
@@ -114,7 +114,7 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .postBackground
         NotificationCenter.default.removeObserver(self)
-        title = "Login"
+        title = Text.Login.login
         hideKeyboardWhenTappedAround()
     }
     

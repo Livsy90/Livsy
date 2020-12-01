@@ -150,7 +150,7 @@ final class PostCommentRepliesViewController: UIViewController {
         
         if UserDefaults.standard.token == "" {
             let loginButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 120, height: 30))
-            loginButton.setTitle("Login to reply", for: .normal)
+            loginButton.setTitle(Text.Comments.loginToReply, for: .normal)
             loginButton.layer.cornerRadius = 8
             loginButton.layer.borderWidth = 1
             loginButton.layer.borderColor = UIColor.navBarTint.cgColor
@@ -234,8 +234,8 @@ extension PostCommentRepliesViewController: UITableViewDelegate {
         case 0:
             return ""
         default:
-            guard let commentReplies = router?.dataStore?.replies else { return "Replies" }
-            return commentReplies.isEmpty ? "No replies yet" : "Replies"
+            guard let commentReplies = router?.dataStore?.replies else { return Text.Comments.noReplies }
+            return commentReplies.isEmpty ? Text.Comments.noReplies : Text.Comments.replies
         }
     }
     

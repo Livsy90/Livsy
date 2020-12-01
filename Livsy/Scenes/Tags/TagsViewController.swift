@@ -149,7 +149,7 @@ extension TagsViewController: UITableViewDataSource {
 
 extension TagsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        "Tags"
+        Text.Tags.tags
     }
 }
 

@@ -88,7 +88,7 @@ class MainProfileCell: UITableViewCell {
     }
     
     private func setupList() {
-        let arrayOfLines = ["Leave comments", "See your profile information"]
+        let arrayOfLines = [Text.Profile.leaveComments, Text.Profile.seeProfileInfo]
         for value in arrayOfLines {
             list.text = ("\(list.text ?? "") • \(value)\n")
         }
