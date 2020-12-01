@@ -19,6 +19,7 @@ enum Text {
         static let tryAgain = NSLocalizedString("Try again", comment: "")
         static let search = NSLocalizedString("Search", comment: "")
         static let save = NSLocalizedString("Save", comment: "")
+        static let openVideo = NSLocalizedString("▶ Tap the video to open", comment: "")
         
     }
     

@@ -144,7 +144,7 @@ final class PostViewController: UIViewController {
     private func setupProgressView() {
         view.addSubview(progressView)
         
-        progressView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: self.topbarHeight, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 3)
+        progressView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: self.topbarHeight, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 4)
         let color = router?.dataStore?.averageColor ?? .blueButton
         progressView.progressTintColor = color
     }

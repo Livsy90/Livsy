@@ -32,6 +32,7 @@ import Foundation
 //}
 
 extension String {
+    
     func convertToAttributedFromHTML() -> NSAttributedString? {
         var attributedText: NSAttributedString?
         let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue]
@@ -42,32 +43,31 @@ extension String {
         return attributedText
     }
     
-    func removeHTMLTags() -> String {
+    func pureString() -> String {
+        return removeHTMLTags().handleHTMLEllipsel().handleHTMLDots().handeHTMLDash() 
+    }
+    
+    private func removeHTMLTags() -> String {
         return replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
     }
     
-    func handleHTMLEllipsel() -> String {
+    private func handleHTMLEllipsel() -> String {
         return replacingOccurrences(of: "&#8230;", with: "...", options: .regularExpression, range: nil)
     }
     
-    func handleHTMLDots() -> String {
+    private func handleHTMLDots() -> String {
         return replacingOccurrences(of: "&#46;", with: ".", options: .regularExpression, range: nil)
     }
     
-    func handeLaquo() -> String {
+    private func handeLaquo() -> String {
         return replacingOccurrences(of: "&#171;", with: "«", options: .regularExpression, range: nil)
     }
     
-    func handeRaquo() -> String {
+    private func handeRaquo() -> String {
         return replacingOccurrences(of: "&#187;", with: "»", options: .regularExpression, range: nil)
     }
     func handeHTMLDash() -> String {
         return replacingOccurrences(of: "&#8212;", with: "-", options: .regularExpression, range: nil)
-    }
-    
-    
-    func pureString() -> String {
-        return removeHTMLTags().handleHTMLEllipsel().handleHTMLDots().handeHTMLDash() //.handeRaquo().handeLaquo()
     }
     
     func getSecureGravatar() -> String {

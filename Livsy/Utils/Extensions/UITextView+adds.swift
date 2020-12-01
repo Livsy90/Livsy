@@ -16,7 +16,7 @@ extension UITextView {
         
         let attrStr = try! NSMutableAttributedString(
             data: modifiedFont.data(using: .unicode, allowLossyConversion: true)!,
-            options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding:String.Encoding.utf8.rawValue],
+            options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue],
             documentAttributes: nil)
         
         self.attributedText = resizeImageInHTLLString(attrStr: attrStr)
@@ -28,8 +28,8 @@ extension UITextView {
             if let attachement = value as? NSTextAttachment {
                 let image = attachement.image(forBounds: attachement.bounds, textContainer: NSTextContainer(), characterIndex: range.location)!
                 let screenSize: CGRect = UIScreen.main.bounds
-                if image.size.width > screenSize.width-20 {
-                    let scale = (screenSize.width-20)/image.size.width
+                if image.size.width > screenSize.width - 50 {
+                    let scale = (screenSize.width - 50) / image.size.width
                     let newImage = image.resizeImage(scale: scale)
                     let newAttribut = NSTextAttachment()
                     newAttribut.image = newImage
@@ -41,8 +41,8 @@ extension UITextView {
     }
     
     private func formatStringWithYTVideo(text: String, with width: Float) -> String {
-        let iframeTexts = matches(for: ".*iframe.*", in: text);
-        var newText = text;
+        let iframeTexts = matches(for: ".*iframe.*", in: text)
+        var newText = text
         
         if iframeTexts.count > 0 {
             
@@ -51,17 +51,19 @@ extension UITextView {
                 
                 if iframeId.count > 0 {
                     
-                    newText = newText.replacingOccurrences(of: iframeText, with:"<a href='https://www.youtube.com/watch?v=\(iframeId[0])'><img src=\"https://img.youtube.com/vi/" + iframeId[0] + "/maxresdefault.jpg\" alt=\"\" width=\"\(width)\" /></a>");
+                    let imgString = "<a href='https://www.youtube.com/watch?v=\(iframeId[0])'><img src=\"https://img.youtube.com/vi/" + iframeId[0] + "/maxresdefault.jpg\" alt=\"\" width=\"\(width)\" /></a>"
                     
+                    let htmlString = "<h5>\(Text.Common.openVideo)\(imgString)</h5>"
+                    
+                    newText = newText.replacingOccurrences(of: iframeText, with: htmlString)
                 }
             }
         }
         
-        return newText;
+        return newText
     }
     
     private func matches(for regex: String, in text: String) -> [String] {
-        
         do {
             let regex = try NSRegularExpression(pattern: regex,  options: .caseInsensitive)
             let nsString = text as NSString
@@ -74,3 +76,8 @@ extension UITextView {
     }
     
 }
+
+
+
+
+

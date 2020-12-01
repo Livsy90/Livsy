@@ -127,6 +127,8 @@ final class PostListViewController: UIViewController {
             
         }
         
+        postCollectionView.keyboardDismissMode = .onDrag
+        
         postCollectionView.addSubview(nothingFoundImageView)
         nothingFoundImageView.centerYAnchor.constraint(equalTo: postCollectionView.centerYAnchor, constant: -50).isActive = true
         nothingFoundImageView.centerXAnchor.constraint(equalTo: postCollectionView.centerXAnchor).isActive = true
