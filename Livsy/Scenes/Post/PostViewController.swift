@@ -267,7 +267,7 @@ final class PostViewController: UIViewController {
     }
     
     private func setAlphaForNB(scrollView: UIScrollView) {
-        switch scrollView.contentOffset.y > 0 - (self.topbarHeight + 10) {
+        switch scrollView.contentOffset.y > 0 - (self.topbarHeight + 55) {
         case true:
             UIView.animate(withDuration: 0.25) {
                 self.postTitleLabel.alpha = 0
