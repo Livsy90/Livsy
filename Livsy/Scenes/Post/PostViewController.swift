@@ -194,10 +194,11 @@ final class PostViewController: UIViewController {
     private func rightNavItemsSetup() {
         loadingCommentsIndicator.stopAnimating()
         guard let count = router?.dataStore?.comments.count else { return }
+        guard let postAuthorName = router?.dataStore?.authorName else { return }
         let countLabelText = count == 0 ? Text.Post.comments : "\(Text.Post.comments): \(count)"
         let commentsItem = UIBarButtonItem(title: countLabelText, style: .done, target: self, action: #selector(routeToComments))
         commentsButtonItem = commentsItem
-        commentsButtonItem.isEnabled = false
+        commentsButtonItem.isEnabled = !postAuthorName.isEmpty
         
         let flameButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
         flameButton.addTarget(self, action: #selector(savePostToFav), for: .touchUpInside)
