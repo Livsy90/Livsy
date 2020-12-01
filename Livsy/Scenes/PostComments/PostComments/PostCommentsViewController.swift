@@ -57,7 +57,19 @@ final class PostCommentsViewController: UIViewController {
     }
     
     private func setup() {
-        PostCommentsConfigurator.sharedInstance.configure(viewController: self)
+        let interactor = PostCommentsInteractor()
+        let presenter = PostCommentsPresenter()
+        let router = PostCommentsRouter()
+        let worker = PostCommentsWorker()
+        
+        interactor.presenter = presenter
+        interactor.worker = worker
+        presenter.viewController = self
+        router.viewController = self
+        router.dataStore = interactor
+        
+        self.interactor = interactor
+        self.router = router
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -279,9 +291,10 @@ extension PostCommentsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let postAuthorName = router?.dataStore?.authorName ?? ""
         guard let comment = router?.dataStore?.comments[indexPath.row] else { return UITableViewCell() }
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.reuseIdentifier(), for: indexPath) as? CommentsTableViewCell else { return UITableViewCell() }
-        cell.config(comment: comment, isReplyButtonHidden: false)
+        cell.config(comment: comment, isReplyButtonHidden: false, postAuthorName: postAuthorName)
         return cell
     }
     

@@ -42,6 +42,7 @@ final class PostRouter: PostRoutingLogic, PostDataPassing {
         destination.commentsData = source.comments
         destination.postID = source.id
         destination.postTitle = source.title ?? ""
+        destination.authorName = source.authorName
     }
     
     func showAddToFavResultAlert(with text: String) {

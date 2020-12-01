@@ -17,6 +17,7 @@ protocol PostCommentRepliesDataStore {
     var replies: [PostComment] { get set }
     var parentComment: PostComment { get set }
     var postID: Int { get set }
+    var authorName: String? { get set }
 }
 
 final class PostCommentRepliesInteractor: PostCommentRepliesBusinessLogic, PostCommentRepliesDataStore {
@@ -33,6 +34,7 @@ final class PostCommentRepliesInteractor: PostCommentRepliesBusinessLogic, PostC
     var replies: [PostComment] = []
     var parentComment: PostComment = PostComment(id: 00, parent: 00, authorName: "")
     var postID: Int = 0
+    var authorName: String? = ""
     
     // MARK: - Business Logic
     

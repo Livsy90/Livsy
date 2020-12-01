@@ -27,6 +27,7 @@ struct API {
     static let userComments = "wp/v2/comments/?author_name="
     static let favPosts = "wp/v2/posts?include="
     static let currentUserInfo = "wp/v2/users/me"
+    static let userInfo = "wp/v2/users/"
     static let tags = "wp/v2/tags"
     static let categories = "wp/v2/categories"
 }

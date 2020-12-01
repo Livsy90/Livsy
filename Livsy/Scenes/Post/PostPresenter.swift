@@ -12,6 +12,7 @@ protocol PostPresentationLogic {
     func presentPostPage(response: PostModels.PostPage.Response)
     func presentPostComments(response: PostModels.PostComments.Response)
     func presentPresentFavorites(response: PostModels.SaveToFavorites.Response)
+    func presentPresentAuthorName(response: PostModels.AuthorName.Response)
 }
 
 final class PostPresenter: PostPresentationLogic {
@@ -25,7 +26,7 @@ final class PostPresenter: PostPresentationLogic {
     // MARK: - Presentation Logic
     
     func presentPostPage(response: PostModels.PostPage.Response) {
-        viewController?.displayPostPage(viewModel: PostModels.PostPage.ViewModel(error: response.error))
+        viewController?.displayPostPage(viewModel: PostModels.PostPage.ViewModel(error: response.error, authorId: response.authorId))
     }
     
     func presentPostComments(response: PostModels.PostComments.Response) {
@@ -34,5 +35,9 @@ final class PostPresenter: PostPresentationLogic {
     
     func presentPresentFavorites(response: PostModels.SaveToFavorites.Response) {
         viewController?.displayFavorites(viewModel: PostModels.SaveToFavorites.ViewModel(isFavorite: response.isFavorite))
+    }
+    
+    func presentPresentAuthorName(response: PostModels.AuthorName.Response) {
+        viewController?.displayAuthorName(viewModel: PostModels.AuthorName.ViewModel())
     }
 }

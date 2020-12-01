@@ -45,7 +45,19 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setup() {
-        ProfileConfigurator.sharedInstance.configure(viewController: self)
+        let interactor = ProfileInteractor()
+        let presenter = ProfilePresenter()
+        let router = ProfileRouter()
+        let worker = ProfileWorker()
+        
+        interactor.presenter = presenter
+        interactor.worker = worker
+        presenter.viewController = self
+        router.viewController = self
+        router.dataStore = interactor
+        
+        self.interactor = interactor
+        self.router = router
     }
     
     // MARK: - Lifecycle

@@ -71,7 +71,19 @@ final class PostListViewController: UIViewController {
     }
     
     private func setup() {
-        PostListConfigurator.sharedInstance.configure(viewController: self)
+        let interactor = PostListInteractor()
+        let presenter = PostListPresenter()
+        let router = PostListRouter()
+        let worker = PostListWorker()
+        
+        interactor.presenter = presenter
+        interactor.worker = worker
+        presenter.viewController = self
+        router.viewController = self
+        router.dataStore = interactor
+        
+        self.interactor = interactor
+        self.router = router
     }
     
     // MARK: - Lifecycle

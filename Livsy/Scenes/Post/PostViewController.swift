@@ -12,6 +12,7 @@ protocol PostDisplayLogic: class {
     func displayPostPage(viewModel: PostModels.PostPage.ViewModel)
     func displayPostComments(viewModel: PostModels.PostComments.ViewModel)
     func displayFavorites(viewModel: PostModels.SaveToFavorites.ViewModel)
+    func displayAuthorName(viewModel: PostModels.AuthorName.ViewModel)
 }
 
 final class PostViewController: UIViewController {
@@ -33,6 +34,7 @@ final class PostViewController: UIViewController {
     private let imageView = WebImageView()
     private let lblName = UILabel()
     private var favButton = UIButton()
+    private var commentsButtonItem = UIBarButtonItem()
     private let darkView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -58,7 +60,19 @@ final class PostViewController: UIViewController {
     }
     
     private func setup() {
-        PostConfigurator.sharedInstance.configure(viewController: self)
+        let interactor = PostInteractor()
+        let presenter = PostPresenter()
+        let router = PostRouter()
+        let worker = PostWorker()
+        
+        interactor.presenter = presenter
+        interactor.worker = worker
+        presenter.viewController = self
+        router.viewController = self
+        router.dataStore = interactor
+        
+        self.interactor = interactor
+        self.router = router
     }
     
     // MARK: - Lifecycle
@@ -182,6 +196,8 @@ final class PostViewController: UIViewController {
         guard let count = router?.dataStore?.comments.count else { return }
         let countLabelText = count == 0 ? Text.Post.comments : "\(Text.Post.comments): \(count)"
         let commentsItem = UIBarButtonItem(title: countLabelText, style: .done, target: self, action: #selector(routeToComments))
+        commentsButtonItem = commentsItem
+        commentsButtonItem.isEnabled = false
         
         let flameButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
         flameButton.addTarget(self, action: #selector(savePostToFav), for: .touchUpInside)
@@ -202,7 +218,7 @@ final class PostViewController: UIViewController {
         let array = UserDefaults.favPosts ?? []
         let isFavorite = array.contains(id ?? 00)
         setFavImage(isFavorite: isFavorite, animated: false)
-        navigationItem.rightBarButtonItems = [shareItem, favItem, commentsItem]
+        navigationItem.rightBarButtonItems = [shareItem, favItem, commentsButtonItem]
     }
     
     private func fetchPost() {
@@ -212,6 +228,10 @@ final class PostViewController: UIViewController {
     
     private func fetchPostComments() {
         interactor?.fetchPostComments(request: PostModels.PostComments.Request())
+    }
+    
+    private func fetchPostAuthor(authorId: Int) {
+        interactor?.fetchAuthorName(request: PostModels.AuthorName.Request(authorId: authorId))
     }
     
     private func scaleHeader() {
@@ -276,6 +296,7 @@ extension PostViewController: PostDisplayLogic {
     func displayPostPage(viewModel: PostModels.PostPage.ViewModel) {
         switch viewModel.error == nil {
         case true:
+            fetchPostAuthor(authorId: viewModel.authorId)
             guard let title = router?.dataStore?.title else { return }
             guard let text = router?.dataStore?.content else { return }
             postTitleLabel.text = title
@@ -298,6 +319,10 @@ extension PostViewController: PostDisplayLogic {
         } else {
             router?.showAddToFavResultAlert(with: Text.Post.removedFF)
         }
+    }
+    
+    func displayAuthorName(viewModel: PostModels.AuthorName.ViewModel) {
+        commentsButtonItem.isEnabled = true
     }
     
 }

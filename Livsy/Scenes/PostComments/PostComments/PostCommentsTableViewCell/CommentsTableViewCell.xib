@@ -44,12 +44,22 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pencil.and.outline" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="WY6-6E-fNa">
+                        <rect key="frame" x="64" y="23.5" width="20" height="20.5"/>
+                        <color key="tintColor" name="PostListText"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="frf-yU-uKm"/>
+                            <constraint firstAttribute="width" constant="20" id="unf-en-EZu"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <color key="tintColor" systemColor="systemIndigoColor"/>
                 <constraints>
+                    <constraint firstItem="WY6-6E-fNa" firstAttribute="leading" secondItem="7GL-pu-tvM" secondAttribute="trailing" constant="8" symbolic="YES" id="3AJ-hq-qhV"/>
                     <constraint firstItem="7GL-pu-tvM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="75A-LQ-Q1N"/>
                     <constraint firstItem="32n-Wv-y1J" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="D5d-WG-pnT"/>
+                    <constraint firstItem="WY6-6E-fNa" firstAttribute="centerY" secondItem="7GL-pu-tvM" secondAttribute="centerY" id="Nnk-vs-Agf"/>
                     <constraint firstItem="7GL-pu-tvM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Pg1-Kc-WzR"/>
                     <constraint firstItem="UOH-vP-0hz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="RCO-Dh-BWG"/>
                     <constraint firstAttribute="trailing" secondItem="32n-Wv-y1J" secondAttribute="trailing" constant="16" id="XHR-i9-D5D"/>
@@ -64,12 +74,14 @@
             <connections>
                 <outlet property="authorNameLabel" destination="7GL-pu-tvM" id="Vl0-jO-AJh"/>
                 <outlet property="contentLabel" destination="32n-Wv-y1J" id="k1l-e1-ZRV"/>
+                <outlet property="postAuthorImageView" destination="WY6-6E-fNa" id="0hE-Hk-aRb"/>
                 <outlet property="repliesLabel" destination="uIX-Me-eOY" id="EeT-FY-gw2"/>
             </connections>
             <point key="canvasLocation" x="-304.34782608695656" y="143.63839285714286"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="pencil.and.outline" catalog="system" width="128" height="128"/>
         <namedColor name="PostListText">
             <color red="0.12999999523162842" green="0.12999999523162842" blue="0.12999999523162842" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

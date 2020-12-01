@@ -116,7 +116,7 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
             }
             
             if error == nil && postList?.isEmpty ?? true {
-                let error = CustomError(code: "", message: "something gone wrong...", data: ErrorData(status: 0))
+                let error = CustomError(code: "", message: "something went wrong...", data: ErrorData(status: 0))
                 let response = PostListModels.FilteredPostList.Response(error: error)
                 self.presenter?.presentPostListByCategory(response: response)
             } else {

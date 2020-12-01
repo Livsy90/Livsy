@@ -12,12 +12,14 @@ protocol PostBusinessLogic {
     func fetchPostPage(request: PostModels.PostPage.Request)
     func fetchPostComments(request: PostModels.PostComments.Request)
     func savePostToFav(request: PostModels.SaveToFavorites.Request)
+    func fetchAuthorName(request: PostModels.AuthorName.Request)
 }
 
 protocol PostDataStore {
     var title: String? { get set }
     var content: String? { get set }
     var id: Int { get set }
+    var authorName: String? { get set }
     var comments: [PostComment] { get set }
     var image: UIImage { get set }
     var averageColor: UIColor { get set }
@@ -38,6 +40,7 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
     var title: String? = ""
     var content: String? = ""
     var id: Int = 1
+    var authorName: String? = ""
     var comments: [PostComment] = []
     var image = UIImage()
     var averageColor: UIColor = .blueButton
@@ -51,7 +54,7 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
             self.content = post?.content?.rendered
             self.title = post?.title?.rendered.pureString()
             self.postLink = post?.link ?? "https://livsy.me"
-            self.presenter?.presentPostPage(response: PostModels.PostPage.Response(error: error))
+            self.presenter?.presentPostPage(response: PostModels.PostPage.Response(error: error, authorId: post?.author ?? 1))
         })
     }
     
@@ -77,6 +80,14 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
             isFavorite = true
         }
         presenter?.presentPresentFavorites(response: PostModels.SaveToFavorites.Response(isFavorite: isFavorite))
+    }
+    
+    func fetchAuthorName(request: PostModels.AuthorName.Request) {
+        worker?.fetchUserInfo(id: request.authorId, completion: { [weak self] (response, error) in
+            guard let self = self else { return }
+            self.authorName = response?.name
+            self.presenter?.presentPresentAuthorName(response: PostModels.AuthorName.Response())
+        })
     }
     
 }

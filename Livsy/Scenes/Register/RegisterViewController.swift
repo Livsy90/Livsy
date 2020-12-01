@@ -91,7 +91,19 @@ final class RegisterViewController: UIViewController {
     }
     
     private func setup() {
-        RegisterConfigurator.sharedInstance.configure(viewController: self)
+        let interactor = RegisterInteractor()
+        let presenter = RegisterPresenter()
+        let router = RegisterRouter()
+        let worker = RegisterWorker()
+        
+        interactor.presenter = presenter
+        interactor.worker = worker
+        presenter.viewController = self
+        router.viewController = self
+        router.dataStore = interactor
+        
+        self.interactor = interactor
+        self.router = router
     }
     
     // MARK: - Lifecycle

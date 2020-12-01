@@ -49,10 +49,12 @@ enum ProfileModels {
 
 struct UserInfo: Codable {
     var id: Int
+    var name: String
     var avatarURLs: avatarURLs
     
     private enum CodingKeys: String, CodingKey {
         case id
+        case name
         case avatarURLs = "avatar_urls"
     }
 }

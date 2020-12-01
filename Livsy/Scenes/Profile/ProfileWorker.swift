@@ -18,7 +18,7 @@ final class ProfileWorker {
     }
     
     func fetchUserInfo(completion: @escaping (Bodies.UserInfoAPI.Response?, CustomError?) -> ()) {
-        netManager.fetchUserInfo(completion: completion)
+        netManager.fetchCurrentUserInfo(completion: completion)
     }
     
 }

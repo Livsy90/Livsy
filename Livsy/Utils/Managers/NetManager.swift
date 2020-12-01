@@ -160,7 +160,7 @@ class NetManager {
     
     func fetchPostListByTag(page: Int, id: Int, completion: @escaping (Bodies.PostListAPI.Response?, CustomError?) -> ()) {
         let page = "&page=\(page)"
-        let request = Request.RequestType.PostList.get(path: "\(API.postsByTag)\(id)")
+        let request = Request.RequestType.PostList.get(path: "\(API.postsByTag)\(id)\(page)")
         net.getData(with: request) { (data, error) in
             guard let data = data, error == nil else { return }
             do {
@@ -228,8 +228,22 @@ class NetManager {
         }
     }
     
-    func fetchUserInfo(completion: @escaping (Bodies.UserInfoAPI.Response?, CustomError?) -> ()) {
+    func fetchCurrentUserInfo(completion: @escaping (Bodies.UserInfoAPI.Response?, CustomError?) -> ()) {
         let request = Request.RequestType.UserInfo.get(path: API.currentUserInfo)
+        net.getData(with: request) { (data, error) in
+            guard let data = data, error == nil else { return }
+            do {
+                let response = try JSONDecoder().decode(Bodies.UserInfoAPI.Response.self, from: data)
+                completion(response, nil)
+            } catch {
+                guard let cusotomError = self.decodeError(data: data) else { return }
+                completion(nil, cusotomError)
+            }
+        }
+    }
+    
+    func fetchUserInfo(id: Int, completion: @escaping (Bodies.UserInfoAPI.Response?, CustomError?) -> ()) {
+        let request = Request.RequestType.UserInfo.get(path: "\(API.userInfo)\(id)")
         net.getData(with: request) { (data, error) in
             guard let data = data, error == nil else { return }
             do {

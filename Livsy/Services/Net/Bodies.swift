@@ -10,7 +10,7 @@ import UIKit
 
 struct Bodies {
     
-    enum BodyType {
+    enum BodyKind {
         case PostList
         case PostPage
         case PostComments

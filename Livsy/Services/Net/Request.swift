@@ -36,19 +36,19 @@ struct Request {
                 request.httpMethod = "GET"
             case .Login(let username, let password):
                 request.httpMethod = "POST"
-                body = Bodies.BodyType.Login(username, password).bodyData()
+                body = Bodies.BodyKind.Login(username, password).bodyData()
                 headers = Headers.Request.Login.dict()
             case .CreateComment(let content, let post, let parent):
                 request.httpMethod = "POST"
-                body = Bodies.BodyType.CreateComment(content, post, parent).bodyData()
+                body = Bodies.BodyKind.CreateComment(content, post, parent).bodyData()
                 headers = Headers.Request.CreateComment.dict()
             case .Register(let username, let email, let password):
                 request.httpMethod = "POST"
-                body = Bodies.BodyType.Register(username, email, password).bodyData()
+                body = Bodies.BodyKind.Register(username, email, password).bodyData()
                 headers = Headers.Request.Register.dict()
             case .PasswordReset(let login):
                 request.httpMethod = "POST"
-                body = Bodies.BodyType.PasswordReset(login).bodyData()
+                body = Bodies.BodyKind.PasswordReset(login).bodyData()
                 headers = Headers.Request.PasswordReset.dict()
             case .Search:
                 request.httpMethod = "GET"

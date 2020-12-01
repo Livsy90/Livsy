@@ -48,7 +48,6 @@ struct Headers {
             case .UserInfo:
                 var dictionary: [String: String] = [:]
                 dictionary[FieldName.ContentType.rawValue] = FieldValue.Json.rawValue
-                dictionary[FieldName.Authorization.rawValue] = "Bearer \(UserDefaults.standard.token ?? "")"
                 return dictionary
             }
         }

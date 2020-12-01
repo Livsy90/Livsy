@@ -13,6 +13,7 @@ class CommentsTableViewCell: UITableViewCell {
     @IBOutlet weak var authorNameLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var repliesLabel: UILabel!
+    @IBOutlet weak var postAuthorImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,13 +38,14 @@ class CommentsTableViewCell: UITableViewCell {
         return "CommentsTableViewCell"
     }
     
-    func config(comment: PostComment, isReplyButtonHidden: Bool) {
+    func config(comment: PostComment, isReplyButtonHidden: Bool, postAuthorName: String) {
         let repliesText = comment.replies.count == 1 ? Text.Comments.reply : Text.Comments.replies
         repliesLabel.text = "••• \(repliesText): \(comment.replies.count)"
         authorNameLabel.text = comment.authorName.pureString()
+        authorNameLabel.textColor = UserDefaults.standard.username != authorNameLabel.text ? .postListText : .blueButton
         contentLabel.text = comment.content?.rendered?.pureString()
         repliesLabel.isHidden = isReplyButtonHidden || comment.replies.count == 0
-        
+        postAuthorImageView.isHidden = postAuthorName != authorNameLabel.text
     }
     
 }

@@ -47,7 +47,19 @@ final class PostCommentRepliesViewController: UIViewController {
     }
     
     private func setup() {
-        PostCommentRepliesConfigurator.sharedInstance.configure(viewController: self)
+        let interactor = PostCommentRepliesInteractor()
+        let presenter = PostCommentRepliesPresenter()
+        let router = PostCommentRepliesRouter()
+        let worker = PostCommentRepliesWorker()
+        
+        interactor.presenter = presenter
+        interactor.worker = worker
+        presenter.viewController = self
+        router.viewController = self
+        router.dataStore = interactor
+        
+        self.interactor = interactor
+        self.router = router
     }
     
     // MARK: - Lifecycle
@@ -258,19 +270,20 @@ extension PostCommentRepliesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let postAuthorName = router?.dataStore?.authorName ?? ""
         guard let parentComment = router?.dataStore?.parentComment else { return UITableViewCell() }
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.reuseIdentifier(), for: indexPath) as? CommentsTableViewCell else { return UITableViewCell() }
         
         switch indexPath.section {
         case 0:
-            cell.config(comment: parentComment, isReplyButtonHidden: true)
+            cell.config(comment: parentComment, isReplyButtonHidden: true, postAuthorName: postAuthorName)
             cell.selectionStyle = .none
             return cell
         default:
             if !(router?.dataStore?.replies.isEmpty ?? true) {
                 guard let commArray = router?.dataStore?.replies else { return UITableViewCell() }
                 let comment = commArray[indexPath.row]
-                cell.config(comment: comment, isReplyButtonHidden: true)
+                cell.config(comment: comment, isReplyButtonHidden: true, postAuthorName: postAuthorName)
             }
             cell.selectionStyle = .none
             return cell

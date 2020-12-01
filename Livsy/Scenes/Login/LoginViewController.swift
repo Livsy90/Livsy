@@ -105,7 +105,19 @@ final class LoginViewController: UIViewController {
     }
     
     private func setup() {
-        LoginConfigurator.sharedInstance.configure(viewController: self)
+        let interactor = LoginInteractor()
+        let presenter = LoginPresenter()
+        let router = LoginRouter()
+        let worker = LoginWorker()
+        
+        interactor.presenter = presenter
+        interactor.worker = worker
+        presenter.viewController = self
+        router.viewController = self
+        router.dataStore = interactor
+        
+        self.interactor = interactor
+        self.router = router
     }
     
     // MARK: - Lifecycle

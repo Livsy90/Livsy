@@ -21,4 +21,8 @@ final class PostWorker {
         netManager.fetchPostComments(id: id, completion: completion)
     }
     
+    func fetchUserInfo(id: Int, completion: @escaping (Bodies.UserInfoAPI.Response?, CustomError?) -> ()) {
+        netManager.fetchUserInfo(id: id, completion: completion)
+    }
+    
 }

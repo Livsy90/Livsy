@@ -14,6 +14,7 @@ struct PostPage: Codable {
     let title: Title?
     let link: String
     let content: Content?
+    let author: Int
 }
 
 struct PostComment: Codable {
@@ -43,10 +44,12 @@ enum PostModels {
         
         struct Response {
             var error: CustomError?
+            var authorId: Int
         }
         
         struct ViewModel {
             var error: CustomError?
+            var authorId: Int
         }
     }
     
@@ -77,6 +80,19 @@ enum PostModels {
         
         struct ViewModel {
             var isFavorite: Bool
+        }
+    }
+    
+    enum AuthorName {
+        
+        struct Request {
+            var authorId: Int
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
         }
     }
     
