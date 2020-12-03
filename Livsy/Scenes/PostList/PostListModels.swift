@@ -14,6 +14,9 @@ struct Post: Codable {
     let title: Title?
     let excerpt: Excerpt?
     let imgURL: String?
+    let link: String
+    let content: Content?
+    let author: Int
     
     private enum CodingKeys: String, CodingKey {
         case id
@@ -21,6 +24,9 @@ struct Post: Codable {
         case title
         case excerpt
         case imgURL = "fimg_url"
+        case link
+        case content
+        case author
     }
 }
 
@@ -142,19 +148,16 @@ enum PostListModels {
         }
     }
     
-    enum Post {
+    enum PostPage {
         
         struct Request {
-            var url: String
-            var id: Int
+            var post: Post
         }
         
         struct Response {
-            var id: Int
         }
         
         struct ViewModel {
-            var id: Int
         }
     }
     

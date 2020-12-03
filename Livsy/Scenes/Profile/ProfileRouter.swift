@@ -12,7 +12,7 @@ protocol ProfileRoutingLogic {
     func showSignOutResultAlert()
     func showSignOutQuestionAlert(completion: @escaping (() -> Void))
     func routeToLogin()
-    func routeToPost(id: Int, url: String)
+    func routeToPost()
     func showAvatarQuestionAlert(completion: @escaping (() -> Void))
 }
 
@@ -54,10 +54,10 @@ final class ProfileRouter: ProfileRoutingLogic, ProfileDataPassing {
         destination.loginSceneDelegate = viewController
     }
     
-    func routeToPost(id: Int, url: String) {
+    func routeToPost() {
         let destinationVC = PostViewController()
         var destinationDS = destinationVC.router!.dataStore!
-        passDataToPost(postID: id, imageURL: url, source: dataStore!, destination: &destinationDS)
+        passDataToPost(source: dataStore!, destination: &destinationDS)
         navigateToPost(source: viewController!, destination: destinationVC)
     }
     
@@ -65,12 +65,9 @@ final class ProfileRouter: ProfileRoutingLogic, ProfileDataPassing {
         viewController?.navigationController?.pushViewController(destination, animated: true)
     }
     
-    func passDataToPost(postID: Int, imageURL: String, source: ProfileDataStore, destination: inout PostDataStore) {
-        destination.id = postID
-        let imageView = source.postImageView
-        imageView?.set(imageURL: imageURL)
-        destination.image = imageView?.image ?? UIImage()
-        destination.averageColor = imageView?.image?.averageColor ?? UIColor.blueButton
+    func passDataToPost(source: ProfileDataStore, destination: inout PostDataStore) {
+        destination.post = source.selectedPost
+        destination.image = source.postImageView?.image ?? UIImage()
     }
     
     func showAvatarQuestionAlert(completion: @escaping (() -> Void)) {

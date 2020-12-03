@@ -40,8 +40,8 @@ final class PostRouter: PostRoutingLogic, PostDataPassing {
     
     func passDataToPostComments(source: PostDataStore, destination: inout PostCommentsDataStore) {
         destination.commentsData = source.comments
-        destination.postID = source.id
-        destination.postTitle = source.title ?? ""
+        destination.postID = source.post.id
+        destination.postTitle = source.post.title?.rendered ?? ""
         destination.authorName = source.authorName
     }
     
@@ -58,7 +58,7 @@ final class PostRouter: PostRoutingLogic, PostDataPassing {
     }
     
     func sharePost() {
-        let linkActivityItem = NSURL(string: dataStore?.postLink ?? "")!
+        let linkActivityItem = NSURL(string: dataStore?.post.link ?? "")!
         let activityViewController = UIActivityViewController(
             activityItems: [linkActivityItem], applicationActivities: nil)
         

@@ -26,7 +26,7 @@ final class PostPresenter: PostPresentationLogic {
     // MARK: - Presentation Logic
     
     func presentPostPage(response: PostModels.PostPage.Response) {
-        viewController?.displayPostPage(viewModel: PostModels.PostPage.ViewModel(error: response.error, authorId: response.authorId))
+        viewController?.displayPostPage(viewModel: PostModels.PostPage.ViewModel())
     }
     
     func presentPostComments(response: PostModels.PostComments.Response) {

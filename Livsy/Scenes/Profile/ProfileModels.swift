@@ -45,6 +45,16 @@ enum ProfileModels {
         }
     }
     
+    enum PostPage {
+        struct Request {
+            var post: Post
+        }
+        struct Response {
+        }
+        struct ViewModel {
+        }
+    }
+    
 }
 
 struct UserInfo: Codable {

@@ -16,18 +16,15 @@ protocol PostBusinessLogic {
 }
 
 protocol PostDataStore {
-    var title: String? { get set }
-    var content: String? { get set }
-    var id: Int { get set }
     var authorName: String? { get set }
     var comments: [PostComment] { get set }
     var image: UIImage { get set }
     var averageColor: UIColor { get set }
-    var postLink: String { get set }
+    var post: Post { get set }
 }
 
 final class PostInteractor: PostBusinessLogic, PostDataStore {
-    
+
     // MARK: - Public Properties
     
     var presenter: PostPresentationLogic?
@@ -37,29 +34,21 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
     
     // MARK: - Data Store
     
-    var title: String? = ""
-    var content: String? = ""
-    var id: Int = 1
-    var authorName: String? = ""
+    var authorName: String?
     var comments: [PostComment] = []
     var image = UIImage()
     var averageColor: UIColor = .blueButton
-    var postLink: String = "https://livsy.me"
+    var post: Post = Post(id: 00, date: "", title: nil, excerpt: nil, imgURL: nil, link: "", content: nil, author: 00)
     
     // MARK: - Business Logic
     
     func fetchPostPage(request: PostModels.PostPage.Request) {
-        worker?.fetchPost(id: id, completion: { [weak self] (post, error) in
-            guard let self = self else { return }
-            self.content = post?.content?.rendered
-            self.title = post?.title?.rendered.pureString()
-            self.postLink = post?.link ?? "https://livsy.me"
-            self.presenter?.presentPostPage(response: PostModels.PostPage.Response(error: error, authorId: post?.author ?? 1))
-        })
+        averageColor = image.averageColor ?? .blueButton
+        presenter?.presentPostPage(response: PostModels.PostPage.Response())
     }
     
     func fetchPostComments(request: PostModels.PostComments.Request) {
-        worker?.fetchPostComments(id: id, completion: { [weak self] (comments, error) in
+        worker?.fetchPostComments(id: post.id, completion: { [weak self] (comments, error) in
             guard let self = self else { return }
             self.comments = comments ?? []
             self.presenter?.presentPostComments(response: PostModels.PostComments.Response())
@@ -70,12 +59,12 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
         var array = UserDefaults.favPosts ?? []
         var isFavorite = false
         
-        if array.contains(id) {
-            array = array.filter { $0 != id }
+        if array.contains(post.id) {
+            array = array.filter { $0 != post.id }
             UserDefaults.standard.set(array, forKey: "favPosts")
             isFavorite = false
         } else {
-            array.append(id)
+            array.append(post.id)
             UserDefaults.standard.set(array, forKey: "favPosts")
             isFavorite = true
         }
@@ -83,7 +72,7 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
     }
     
     func fetchAuthorName(request: PostModels.AuthorName.Request) {
-        worker?.fetchUserInfo(id: request.authorId, completion: { [weak self] (response, error) in
+        worker?.fetchUserInfo(id: post.author, completion: { [weak self] (response, error) in
             guard let self = self else { return }
             self.authorName = response?.name
             self.presenter?.presentPresentAuthorName(response: PostModels.AuthorName.Response())

@@ -16,7 +16,7 @@ protocol PostListBusinessLogic {
     func fetchFilterData(request: PostListModels.Tags.Request)
     func fetchFilteredPostList(request: PostListModels.FilteredPostList.Request)
     func fetchPageList(request: PostListModels.PageList.Request)
-    func showPost(request: PostListModels.Post.Request)
+    func showPost(request: PostListModels.PostPage.Request)
 }
 
 protocol PostListDataStore {
@@ -25,6 +25,7 @@ protocol PostListDataStore {
     var categories: [Tag] { get set }
     var pageList: [Post] { get set }
     var imageView: WebImageView { get set }
+    var selectedPost: Post { get set }
 }
 
 final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
@@ -37,6 +38,7 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
     // MARK: - Data Store
     
     var postList: [Post] = []
+    var selectedPost: Post = Post(id: 00, date: "", title: nil, excerpt: nil, imgURL: nil, link: "", content: nil, author: 00)
     var tags: [Tag] = []
     var categories: [Tag] = []
     var pageList: [Post] = []
@@ -110,7 +112,7 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
             
             guard let self = self else { return }
             if request.page != 1 && error == nil {
-                self.postList.append(contentsOf: postList ?? [Post(id: 00, date: "", title: Title(rendered: "title"), excerpt: Excerpt(rendered: "@@@", protected: true), imgURL: "")])
+                self.postList.append(contentsOf: postList ?? [Post(id: 0, date: "", title: Title(rendered: "no title"), excerpt: nil, imgURL: "", link: "", content: nil, author: 00)])
             } else if error == nil {
                 self.postList = postList ?? []
             }
@@ -135,9 +137,10 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
         })
     }
     
-    func showPost(request: PostListModels.Post.Request) {
-        imageView.set(imageURL: request.url)
-        presenter?.presentPost(response: PostListModels.Post.Response(id: request.id))
+    func showPost(request: PostListModels.PostPage.Request) {
+        imageView.set(imageURL: request.post.imgURL)
+        selectedPost = request.post
+        presenter?.presentPost(response: PostListModels.PostPage.Response())
     }
     
 }

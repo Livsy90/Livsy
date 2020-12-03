@@ -92,13 +92,14 @@ final class PostViewController: UIViewController {
         createGradientLayer()
         scrollViewSetup()
         textViewSetup()
+        fetchPostAuthor()
         fetchPost()
         setupHeader()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setFavImage(isFavorite: UserDefaults.favPosts?.contains(router?.dataStore?.id ?? 00) ?? false, animated: false)
+        setFavImage(isFavorite: UserDefaults.favPosts?.contains(router?.dataStore?.post.id ?? 00) ?? false, animated: false)
         fetchPostComments()
         setupNavBar()
     }
@@ -194,8 +195,8 @@ final class PostViewController: UIViewController {
     
     private func rightNavItemsSetup() {
         loadingCommentsIndicator.stopAnimating()
-        guard let count = router?.dataStore?.comments.count else { return }
-        guard let postAuthorName = router?.dataStore?.authorName else { return }
+        let count = router?.dataStore?.comments.count ?? 0
+        let postAuthorName = router?.dataStore?.authorName ?? ""
         let countLabelText = count == 0 ? Text.Post.comments : "\(Text.Post.comments): \(count)"
         let commentsItem = UIBarButtonItem(title: countLabelText, style: .done, target: self, action: #selector(routeToComments))
         commentsButtonItem = commentsItem
@@ -216,7 +217,7 @@ final class PostViewController: UIViewController {
         let shareItem =  UIBarButtonItem(customView: self.shareButton)
         
         
-        let id = router?.dataStore?.id
+        let id = router?.dataStore?.post.id
         let array = UserDefaults.favPosts ?? []
         let isFavorite = array.contains(id ?? 00)
         setFavImage(isFavorite: isFavorite, animated: false)
@@ -232,8 +233,8 @@ final class PostViewController: UIViewController {
         interactor?.fetchPostComments(request: PostModels.PostComments.Request())
     }
     
-    private func fetchPostAuthor(authorId: Int) {
-        interactor?.fetchAuthorName(request: PostModels.AuthorName.Request(authorId: authorId))
+    private func fetchPostAuthor() {
+        interactor?.fetchAuthorName(request: PostModels.AuthorName.Request())
     }
     
     private func scaleHeader() {
@@ -273,10 +274,17 @@ final class PostViewController: UIViewController {
             UIView.animate(withDuration: 0.20) {
                 self.postTitleLabel.alpha = 0
             }
-        default:
+        case false:
             UIView.animate(withDuration: 0.25) {
                 self.postTitleLabel.alpha = 1
             }
+        }
+    }
+    
+    private func setText(_ post: Post) {
+        DispatchQueue.main.async {
+            self.postTitleLabel.text = post.title?.rendered.pureString()
+            self.textView.setHTMLFromString(htmlText: post.content?.rendered ?? "", color: .postText)
         }
     }
     
@@ -293,21 +301,13 @@ final class PostViewController: UIViewController {
 }
 
 // MARK: - Post Display Logic
+
 extension PostViewController: PostDisplayLogic {
     
     func displayPostPage(viewModel: PostModels.PostPage.ViewModel) {
-        switch viewModel.error == nil {
-        case true:
-            fetchPostAuthor(authorId: viewModel.authorId)
-            guard let title = router?.dataStore?.title else { return }
-            guard let text = router?.dataStore?.content else { return }
-            postTitleLabel.text = title
-            textView.setHTMLFromString(htmlText: text, color: .postText)
-        default:
-            router?.showErrorAlert(with: viewModel.error?.message ?? "", completion: fetchPost)
-        }
+        guard let post = router?.dataStore?.post else { return }
+        setText(post)
         activityIndicator.hideIndicator()
-        
     }
     
     func displayPostComments(viewModel: PostModels.PostComments.ViewModel) {

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol PostListRoutingLogic {
-    func routeToPost(id: Int)
+    func routeToPost()
     func routeToLogin()
     func showSignOutResultAlert()
     func showSignOutQuestionAlert(completion: @escaping (() -> Void))
@@ -30,10 +30,10 @@ final class PostListRouter: PostListRoutingLogic, PostListDataPassing {
     weak var viewController: PostListViewController?
     var dataStore: PostListDataStore?
         
-    func routeToPost(id: Int) {
+    func routeToPost() {
         let destinationVC = PostViewController()
         var destinationDS = destinationVC.router!.dataStore!
-        passDataToPost(postID: id, source: dataStore!, destination: &destinationDS)
+        passDataToPost(source: dataStore!, destination: &destinationDS)
         navigateToPost(source: viewController!, destination: destinationVC)
     }
     
@@ -41,10 +41,9 @@ final class PostListRouter: PostListRoutingLogic, PostListDataPassing {
         viewController?.navigationController?.pushViewController(destination, animated: true)
     }
     
-    func passDataToPost(postID: Int, source: PostListDataStore, destination: inout PostDataStore) {
-        destination.id = postID
+    func passDataToPost(source: PostListDataStore, destination: inout PostDataStore) {
         destination.image = source.imageView.image ?? UIImage()
-        destination.averageColor = source.imageView.image?.averageColor ?? UIColor.blueButton
+        destination.post = source.selectedPost
     }
     
     func routeToLogin() {

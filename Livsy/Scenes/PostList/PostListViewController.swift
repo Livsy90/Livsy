@@ -15,7 +15,7 @@ protocol PostListDisplayLogic: class {
     func displayTags(viewModel: PostListModels.Tags.ViewModel)
     func displayPostListByCategory(viewModel: PostListModels.FilteredPostList.ViewModel)
     func displayPageList(viewModel: PostListModels.PageList.ViewModel)
-    func displayPost(viewModel: PostListModels.Post.ViewModel)
+    func displayPost(viewModel: PostListModels.PostPage.ViewModel)
 }
 
 final class PostListViewController: UIViewController {
@@ -122,9 +122,9 @@ final class PostListViewController: UIViewController {
         postCollectionView.footerView.startAnimating()
         postCollectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
-        postCollectionView.fetchIdCompletion = { [weak self] (id, url) in
+        postCollectionView.fetchPostCompletion = { [weak self] (post) in
             guard let self = self else { return }
-            self.showPost(url: url, id: id)
+            self.showPost(post)
         }
         
         postCollectionView.loadMoreCompletion = { [weak self] isLoadMore in
@@ -203,7 +203,11 @@ final class PostListViewController: UIViewController {
     }
     
     private func showPost(url: String, id: Int) {
-        interactor?.showPost(request: PostListModels.Post.Request(url: url, id: id))
+        
+    }
+    
+    private func showPost(_ post: Post) {
+        interactor?.showPost(request: PostListModels.PostPage.Request(post: post))
     }
     
     private func setupRefreshControl() {
@@ -340,8 +344,8 @@ extension PostListViewController: PostListDisplayLogic {
         
     }
     
-    func displayPost(viewModel: PostListModels.Post.ViewModel) {
-        router?.routeToPost(id: viewModel.id)
+    func displayPost(viewModel: PostListModels.PostPage.ViewModel) {
+        router?.routeToPost()
     }
     
 }

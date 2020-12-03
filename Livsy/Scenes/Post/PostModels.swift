@@ -43,13 +43,9 @@ enum PostModels {
         }
         
         struct Response {
-            var error: CustomError?
-            var authorId: Int
         }
         
         struct ViewModel {
-            var error: CustomError?
-            var authorId: Int
         }
     }
     
@@ -86,7 +82,6 @@ enum PostModels {
     enum AuthorName {
         
         struct Request {
-            var authorId: Int
         }
         
         struct Response {

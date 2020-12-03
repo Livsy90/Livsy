@@ -13,6 +13,7 @@ protocol ProfileBusinessLogic {
     func showFavPosts(request: ProfileModels.FavoritePosts.Request)
     func removePost(request: ProfileModels.PostToRemove.Request)
     func getAvatar(request: ProfileModels.Avatar.Request)
+    func showPost(request: ProfileModels.PostPage.Request)
 }
 
 protocol ProfileDataStore {
@@ -20,6 +21,7 @@ protocol ProfileDataStore {
     var postImageView: WebImageView? { get set }
     var avatar: WebImageView? { get set }
     var url: String { get set }
+    var selectedPost: Post { get set }
 }
 
 final class ProfileInteractor: ProfileBusinessLogic, ProfileDataStore {
@@ -37,6 +39,7 @@ final class ProfileInteractor: ProfileBusinessLogic, ProfileDataStore {
     var postImageView: WebImageView? = WebImageView()
     var avatar: WebImageView? = WebImageView()
     var url: String = ""
+    var selectedPost: Post = Post(id: 0, date: "", title: nil, excerpt: nil, imgURL: nil, link: "", content: nil, author: 00)
     
     // MARK: - Business Logic
     
@@ -79,6 +82,12 @@ final class ProfileInteractor: ProfileBusinessLogic, ProfileDataStore {
             self.avatar?.set(imageURL: response?.avatarURLs.large.getSecureGravatar())
             self.presenter?.presentAvatar(response: ProfileModels.Avatar.Response())
         })
+    }
+    
+    func showPost(request: ProfileModels.PostPage.Request) {
+        selectedPost = request.post
+        postImageView?.set(imageURL: request.post.imgURL)
+        presenter?.presentPost(response: ProfileModels.PostPage.Response())
     }
     
 }

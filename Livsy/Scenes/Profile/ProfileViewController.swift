@@ -14,6 +14,7 @@ protocol ProfileDisplayLogic: class {
     func displayFavPosts(viewModel: ProfileModels.FavoritePosts.ViewModel)
     func displayPostRemoval(viewModel: ProfileModels.PostToRemove.ViewModel)
     func displayAvatar(viewModel: ProfileModels.Avatar.ViewModel)
+    func displayPost(viewModel: ProfileModels.PostPage.ViewModel)
 }
 
 final class ProfileViewController: UIViewController {
@@ -125,7 +126,7 @@ final class ProfileViewController: UIViewController {
     }
     
     private func routeToPost(id: Int, url: String) {
-        router?.routeToPost(id: id, url: url)
+        
     }
     
     private func getAppVersion() -> String {
@@ -177,7 +178,7 @@ final class ProfileViewController: UIViewController {
 // MARK: - Profile Display Logic
 
 extension ProfileViewController: ProfileDisplayLogic {
-    
+        
     func displaySignOut() {
         router?.showSignOutResultAlert()
         tableView.reloadWithAnimation()
@@ -198,6 +199,11 @@ extension ProfileViewController: ProfileDisplayLogic {
         activityIndicator.hideIndicator()
     }
     
+    func displayPost(viewModel: ProfileModels.PostPage.ViewModel) {
+        router?.routeToPost()
+    }
+    
+    
 }
 
 extension ProfileViewController: LoginSceneDelegate {
@@ -215,11 +221,11 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let posts = router?.dataStore?.favoritePosts ?? []
         tableView.deselectRow(at: indexPath, animated: true)
         
         if indexPath.section == 1 {
-            routeToPost(id: posts[indexPath.row].id, url: posts[indexPath.row].imgURL ?? "")
+            let posts = router?.dataStore?.favoritePosts ?? []
+            interactor?.showPost(request: ProfileModels.PostPage.Request(post: posts[indexPath.row]))
         }
     }
     
@@ -283,7 +289,7 @@ extension ProfileViewController: UITableViewDataSource {
                 self.interactor?.removePost(request: ProfileModels.PostToRemove.Request(indexPath: indexPath))
                 completionHandler(true)
             }
-            deleteAction.image = UIImage(systemName: "trash.circle.fill")
+            deleteAction.image = UIImage(systemName: "xmark.circle.fill")
             deleteAction.backgroundColor = .systemRed
             return UISwipeActionsConfiguration(actions: [deleteAction])
         }
@@ -292,11 +298,11 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let name = UserDefaults.standard.username else { return UITableViewCell() }
         
-        var post = Post(id: 0, date: "", title: Title(rendered: "no title"), excerpt: nil, imgURL: "")
+        var post = Post(id: 0, date: "", title: Title(rendered: "no title"), excerpt: nil, imgURL: "", link: "", content: nil, author: 00)
         
         let posts = router?.dataStore?.favoritePosts
         if posts?.count ?? 0 > 0 {
-            post = posts?[indexPath.row] ?? Post(id: 0, date: "", title: Title(rendered: "no title"), excerpt: nil, imgURL: "")
+            post = posts?[indexPath.row] ?? post
         }
         
         guard let commentCell = tableView.dequeueReusableCell(withIdentifier: "favCellId", for: indexPath) as? FavPostsCell else { return UITableViewCell() }

@@ -13,6 +13,7 @@ protocol ProfilePresentationLogic {
     func presentFavPosts(response: ProfileModels.FavoritePosts.Response)
     func presentRemovedPost(response: ProfileModels.PostToRemove.Response)
     func presentAvatar(response: ProfileModels.Avatar.Response)
+    func presentPost(response: ProfileModels.PostPage.Response)
 }
 
 final class ProfilePresenter: ProfilePresentationLogic {
@@ -40,4 +41,7 @@ final class ProfilePresenter: ProfilePresentationLogic {
         viewController?.displayAvatar(viewModel: ProfileModels.Avatar.ViewModel())
     }
     
+    func presentPost(response: ProfileModels.PostPage.Response) {
+        viewController?.displayPost(viewModel: ProfileModels.PostPage.ViewModel())
+    }
 }

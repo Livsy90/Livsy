@@ -15,7 +15,7 @@ protocol PostListPresentationLogic {
     func presentTags(response: PostListModels.Tags.Response)
     func presentPostListByCategory(response: PostListModels.FilteredPostList.Response)
     func presentPageList(response: PostListModels.PageList.Response)
-    func presentPost(response: PostListModels.Post.Response)
+    func presentPost(response: PostListModels.PostPage.Response)
 }
 
 final class PostListPresenter: PostListPresentationLogic {
@@ -52,8 +52,8 @@ final class PostListPresenter: PostListPresentationLogic {
         viewController?.displayPageList(viewModel: PostListModels.PageList.ViewModel())
     }
     
-    func presentPost(response: PostListModels.Post.Response) {
-        viewController?.displayPost(viewModel: PostListModels.Post.ViewModel(id: response.id))
+    func presentPost(response: PostListModels.PostPage.Response) {
+        viewController?.displayPost(viewModel: PostListModels.PostPage.ViewModel())
     }
     
 }
