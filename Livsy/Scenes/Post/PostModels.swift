@@ -91,6 +91,17 @@ enum PostModels {
         }
     }
     
+    enum Color {
+        
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
 }
 
 

@@ -13,6 +13,7 @@ protocol PostPresentationLogic {
     func presentPostComments(response: PostModels.PostComments.Response)
     func presentPresentFavorites(response: PostModels.SaveToFavorites.Response)
     func presentPresentAuthorName(response: PostModels.AuthorName.Response)
+    func presentUI(response: PostModels.Color.Response)
 }
 
 final class PostPresenter: PostPresentationLogic {
@@ -39,5 +40,9 @@ final class PostPresenter: PostPresentationLogic {
     
     func presentPresentAuthorName(response: PostModels.AuthorName.Response) {
         viewController?.displayAuthorName(viewModel: PostModels.AuthorName.ViewModel())
+    }
+    
+    func presentUI(response: PostModels.Color.Response) {
+        viewController?.displayUI(viewModel: PostModels.Color.ViewModel())
     }
 }

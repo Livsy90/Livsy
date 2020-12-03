@@ -13,6 +13,7 @@ protocol PostDisplayLogic: class {
     func displayPostComments(viewModel: PostModels.PostComments.ViewModel)
     func displayFavorites(viewModel: PostModels.SaveToFavorites.ViewModel)
     func displayAuthorName(viewModel: PostModels.AuthorName.ViewModel)
+    func displayUI(viewModel: PostModels.Color.ViewModel)
 }
 
 final class PostViewController: UIViewController {
@@ -88,13 +89,7 @@ final class PostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .postBackground
-        showActivityIndicatorOnNavBarItem()
-        createGradientLayer()
-        scrollViewSetup()
-        textViewSetup()
-        fetchPostAuthor()
-        fetchPost()
-        setupHeader()
+        setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -124,6 +119,10 @@ final class PostViewController: UIViewController {
         postTitleLabel.font = UIFont.systemFont(ofSize: 26)
         postTitleLabel.clipsToBounds = true
         imageView.addSubview(postTitleLabel)
+    }
+    
+    private func setupUI() {
+        interactor?.getAverageColor(request: PostModels.Color.Request())
     }
     
     private func setupNavBar() {
@@ -325,6 +324,16 @@ extension PostViewController: PostDisplayLogic {
     
     func displayAuthorName(viewModel: PostModels.AuthorName.ViewModel) {
         commentsButtonItem.isEnabled = true
+    }
+    
+    func displayUI(viewModel: PostModels.Color.ViewModel) {
+        createGradientLayer()
+        showActivityIndicatorOnNavBarItem()
+        scrollViewSetup()
+        textViewSetup()
+        fetchPostAuthor()
+        fetchPost()
+        setupHeader()
     }
     
 }
