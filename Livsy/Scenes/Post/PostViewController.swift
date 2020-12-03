@@ -182,6 +182,7 @@ final class PostViewController: UIViewController {
         textView.font = UIFont.preferredFont(forTextStyle: .body)
         textView.textColor = .commentBody
         textView.textAlignment = .left
+        textView.tintColor = router?.dataStore?.averageColor ?? .blue
     }
     
     private func showActivityIndicatorOnNavBarItem() {
@@ -267,9 +268,9 @@ final class PostViewController: UIViewController {
     }
     
     private func setAlphaForNB(scrollView: UIScrollView) {
-        switch scrollView.contentOffset.y > 0 - (self.topbarHeight + 55) {
+        switch scrollView.contentOffset.y > 0 - (self.topbarHeight + 60) {
         case true:
-            UIView.animate(withDuration: 0.25) {
+            UIView.animate(withDuration: 0.20) {
                 self.postTitleLabel.alpha = 0
             }
         default:

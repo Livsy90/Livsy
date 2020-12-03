@@ -35,8 +35,6 @@ class CommentInputAccessoryView: UIView {
         tv.backgroundColor = .inputTextView
         tv.textColor = .postText
         tv.tintColor = UIColor.init(named: "NavBarTint")
-        //tv.layer.borderWidth = 1
-        //tv.layer.borderColor = #colorLiteral(red: 0.5741485357, green: 0.5741624236, blue: 0.574154973, alpha: 1)
         tv.isScrollEnabled = false
         tv.font = UIFont.systemFont(ofSize: 18)
         tv.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
@@ -45,11 +43,8 @@ class CommentInputAccessoryView: UIView {
     
     private let submitButton: UIButton = {
         let sb = UIButton(type: .system)
-       // sb.setTitle("Submit", for: .normal)
         sb.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
         sb.setImage(UIImage(systemName: "zzz"), for: .disabled)
-       // sb.setTitleColor(UIColor.init(named: "PostText"), for: .normal)
-       // sb.setTitleColor(.gray, for: .disabled)
         sb.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         sb.addTarget(self, action: #selector(handleSubmit), for: .touchUpInside)
         sb.isEnabled = false

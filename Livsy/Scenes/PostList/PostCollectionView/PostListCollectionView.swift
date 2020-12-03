@@ -83,27 +83,20 @@ class PostListCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        
         let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { action in
-            
-            
             let id = self.cells[indexPath.row].id
             var array = UserDefaults.favPosts ?? []
-            var action = UIAction(title: "", image: UIImage(systemName: "flame")) {_ in
-                {}()
-            }
+            var action = UIAction(title: "", image: UIImage(systemName: "flame")) {_ in }
             
             switch array.contains(id) {
             case true:
-                
-                action = UIAction(title: Text.Post.removFF, image: UIImage(systemName: "xmark.circle.fill")) {_ in
+                action = UIAction(title: Text.Post.removeFF, image: UIImage(systemName: "xmark.circle.fill")) {_ in
                     array = array.filter { $0 != id }
                     UserDefaults.standard.set(array, forKey: "favPosts")
                     self.reloadItems(at: [indexPath])
                 }
                 
             case false:
-                
                 action = UIAction(title: Text.Post.addTF, image: UIImage(systemName: "flame.fill")) {_ in
                     array.append(id)
                     UserDefaults.standard.set(array, forKey: "favPosts")

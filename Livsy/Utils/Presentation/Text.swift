@@ -33,12 +33,13 @@ enum Text {
         static let addedTF = NSLocalizedString("Added to favorites", comment: "")
         static let addTF = NSLocalizedString("Add to favorites", comment: "")
         static let removedFF = NSLocalizedString("Removed from favorites", comment: "")
-        static let removFF = NSLocalizedString("Remove from favorites", comment: "")
+        static let removeFF = NSLocalizedString("Remove from favorites", comment: "")
         
     }
     
     enum Comments {
-        
+        static let enterComment = NSLocalizedString("Enter comment", comment: "")
+        static let answer = NSLocalizedString("Answer", comment: "")
         static let beTheFirst = NSLocalizedString("Be the first", comment: "")
         static let loginToReply = NSLocalizedString("Login to reply", comment: "")
         static let reply = NSLocalizedString("reply", comment: "")

@@ -15,7 +15,7 @@ class CommentInputTextView: UITextView, UITextViewDelegate {
     
     private let placeholderLabel: UILabel = {
         let label = UILabel()
-        label.text = "Enter Comment"
+        label.text = Text.Comments.enterComment
         label.textColor = .lightGray
         return label
     }()
