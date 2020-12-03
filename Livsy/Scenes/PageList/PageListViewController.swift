@@ -61,7 +61,7 @@ final class PageListViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func viewWillLayoutSubviews() {
-        preferredContentSize = CGSize(width: 180, height: tableView.contentSize.height)
+        preferredContentSize = CGSize(width: 300, height: tableView.contentSize.height)
     }
     
     override func viewDidLoad() {
@@ -131,6 +131,7 @@ extension PageListViewController: UITableViewDataSource {
         cell.textLabel?.text = tags[indexPath.row].title?.rendered.pureString()
         cell.separatorInset = .zero
         cell.backgroundColor = .clear
+        cell.textLabel?.textAlignment = .center
         return cell
     }
     

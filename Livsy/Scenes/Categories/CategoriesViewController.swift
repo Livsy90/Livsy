@@ -61,7 +61,7 @@ final class CategoriesViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func viewWillLayoutSubviews() {
-        preferredContentSize = CGSize(width: 180, height: tableView.contentSize.height)
+        preferredContentSize = CGSize(width: 200, height: tableView.contentSize.height)
     }
     
     override func viewDidLoad() {
@@ -131,6 +131,7 @@ extension CategoriesViewController: UITableViewDataSource {
         cell.textLabel?.text = tags[indexPath.row].name
         cell.separatorInset = .zero
         cell.backgroundColor = .clear
+        cell.textLabel?.textAlignment = .center
         return cell
     }
     

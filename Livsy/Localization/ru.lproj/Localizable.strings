@@ -124,6 +124,12 @@
 "Tags" = "Тэги";
 
 /* No comment provided by engineer. */
+"Add to favorites" = "Добавить в избранное";
+
+/* No comment provided by engineer. */
+"Remove from favorites" = "Удалить из избранного";
+
+/* No comment provided by engineer. */
 "Login or email" = "Логин или email";
 
 /* No comment provided by engineer. */

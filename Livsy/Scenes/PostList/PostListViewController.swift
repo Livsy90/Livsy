@@ -109,6 +109,7 @@ final class PostListViewController: UIViewController {
         super.viewWillAppear(animated)
         setNeedsStatusBarAppearanceUpdate()
         setupNavBar()
+        postCollectionView.reloadData()
         fetchPageList()
         fetchFilterList(isTags: true)
         fetchFilterList(isTags: false)

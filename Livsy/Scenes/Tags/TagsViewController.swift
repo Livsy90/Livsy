@@ -61,7 +61,7 @@ final class TagsViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func viewWillLayoutSubviews() {
-        preferredContentSize = CGSize(width: 180, height: tableView.contentSize.height)
+        preferredContentSize = CGSize(width: 300, height: tableView.contentSize.height)
     }
     
     override func viewDidLoad() {
@@ -136,6 +136,7 @@ extension TagsViewController: UITableViewDataSource {
         cell.textLabel?.text = tags[indexPath.row].name
         cell.backgroundColor = .clear
         cell.separatorInset = .zero
+        cell.textLabel?.textAlignment = .center
         return cell
     }
     

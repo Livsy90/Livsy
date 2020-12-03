@@ -46,6 +46,14 @@ class PostListCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    let favImageView: UIImageView = {
+        let image = UIImage(systemName: "flame.fill")
+        let imageView = UIImageView()
+        imageView.image = image ?? UIImage()
+        imageView.tintColor = .systemRed
+        return imageView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -58,7 +66,7 @@ class PostListCollectionViewCell: UICollectionViewCell {
         self.clipsToBounds = false
         DispatchQueue.main.async {
             self.mainImageView.layer.masksToBounds = true
-            self.mainImageView.layer.cornerRadius = 15
+            self.mainImageView.layer.cornerRadius = 13
             self.mainImageView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         }
     }
@@ -71,11 +79,18 @@ class PostListCollectionViewCell: UICollectionViewCell {
         mainImageView.set(imageURL: imageUrl)
     }
     
+    func setVisibilityOfFavoriteImageView(posts: [Post], index: Int) {
+        let id = posts[index].id
+        let array = UserDefaults.favPosts ?? []
+        favImageView.isHidden = !array.contains(id)
+    }
+    
     private func setup() {
         addSubview(smallDescriptionLabel)
         addSubview(mainImageView)
         mainImageView.addSubview(darkView)
         mainImageView.addSubview(nameLabel)
+        mainImageView.addSubview(favImageView)
         nameLabel.centerXAnchor.constraint(equalTo: mainImageView.centerXAnchor).isActive = true
         nameLabel.centerYAnchor.constraint(equalTo: mainImageView.centerYAnchor).isActive = true
         nameLabel.widthAnchor.constraint(equalTo: mainImageView.widthAnchor, constant: -16).isActive = true
@@ -83,6 +98,7 @@ class PostListCollectionViewCell: UICollectionViewCell {
         darkView.centerYAnchor.constraint(equalTo: mainImageView.centerYAnchor).isActive = true
         darkView.widthAnchor.constraint(equalTo: mainImageView.widthAnchor).isActive = true
         darkView.heightAnchor.constraint(equalTo: mainImageView.heightAnchor).isActive = true
+        favImageView.anchor(top: mainImageView.topAnchor, left: nil, bottom: nil, right: mainImageView.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 10, width: 0, height: 0)
         mainImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: Constants.postListImageHeight)
         smallDescriptionLabel.anchor(top: mainImageView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 16, paddingBottom: 5, paddingRight: 16, width: 0, height: 0)
         mainImageView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
