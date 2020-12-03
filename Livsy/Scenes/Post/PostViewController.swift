@@ -183,6 +183,7 @@ final class PostViewController: UIViewController {
         textView.textColor = .commentBody
         textView.textAlignment = .left
         textView.tintColor = router?.dataStore?.averageColor ?? .blue
+        textView.alpha = 0
     }
     
     private func showActivityIndicatorOnNavBarItem() {
@@ -280,10 +281,14 @@ final class PostViewController: UIViewController {
         }
     }
     
-    private func setText(_ post: Post) {
+    private func setText(_ post: Post, _ completionBlock: @escaping () -> Void) {
         DispatchQueue.main.async {
             self.postTitleLabel.text = post.title?.rendered.pureString()
             self.textView.setHTMLFromString(htmlText: post.content?.rendered ?? "", color: .postText)
+            UIView.animate(withDuration: 0.35) {
+                self.textView.alpha = 1
+            }
+            completionBlock()
         }
     }
     
@@ -305,8 +310,7 @@ extension PostViewController: PostDisplayLogic {
     
     func displayPostPage(viewModel: PostModels.PostPage.ViewModel) {
         guard let post = router?.dataStore?.post else { return }
-        setText(post)
-        activityIndicator.hideIndicator()
+        setText(post) { self.activityIndicator.hideIndicator() }
     }
     
     func displayPostComments(viewModel: PostModels.PostComments.ViewModel) {

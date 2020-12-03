@@ -244,6 +244,15 @@ final class PostListViewController: UIViewController {
         interactor?.signOut()
     }
     
+    private func showPostList(_ posts: [Post], _ completionBlock: @escaping () -> Void) {
+        postCollectionView.set(cells: posts)
+        postCollectionView.softReload()
+        refreshControl.endRefreshing()
+        postCollectionView.footerView.stopAnimating()
+        nothingFoundImageView.isHidden = !posts.isEmpty
+        completionBlock()
+    }
+    
     @objc private func refreshData() {
         activityIndicator.showIndicator(on: self)
         page = 0
@@ -297,14 +306,11 @@ extension PostListViewController: PostListDisplayLogic {
     
     func displayPostList(viewModel: PostListModels.PostList.ViewModel) {
         guard let posts = router?.dataStore?.postList else { return }
-        postCollectionView.isStopRefreshing = viewModel.isStopRereshing
-        postCollectionView.set(cells: posts)
-        postCollectionView.softReload()
-        refreshControl.endRefreshing()
-        postCollectionView.footerView.stopAnimating()
-        nothingFoundImageView.isHidden = !posts.isEmpty
-        activityIndicator.hideIndicator()
-        navigationController?.navigationBar.isUserInteractionEnabled = true
+        showPostList(posts) {
+            self.postCollectionView.isStopRefreshing = viewModel.isStopRereshing
+            self.activityIndicator.hideIndicator()
+            self.navigationController?.navigationBar.isUserInteractionEnabled = true
+        }
     }
     
     func displayToken(viewModel: PostListModels.Login.ViewModel) {
@@ -321,13 +327,10 @@ extension PostListViewController: PostListDisplayLogic {
     
     func displayPostListByCategory(viewModel: PostListModels.FilteredPostList.ViewModel) {
         guard let posts = router?.dataStore?.postList else { return }
-        postCollectionView.isStopRefreshing = viewModel.isStopRereshing
-        postCollectionView.set(cells: posts)
-        postCollectionView.softReload()
-        refreshControl.endRefreshing()
-        postCollectionView.footerView.stopAnimating()
-        nothingFoundImageView.isHidden = !posts.isEmpty
-        activityIndicator.hideIndicator()
+        showPostList(posts) {
+            self.activityIndicator.hideIndicator()
+            self.postCollectionView.isStopRefreshing = viewModel.isStopRereshing
+        }
         
         if byCategory || byTag {
             UIView.animate(withDuration: 0.2, animations: {
