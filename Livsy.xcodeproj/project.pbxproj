@@ -441,17 +441,12 @@
 		C2386F7B249DF6EB0076AED3 /* Livsy */ = {
 			isa = PBXGroup;
 			children = (
+				C28264B8257A1F6400B443F2 /* AppCommon */,
 				C20EDF80257678BC006D03E1 /* Localization */,
 				C2D53D4D2542E71B00C13AD0 /* API Models */,
 				C2278E79249E2F9800D9D582 /* Utils */,
 				C2386F9F249E099F0076AED3 /* Scenes */,
 				C2386F90249DF73A0076AED3 /* Services */,
-				C2386F7C249DF6EB0076AED3 /* AppDelegate.swift */,
-				C2386F7E249DF6EB0076AED3 /* SceneDelegate.swift */,
-				C2386F80249DF6EB0076AED3 /* ViewController.swift */,
-				C2386F82249DF6EB0076AED3 /* Main.storyboard */,
-				C2386F85249DF6EC0076AED3 /* Assets.xcassets */,
-				C2386F87249DF6EC0076AED3 /* LaunchScreen.storyboard */,
 				C2386F8A249DF6EC0076AED3 /* Info.plist */,
 			);
 			path = Livsy;
@@ -585,6 +580,19 @@
 				C2D6691F24A3C3E600F6731F /* PostViewController.swift */,
 			);
 			path = Post;
+			sourceTree = "<group>";
+		};
+		C28264B8257A1F6400B443F2 /* AppCommon */ = {
+			isa = PBXGroup;
+			children = (
+				C2386F85249DF6EC0076AED3 /* Assets.xcassets */,
+				C2386F87249DF6EC0076AED3 /* LaunchScreen.storyboard */,
+				C2386F7C249DF6EB0076AED3 /* AppDelegate.swift */,
+				C2386F7E249DF6EB0076AED3 /* SceneDelegate.swift */,
+				C2386F80249DF6EB0076AED3 /* ViewController.swift */,
+				C2386F82249DF6EB0076AED3 /* Main.storyboard */,
+			);
+			path = AppCommon;
 			sourceTree = "<group>";
 		};
 		C2A5B9E924B364A9004BE928 /* CommentInput */ = {

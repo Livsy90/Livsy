@@ -158,7 +158,7 @@ final class PostViewController: UIViewController {
     private func setupProgressView() {
         view.addSubview(progressView)
         
-        progressView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: self.topbarHeight - 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 5)
+        progressView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: self.topbarHeight - 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 4)
         let color = router?.dataStore?.averageColor ?? .blueButton
         progressView.progressTintColor = color
     }
@@ -239,7 +239,7 @@ final class PostViewController: UIViewController {
     
     private func scaleHeader() {
         let y = 300 - (scrollView.contentOffset.y + 300)
-        let height = min(max(y, self.topbarHeight), 400)
+        let height = min(max(y, self.topbarHeight + 3), 400)
         imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height)
         darkView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height)
         postTitleLabel.frame = CGRect(x: 20, y: height - 100, width: UIScreen.main.bounds.size.width - 40, height: 100)
