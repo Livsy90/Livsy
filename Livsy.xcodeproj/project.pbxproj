@@ -411,7 +411,7 @@
 		C234943B254C791600E26ADC /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				C239A710254DAAF1000E7358 /* MainProfileCell */,
+				C239A710254DAAF1000E7358 /* ProfileCells */,
 				C234943D254C793100E26ADC /* ProfilePresenter.swift */,
 				C234943E254C793100E26ADC /* ProfileWorker.swift */,
 				C234943F254C793100E26ADC /* ProfileRouter.swift */,
@@ -475,29 +475,29 @@
 		C2386F9F249E099F0076AED3 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				C2349438254C331800E26ADC /* MainTabBarController */,
+				C2278E7F249E611E00D9D582 /* PostList */,
+				C2765B9424A11EE2008888B0 /* Post */,
+				C268CDA824A928ED00949C4D /* PostComments */,
 				C2D2ABD6257112B600388FE3 /* Page */,
 				C2589C1F256FD0CD00F727FD /* PageList */,
 				C20974B52561372700485464 /* Categories */,
 				C24CA07E25604CE3003B6521 /* Tags */,
 				C234943B254C791600E26ADC /* Profile */,
-				C2349438254C331800E26ADC /* MainTabBarController */,
 				C2E3443E25373046000D07F2 /* Register */,
-				C218FCEB251B5A32002F9C68 /* Splash */,
 				C2345BF424B4F15700125976 /* Login */,
-				C268CDA824A928ED00949C4D /* PostComments */,
-				C2765B9424A11EE2008888B0 /* Post */,
-				C2278E7F249E611E00D9D582 /* PostList */,
+				C218FCEB251B5A32002F9C68 /* Splash */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
 		};
-		C239A710254DAAF1000E7358 /* MainProfileCell */ = {
+		C239A710254DAAF1000E7358 /* ProfileCells */ = {
 			isa = PBXGroup;
 			children = (
 				C239A711254DAC2E000E7358 /* MainProfileCell.swift */,
 				C22FFB992559716400416C15 /* FavPostsCell.swift */,
 			);
-			path = MainProfileCell;
+			path = ProfileCells;
 			sourceTree = "<group>";
 		};
 		C23B0AE625275F0800E7FBA4 /* PostCommentsTableViewCell */ = {

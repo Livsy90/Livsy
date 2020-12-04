@@ -43,6 +43,7 @@ final class PostRouter: PostRoutingLogic, PostDataPassing {
         destination.postID = source.post.id
         destination.postTitle = source.post.title?.rendered ?? ""
         destination.authorName = source.authorName
+        destination.image = source.image
     }
     
     func showAddToFavResultAlert(with text: String) {

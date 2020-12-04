@@ -305,8 +305,9 @@ extension ProfileViewController: UITableViewDataSource {
             post = posts?[indexPath.row] ?? post
         }
         
-        guard let commentCell = tableView.dequeueReusableCell(withIdentifier: "favCellId", for: indexPath) as? FavPostsCell else { return UITableViewCell() }
-        commentCell.config(post: post)
+        guard let favCell = tableView.dequeueReusableCell(withIdentifier: "favCellId", for: indexPath) as? FavPostsCell else { return UITableViewCell() }
+        favCell.config(post: post)
+        favCell.separatorInset = UIEdgeInsets(top: 0, left: 50, bottom: 0, right: 50)
         
         guard let mainCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as? MainProfileCell else { return UITableViewCell() }
         
@@ -323,7 +324,7 @@ extension ProfileViewController: UITableViewDataSource {
         case 0:
             return mainCell
         default:
-            return commentCell
+            return favCell
         }
     }
     

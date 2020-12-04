@@ -6,7 +6,7 @@
 //  Copyright © 2020 Artem Mirzabekian. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol PostCommentRepliesBusinessLogic {
     func showReplies(request: PostCommentRepliesModels.PostCommentReplies.Request)
@@ -18,6 +18,7 @@ protocol PostCommentRepliesDataStore {
     var parentComment: PostComment { get set }
     var postID: Int { get set }
     var authorName: String? { get set }
+    var image: UIImage { get set }
 }
 
 final class PostCommentRepliesInteractor: PostCommentRepliesBusinessLogic, PostCommentRepliesDataStore {
@@ -35,6 +36,7 @@ final class PostCommentRepliesInteractor: PostCommentRepliesBusinessLogic, PostC
     var parentComment: PostComment = PostComment(id: 00, parent: 00, authorName: "")
     var postID: Int = 0
     var authorName: String? = ""
+    var image: UIImage = UIImage()
     
     // MARK: - Business Logic
     

@@ -42,6 +42,7 @@ final class PostCommentsRouter: PostCommentsRoutingLogic, PostCommentsDataPassin
         destination.postID = source.postID
         destination.parentComment = source.parentComment
         destination.authorName = source.authorName
+        destination.image = source.image
     }
     
     func routeToLogin() {

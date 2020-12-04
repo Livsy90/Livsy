@@ -27,7 +27,7 @@ class MainProfileCell: UITableViewCell {
         label.textAlignment = .left
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         label.textColor = .authorName
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isHidden = hasToken
@@ -49,7 +49,7 @@ class MainProfileCell: UITableViewCell {
         label.textAlignment = .left
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 4
-        label.font = UIFont.systemFont(ofSize: 35, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         label.textColor = .titleGray
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = UserDefaults.standard.username
@@ -59,7 +59,7 @@ class MainProfileCell: UITableViewCell {
     private let stackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .vertical
-        sv.spacing = 20
+        sv.spacing = 16
         sv.distribution = .fill
         return sv
     }()

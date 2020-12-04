@@ -161,9 +161,10 @@ final class PostViewController: UIViewController {
         gradientLayer.frame = self.view.bounds
         guard let color = router?.dataStore?.averageColor else { return }
         let cgColor1 = color.cgColor
-        let cgColor2 = color.withAlphaComponent(0.3).cgColor
-        let cgColor3 = color.withAlphaComponent(0.1).cgColor
-        gradientLayer.colors = [cgColor1, cgColor2, cgColor3, cgColor3, cgColor2]
+        let cgColor2 = color.withAlphaComponent(0.7).cgColor
+        let cgColor3 = color.withAlphaComponent(0.3).cgColor
+        let cgColor4 = color.withAlphaComponent(0.1).cgColor
+        gradientLayer.colors = [cgColor1, cgColor2, cgColor3, cgColor4, cgColor4, cgColor3]
         self.view.layer.addSublayer(gradientLayer)
     }
     
@@ -218,7 +219,6 @@ final class PostViewController: UIViewController {
         textView.font = UIFont.preferredFont(forTextStyle: .body)
         textView.textColor = .commentBody
         textView.textAlignment = .left
-        textView.tintColor = router?.dataStore?.averageColor ?? .blue
         textView.alpha = 0
     }
     
@@ -328,6 +328,17 @@ final class PostViewController: UIViewController {
         }
     }
     
+    private func setMainColor() {
+        let color = router?.dataStore?.averageColor ?? .postBackground
+        view.backgroundColor = UIColor.init { (trait) -> UIColor in
+            ((trait.userInterfaceStyle == .dark ? (color.darker(by: 35) ?? .postBackground) : color.lighter(by: 60)) ?? .postBackground)
+        }
+        
+        textView.tintColor = UIColor.init { (trait) -> UIColor in
+            ((trait.userInterfaceStyle == .dark ? (color.lighter(by: 35) ?? .blue) : color.darker(by: 15)) ?? .blue)
+        }
+    }
+    
     @objc private func routeToComments() {
         router?.routeToPostComments()
     }
@@ -367,6 +378,7 @@ extension PostViewController: PostDisplayLogic {
     }
     
     func displayUI(viewModel: PostModels.Color.ViewModel) {
+        setMainColor()
         createGradientLayer()
         showActivityIndicatorOnNavBarItem()
         scrollViewSetup()

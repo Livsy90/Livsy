@@ -17,7 +17,7 @@ class FavPostsCell: UITableViewCell {
         label.textAlignment = .left
         label.lineBreakMode = .byTruncatingTail
         label.numberOfLines = 4
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         label.textColor = .titleGray
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -54,8 +54,8 @@ class FavPostsCell: UITableViewCell {
         contentView.addSubview(mainImageView)
         mainImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         contentView.addSubview(titleLabel)
-        mainImageView.anchor(top: nil, left: contentView.leftAnchor, bottom: nil, right: titleLabel.leftAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 50, height: 50)
-        titleLabel.anchor(top: contentView.topAnchor, left: nil, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, paddingTop: 30, paddingLeft: 10, paddingBottom: 30, paddingRight: 10, width: 0, height: 0)
+        mainImageView.anchor(top: nil, left: contentView.leftAnchor, bottom: nil, right: titleLabel.leftAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 10, paddingRight: 10, width: 50, height: 50)
+        titleLabel.anchor(top: contentView.topAnchor, left: nil, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, paddingTop: 30, paddingLeft: 10, paddingBottom: 30, paddingRight: 20, width: 0, height: 0)
     }
     
     func config(post: Post) {

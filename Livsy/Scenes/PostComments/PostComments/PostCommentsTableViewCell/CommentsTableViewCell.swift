@@ -17,13 +17,14 @@ class CommentsTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        backgroundColor = .clear
         let selectedBackgroundView = UIView()
         let unselectedBackgroundView = UIView()
-        unselectedBackgroundView.backgroundColor = .rowBackground
-        selectedBackgroundView.backgroundColor = #colorLiteral(red: 0.7540688515, green: 0.7540867925, blue: 0.7540771365, alpha: 1)
+        unselectedBackgroundView.backgroundColor = .clear
+        selectedBackgroundView.backgroundColor = UIColor.rowBackground.withAlphaComponent(0.4)
         self.selectedBackgroundView = selectedBackgroundView
         self.backgroundView = unselectedBackgroundView
-        repliesLabel.textColor = .blueButton
+        repliesLabel.textColor = .navBarTint
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

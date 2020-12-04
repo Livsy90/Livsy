@@ -31,7 +31,7 @@ final class LoginViewController: UIViewController {
     private let loginTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = Text.SignUp.username
-        tf.backgroundColor = .inputTextView
+        tf.backgroundColor = .inputField
         tf.setLeftPaddingPoints(10)
         tf.setRightPaddingPoints(10)
         tf.layer.cornerRadius = 8
@@ -46,7 +46,7 @@ final class LoginViewController: UIViewController {
         tf.placeholder = Text.SignUp.password
         tf.isSecureTextEntry = true
         tf.layer.cornerRadius = 8
-        tf.backgroundColor = .inputTextView
+        tf.backgroundColor = .inputField
         tf.setLeftPaddingPoints(10)
         tf.setRightPaddingPoints(10)
         tf.font = UIFont.systemFont(ofSize: 14)

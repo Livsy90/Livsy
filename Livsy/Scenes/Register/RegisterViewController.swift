@@ -14,9 +14,7 @@ protocol RegisterDisplayLogic: class {
 }
 
 final class RegisterViewController: UIViewController {
-    
-    // MARK: - IBOutlets
-    
+        
     // MARK: - Public Properties
     
     var interactor: RegisterBusinessLogic?
@@ -25,11 +23,10 @@ final class RegisterViewController: UIViewController {
     // MARK: - Private Properties
     
     private let activityIndicator = ActivityIndicator()
-    
     private let loginTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = Text.SignUp.username
-        tf.backgroundColor = .inputTextView
+        tf.backgroundColor = .inputField
         tf.setLeftPaddingPoints(10)
         tf.setRightPaddingPoints(10)
         tf.layer.cornerRadius = 8
@@ -42,7 +39,7 @@ final class RegisterViewController: UIViewController {
     private let emailTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Email"
-        tf.backgroundColor = .inputTextView
+        tf.backgroundColor = .inputField
         tf.setLeftPaddingPoints(10)
         tf.setRightPaddingPoints(10)
         tf.layer.cornerRadius = 8
@@ -57,7 +54,7 @@ final class RegisterViewController: UIViewController {
         tf.placeholder = Text.SignUp.password
         tf.isSecureTextEntry = true
         tf.layer.cornerRadius = 8
-        tf.backgroundColor = .inputTextView
+        tf.backgroundColor = .inputField
         tf.setLeftPaddingPoints(10)
         tf.setRightPaddingPoints(10)
         tf.font = UIFont.systemFont(ofSize: 14)
@@ -126,7 +123,6 @@ final class RegisterViewController: UIViewController {
     
     private func setupInputFields() {
         let stackView = UIStackView(arrangedSubviews: [loginTextField, passwordTextField, emailTextField, signupButton])
-        
         stackView.axis = .vertical
         stackView.spacing = 10
         stackView.distribution = .fillEqually
@@ -186,7 +182,6 @@ extension RegisterViewController: RegisterDisplayLogic {
         } else {
             router?.showAlert(with: viewModel.error?.message ?? "Error")
         }
-        
     }
     
 }

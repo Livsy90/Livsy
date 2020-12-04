@@ -42,7 +42,8 @@ final class PostCommentsViewController: UIViewController {
     }()
     private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     private let activityIndicator = ActivityIndicator()
-    private var safeArea: UILayoutGuide!
+    private let effect = UIBlurEffect(style: .prominent)
+    private let resizingMask: UIView.AutoresizingMask = [.flexibleWidth, .flexibleHeight]
     
     // MARK: - Initializers
     
@@ -133,19 +134,42 @@ final class PostCommentsViewController: UIViewController {
     }
     
     private func setupTableView() {
+        let imgView = UIImageView(image: router?.dataStore?.image ?? UIImage())
+        view.addSubview(imgView)
+        imgView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         tableView.showsHorizontalScrollIndicator = false
         tableView.showsVerticalScrollIndicator = false
-        safeArea = view.layoutMarginsGuide
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        tableView.anchor(top: imgView.topAnchor, left: imgView.leftAnchor, bottom: imgView.bottomAnchor, right: imgView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         tableView.tableFooterView = UIView()
-        tableView.backgroundColor = .postListBackground
         tableView.keyboardDismissMode = .onDrag
         tableView.register(UINib(nibName: CommentsTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.reuseIdentifier())
+        tableView.backgroundColor = .clear
+        let backgroundView = UIView(frame: view.bounds)
+        backgroundView.autoresizingMask = resizingMask
+        backgroundView.addSubview(self.buildImageView())
+        backgroundView.addSubview(self.buildBlurView())
+        
+        tableView.backgroundView = backgroundView
+        tableView.separatorEffect = UIVibrancyEffect(blurEffect: effect)
+    }
+    
+    private func buildImageView() -> UIImageView {
+        let imageView = UIImageView(image: UIImage(named: "img"))
+        imageView.frame = view.bounds
+        imageView.autoresizingMask = resizingMask
+        return imageView
+    }
+    
+    private func buildBlurView() -> UIVisualEffectView {
+        let blurView = UIVisualEffectView(effect: effect)
+        blurView.frame = view.bounds
+        blurView.autoresizingMask = resizingMask
+        return blurView
     }
     
     private func setupInputView() {
@@ -278,7 +302,7 @@ extension PostCommentsViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let title = router?.dataStore?.postTitle
+        let title = router?.dataStore?.postTitle.pureString()
         return title
     }
     

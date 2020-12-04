@@ -6,7 +6,7 @@
 //  Copyright © 2020 Artem Mirzabekian. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol PostCommentsBusinessLogic {
     func showComments(request: PostCommentsModels.PostComments.Request)
@@ -22,6 +22,7 @@ protocol PostCommentsDataStore {
     var parentComment: PostComment { get set }
     var postTitle: String { get set }
     var authorName: String? { get set }
+    var image: UIImage { get set }
 }
 
 final class PostCommentsInteractor: PostCommentsBusinessLogic, PostCommentsDataStore {
@@ -40,6 +41,7 @@ final class PostCommentsInteractor: PostCommentsBusinessLogic, PostCommentsDataS
     var parentComment: PostComment = PostComment(id: 00, parent: 00, authorName: "")
     var postTitle: String = ""
     var authorName: String? = ""
+    var image: UIImage = UIImage()
     
     // MARK: - Business Logic
     
