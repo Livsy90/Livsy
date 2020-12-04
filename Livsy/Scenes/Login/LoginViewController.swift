@@ -124,7 +124,7 @@ final class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .postBackground
+        view.backgroundColor = .postListBackground
         NotificationCenter.default.removeObserver(self)
         title = Text.Login.login
         hideKeyboardWhenTappedAround()

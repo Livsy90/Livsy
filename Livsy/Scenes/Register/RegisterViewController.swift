@@ -111,7 +111,7 @@ final class RegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupInputFields()
-        view.backgroundColor = .postBackground
+        view.backgroundColor = .postListBackground
         title = Text.SignUp.signUp
         hideKeyboardWhenTappedAround()
     }

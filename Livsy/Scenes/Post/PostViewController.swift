@@ -55,7 +55,7 @@ final class PostViewController: UIViewController {
         
         switch addPostOpenCount {
         case 10, 20, 30:
-            incrementPostOpenCountCount()
+            incrementPostOpenCount()
             return true
         default:
             return false
@@ -141,7 +141,7 @@ final class PostViewController: UIViewController {
         interactor?.getAverageColorAndSetupUI(request: PostModels.Color.Request())
     }
     
-    private func incrementPostOpenCountCount() {
+    private func incrementPostOpenCount() {
         var addPostOpenCount = UserDefaults.standard.addPostOpenCount ?? 0
         guard addPostOpenCount < 31 else { return }
         addPostOpenCount += 1
