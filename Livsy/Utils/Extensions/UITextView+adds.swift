@@ -19,18 +19,17 @@ extension UITextView {
             options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue],
             documentAttributes: nil)
         
-        self.attributedText = resizeImageInHTLLString(attrStr: attrStr)
+        self.attributedText = resizeImageInHTMLString(attrStr: attrStr)
         self.textColor = color
     }
     
-    private func resizeImageInHTLLString(attrStr: NSMutableAttributedString) -> NSMutableAttributedString {
+    private func resizeImageInHTMLString(attrStr: NSMutableAttributedString) -> NSMutableAttributedString {
         attrStr.enumerateAttribute(NSAttributedString.Key.attachment, in: NSMakeRange(0, attrStr.length), options: .init(rawValue: 0), using: { (value, range, stop) in
             if let attachement = value as? NSTextAttachment {
                 let image = attachement.image(forBounds: attachement.bounds, textContainer: NSTextContainer(), characterIndex: range.location)!
                 let screenSize: CGRect = UIScreen.main.bounds
                 if image.size.width > screenSize.width - 50 {
-                    let scale = (screenSize.width - 50) / image.size.width
-                    let newImage = image.resizeImage(scale: scale)
+                    let newImage = image.resize(scaledToWidth: screenSize.width - 50)
                     let newAttribut = NSTextAttachment()
                     newAttribut.image = newImage
                     attrStr.addAttribute(NSAttributedString.Key.attachment, value: newAttribut, range: range)
