@@ -13,7 +13,7 @@ protocol PostBusinessLogic {
     func fetchPostComments(request: PostModels.PostComments.Request)
     func savePostToFav(request: PostModels.SaveToFavorites.Request)
     func fetchAuthorName(request: PostModels.AuthorName.Request)
-    func getAverageColor(request: PostModels.Color.Request)
+    func getAverageColorAndSetupUI(request: PostModels.Color.Request)
 }
 
 protocol PostDataStore {
@@ -43,7 +43,7 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
     
     // MARK: - Business Logic
     
-    func getAverageColor(request: PostModels.Color.Request) {
+    func getAverageColorAndSetupUI(request: PostModels.Color.Request) {
         DispatchQueue.main.async {
             self.averageColor = self.image.averageColor ?? .blueButton
             self.presenter?.presentUI(response: PostModels.Color.Response())

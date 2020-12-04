@@ -6,6 +6,7 @@
 //  Copyright © 2020 Artem Mirzabekian. All rights reserved.
 //
 
+import StoreKit
 import UIKit
 
 protocol PostDisplayLogic: class {
@@ -42,11 +43,24 @@ final class PostViewController: UIViewController {
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         return view
     }()
+    
     private let progressView: UIProgressView = {
         let pv = UIProgressView(progressViewStyle: .bar)
         pv.translatesAutoresizingMaskIntoConstraints = false
         return pv
     }()
+    
+    private var isShowReviewAlert: Bool {
+        let addPostOpenCount = UserDefaults.standard.addPostOpenCount
+        
+        switch addPostOpenCount {
+        case 10, 20, 30:
+            incrementPostOpenCountCount()
+            return true
+        default:
+            return false
+        }
+    }
     
     // MARK: - Initializers
     
@@ -88,7 +102,6 @@ final class PostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .postBackground
         setupUI()
     }
     
@@ -97,11 +110,13 @@ final class PostViewController: UIViewController {
         setFavImage(isFavorite: UserDefaults.favPosts?.contains(router?.dataStore?.post.id ?? 00) ?? false, animated: false)
         fetchPostComments()
         setupNavBar()
+        incrementOpenPostCount()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupProgressView()
+        showReviewAlert()
     }
     
     // MARK: - Private Methods
@@ -122,7 +137,15 @@ final class PostViewController: UIViewController {
     }
     
     private func setupUI() {
-        interactor?.getAverageColor(request: PostModels.Color.Request())
+        view.backgroundColor = .postBackground
+        interactor?.getAverageColorAndSetupUI(request: PostModels.Color.Request())
+    }
+    
+    private func incrementPostOpenCountCount() {
+        var addPostOpenCount = UserDefaults.standard.addPostOpenCount ?? 0
+        guard addPostOpenCount < 31 else { return }
+        addPostOpenCount += 1
+        UserDefaults.standard.addPostOpenCount = addPostOpenCount
     }
     
     private func setupNavBar() {
@@ -161,6 +184,19 @@ final class PostViewController: UIViewController {
         progressView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: self.topbarHeight - 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 4)
         let color = router?.dataStore?.averageColor ?? .blueButton
         progressView.progressTintColor = color
+    }
+    
+    func incrementOpenPostCount() {
+        var addPostOpenCount = UserDefaults.standard.addPostOpenCount ?? 0
+        guard addPostOpenCount < 21 else { return }
+        addPostOpenCount += 1
+        UserDefaults.standard.addPostOpenCount = addPostOpenCount
+    }
+    
+    private func showReviewAlert() {
+        if isShowReviewAlert {
+            SKStoreReviewController.requestReview()
+        }
     }
     
     private func postTitleSetup() {
@@ -209,7 +245,7 @@ final class PostViewController: UIViewController {
         
         let config = UIImage.SymbolConfiguration(pointSize: 22, weight: .medium, scale: .medium)
         let shareImage = UIImage(systemName: "arrowshape.turn.up.right", withConfiguration: config)
-    
+        
         let shareButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
         shareButton.addTarget(self, action: #selector(share), for: .touchUpInside)
         shareButton.setImage(shareImage, for: .normal)

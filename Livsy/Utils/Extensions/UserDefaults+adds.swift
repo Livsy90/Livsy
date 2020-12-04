@@ -13,13 +13,24 @@ extension UserDefaults {
     
     private enum Key {
         
+        static let addPostOpenCount = "addPostOpenCount"
+        
         static let login = "login"
-    
+        
         static let password = "password"
         
         static let token = "token"
         
         static let favPosts = "favPosts"
+    }
+    
+    var addPostOpenCount: Int? {
+        get {
+            return integer(forKey: Key.addPostOpenCount)
+        }
+        set {
+            set(newValue, forKey: Key.addPostOpenCount)
+        }
     }
     
     var username: String? {
