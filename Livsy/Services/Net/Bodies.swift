@@ -62,7 +62,7 @@ struct Bodies {
     // MARK: PostPageAPI
     
     enum PostPageAPI {
-        typealias Response = PostPage
+        typealias Response = Post
         struct Request: Encodable {
         }
     }

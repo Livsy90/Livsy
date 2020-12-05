@@ -22,6 +22,11 @@ final class PostCommentsViewController: UIViewController {
     var router: (PostCommentsRoutingLogic & PostCommentsDataPassing)?
     
     // MARK: - Private Properties
+    
+    private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
+    private let activityIndicator = ActivityIndicator()
+    private let effect = UIBlurEffect(style: .prominent)
+    private let resizingMask: UIView.AutoresizingMask = [.flexibleWidth, .flexibleHeight]
     private var refreshControl: UIRefreshControl!
     private var bottomConstraint = NSLayoutConstraint()
     private lazy var containerView: CommentInputAccessoryView = {
@@ -30,6 +35,7 @@ final class PostCommentsViewController: UIViewController {
         commentInputAccessoryView.delegate = self
         return commentInputAccessoryView
     }()
+    
     private let noCommentsLabel: UILabel = {
         let l = UILabel()
         l.text = Text.Comments.beTheFirst
@@ -40,10 +46,14 @@ final class PostCommentsViewController: UIViewController {
         l.font = UIFont.boldSystemFont(ofSize: 30.0)
         return l
     }()
-    private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
-    private let activityIndicator = ActivityIndicator()
-    private let effect = UIBlurEffect(style: .prominent)
-    private let resizingMask: UIView.AutoresizingMask = [.flexibleWidth, .flexibleHeight]
+    
+    private var backgroundImageView: UIImageView = {
+        let v = UIImageView()
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.contentMode = .scaleAspectFill
+        v.clipsToBounds = true
+        return v
+    }()
     
     // MARK: - Initializers
     
@@ -134,9 +144,9 @@ final class PostCommentsViewController: UIViewController {
     }
     
     private func setupTableView() {
-        let imgView = UIImageView(image: router?.dataStore?.image ?? UIImage())
-        view.addSubview(imgView)
-        imgView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        backgroundImageView.image = router?.dataStore?.image ?? UIImage()
+        view.addSubview(backgroundImageView)
+        backgroundImageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         tableView.showsHorizontalScrollIndicator = false
         tableView.showsVerticalScrollIndicator = false
         tableView.delegate = self
@@ -144,11 +154,12 @@ final class PostCommentsViewController: UIViewController {
         view.addSubview(tableView)
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.anchor(top: imgView.topAnchor, left: imgView.leftAnchor, bottom: imgView.bottomAnchor, right: imgView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        tableView.anchor(top: backgroundImageView.topAnchor, left: backgroundImageView.leftAnchor, bottom: backgroundImageView.bottomAnchor, right: backgroundImageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         tableView.tableFooterView = UIView()
         tableView.keyboardDismissMode = .onDrag
         tableView.register(UINib(nibName: CommentsTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.reuseIdentifier())
         tableView.backgroundColor = .clear
+        
         let backgroundView = UIView(frame: view.bounds)
         backgroundView.autoresizingMask = resizingMask
         backgroundView.addSubview(self.buildImageView())

@@ -34,6 +34,7 @@ enum Text {
         static let addTF = NSLocalizedString("Add to favorites", comment: "")
         static let removedFF = NSLocalizedString("Removed from favorites", comment: "")
         static let removeFF = NSLocalizedString("Remove from favorites", comment: "")
+        static let postNotFound = NSLocalizedString("Post not found", comment: "")
         
     }
     

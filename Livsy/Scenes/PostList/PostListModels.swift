@@ -161,4 +161,16 @@ enum PostListModels {
         }
     }
     
+    enum PostFromLink {
+        
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
 }

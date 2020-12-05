@@ -22,7 +22,8 @@ final class PostViewController: UIViewController {
     
     var interactor: PostBusinessLogic?
     var router: (PostRoutingLogic & PostDataPassing)?
-    
+    var isFromLink = false
+    var postID = 0
     var shareButton = UIButton()
     
     // MARK: - Private Properties
@@ -115,7 +116,6 @@ final class PostViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setupProgressView()
         showReviewAlert()
     }
     
@@ -262,7 +262,7 @@ final class PostViewController: UIViewController {
     
     private func fetchPost() {
         activityIndicator.showIndicator(on: self)
-        interactor?.fetchPostPage(request: PostModels.PostPage.Request())
+        interactor?.fetchPostPage(request: PostModels.PostPage.Request(isFromLink: isFromLink, postID: postID))
     }
     
     private func fetchPostComments() {
@@ -356,8 +356,26 @@ final class PostViewController: UIViewController {
 extension PostViewController: PostDisplayLogic {
     
     func displayPostPage(viewModel: PostModels.PostPage.ViewModel) {
-        guard let post = router?.dataStore?.post else { return }
-        setText(post) { self.activityIndicator.hideIndicator() }
+        
+        switch viewModel.error == nil {
+        case true:
+            showActivityIndicatorOnNavBarItem()
+            setMainColor()
+            createGradientLayer()
+            scrollViewSetup()
+            setupHeader()
+            textViewSetup()
+            setupProgressView()
+            fetchPostComments()
+            fetchPostAuthor()
+            guard let post = router?.dataStore?.post else { return }
+            setText(post) { self.activityIndicator.hideIndicator() }
+            isFromLink = false
+        case false:
+            router?.showErrorAlert(with: Text.Post.postNotFound, completion: fetchPost)
+        }
+        
+        
     }
     
     func displayPostComments(viewModel: PostModels.PostComments.ViewModel) {
@@ -378,14 +396,7 @@ extension PostViewController: PostDisplayLogic {
     }
     
     func displayUI(viewModel: PostModels.Color.ViewModel) {
-        setMainColor()
-        createGradientLayer()
-        showActivityIndicatorOnNavBarItem()
-        scrollViewSetup()
-        textViewSetup()
-        fetchPostAuthor()
         fetchPost()
-        setupHeader()
     }
     
 }

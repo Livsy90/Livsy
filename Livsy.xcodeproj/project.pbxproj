@@ -16,6 +16,7 @@
 		C20974CA256144A100485464 /* Array+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20974C9256144A100485464 /* Array+adds.swift */; };
 		C20EDF8625767922006D03E1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C20EDF8825767922006D03E1 /* Localizable.strings */; };
 		C20EDF8F257679DC006D03E1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C20EDF91257679DC006D03E1 /* InfoPlist.strings */; };
+		C2133151257BBB22004FDF9D /* URL+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2133150257BBB22004FDF9D /* URL+adds.swift */; };
 		C218FCF3251B5A6A002F9C68 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C218FCEC251B5A6A002F9C68 /* Splash.storyboard */; };
 		C218FCF4251B5A6A002F9C68 /* SplashPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218FCED251B5A6A002F9C68 /* SplashPresenter.swift */; };
 		C218FCF5251B5A6A002F9C68 /* SplashWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218FCEE251B5A6A002F9C68 /* SplashWorker.swift */; };
@@ -151,6 +152,8 @@
 		C20EDF90257679DC006D03E1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C20EDF93257679DF006D03E1 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C20EDF952576945B006D03E1 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C213314D257B9018004FDF9D /* Livsy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Livsy.entitlements; sourceTree = "<group>"; };
+		C2133150257BBB22004FDF9D /* URL+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+adds.swift"; sourceTree = "<group>"; };
 		C218FCEC251B5A6A002F9C68 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		C218FCED251B5A6A002F9C68 /* SplashPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashPresenter.swift; sourceTree = "<group>"; };
 		C218FCEE251B5A6A002F9C68 /* SplashWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashWorker.swift; sourceTree = "<group>"; };
@@ -359,6 +362,7 @@
 				C22FFB962559453D00416C15 /* UIButton+adds.swift */,
 				C2FFC6A3255A9DB1001B885E /* UICollectionView+adds.swift */,
 				C20974C9256144A100485464 /* Array+adds.swift */,
+				C2133150257BBB22004FDF9D /* URL+adds.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -441,6 +445,7 @@
 		C2386F7B249DF6EB0076AED3 /* Livsy */ = {
 			isa = PBXGroup;
 			children = (
+				C213314D257B9018004FDF9D /* Livsy.entitlements */,
 				C28264B8257A1F6400B443F2 /* AppCommon */,
 				C20EDF80257678BC006D03E1 /* Localization */,
 				C2D53D4D2542E71B00C13AD0 /* API Models */,
@@ -822,6 +827,7 @@
 				C2386FAA249E09B50076AED3 /* PostListRouter.swift in Sources */,
 				C250E668254EA6BB009E5E03 /* UITableView+adds.swift in Sources */,
 				C20974C22561374A00485464 /* CategoriesModels.swift in Sources */,
+				C2133151257BBB22004FDF9D /* URL+adds.swift in Sources */,
 				C20974CA256144A100485464 /* Array+adds.swift in Sources */,
 				C2589C1A256FD0BF00F727FD /* PageListRouter.swift in Sources */,
 				C2BCF43224AB67E8008C28FD /* PostCommentRepliesPresenter.swift in Sources */,
@@ -1049,6 +1055,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Livsy/Livsy.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GWLC7B32AQ;
 				INFOPLIST_FILE = Livsy/Info.plist;
@@ -1067,6 +1074,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Livsy/Livsy.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GWLC7B32AQ;
 				INFOPLIST_FILE = Livsy/Info.plist;

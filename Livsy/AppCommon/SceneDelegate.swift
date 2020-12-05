@@ -17,22 +17,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        
         UINavigationBar.appearance().tintColor = UIColor.init(named: "NavBarTint")
-        
         window = UIWindow(windowScene: windowScene)
-        //self.window =  UIWindow(frame: UIScreen.main.bounds)
-        
-//        let storyboard = UIStoryboard(name: "Splash", bundle: nil)
-//        guard let rootVC = storyboard.instantiateViewController(identifier: "SplashViewController") as? SplashViewController else {
-//            print("ViewController not found")
-//            return
-//        }
-        
         window?.rootViewController = MainTabBarController()
-       // let rootNC = UINavigationController(rootViewController: rootVC)
-       // self.window?.rootViewController = rootNC
         window?.makeKeyAndVisible()
+        
+        guard let userActivity = connectionOptions.userActivities.first,
+              userActivity.activityType == NSUserActivityTypeBrowsingWeb
+        else { return }
+        
+        self.scene(scene, continue: userActivity)
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        
+    }
+    
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+              let urlToOpen = userActivity.webpageURL else {
+            return
+        }
+        
+        let urlStr = urlToOpen.absoluteString
+        guard let urlComp = URLComponents(string: urlStr) else { return }
+        guard let id = urlComp.path.components(separatedBy: "/").last else { return }
+        
+        navigateToPost(id: Int(id) ?? 00)
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -63,6 +77,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
     
+    func navigateToPost(id: Int) {
+        guard let tabBarController = window?.rootViewController as? UITabBarController else {
+            return
+        }
+        guard let viewControllers = tabBarController.viewControllers,
+              let index = viewControllers.firstIndex(where: { $0 is NavigationController }),
+              let nc = viewControllers[index] as? NavigationController else { return }
+        
+        nc.popToRootViewController(animated: false)
+        tabBarController.selectedIndex = index
+        
+        let postViewController = PostViewController()
+        postViewController.isFromLink = true
+        postViewController.postID = id
+        nc.pushViewController(postViewController, animated: true)
+    }
     
 }
 

@@ -39,13 +39,17 @@ enum PostModels {
     enum PostPage {
         
         struct Request {
-            var error: CustomError?
+            var isFromLink: Bool
+            var error: Error?
+            var postID: Int
         }
         
         struct Response {
+            var error: CustomError?
         }
         
         struct ViewModel {
+            var error: CustomError?
         }
     }
     

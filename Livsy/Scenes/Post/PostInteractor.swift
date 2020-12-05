@@ -22,6 +22,7 @@ protocol PostDataStore {
     var image: UIImage { get set }
     var averageColor: UIColor { get set }
     var post: Post { get set }
+    var imageView: WebImageView { get set }
 }
 
 final class PostInteractor: PostBusinessLogic, PostDataStore {
@@ -40,6 +41,7 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
     var image = UIImage()
     var averageColor: UIColor = .blueButton
     var post: Post = Post(id: 00, date: "", title: nil, excerpt: nil, imgURL: nil, link: "", content: nil, author: 00)
+    var imageView: WebImageView = WebImageView()
     
     // MARK: - Business Logic
     
@@ -51,7 +53,22 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
     }
     
     func fetchPostPage(request: PostModels.PostPage.Request) {
-        presenter?.presentPostPage(response: PostModels.PostPage.Response())
+        switch request.isFromLink {
+        case true:
+            worker?.fetchPost(id: request.postID, completion: { [weak self] (response, error) in
+                guard let self = self else { return }
+                let post = response ?? Post(id: 00, date: "", title: nil, excerpt: nil, imgURL: "", link: "", content: nil, author: 00)
+                self.post = post
+                self.imageView.set(imageURL: post.imgURL)
+                self.image = self.imageView.image ?? UIImage()
+                self.averageColor = self.image.averageColor ?? .blueButton
+                self.presenter?.presentPostPage(response: PostModels.PostPage.Response(error: error))
+            })
+            
+        case false:
+            presenter?.presentPostPage(response: PostModels.PostPage.Response(error: nil))
+        }
+        
     }
     
     func fetchPostComments(request: PostModels.PostComments.Request) {
