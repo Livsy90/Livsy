@@ -46,7 +46,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let urlComp = URLComponents(string: urlStr) else { return }
         guard let id = urlComp.path.components(separatedBy: "/").last else { return }
         
-        navigateToPost(id: Int(id) ?? 00)
+        if isPostLink(urlStr: urlStr) { navigateToPost(id: Int(id) ?? 00) }
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -92,6 +92,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         postViewController.isFromLink = true
         postViewController.postID = id
         nc.pushViewController(postViewController, animated: true)
+    }
+    
+    func isPostLink(urlStr: String) -> Bool {
+        urlStr.contains("topics") ? true : false
     }
     
 }
