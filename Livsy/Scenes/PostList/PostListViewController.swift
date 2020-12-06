@@ -262,7 +262,7 @@ final class PostListViewController: UIViewController {
         fetchPostList(isLoadMore: false)
         fetchFilterList(isTags: true)
         fetchFilterList(isTags: false)
-        title = "Livsy"
+        title = Text.Common.livsy
         UIView.animate(withDuration: 0.3, animations: {
             self.homeButton.alpha = 0
         })
