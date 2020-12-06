@@ -21,20 +21,22 @@ final class PostCommentRepliesViewController: UIViewController {
     var router: (PostCommentRepliesRoutingLogic & PostCommentRepliesDataPassing)?
     
     // MARK: - Private Properties
-    
-    private var refreshControl: UIRefreshControl!
-    private var repliesCollectionView = RepliesCollectionView()
-    private var bottomConstraint = NSLayoutConstraint()
+
     private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     private let activityIndicator = ActivityIndicator()
     private let effect = UIBlurEffect(style: .prominent)
     private let resizingMask: UIView.AutoresizingMask = [.flexibleWidth, .flexibleHeight]
+    private var refreshControl: UIRefreshControl!
+    private var repliesCollectionView = RepliesCollectionView()
+    private var bottomConstraint = NSLayoutConstraint()
     private lazy var containerView: CommentInputAccessoryView = {
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         let commentInputAccessoryView = CommentInputAccessoryView(frame: frame)
         commentInputAccessoryView.delegate = self
         return commentInputAccessoryView
     }()
+    
+    private lazy var loginBarButtonItem = UIBarButtonItem(title: Text.Comments.loginToReply, style: .done, target: self, action: #selector(routeToLogin))
     
     // MARK: - Initializers
     
@@ -185,19 +187,8 @@ final class PostCommentRepliesViewController: UIViewController {
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.shadowImage = nil
         navigationController?.navigationBar.tintColor = .navBarTint
-        
         if UserDefaults.standard.token == "" {
-            let loginButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 120, height: 30))
-            loginButton.setTitle(Text.Comments.loginToReply, for: .normal)
-            loginButton.layer.cornerRadius = 8
-            loginButton.layer.borderWidth = 1
-            loginButton.layer.borderColor = UIColor.navBarTint.cgColor
-            loginButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-            loginButton.setTitleColor(.navBarTint, for: .normal)
-            loginButton.addTarget(self, action: #selector(routeToLogin), for: .touchUpInside)
-            loginButton.isEnabled = false
-            let item =  UIBarButtonItem(customView: loginButton)
-            navigationItem.rightBarButtonItem = item
+            navigationItem.rightBarButtonItem = loginBarButtonItem
         } else {
             navigationItem.rightBarButtonItem = nil
         }
