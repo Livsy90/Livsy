@@ -98,7 +98,7 @@ final class PostListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Livsy"
+        title = Text.Common.livsy
         checkToken()
         setupCollectionView()
         setupRefreshControl()
@@ -246,7 +246,7 @@ final class PostListViewController: UIViewController {
     
     private func showPostList(_ posts: [Post], _ completionBlock: @escaping () -> Void) {
         postCollectionView.set(cells: posts)
-        postCollectionView.softReload()
+        postCollectionView.reloadData()
         refreshControl.endRefreshing()
         postCollectionView.footerView.stopAnimating()
         nothingFoundImageView.isHidden = !posts.isEmpty
