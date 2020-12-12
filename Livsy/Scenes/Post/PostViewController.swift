@@ -121,6 +121,18 @@ final class PostViewController: UIViewController {
     
     // MARK: - Private Methods
     
+    private func setupUI() {
+        setMainColor()
+        createGradientLayer()
+        scrollViewSetup()
+        setupHeader()
+        postDateLabelSetup()
+        textViewSetup()
+        setupProgressView()
+        fetchPostComments()
+        fetchPostAuthor()
+    }
+    
     private func setupHeader() {
         imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 300)
         imageView.image = router?.dataStore?.image
@@ -139,18 +151,6 @@ final class PostViewController: UIViewController {
     private func setupDataforUI() {
         view.backgroundColor = .postBackground
         interactor?.getAverageColorAndSetupUI(request: PostModels.Color.Request())
-    }
-    
-    private func setupUI() {
-        setMainColor()
-        createGradientLayer()
-        scrollViewSetup()
-        setupHeader()
-        postDateLabelSetup()
-        textViewSetup()
-        setupProgressView()
-        fetchPostComments()
-        fetchPostAuthor()
     }
     
     private func incrementPostOpenCount() {
@@ -214,11 +214,11 @@ final class PostViewController: UIViewController {
     }
     
     private func postDateLabelSetup() {
-        let date = router?.dataStore?.post.date.getDate()?.formatToDateAndTimeStyle()
+        let date = router?.dataStore?.post.date.getDate()?.formatToDateAndTimeStyle() ?? ""
         postDateLabel.text = date
-        postDateLabel.font = .boldSystemFont(ofSize: 13)
+        postDateLabel.font = .systemFont(ofSize: 13, weight: .light)
         postDateLabel.textColor = .bodyText
-        postDateLabel.anchor(top: scrollView.topAnchor, left: scrollView.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        postDateLabel.anchor(top: scrollView.topAnchor, left: scrollView.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 6, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     private func postTitleSetup() {
@@ -234,7 +234,7 @@ final class PostViewController: UIViewController {
     private func textViewSetup() {
         textView.backgroundColor = .clear
         textView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -40).isActive = true
-        textView.anchor(top: postDateLabel.bottomAnchor, left: scrollView.leftAnchor, bottom: scrollView.bottomAnchor, right: scrollView.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        textView.anchor(top: postDateLabel.bottomAnchor, left: scrollView.leftAnchor, bottom: scrollView.bottomAnchor, right: scrollView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         textView.isScrollEnabled = false
         textView.isEditable = false
         textView.font = UIFont.preferredFont(forTextStyle: .body)
@@ -299,7 +299,7 @@ final class PostViewController: UIViewController {
         let height = min(max(y, self.topbarHeight + 3), 400)
         imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height)
         darkView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height)
-        postTitleLabel.frame = CGRect(x: 20, y: height - 100, width: UIScreen.main.bounds.size.width - 40, height: 100)
+        postTitleLabel.frame = CGRect(x: 20, y: height - 130, width: UIScreen.main.bounds.size.width - 40, height: 100)
     }
     
     private func changeProgressViewValue(scrollView: UIScrollView) {
@@ -326,11 +326,12 @@ final class PostViewController: UIViewController {
     }
     
     private func setAlphaForNB(scrollView: UIScrollView) {
-        switch scrollView.contentOffset.y > 0 - (self.topbarHeight + 60) {
+        switch scrollView.contentOffset.y > 0 - (self.topbarHeight + 90) {
         case true:
             UIView.animate(withDuration: 0.20) {
                 self.postTitleLabel.alpha = 0
             }
+            
         case false:
             UIView.animate(withDuration: 0.25) {
                 self.postTitleLabel.alpha = 1

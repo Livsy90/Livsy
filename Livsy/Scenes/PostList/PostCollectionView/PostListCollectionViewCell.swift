@@ -59,7 +59,7 @@ class PostListCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 1
-        label.font = UIFont.systemFont(ofSize: 11, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .light)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

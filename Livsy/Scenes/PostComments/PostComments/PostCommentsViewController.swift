@@ -22,12 +22,6 @@ final class PostCommentsViewController: UIViewController {
     var router: (PostCommentsRoutingLogic & PostCommentsDataPassing)?
     
     // MARK: - Private Properties
-    
-    private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
-    private let activityIndicator = ActivityIndicator()
-    private let effect = UIBlurEffect(style: .prominent)
-    private let resizingMask: UIView.AutoresizingMask = [.flexibleWidth, .flexibleHeight]
-    private var refreshControl: UIRefreshControl!
     private let noCommentsLabel: UILabel = {
         let l = UILabel()
         l.text = Text.Comments.beTheFirst
@@ -39,15 +33,20 @@ final class PostCommentsViewController: UIViewController {
         return l
     }()
     
+    private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
+    private let activityIndicator = ActivityIndicator()
+    private let effect = UIBlurEffect(style: .prominent)
+    private let resizingMask: UIView.AutoresizingMask = [.flexibleWidth, .flexibleHeight]
+    private var refreshControl: UIRefreshControl!
+    private var bottomConstraint = NSLayoutConstraint()
     private var backgroundImageView: UIImageView = {
-        let v = UIImageView()
-        v.translatesAutoresizingMaskIntoConstraints = false
-        v.contentMode = .scaleAspectFill
-        v.clipsToBounds = true
-        return v
+        let imgView = UIImageView()
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        imgView.contentMode = .scaleAspectFill
+        imgView.clipsToBounds = true
+        return imgView
     }()
     
-    private var bottomConstraint = NSLayoutConstraint()
     private lazy var containerView: CommentInputAccessoryView = {
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         let commentInputAccessoryView = CommentInputAccessoryView(frame: frame)
@@ -172,7 +171,7 @@ final class PostCommentsViewController: UIViewController {
     }
     
     private func buildImageView() -> UIImageView {
-        let imageView = UIImageView(image: UIImage(named: "img"))
+        let imageView = UIImageView(image: UIImage())
         imageView.frame = view.bounds
         imageView.autoresizingMask = resizingMask
         return imageView

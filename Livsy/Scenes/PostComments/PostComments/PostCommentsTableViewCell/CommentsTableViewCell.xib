@@ -20,21 +20,21 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="752" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7GL-pu-tvM">
-                        <rect key="frame" x="16" y="16" width="40" height="27.5"/>
+                        <rect key="frame" x="16" y="16" width="40" height="45.5"/>
                         <color key="tintColor" name="PostListText"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32n-Wv-y1J">
-                        <rect key="frame" x="16" y="59.5" width="400" height="18"/>
+                        <rect key="frame" x="16" y="69.5" width="400" height="18"/>
                         <color key="tintColor" name="PostText"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pencil.and.outline" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="WY6-6E-fNa">
-                        <rect key="frame" x="64" y="19" width="20" height="20.5"/>
+                        <rect key="frame" x="64" y="28" width="20" height="20.5"/>
                         <color key="tintColor" name="PostListText"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="frf-yU-uKm"/>
@@ -42,14 +42,14 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0lp-c1-c6q">
-                        <rect key="frame" x="16" y="87.5" width="33" height="14.5"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                        <rect key="frame" x="16" y="87.5" width="30" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uIX-Me-eOY">
-                        <rect key="frame" x="381.5" y="86" width="34.5" height="16"/>
-                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                        <rect key="frame" x="380.5" y="86" width="35.5" height="16"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -59,14 +59,14 @@
                 <constraints>
                     <constraint firstItem="WY6-6E-fNa" firstAttribute="leading" secondItem="7GL-pu-tvM" secondAttribute="trailing" constant="8" symbolic="YES" id="3AJ-hq-qhV"/>
                     <constraint firstItem="7GL-pu-tvM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="75A-LQ-Q1N"/>
-                    <constraint firstItem="0lp-c1-c6q" firstAttribute="top" secondItem="32n-Wv-y1J" secondAttribute="bottom" constant="10" id="BFZ-yU-Tcm"/>
+                    <constraint firstItem="0lp-c1-c6q" firstAttribute="top" secondItem="32n-Wv-y1J" secondAttribute="bottom" id="BFZ-yU-Tcm"/>
                     <constraint firstItem="32n-Wv-y1J" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="D5d-WG-pnT"/>
                     <constraint firstItem="WY6-6E-fNa" firstAttribute="centerY" secondItem="7GL-pu-tvM" secondAttribute="centerY" id="Nnk-vs-Agf"/>
                     <constraint firstItem="7GL-pu-tvM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Pg1-Kc-WzR"/>
                     <constraint firstAttribute="bottom" secondItem="0lp-c1-c6q" secondAttribute="bottom" constant="16" id="SxD-aY-jQB"/>
                     <constraint firstAttribute="trailing" secondItem="32n-Wv-y1J" secondAttribute="trailing" constant="16" id="XHR-i9-D5D"/>
                     <constraint firstItem="0lp-c1-c6q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="cOE-wi-C1l"/>
-                    <constraint firstItem="32n-Wv-y1J" firstAttribute="top" secondItem="7GL-pu-tvM" secondAttribute="bottom" constant="16" id="dek-QC-BgM"/>
+                    <constraint firstItem="32n-Wv-y1J" firstAttribute="top" secondItem="7GL-pu-tvM" secondAttribute="bottom" constant="8" id="dek-QC-BgM"/>
                     <constraint firstAttribute="trailing" secondItem="uIX-Me-eOY" secondAttribute="trailing" constant="16" id="lVM-9v-MBz"/>
                     <constraint firstAttribute="bottom" secondItem="uIX-Me-eOY" secondAttribute="bottom" constant="16" id="m9L-Ky-m1w"/>
                 </constraints>

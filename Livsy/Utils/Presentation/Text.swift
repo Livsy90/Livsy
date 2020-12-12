@@ -30,6 +30,7 @@ enum Text {
     
     enum Post {
         
+        static let publishedOn = NSLocalizedString("Published on", comment: "")
         static let comment = NSLocalizedString("Comment:", comment: "")
         static let comments = NSLocalizedString("Comments", comment: "")
         static let addedTF = NSLocalizedString("Added to favorites", comment: "")
