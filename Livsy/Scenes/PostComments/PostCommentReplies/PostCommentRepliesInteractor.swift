@@ -33,7 +33,7 @@ final class PostCommentRepliesInteractor: PostCommentRepliesBusinessLogic, PostC
     // MARK: - Data Store
     
     var replies: [PostComment] = []
-    var parentComment: PostComment = PostComment(id: 00, parent: 00, authorName: "")
+    var parentComment: PostComment = PostComment(id: 00, parent: 00, authorName: "", date: "")
     var postID: Int = 0
     var authorName: String? = ""
     var image: UIImage = UIImage()

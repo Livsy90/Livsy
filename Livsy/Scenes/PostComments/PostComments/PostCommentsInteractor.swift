@@ -38,7 +38,7 @@ final class PostCommentsInteractor: PostCommentsBusinessLogic, PostCommentsDataS
     var commentAndReplies: [PostComment] = []
     var comments: [PostComment] = []
     var postID: Int = 1
-    var parentComment: PostComment = PostComment(id: 00, parent: 00, authorName: "")
+    var parentComment: PostComment = PostComment(id: 00, parent: 00, authorName: "", date: "")
     var postTitle: String = ""
     var authorName: String? = ""
     var image: UIImage = UIImage()

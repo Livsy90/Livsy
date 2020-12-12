@@ -14,6 +14,7 @@ class CommentsTableViewCell: UITableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var repliesLabel: UILabel!
     @IBOutlet weak var postAuthorImageView: UIImageView!
+    @IBOutlet weak var dateLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,6 +26,7 @@ class CommentsTableViewCell: UITableViewCell {
         self.selectedBackgroundView = selectedBackgroundView
         self.backgroundView = unselectedBackgroundView
         repliesLabel.textColor = .navBarTint
+        dateLabel.textColor = .navBarTint
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -47,6 +49,7 @@ class CommentsTableViewCell: UITableViewCell {
         contentLabel.text = comment.content?.rendered?.pureString()
         repliesLabel.isHidden = isReplyButtonHidden || comment.replies.count == 0
         postAuthorImageView.isHidden = postAuthorName != authorNameLabel.text
+        dateLabel.text = comment.date.getDate()?.formatToDateAndTimeStyle()
     }
     
 }

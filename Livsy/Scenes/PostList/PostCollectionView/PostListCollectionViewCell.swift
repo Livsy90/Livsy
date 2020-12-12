@@ -103,6 +103,7 @@ class PostListCollectionViewCell: UICollectionViewCell {
         mainImageView.addSubview(nameLabel)
         mainImageView.addSubview(favImageView)
         mainImageView.addSubview(dateLabel)
+        dateLabel.centerXAnchor.constraint(equalTo: mainImageView.centerXAnchor).isActive = true
         nameLabel.centerXAnchor.constraint(equalTo: mainImageView.centerXAnchor).isActive = true
         nameLabel.centerYAnchor.constraint(equalTo: mainImageView.centerYAnchor).isActive = true
         nameLabel.widthAnchor.constraint(equalTo: mainImageView.widthAnchor, constant: -16).isActive = true
@@ -111,7 +112,7 @@ class PostListCollectionViewCell: UICollectionViewCell {
         darkView.widthAnchor.constraint(equalTo: mainImageView.widthAnchor).isActive = true
         darkView.heightAnchor.constraint(equalTo: mainImageView.heightAnchor).isActive = true
         favImageView.anchor(top: mainImageView.topAnchor, left: nil, bottom: nil, right: mainImageView.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 10, width: 0, height: 0)
-        dateLabel.anchor(top: mainImageView.topAnchor, left: mainImageView.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        dateLabel.anchor(top: nameLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         mainImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: Constants.postListImageHeight)
         smallDescriptionLabel.anchor(top: mainImageView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 16, paddingBottom: 5, paddingRight: 16, width: 0, height: 0)
         mainImageView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true

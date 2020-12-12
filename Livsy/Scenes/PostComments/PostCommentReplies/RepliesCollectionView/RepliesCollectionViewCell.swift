@@ -28,7 +28,7 @@ class RepliesCollectionViewCell: UICollectionViewCell {
     let content: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .commentBody
+        label.textColor = .bodyText
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

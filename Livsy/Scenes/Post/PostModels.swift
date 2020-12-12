@@ -23,12 +23,14 @@ struct PostComment: Codable {
     var parent: Int
     var authorName: String
     var content: Content?
+    let date: String
     var replies: [PostComment] = []
     
     private enum CodingKeys: String, CodingKey {
         case id
         case parent
         case authorName = "author_name"
+        case date
         case content
     }
     

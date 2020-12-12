@@ -8,11 +8,16 @@
 
 import UIKit
 
-class MainTabBarController: UITabBarController {
+protocol TabBarReselectHandling {
+    func handleReselect()
+}
+
+class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBar.tintColor = .postText
+        delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,6 +57,24 @@ class MainTabBarController: UITabBarController {
         
         propertyAnimator.addAnimations({ barItemView.transform = .identity }, delayFactor: CGFloat(timeInterval))
         propertyAnimator.startAnimation()
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        guard tabBarController.selectedViewController === viewController else { return true }
+        guard let navigationController = viewController as? UINavigationController else {
+            assertionFailure()
+            return true
+        }
+        
+        guard
+            navigationController.viewControllers.count <= 1,
+            let destinationViewController = navigationController.viewControllers.first as? TabBarReselectHandling
+        else {
+            return true
+        }
+        
+        destinationViewController.handleReselect()
+        return false
     }
     
 }

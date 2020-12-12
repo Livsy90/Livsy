@@ -15,6 +15,7 @@ enum Text {
         static let empty = ""
         static let ok = "OK"
         static let livsy = NSLocalizedString("Livsy", comment: "")
+        static let at = NSLocalizedString("at", comment: "")
         static let cancel = NSLocalizedString("Cancel", comment: "")
         static let close = NSLocalizedString("Close", comment: "")
         static let tryAgain = NSLocalizedString("Try again", comment: "")

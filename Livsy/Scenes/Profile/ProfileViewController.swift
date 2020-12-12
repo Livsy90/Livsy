@@ -89,6 +89,7 @@ final class ProfileViewController: UIViewController {
         tableView.register(MainProfileCell.self, forCellReuseIdentifier: "cellId")
         tableView.register(FavPostsCell.self, forCellReuseIdentifier: "favCellId")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")
+        tableView.separatorEffect = UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemUltraThinMaterial))
     }
     
     private func signOut() {
@@ -157,9 +158,7 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc private func presentMailViewController() {
-        
         if MFMailComposeViewController.canSendMail() {
-            
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
             mail.setToRecipients([Text.Profile.supportEmail])
@@ -170,7 +169,6 @@ final class ProfileViewController: UIViewController {
         } else {
             showAlertWithOneButton(title: Text.Profile.noMailAccount, message: nil, buttonTitle: Text.Common.ok, buttonAction: nil)
         }
-        
     }
     
 }
@@ -349,3 +347,10 @@ extension ProfileViewController: MFMailComposeViewControllerDelegate {
     
 }
 
+extension ProfileViewController: TabBarReselectHandling {
+    
+    func handleReselect() {
+        tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .middle, animated: true)
+    }
+    
+}

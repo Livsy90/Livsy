@@ -42,7 +42,7 @@ extension UIColor {
         return UIColor.init(named: "AuthorName") ?? .darkText
     }
     
-    static var commentBody: UIColor {
+    static var bodyText: UIColor {
         return UIColor.init(named: "CommentText") ?? .darkText
     }
     

@@ -17,8 +17,15 @@ extension Date {
     
     func formatToShortStyle() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "dd LLL yyyy"
+        dateFormatter.locale = .current
+        return dateFormatter.string(from: self)
+    }
+    
+    func formatToDateAndTimeStyle() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd LLL YYY \(Text.Common.at) HH:mm"
+        dateFormatter.locale = .current
         return dateFormatter.string(from: self)
     }
 }

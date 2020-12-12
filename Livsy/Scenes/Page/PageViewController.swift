@@ -82,7 +82,7 @@ final class PageViewController: UIViewController {
         scrollView.backgroundColor = .postBackground
         
         scrollView.addSubview(titleLabel)
-        titleLabel.textColor = .commentBody
+        titleLabel.textColor = .bodyText
         titleLabel.lineBreakMode = .byWordWrapping
         titleLabel.numberOfLines = 0
         titleLabel.font = UIFont.systemFont(ofSize: 26)
@@ -94,7 +94,7 @@ final class PageViewController: UIViewController {
         textView.isScrollEnabled = false
         textView.isEditable = false
         textView.font = UIFont.preferredFont(forTextStyle: .body)
-        textView.textColor = .commentBody
+        textView.textColor = .bodyText
         textView.textAlignment = .left
     }
     

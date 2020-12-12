@@ -103,7 +103,6 @@ final class PostListViewController: UIViewController {
         setupCollectionView()
         setupRefreshControl()
         fetchPostList(isLoadMore: false)
-        tabBarController?.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -408,19 +407,17 @@ extension PostListViewController: TagsViewControllerDelegate {
 }
 
 extension PostListViewController: PageListViewControllerDelegate {
+    
     func routeToPage(id: Int) {
         router?.routeToPage(id: id)
     }
+    
 }
 
-extension PostListViewController: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        let tabBarIndex = tabBarController.selectedIndex
-        let postList = router?.dataStore?.postList
-        if tabBarIndex == 0 {
-            self.postCollectionView.setContentOffset(CGPoint(x:0,y: -140), animated: true)
-            
-        }
+extension PostListViewController: TabBarReselectHandling {
+    
+    func handleReselect() {
+        postCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredVertically, animated: true)
     }
     
 }

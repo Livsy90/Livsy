@@ -35,7 +35,7 @@ final class PostViewController: UIViewController {
     private let scrollView = UIScrollView()
     private let postTitleLabel = UILabel()
     private let imageView = WebImageView()
-    private let lblName = UILabel()
+    private let postDateLabel = UILabel()
     private var favButton = UIButton()
     private var commentsButtonItem = UIBarButtonItem()
     private let darkView: UIView = {
@@ -103,7 +103,7 @@ final class PostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setupDataforUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -136,9 +136,21 @@ final class PostViewController: UIViewController {
         imageView.addSubview(postTitleLabel)
     }
     
-    private func setupUI() {
+    private func setupDataforUI() {
         view.backgroundColor = .postBackground
         interactor?.getAverageColorAndSetupUI(request: PostModels.Color.Request())
+    }
+    
+    private func setupUI() {
+        setMainColor()
+        createGradientLayer()
+        scrollViewSetup()
+        setupHeader()
+        postDateLabelSetup()
+        textViewSetup()
+        setupProgressView()
+        fetchPostComments()
+        fetchPostAuthor()
     }
     
     private func incrementPostOpenCount() {
@@ -171,6 +183,7 @@ final class PostViewController: UIViewController {
     private func scrollViewSetup() {
         view.addSubview(scrollView)
         scrollView.addSubview(textView)
+        scrollView.addSubview(postDateLabel)
         scrollView.delegate = self
         scrollView.alwaysBounceVertical = true
         scrollView.isDirectionalLockEnabled = true
@@ -200,6 +213,14 @@ final class PostViewController: UIViewController {
         }
     }
     
+    private func postDateLabelSetup() {
+        let date = router?.dataStore?.post.date.getDate()?.formatToDateAndTimeStyle()
+        postDateLabel.text = date
+        postDateLabel.font = .boldSystemFont(ofSize: 13)
+        postDateLabel.textColor = .bodyText
+        postDateLabel.anchor(top: scrollView.topAnchor, left: scrollView.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+    }
+    
     private func postTitleSetup() {
         postTitleLabel.textColor = .white
         postTitleLabel.lineBreakMode = .byWordWrapping
@@ -213,11 +234,11 @@ final class PostViewController: UIViewController {
     private func textViewSetup() {
         textView.backgroundColor = .clear
         textView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -40).isActive = true
-        textView.anchor(top: scrollView.topAnchor, left: scrollView.leftAnchor, bottom: scrollView.bottomAnchor, right: scrollView.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        textView.anchor(top: postDateLabel.bottomAnchor, left: scrollView.leftAnchor, bottom: scrollView.bottomAnchor, right: scrollView.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         textView.isScrollEnabled = false
         textView.isEditable = false
         textView.font = UIFont.preferredFont(forTextStyle: .body)
-        textView.textColor = .commentBody
+        textView.textColor = .bodyText
         textView.textAlignment = .left
         textView.alpha = 0
     }
@@ -360,21 +381,13 @@ extension PostViewController: PostDisplayLogic {
         switch viewModel.error == nil {
         case true:
             showActivityIndicatorOnNavBarItem()
-            setMainColor()
-            createGradientLayer()
-            scrollViewSetup()
-            setupHeader()
-            textViewSetup()
-            setupProgressView()
-            fetchPostComments()
-            fetchPostAuthor()
+            setupUI()
             guard let post = router?.dataStore?.post else { return }
             setText(post) { self.activityIndicator.hideIndicator() }
             isFromLink = false
         case false:
             router?.showErrorAlert(with: Text.Post.postNotFound, completion: fetchPost)
         }
-        
         
     }
     
