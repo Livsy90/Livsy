@@ -59,8 +59,10 @@ class PostListCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
         cell.set(imageUrl: cells[indexPath.row].imgURL)
         let description = cells[indexPath.row].excerpt?.rendered?.pureString()
         let title = cells[indexPath.row].title?.rendered.pureString()
+        let date = cells[indexPath.row].date.getDate()?.formatToShortStyle()
         cell.nameLabel.text = title
         cell.smallDescriptionLabel.text = description
+        cell.dateLabel.text = date
         cell.setVisibilityOfFavoriteImageView(posts: cells, index: indexPath.row)
         return cell
     }

@@ -33,6 +33,23 @@ import Foundation
 
 extension String {
     
+    func getDate() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.locale = Locale.current
+        return dateFormatter.date(from: self)
+    }
+    
+    func getStringDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMMM yyyy"
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.locale = Locale.current
+        let date = dateFormatter.date(from: self) ?? Date()
+        return dateFormatter.string(from: date)
+    }
+    
     func convertToAttributedFromHTML() -> NSAttributedString? {
         var attributedText: NSAttributedString?
         let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue]

@@ -96,7 +96,7 @@ final class TagsViewController: UIViewController {
         backgroundView.addSubview(self.buildBlurView())
         
         tableView.backgroundView = backgroundView
-        tableView.separatorEffect = UIVibrancyEffect(blurEffect: effect)
+        tableView.separatorColor = .clear
         tableView.isScrollEnabled = UIScreen.main.bounds.height < tableView.contentSize.height + 300
     }
     
@@ -136,7 +136,6 @@ extension TagsViewController: UITableViewDataSource {
         cell.textLabel?.text = tags[indexPath.row].name
         cell.backgroundColor = .clear
         cell.separatorInset = .zero
-        cell.textLabel?.textAlignment = .center
         return cell
     }
     

@@ -92,7 +92,7 @@ final class CategoriesViewController: UIViewController {
         backgroundView.addSubview(self.buildBlurView())
         
         tableView.backgroundView = backgroundView
-        tableView.separatorEffect = UIVibrancyEffect(blurEffect: effect)
+        tableView.separatorColor = .clear
         tableView.isScrollEnabled = UIScreen.main.bounds.height < tableView.contentSize.height + 300
     }
     
@@ -131,7 +131,6 @@ extension CategoriesViewController: UITableViewDataSource {
         cell.textLabel?.text = tags[indexPath.row].name
         cell.separatorInset = .zero
         cell.backgroundColor = .clear
-        cell.textLabel?.textAlignment = .center
         return cell
     }
     

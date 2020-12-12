@@ -85,6 +85,7 @@
 		C2589C1C256FD0BF00F727FD /* PageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2589C15256FD0BF00F727FD /* PageListViewController.swift */; };
 		C2589C1D256FD0BF00F727FD /* PageListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2589C16256FD0BF00F727FD /* PageListInteractor.swift */; };
 		C259927D256C3CC70015E4FD /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = C259927C256C3CC70015E4FD /* Text.swift */; };
+		C25DBC9E2584B90F004986F0 /* Date+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25DBC9D2584B90F004986F0 /* Date+adds.swift */; };
 		C268CDB124A9290800949C4D /* PostCommentsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268CDAA24A9290800949C4D /* PostCommentsPresenter.swift */; };
 		C268CDB224A9290800949C4D /* PostCommentsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268CDAB24A9290800949C4D /* PostCommentsWorker.swift */; };
 		C268CDB324A9290800949C4D /* PostCommentsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268CDAC24A9290800949C4D /* PostCommentsRouter.swift */; };
@@ -224,6 +225,7 @@
 		C2589C15256FD0BF00F727FD /* PageListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageListViewController.swift; sourceTree = "<group>"; };
 		C2589C16256FD0BF00F727FD /* PageListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageListInteractor.swift; sourceTree = "<group>"; };
 		C259927C256C3CC70015E4FD /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
+		C25DBC9D2584B90F004986F0 /* Date+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+adds.swift"; sourceTree = "<group>"; };
 		C268CDAA24A9290800949C4D /* PostCommentsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentsPresenter.swift; sourceTree = "<group>"; };
 		C268CDAB24A9290800949C4D /* PostCommentsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentsWorker.swift; sourceTree = "<group>"; };
 		C268CDAC24A9290800949C4D /* PostCommentsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentsRouter.swift; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 				C2FFC6A3255A9DB1001B885E /* UICollectionView+adds.swift */,
 				C20974C9256144A100485464 /* Array+adds.swift */,
 				C2133150257BBB22004FDF9D /* URL+adds.swift */,
+				C25DBC9D2584B90F004986F0 /* Date+adds.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -804,6 +807,7 @@
 				C218FCF4251B5A6A002F9C68 /* SplashPresenter.swift in Sources */,
 				C259927D256C3CC70015E4FD /* Text.swift in Sources */,
 				C24CA08825604D6E003B6521 /* TagsWorker.swift in Sources */,
+				C25DBC9E2584B90F004986F0 /* Date+adds.swift in Sources */,
 				C2EBC71E24D02F870066113D /* NetManager.swift in Sources */,
 				C2D2ABE82571425200388FE3 /* NavigationController.swift in Sources */,
 				C23261F024D5D73B00F670EE /* Collection+safe.swift in Sources */,

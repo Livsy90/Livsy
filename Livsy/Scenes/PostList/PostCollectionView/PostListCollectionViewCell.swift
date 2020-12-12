@@ -54,6 +54,17 @@ class PostListCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    let dateLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 1
+        label.font = UIFont.systemFont(ofSize: 11, weight: .bold)
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -91,6 +102,7 @@ class PostListCollectionViewCell: UICollectionViewCell {
         mainImageView.addSubview(darkView)
         mainImageView.addSubview(nameLabel)
         mainImageView.addSubview(favImageView)
+        mainImageView.addSubview(dateLabel)
         nameLabel.centerXAnchor.constraint(equalTo: mainImageView.centerXAnchor).isActive = true
         nameLabel.centerYAnchor.constraint(equalTo: mainImageView.centerYAnchor).isActive = true
         nameLabel.widthAnchor.constraint(equalTo: mainImageView.widthAnchor, constant: -16).isActive = true
@@ -99,6 +111,7 @@ class PostListCollectionViewCell: UICollectionViewCell {
         darkView.widthAnchor.constraint(equalTo: mainImageView.widthAnchor).isActive = true
         darkView.heightAnchor.constraint(equalTo: mainImageView.heightAnchor).isActive = true
         favImageView.anchor(top: mainImageView.topAnchor, left: nil, bottom: nil, right: mainImageView.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 10, width: 0, height: 0)
+        dateLabel.anchor(top: mainImageView.topAnchor, left: mainImageView.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         mainImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: Constants.postListImageHeight)
         smallDescriptionLabel.anchor(top: mainImageView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 16, paddingBottom: 5, paddingRight: 16, width: 0, height: 0)
         mainImageView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
