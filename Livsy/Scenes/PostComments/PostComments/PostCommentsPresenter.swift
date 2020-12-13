@@ -25,7 +25,7 @@ final class PostCommentsPresenter: PostCommentsPresentationLogic {
     // MARK: - Presentation Logic
     
     func presentPostComments(response: PostCommentsModels.PostComments.Response) {
-        viewController?.displayPostComments(viewModel: PostCommentsModels.PostComments.ViewModel(isReload: response.isReload))
+        viewController?.displayPostComments(viewModel: PostCommentsModels.PostComments.ViewModel(isReload: response.isReload, isOneCommentAppended: response.isOneCommentAppended, isSubmited: response.isSubmited, isEditedByWeb: response.isEditedByWeb))
     }
     
     func presentReplies(response: PostCommentsModels.Replies.Response) {
@@ -33,6 +33,6 @@ final class PostCommentsPresenter: PostCommentsPresentationLogic {
     }
     
     func presentSubmitCommentResult(response: PostCommentsModels.SubmitComment.Response) {
-        viewController?.diplsySubmitCommentResult(viewModel: PostCommentsModels.SubmitComment.ViewModel(error: response.error))
+        viewController?.displaySubmitCommentResult(viewModel: PostCommentsModels.SubmitComment.ViewModel(error: response.error))
     }
 }

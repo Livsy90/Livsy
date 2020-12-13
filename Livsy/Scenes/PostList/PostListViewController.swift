@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol PostListDisplayLogic: class {
+protocol PostListDisplayLogic: AnyObject {
     func displayPostList(viewModel: PostListModels.PostList.ViewModel)
     func displayToken(viewModel: PostListModels.Login.ViewModel)
     func displaySignOut()

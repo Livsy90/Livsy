@@ -14,16 +14,23 @@ enum PostCommentRepliesModels {
     
     enum PostCommentReplies {
         
-       struct Request {
+        struct Request {
             var isReload: Bool
+            var isSubmitted: Bool
         }
         
         struct Response {
-            
+            var isReload: Bool
+            var isOneCommentAppended: Bool
+            var isSubmited: Bool
+            var isEditedByWeb: Bool
         }
         
         struct ViewModel {
-            
+            var isReload: Bool
+            var isOneCommentAppended: Bool
+            var isSubmited: Bool
+            var isEditedByWeb: Bool
         }
     }
     

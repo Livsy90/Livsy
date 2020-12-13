@@ -9,7 +9,7 @@
 import StoreKit
 import UIKit
 
-protocol PostDisplayLogic: class {
+protocol PostDisplayLogic: AnyObject {
     func displayPostPage(viewModel: PostModels.PostPage.ViewModel)
     func displayPostComments(viewModel: PostModels.PostComments.ViewModel)
     func displayFavorites(viewModel: PostModels.SaveToFavorites.ViewModel)

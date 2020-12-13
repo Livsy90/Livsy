@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol TagsDisplayLogic: class {
+protocol TagsDisplayLogic: AnyObject {
     func displayTags(viewModel: TagsModels.Tags.ViewModel)
 }
 
-protocol TagsViewControllerDelegate: class {
+protocol TagsViewControllerDelegate: AnyObject {
     func fetchPostListByTag(id: Int)
 }
 

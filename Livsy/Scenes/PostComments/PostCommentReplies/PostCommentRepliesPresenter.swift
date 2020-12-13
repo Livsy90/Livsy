@@ -24,7 +24,7 @@ final class PostCommentRepliesPresenter: PostCommentRepliesPresentationLogic {
     // MARK: - Presentation Logic
     
     func presentReplies(response: PostCommentRepliesModels.PostCommentReplies.Response) {
-        viewController?.displayReplies(request: PostCommentRepliesModels.PostCommentReplies.ViewModel())
+        viewController?.displayReplies(viewModel: PostCommentRepliesModels.PostCommentReplies.ViewModel(isReload: response.isReload, isOneCommentAppended: response.isOneCommentAppended, isSubmited: response.isSubmited, isEditedByWeb: response.isEditedByWeb))
     }
     
     func presentSubmitCommentResult(response: PostCommentRepliesModels.SubmitComment.Response) {

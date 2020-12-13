@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol PageListDisplayLogic: class {
+protocol PageListDisplayLogic: AnyObject {
     
 }
 
-protocol PageListViewControllerDelegate: class {
+protocol PageListViewControllerDelegate: AnyObject {
     func routeToPage(id: Int)
 }
 

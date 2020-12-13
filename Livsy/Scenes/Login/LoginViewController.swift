@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol LoginDisplayLogic: class {
+protocol LoginDisplayLogic: AnyObject {
     func displayLogin(viewModel: LoginModels.Login.ViewModel)
     func displayResetPassword(viewModel: LoginModels.ResetPassword.ViewModel)
 }
 
-protocol LoginSceneDelegate: class {
+protocol LoginSceneDelegate: AnyObject {
     func setupUIforLoggedIn()
 }
 

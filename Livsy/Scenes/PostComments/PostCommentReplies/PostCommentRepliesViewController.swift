@@ -8,8 +8,8 @@
 
 import UIKit
 
-protocol PostCommentRepliesDisplayLogic: class {
-    func displayReplies(request: PostCommentRepliesModels.PostCommentReplies.ViewModel)
+protocol PostCommentRepliesDisplayLogic: AnyObject {
+    func displayReplies(viewModel: PostCommentRepliesModels.PostCommentReplies.ViewModel)
     func diplsySubmitCommentResult(viewModel: PostCommentRepliesModels.SubmitComment.ViewModel)
 }
 
@@ -28,7 +28,6 @@ final class PostCommentRepliesViewController: UIViewController {
     private let resizingMask: UIView.AutoresizingMask = [.flexibleWidth, .flexibleHeight]
     private var refreshControl: UIRefreshControl!
     private var repliesCollectionView = RepliesCollectionView()
-    private var bottomConstraint = NSLayoutConstraint()
     private var backgroundImageView: UIImageView = {
         let imgView = UIImageView()
         imgView.translatesAutoresizingMaskIntoConstraints = false
@@ -80,8 +79,7 @@ final class PostCommentRepliesViewController: UIViewController {
         super.viewDidLoad()
         setupRefreshControl()
         setupTableView()
-        setupInputView()
-        showReplies(isReload: false)
+        showReplies(isReload: false, isSubmitted: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -109,7 +107,7 @@ final class PostCommentRepliesViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.anchor(top: backgroundImageView.topAnchor, left: backgroundImageView.leftAnchor, bottom: backgroundImageView.bottomAnchor, right: backgroundImageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         tableView.tableFooterView = UIView()
-        tableView.keyboardDismissMode = .onDrag
+        tableView.keyboardDismissMode = .interactive
         tableView.register(UINib(nibName: CommentsTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.reuseIdentifier())
         tableView.backgroundColor = .clear
         
@@ -143,16 +141,6 @@ final class PostCommentRepliesViewController: UIViewController {
         tableView.addSubview(refreshControl)
     }
     
-    
-    private func setupInputView() {
-        view.addSubview(containerView)
-        containerView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        
-        let bCons = NSLayoutConstraint(item: containerView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
-        bottomConstraint = bCons
-        view.addConstraint(bottomConstraint)
-    }
-    
     @objc private func adjustForKeyboard(notification: Notification) {
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         
@@ -160,27 +148,11 @@ final class PostCommentRepliesViewController: UIViewController {
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
         if notification.name == UIResponder.keyboardWillHideNotification {
             tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
-            bottomConstraint.constant = 0
         } else {
             tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + 50, right: 0)
-            bottomConstraint.constant = -keyboardViewEndFrame.height
-        }
-        
-        UIView.animate(withDuration: 0, delay: 0, options: .curveEaseOut) {
-            self.view.layoutIfNeeded()
-        } completion: { (completed) in
-            
         }
         
         tableView.scrollIndicatorInsets = tableView.contentInset
-    }
-    
-    private func scrollToRow(completion: (_ success: Bool) -> Void) {
-        activityIndicator.showIndicator(on: self)
-        if tableView.visibleCells.count > 0 {
-            tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
-        }
-        completion(true)
     }
     
     @objc private func routeToLogin() {
@@ -188,7 +160,7 @@ final class PostCommentRepliesViewController: UIViewController {
     }
     
     @objc private func refreshData() {
-        interactor?.showReplies(request: PostCommentRepliesModels.PostCommentReplies.Request(isReload: true))
+        interactor?.showReplies(request: PostCommentRepliesModels.PostCommentReplies.Request(isReload: true, isSubmitted: false))
     }
     
     private func setupNavBar() {
@@ -213,11 +185,13 @@ final class PostCommentRepliesViewController: UIViewController {
         repliesCollectionView.keyboardDismissMode = .interactive
     }
     
-    private func showReplies(isReload: Bool) {
-        interactor?.showReplies(request: PostCommentRepliesModels.PostCommentReplies.Request(isReload: isReload))
+    private func showReplies(isReload: Bool, isSubmitted: Bool) {
+        tableView.allowsSelection = false
+        interactor?.showReplies(request: PostCommentRepliesModels.PostCommentReplies.Request(isReload: isReload, isSubmitted: isSubmitted))
     }
     
     private func submitComment(content: String) {
+        activityIndicator.showIndicator(on: self)
         interactor?.showSubmitReply(request: PostCommentRepliesModels.SubmitComment.Request(content: content, post: router?.dataStore?.postID ?? 0))
     }
     
@@ -227,16 +201,32 @@ final class PostCommentRepliesViewController: UIViewController {
 
 extension PostCommentRepliesViewController: PostCommentRepliesDisplayLogic {
     
-    func displayReplies(request: PostCommentRepliesModels.PostCommentReplies.ViewModel) {
-        tableView.softReload()
+    func displayReplies(viewModel: PostCommentRepliesModels.PostCommentReplies.ViewModel) {
+        let comments = router?.dataStore?.replies ?? []
+        let isShouldInsertRow = viewModel.isOneCommentAppended && viewModel.isSubmited && !viewModel.isEditedByWeb
         refreshControl.endRefreshing()
         activityIndicator.hideIndicator()
+        isShouldInsertRow ? tableView.insertRows(at: [IndexPath(item: comments.count - 1, section: 1)], with: .right) : tableView.softReload()
+        tableView.allowsSelection = false
+        
+        switch viewModel.isSubmited {
+        case true:
+            if tableView.visibleCells.count > 0 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    guard let item = self.router?.dataStore?.replies.count else { return }
+                    self.tableView.scrollToRow(at: IndexPath(item: item - 1, section: 1), at: .bottom, animated: true)
+                }
+            }
+            
+        case false:
+            return
+        }
     }
     
     func diplsySubmitCommentResult(viewModel: PostCommentRepliesModels.SubmitComment.ViewModel) {
         if viewModel.error == nil {
             containerView.clearCommentTextField()
-            showReplies(isReload: true)
+            showReplies(isReload: true, isSubmitted: true)
         } else {
             containerView.enableButton()
             router?.showAlert(with: viewModel.error?.message ?? "Oops.. Something went wrong!")
@@ -249,10 +239,7 @@ extension PostCommentRepliesViewController: PostCommentRepliesDisplayLogic {
 extension PostCommentRepliesViewController: CommentInputAccessoryViewDelegate {
     
     func didSubmit(for comment: String) {
-        scrollToRow { [weak self] (success) in
-            guard let self = self else { return }
-            self.submitComment(content: comment)
-        }
+        submitComment(content: comment)
     }
     
     func routeToLoginScene() {
@@ -317,3 +304,18 @@ extension PostCommentRepliesViewController: UITableViewDataSource {
     }
     
 }
+
+extension PostCommentRepliesViewController {
+    
+    override var inputAccessoryView: UIView? {
+        get {
+            return containerView
+        }
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+    
+}
+

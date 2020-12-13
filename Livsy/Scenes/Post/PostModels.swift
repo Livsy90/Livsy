@@ -17,7 +17,7 @@ struct PostPage: Codable {
     let author: Int
 }
 
-struct PostComment: Codable {
+struct PostComment: Codable, Equatable {
     
     var id: Int
     var parent: Int
@@ -32,6 +32,10 @@ struct PostComment: Codable {
         case authorName = "author_name"
         case date
         case content
+    }
+    
+    static func ==(lhs: PostComment, rhs: PostComment) -> Bool {
+        return lhs.id == rhs.id
     }
     
 }

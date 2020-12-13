@@ -46,22 +46,24 @@ final class PostCommentsInteractor: PostCommentsBusinessLogic, PostCommentsDataS
     // MARK: - Business Logic
     
     func showComments(request: PostCommentsModels.PostComments.Request) {
-        let commentsCount = commentsData.count
+        let comments = commentsData
         if request.isReload {
             worker?.fetchPostComments(id: postID, completion: { [weak self] (response, error) in
                 guard let self = self else { return }
-                self.commentsData = response ?? []
-                self.showSortedComments(isReload: (response?.count ?? 0 > commentsCount + 1) ? !request.isReload : request.isReload)
+                self.commentsData = response?.sorted(by: { $0.id < $1.id }) ?? []
+                let isMultipleCommentsAppended = response?.count ?? 0 > comments.count + 1
+                let isEditedByWeb = !(response?.contains(array: comments) ?? false)
+                self.showSortedComments(isReload: request.isReload, isOneCommentAppend: !isMultipleCommentsAppended, isSubmitted: request.isSubmitted, isEditedByWeb: isEditedByWeb)
             })
             
         } else {
-            showSortedComments(isReload: request.isReload)
+            showSortedComments(isReload: request.isReload, isOneCommentAppend: false, isSubmitted: false, isEditedByWeb: false)
         }
         
     }
     
     func showReplies(request: PostCommentsModels.Replies.Request) {
-        commentAndReplies = request.replies ?? []
+        commentAndReplies = request.replies?.sorted(by: { $0.id < $1.id }) ?? []
         parentComment = request.comment
         presenter?.presentReplies(response: PostCommentsModels.Replies.Response())
     }
@@ -73,7 +75,7 @@ final class PostCommentsInteractor: PostCommentsBusinessLogic, PostCommentsDataS
         })
     }
     
-    private func showSortedComments(isReload: Bool) {
+    private func showSortedComments(isReload: Bool, isOneCommentAppend: Bool, isSubmitted: Bool, isEditedByWeb: Bool) {
         commentsData.forEach { comment  in
             guard comment.parent != 0,
                 let parentCommentIndex = (commentsData.firstIndex { parentComment in
@@ -82,8 +84,8 @@ final class PostCommentsInteractor: PostCommentsBusinessLogic, PostCommentsDataS
             commentsData[parentCommentIndex].replies.append(comment)
         }
         
-        comments = commentsData.filter { $0.parent == 0 }
-        self.presenter?.presentPostComments(response: PostCommentsModels.PostComments.Response(isReload: isReload))
+        comments = commentsData.filter { $0.parent == 0 }.sorted(by: { $0.id < $1.id })
+        presenter?.presentPostComments(response: PostCommentsModels.PostComments.Response(isReload: isReload, isOneCommentAppended: isOneCommentAppend, isSubmited: isSubmitted, isEditedByWeb: isEditedByWeb))
     }
     
 }

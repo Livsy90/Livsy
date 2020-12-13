@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol RegisterDisplayLogic: class {
+protocol RegisterDisplayLogic: AnyObject {
     func displayLogin(viewModel: RegisterModels.Register.ViewModel)
     func displayLogin(viewModel: RegisterModels.Login.ViewModel)
 }

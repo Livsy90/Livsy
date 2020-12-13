@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SplashDisplayLogic: class {
+protocol SplashDisplayLogic: AnyObject {
     func displaySplash(viewModel: SplashModels.Login.ViewModel)
 }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol PageDisplayLogic: class {
+protocol PageDisplayLogic: AnyObject {
 
     func displayPage(viewModel: PageModels.Page.ViewModel)
     

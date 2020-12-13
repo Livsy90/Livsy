@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-protocol ProfileDisplayLogic: class {
+protocol ProfileDisplayLogic: AnyObject {
     func displaySignOut()
     func displayFavPosts(viewModel: ProfileModels.FavoritePosts.ViewModel)
     func displayPostRemoval(viewModel: ProfileModels.PostToRemove.ViewModel)

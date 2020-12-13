@@ -26,7 +26,7 @@ class CommentsTableViewCell: UITableViewCell {
         self.selectedBackgroundView = selectedBackgroundView
         self.backgroundView = unselectedBackgroundView
         repliesLabel.textColor = .navBarTint
-        dateLabel.textColor = .navBarTint
+        dateLabel.textColor = .titleGray
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

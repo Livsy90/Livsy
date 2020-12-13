@@ -41,14 +41,17 @@ final class PostCommentRepliesInteractor: PostCommentRepliesBusinessLogic, PostC
     // MARK: - Business Logic
     
     func showReplies(request: PostCommentRepliesModels.PostCommentReplies.Request) {
+        let comments = replies
         if request.isReload {
             worker?.fetchReplies(id: parentComment.id, completion: { [weak self] (response, error) in
                 guard let self = self else { return }
-                self.replies = response ?? []
-                self.presenter?.presentReplies(response: PostCommentRepliesModels.PostCommentReplies.Response())
+                self.replies = response?.sorted(by: { $0.id < $1.id }) ?? []
+                let isMultipleCommentsAppended = response?.count ?? 0 > comments.count + 1
+                let isEditedByWeb = !(response?.contains(array: comments) ?? false)
+                self.presenter?.presentReplies(response: PostCommentRepliesModels.PostCommentReplies.Response(isReload: request.isReload, isOneCommentAppended: !isMultipleCommentsAppended, isSubmited: request.isSubmitted, isEditedByWeb: isEditedByWeb))
             })
         } else {
-            self.presenter?.presentReplies(response: PostCommentRepliesModels.PostCommentReplies.Response())
+            self.presenter?.presentReplies(response: PostCommentRepliesModels.PostCommentReplies.Response(isReload: request.isReload, isOneCommentAppended: false, isSubmited: false, isEditedByWeb: false))
         }
     }
     

@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol CategoriesDisplayLogic: class {
+protocol CategoriesDisplayLogic: AnyObject {
     
 }
 
-protocol CategoriesViewControllerDelegate: class {
+protocol CategoriesViewControllerDelegate: AnyObject {
     func fetchPostListByCategory(id: Int)
 }
 
