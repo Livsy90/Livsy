@@ -28,6 +28,9 @@
 "Comments" = "Comments";
 
 /* No comment provided by engineer. */
+"Comment" = "Comment";
+
+/* No comment provided by engineer. */
 "Yes" = "Yes";
 
 /* No comment provided by engineer. */
@@ -38,9 +41,6 @@
 
 /* No comment provided by engineer. */
 "Are you sure?" = "Are uou sure?";
-
-/* No comment provided by engineer. */
-"Comment:" = "Comment:";
 
 /* No comment provided by engineer. */
 "at" = "at";
@@ -80,6 +80,12 @@
 
 /* No comment provided by engineer. */
 "reply" = "reply";
+
+/* No comment provided by engineer. */
+"Replies" = "Replies";
+
+/* No comment provided by engineer. */
+"Discussion" = "Discussion";
 
 /* No comment provided by engineer. */
 "replies" = "replies";

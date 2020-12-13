@@ -98,11 +98,13 @@ final class PostCommentsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = Text.Comments.discussion
         view.backgroundColor = .postBackground
         setupTableView()
         setupRefreshControl()
         setupNoCommentslabel()
         setupNoCommentslabel()
+        addSwipeToPopGesture()
     }
     
     
@@ -126,6 +128,12 @@ final class PostCommentsViewController: UIViewController {
         }
         
         tableView.scrollIndicatorInsets = tableView.contentInset
+    }
+    
+    private func addSwipeToPopGesture() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf))
+        swipeRight.direction = .right
+        view.addGestureRecognizer(swipeRight)
     }
     
     private func setupRefreshControl() {
@@ -184,6 +192,8 @@ final class PostCommentsViewController: UIViewController {
     }
     
     private func setupNavBar() {
+        let closeItem = UIBarButtonItem(title: Text.Common.close, style: .done, target: self, action: #selector(dismissSelf))
+        navigationItem.leftBarButtonItem = closeItem
         setNeedsStatusBarAppearanceUpdate()
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.shadowImage = nil
@@ -210,11 +220,14 @@ final class PostCommentsViewController: UIViewController {
     }
     
     @objc private func routeToLogin() {
+        isShouldReload = true
         router?.routeToLogin()
     }
     
     @objc private func dismissSelf() {
         router?.dismissSelf()
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
     }
     
     @objc private func refreshData() {
@@ -286,6 +299,8 @@ extension PostCommentsViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
         tableView.deselectRow(at: indexPath, animated: true)
         isShouldReload = true
         guard let comments = router?.dataStore?.comments else { return }

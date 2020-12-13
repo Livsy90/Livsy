@@ -31,7 +31,7 @@ enum Text {
     enum Post {
         
         static let publishedOn = NSLocalizedString("Published on", comment: "")
-        static let comment = NSLocalizedString("Comment:", comment: "")
+        static let comment = NSLocalizedString("Comment", comment: "")
         static let comments = NSLocalizedString("Comments", comment: "")
         static let addedTF = NSLocalizedString("Added to favorites", comment: "")
         static let addTF = NSLocalizedString("Add to favorites", comment: "")
@@ -49,6 +49,8 @@ enum Text {
         static let reply = NSLocalizedString("reply", comment: "")
         static let replies = NSLocalizedString("replies", comment: "")
         static let noReplies = NSLocalizedString("no replies yet", comment: "")
+        static let repliesCapital = NSLocalizedString("Replies", comment: "")
+        static let discussion = NSLocalizedString("Discussion", comment: "")
     }
     
     enum Login {

@@ -28,6 +28,9 @@
 "Comments" = "Комментарии";
 
 /* No comment provided by engineer. */
+"Comment" = "Комментарий";
+
+/* No comment provided by engineer. */
 "at" = "в";
 
 /* No comment provided by engineer. */
@@ -41,9 +44,6 @@
 
 /* No comment provided by engineer. */
 "Are you sure?" = "Вы уверены?";
-
-/* No comment provided by engineer. */
-"Comment:" = "Комментарий:";
 
 /* No comment provided by engineer. */
 "You are logged out" = "Вы вышли из профиля";
@@ -71,6 +71,12 @@
 
 /* No comment provided by engineer. */
 "reply" = "ответ";
+
+/* No comment provided by engineer. */
+"Replies" = "Ответы";
+
+/* No comment provided by engineer. */
+"Discussion" = "Обсуждение";
 
 /* No comment provided by engineer. */
 "replies" = "ответы";

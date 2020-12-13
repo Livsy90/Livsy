@@ -21,7 +21,7 @@ final class PostCommentRepliesViewController: UIViewController {
     var router: (PostCommentRepliesRoutingLogic & PostCommentRepliesDataPassing)?
     
     // MARK: - Private Properties
-
+    
     private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     private let activityIndicator = ActivityIndicator()
     private let effect = UIBlurEffect(style: .prominent)
@@ -77,12 +77,15 @@ final class PostCommentRepliesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = Text.Comments.repliesCapital
         setupRefreshControl()
         setupTableView()
         showReplies(isReload: false, isSubmitted: false)
+        addSwipeToPopGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setupNavBar()
     }
     
@@ -164,6 +167,8 @@ final class PostCommentRepliesViewController: UIViewController {
     }
     
     private func setupNavBar() {
+        let closeItem = UIBarButtonItem(title: Text.Common.close, style: .done, target: self, action: #selector(dismissSelf))
+        navigationItem.leftBarButtonItem = closeItem
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.shadowImage = nil
@@ -177,6 +182,14 @@ final class PostCommentRepliesViewController: UIViewController {
     
     @objc private func dismissSelf() {
         router?.dismissSelf()
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+    }
+    
+    private func addSwipeToPopGesture() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf))
+        swipeRight.direction = .right
+        view.addGestureRecognizer(swipeRight)
     }
     
     private func setupCollectionView() {
@@ -257,7 +270,7 @@ extension PostCommentRepliesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
-            return ""
+            return Text.Post.comment
         default:
             guard let commentReplies = router?.dataStore?.replies else { return Text.Comments.noReplies }
             return commentReplies.isEmpty ? Text.Comments.noReplies : Text.Comments.replies

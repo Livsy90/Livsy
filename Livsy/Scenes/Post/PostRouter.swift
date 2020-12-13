@@ -35,7 +35,13 @@ final class PostRouter: PostRoutingLogic, PostDataPassing {
     }
     
     func navigateToPostComments(source: PostViewController, destination: PostCommentsViewController) {
-        viewController?.navigationController?.pushViewController(destination, animated: true)
+        let transition:CATransition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        transition.type = .push
+        transition.subtype = .fromTop
+        viewController?.navigationController?.view.layer.add(transition, forKey: kCATransition)
+        viewController?.navigationController?.pushViewController(destination, animated: false)
     }
     
     func passDataToPostComments(source: PostDataStore, destination: inout PostCommentsDataStore) {

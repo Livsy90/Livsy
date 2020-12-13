@@ -26,8 +26,6 @@ final class PostCommentRepliesRouter: PostCommentRepliesRoutingLogic, PostCommen
     var dataStore: PostCommentRepliesDataStore?
     
     func routeToLogin() {
-       // viewController?.tabBarController?.selectedIndex = 1
-        
         let destinationVC = LoginViewController()
         var destinationDS = destinationVC.router!.dataStore!
         navigateToLogin(source: viewController!, destination: destinationVC)
@@ -43,7 +41,10 @@ final class PostCommentRepliesRouter: PostCommentRepliesRoutingLogic, PostCommen
     }
     
     func dismissSelf() {
-        viewController?.dismiss(animated: true, completion: nil)
+        UIView.transition(with: (viewController?.navigationController?.view)!, duration: 0.5, options: .transitionFlipFromLeft, animations: { [weak self] in
+            guard let self = self else { return }
+            self.viewController?.navigationController?.popViewController(animated: false)
+        })
     }
     
     func showAlert(with message: String) {

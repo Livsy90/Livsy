@@ -254,7 +254,7 @@ final class PostViewController: UIViewController {
         loadingCommentsIndicator.stopAnimating()
         let count = router?.dataStore?.comments.count ?? 0
         let postAuthorName = router?.dataStore?.authorName ?? ""
-        let countLabelText = count == 0 ? Text.Post.comments : "\(Text.Post.comments): \(count)"
+        let countLabelText = count == 0 ? "\(Text.Post.comments):" : "\(Text.Post.comments): \(count)"
         let commentsItem = UIBarButtonItem(title: countLabelText, style: .done, target: self, action: #selector(routeToComments))
         commentsButtonItem = commentsItem
         commentsButtonItem.isEnabled = !postAuthorName.isEmpty
@@ -363,6 +363,8 @@ final class PostViewController: UIViewController {
     
     @objc private func routeToComments() {
         router?.routeToPostComments()
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
     }
     
     @objc private func savePostToFav() {
