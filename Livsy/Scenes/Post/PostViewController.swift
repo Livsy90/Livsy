@@ -29,6 +29,8 @@ final class PostViewController: UIViewController {
     // MARK: - Private Properties
     
     private var id = 0
+    private var favButton = UIButton()
+    private var commentsButton = UIButton()
     private let activityIndicator = ActivityIndicator()
     private let loadingCommentsIndicator = UIActivityIndicatorView()
     private let textView = CustomTextView()
@@ -36,8 +38,6 @@ final class PostViewController: UIViewController {
     private let postTitleLabel = UILabel()
     private let imageView = WebImageView()
     private let postDateLabel = UILabel()
-    private var favButton = UIButton()
-    private var commentsButtonItem = UIBarButtonItem()
     private let darkView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -162,6 +162,7 @@ final class PostViewController: UIViewController {
     
     private func setupNavBar() {
         setNeedsStatusBarAppearanceUpdate()
+        navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: Text.Common.empty, style: .done, target: nil, action: nil)
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.tintColor = .white
@@ -254,18 +255,22 @@ final class PostViewController: UIViewController {
         loadingCommentsIndicator.stopAnimating()
         let count = router?.dataStore?.comments.count ?? 0
         let postAuthorName = router?.dataStore?.authorName ?? ""
-        let countLabelText = count == 0 ? "\(Text.Post.comments):" : "\(Text.Post.comments): \(count)"
-        let commentsItem = UIBarButtonItem(title: countLabelText, style: .done, target: self, action: #selector(routeToComments))
-        commentsButtonItem = commentsItem
-        commentsButtonItem.isEnabled = !postAuthorName.isEmpty
+        commentsButton.isEnabled = !postAuthorName.isEmpty
+        
+        let config = UIImage.SymbolConfiguration(pointSize: 22, weight: .medium, scale: .medium)
+        let shareImage = UIImage(systemName: "arrowshape.turn.up.right", withConfiguration: config)
+        let commentsImage = UIImage(systemName: "message", withConfiguration: config)
+        
+        let bubbleButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
+        bubbleButton.addTarget(self, action: #selector(routeToComments), for: .touchUpInside)
+        bubbleButton.setImage(commentsImage, for: .normal)
+        commentsButton = bubbleButton
+        let commentsItem = UIBarButtonItem(customView: commentsButton)
         
         let flameButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
         flameButton.addTarget(self, action: #selector(savePostToFav), for: .touchUpInside)
         favButton = flameButton
         let favItem =  UIBarButtonItem(customView: favButton)
-        
-        let config = UIImage.SymbolConfiguration(pointSize: 22, weight: .medium, scale: .medium)
-        let shareImage = UIImage(systemName: "arrowshape.turn.up.right", withConfiguration: config)
         
         let shareButton = UIButton(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
         shareButton.addTarget(self, action: #selector(share), for: .touchUpInside)
@@ -273,12 +278,12 @@ final class PostViewController: UIViewController {
         self.shareButton = shareButton
         let shareItem =  UIBarButtonItem(customView: self.shareButton)
         
-        
         let id = router?.dataStore?.post.id
         let array = UserDefaults.favPosts ?? []
         let isFavorite = array.contains(id ?? 00)
         setFavImage(isFavorite: isFavorite, animated: false)
-        navigationItem.rightBarButtonItems = [shareItem, favItem, commentsButtonItem]
+        navigationItem.rightBarButtonItems = [shareItem, favItem, commentsItem]
+        if count > 0 { commentsItem.setBadge(text: String(count)) }
     }
     
     private func fetchPost() {
@@ -408,7 +413,7 @@ extension PostViewController: PostDisplayLogic {
     }
     
     func displayAuthorName(viewModel: PostModels.AuthorName.ViewModel) {
-        commentsButtonItem.isEnabled = true
+        commentsButton.isEnabled = true
     }
     
     func displayUI(viewModel: PostModels.Color.ViewModel) {

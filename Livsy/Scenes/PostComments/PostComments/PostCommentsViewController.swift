@@ -33,6 +33,15 @@ final class PostCommentsViewController: UIViewController {
         return l
     }()
     
+    private let closeNavButton: UIButton = {
+        let button = UIButton()
+        let config = UIImage.SymbolConfiguration(pointSize: 15, weight: .bold, scale: .large)
+        let image = UIImage(systemName: "xmark", withConfiguration: config)
+        button.setImage(image, for: .normal)
+        button.addTarget(self, action: #selector(dismissByNavButton), for: .touchUpInside)
+        return button
+    }()
+    
     private var refreshControl: UIRefreshControl!
     private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     private let activityIndicator = ActivityIndicator()
@@ -130,7 +139,7 @@ final class PostCommentsViewController: UIViewController {
     }
     
     private func addSwipeToPopGesture() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf))
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(dismissBySwipe))
         swipeRight.direction = .right
         view.addGestureRecognizer(swipeRight)
     }
@@ -191,8 +200,7 @@ final class PostCommentsViewController: UIViewController {
     }
     
     private func setupNavBar() {
-        let closeItem = UIBarButtonItem(title: Text.Common.back, style: .done, target: self, action: #selector(dismissSelf))
-        navigationItem.leftBarButtonItem = closeItem
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: closeNavButton)
         setNeedsStatusBarAppearanceUpdate()
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.shadowImage = nil
@@ -223,8 +231,14 @@ final class PostCommentsViewController: UIViewController {
         router?.routeToLogin()
     }
     
-    @objc private func dismissSelf() {
-        router?.dismissSelf()
+    @objc private func dismissBySwipe() {
+        router?.dismissSelf(true)
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+    }
+    
+    @objc private func dismissByNavButton() {
+        router?.dismissSelf(false)
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
     }

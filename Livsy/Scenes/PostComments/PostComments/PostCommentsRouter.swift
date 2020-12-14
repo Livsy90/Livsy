@@ -11,7 +11,7 @@ import UIKit
 protocol PostCommentsRoutingLogic {
     func routeToReplies()
     func routeToLogin()
-    func dismissSelf()
+    func dismissSelf(_ isBySwipe: Bool)
     func showAlert(with message: String)
 }
 
@@ -34,7 +34,7 @@ final class PostCommentsRouter: PostCommentsRoutingLogic, PostCommentsDataPassin
     }
     
     func navigateToReplies(source: PostCommentsViewController, destination: PostCommentRepliesViewController) {
-        UIView.transition(with: (viewController?.navigationController?.view)!, duration: 0.5, options: .transitionFlipFromRight, animations: { [weak self] in
+        UIView.transition(with: (viewController?.navigationController?.view)!, duration: 0.4, options: .transitionFlipFromRight, animations: { [weak self] in
             guard let self = self else { return }
             self.viewController?.navigationController?.pushViewController(destination, animated: false)
         })
@@ -63,12 +63,12 @@ final class PostCommentsRouter: PostCommentsRoutingLogic, PostCommentsDataPassin
         destination.dismissMode = .toComments
     }
     
-    func dismissSelf() {
+    func dismissSelf(_ isBySwipe: Bool) {
         let transition:CATransition = CATransition()
-        transition.duration = 0.5
+        transition.duration = isBySwipe ? 0.3 : 0.45
         transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         transition.type = .push
-        transition.subtype = .fromBottom
+        transition.subtype = isBySwipe ? .fromLeft : .fromBottom
         viewController?.navigationController?.view.layer.add(transition, forKey: kCATransition)
         viewController?.navigationController?.popViewController(animated: false)
     }

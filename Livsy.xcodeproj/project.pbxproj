@@ -50,6 +50,8 @@
 		C2349447254C793100E26ADC /* ProfileModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2349440254C793100E26ADC /* ProfileModels.swift */; };
 		C2349448254C793100E26ADC /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2349441254C793100E26ADC /* ProfileViewController.swift */; };
 		C2349449254C793100E26ADC /* ProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2349442254C793100E26ADC /* ProfileInteractor.swift */; };
+		C23831B72587FAD1001A0759 /* CAShapeLayer+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23831B62587FAD1001A0759 /* CAShapeLayer+adds.swift */; };
+		C23831BA2587FAF6001A0759 /* UIBarButtonItem+adds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23831B92587FAF6001A0759 /* UIBarButtonItem+adds.swift */; };
 		C2386F7D249DF6EB0076AED3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2386F7C249DF6EB0076AED3 /* AppDelegate.swift */; };
 		C2386F7F249DF6EB0076AED3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2386F7E249DF6EB0076AED3 /* SceneDelegate.swift */; };
 		C2386F81249DF6EB0076AED3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2386F80249DF6EB0076AED3 /* ViewController.swift */; };
@@ -188,6 +190,8 @@
 		C2349440254C793100E26ADC /* ProfileModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModels.swift; sourceTree = "<group>"; };
 		C2349441254C793100E26ADC /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		C2349442254C793100E26ADC /* ProfileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInteractor.swift; sourceTree = "<group>"; };
+		C23831B62587FAD1001A0759 /* CAShapeLayer+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAShapeLayer+adds.swift"; sourceTree = "<group>"; };
+		C23831B92587FAF6001A0759 /* UIBarButtonItem+adds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+adds.swift"; sourceTree = "<group>"; };
 		C2386F79249DF6EB0076AED3 /* Livsy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Livsy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2386F7C249DF6EB0076AED3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C2386F7E249DF6EB0076AED3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -366,6 +370,8 @@
 				C20974C9256144A100485464 /* Array+adds.swift */,
 				C2133150257BBB22004FDF9D /* URL+adds.swift */,
 				C25DBC9D2584B90F004986F0 /* Date+adds.swift */,
+				C23831B62587FAD1001A0759 /* CAShapeLayer+adds.swift */,
+				C23831B92587FAF6001A0759 /* UIBarButtonItem+adds.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -812,6 +818,7 @@
 				C2D2ABE82571425200388FE3 /* NavigationController.swift in Sources */,
 				C23261F024D5D73B00F670EE /* Collection+safe.swift in Sources */,
 				C2349447254C793100E26ADC /* ProfileModels.swift in Sources */,
+				C23831BA2587FAF6001A0759 /* UIBarButtonItem+adds.swift in Sources */,
 				C2386F7D249DF6EB0076AED3 /* AppDelegate.swift in Sources */,
 				C268CDB624A9290800949C4D /* PostCommentsInteractor.swift in Sources */,
 				C2BCF43724AB67E8008C28FD /* PostCommentRepliesInteractor.swift in Sources */,
@@ -876,6 +883,7 @@
 				C2589C1D256FD0BF00F727FD /* PageListInteractor.swift in Sources */,
 				C218FCF7251B5A6A002F9C68 /* SplashModels.swift in Sources */,
 				C2A5B9EF24B37B20004BE928 /* UIViewController.swift in Sources */,
+				C23831B72587FAD1001A0759 /* CAShapeLayer+adds.swift in Sources */,
 				C2386FA9249E09B50076AED3 /* PostListWorker.swift in Sources */,
 				C22FFB9A2559716400416C15 /* FavPostsCell.swift in Sources */,
 				C218FCF9251B5A6A002F9C68 /* SplashInteractor.swift in Sources */,

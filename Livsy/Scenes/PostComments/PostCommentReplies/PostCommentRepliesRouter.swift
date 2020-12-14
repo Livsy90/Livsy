@@ -41,7 +41,7 @@ final class PostCommentRepliesRouter: PostCommentRepliesRoutingLogic, PostCommen
     }
     
     func dismissSelf() {
-        UIView.transition(with: (viewController?.navigationController?.view)!, duration: 0.5, options: .transitionFlipFromLeft, animations: { [weak self] in
+        UIView.transition(with: (viewController?.navigationController?.view)!, duration: 0.4, options: .transitionFlipFromLeft, animations: { [weak self] in
             guard let self = self else { return }
             self.viewController?.navigationController?.popViewController(animated: false)
         })

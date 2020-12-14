@@ -36,6 +36,15 @@ final class PostCommentRepliesViewController: UIViewController {
         return imgView
     }()
     
+    private let closeNavButton: UIButton = {
+        let button = UIButton()
+        let config = UIImage.SymbolConfiguration(pointSize: 15, weight: .bold, scale: .large)
+        let image = UIImage(systemName: "xmark", withConfiguration: config)
+        button.setImage(image, for: .normal)
+        button.addTarget(self, action: #selector(dismissSelf), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var containerView: CommentInputAccessoryView = {
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         let commentInputAccessoryView = CommentInputAccessoryView(frame: frame)
@@ -167,8 +176,7 @@ final class PostCommentRepliesViewController: UIViewController {
     }
     
     private func setupNavBar() {
-        let closeItem = UIBarButtonItem(title: Text.Common.back, style: .done, target: self, action: #selector(dismissSelf))
-        navigationItem.leftBarButtonItem = closeItem
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: closeNavButton)
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.shadowImage = nil
