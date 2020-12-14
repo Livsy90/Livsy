@@ -35,8 +35,9 @@ final class PostCommentsViewController: UIViewController {
     
     private let arrowImageView: UIImageView = {
         let config = UIImage.SymbolConfiguration(pointSize: 80, weight: .medium, scale: .large)
-        let image = UIImage(systemName: "arrow.up.circle", withConfiguration: config)
+        let image = UIImage(systemName: "chevron.up", withConfiguration: config)
         let v = UIImageView(image: image)
+        v.contentMode = .scaleAspectFit
         v.tintColor = .lightGray
         return v
     }()
