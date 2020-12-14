@@ -33,11 +33,18 @@ final class PostCommentsViewController: UIViewController {
         return l
     }()
     
+    private let arrowImageView: UIImageView = {
+        let config = UIImage.SymbolConfiguration(pointSize: 80, weight: .medium, scale: .large)
+        let image = UIImage(systemName: "arrow.up.circle", withConfiguration: config)
+        let v = UIImageView(image: image)
+        v.tintColor = .lightGray
+        return v
+    }()
+    
     private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     private let activityIndicator = ActivityIndicator()
     private let effect = UIBlurEffect(style: .prominent)
     private let resizingMask: UIView.AutoresizingMask = [.flexibleWidth, .flexibleHeight]
-    private var refreshControl: UIRefreshControl!
     private var isShouldReload: Bool = false
     private var backgroundImageView: UIImageView = {
         let imgView = UIImageView()
@@ -101,12 +108,11 @@ final class PostCommentsViewController: UIViewController {
         title = Text.Comments.discussion
         view.backgroundColor = .postBackground
         setupTableView()
-        setupRefreshControl()
         setupNoCommentslabel()
         setupNoCommentslabel()
         addSwipeToPopGesture()
+        setupArrowImageView()
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -130,17 +136,18 @@ final class PostCommentsViewController: UIViewController {
         tableView.scrollIndicatorInsets = tableView.contentInset
     }
     
+    private func setupArrowImageView() {
+        let size = 45
+        let screenWidth = self.view.frame.size.width
+        let frame = CGRect(x: (Int(screenWidth) / 2) - (size / 2), y: 75, width: size, height: size)
+        arrowImageView.frame = frame
+        self.view.addSubview(arrowImageView)
+    }
+    
     private func addSwipeToPopGesture() {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf))
         swipeRight.direction = .right
         view.addGestureRecognizer(swipeRight)
-    }
-    
-    private func setupRefreshControl() {
-        refreshControl = UIRefreshControl()
-        refreshControl.backgroundColor = .clear
-        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        tableView.addSubview(refreshControl)
     }
     
     private func setupTableView() {
@@ -154,7 +161,7 @@ final class PostCommentsViewController: UIViewController {
         view.addSubview(tableView)
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.anchor(top: backgroundImageView.topAnchor, left: backgroundImageView.leftAnchor, bottom: backgroundImageView.bottomAnchor, right: backgroundImageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        tableView.anchor(top: backgroundImageView.topAnchor, left: backgroundImageView.leftAnchor, bottom: backgroundImageView.bottomAnchor, right: backgroundImageView.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: CommentsTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.reuseIdentifier())
         tableView.backgroundColor = .clear
@@ -192,7 +199,7 @@ final class PostCommentsViewController: UIViewController {
     }
     
     private func setupNavBar() {
-        let closeItem = UIBarButtonItem(title: Text.Common.close, style: .done, target: self, action: #selector(dismissSelf))
+        let closeItem = UIBarButtonItem(title: Text.Common.back, style: .done, target: self, action: #selector(dismissSelf))
         navigationItem.leftBarButtonItem = closeItem
         setNeedsStatusBarAppearanceUpdate()
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
@@ -244,7 +251,6 @@ extension PostCommentsViewController: PostCommentsDisplayLogic {
         let comments = router?.dataStore?.comments ?? []
         let isShouldInsertRow = viewModel.isOneCommentAppended && viewModel.isSubmited && !viewModel.isEditedByWeb
         noCommentsLabel.isHidden = !comments.isEmpty
-        refreshControl.endRefreshing()
         activityIndicator.hideIndicator()
         isShouldInsertRow ? tableView.insertRows(at: [IndexPath(item: comments.count - 1, section: 0)], with: .right) : tableView.softReload()
         tableView.allowsSelection = true
@@ -310,6 +316,22 @@ extension PostCommentsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let title = router?.dataStore?.postTitle.pureString()
         return title
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < -100 {
+            UIView.animate(withDuration: 0.2) {
+                self.arrowImageView.frame.origin.y = self.topbarHeight + 8
+            }
+        } else {
+            UIView.animate(withDuration: 0.25) {
+                self.arrowImageView.frame.origin.y = -(self.topbarHeight + 8)
+            }
+        }
+        
+        if scrollView.contentOffset.y < -170 {
+            dismissSelf()
+        }
     }
     
 }

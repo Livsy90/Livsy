@@ -13,6 +13,9 @@
 "Close" = "Close";
 
 /* No comment provided by engineer. */
+"Back" = "Back";
+
+/* No comment provided by engineer. */
 "Try again" = "Try again";
 
 /* No comment provided by engineer. */
@@ -22,7 +25,7 @@
 "Save" = "Save";
 
 /* No comment provided by engineer. */
-"▶ Tap the video to open";
+"Tap the video to open" = "Tap the video to open";
 
 /* No comment provided by engineer. */
 "Comments" = "Comments";

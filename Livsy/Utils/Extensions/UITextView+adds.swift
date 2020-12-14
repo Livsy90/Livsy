@@ -52,7 +52,7 @@ extension UITextView {
                     
                     let imgString = "<a href='https://www.youtube.com/watch?v=\(iframeId[0])'><img src=\"https://img.youtube.com/vi/" + iframeId[0] + "/maxresdefault.jpg\" alt=\"\" width=\"\(width)\" /></a>"
                     
-                    let htmlString = "<h5>\(Text.Common.openVideo)\(imgString)</h5>"
+                    let htmlString = "<h5>•\(Text.Common.openVideo)\(imgString)</h5>"
                     
                     newText = newText.replacingOccurrences(of: iframeText, with: htmlString)
                 }

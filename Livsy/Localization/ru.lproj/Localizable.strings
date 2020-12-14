@@ -13,6 +13,9 @@
 "Close" = "Закрыть";
 
 /* No comment provided by engineer. */
+"Back" = "Назад";
+
+/* No comment provided by engineer. */
 "Try again" = "Попробовать еще раз";
 
 /* No comment provided by engineer. */
@@ -22,7 +25,7 @@
 "Save" = "Сохранить";
 
 /* No comment provided by engineer. */
-"▶ Tap the video to open" = "▶ Тапните, чтобы посмотреть видео";
+"Tap the video to open" = "Тапните, чтобы посмотреть видео";
 
 /* No comment provided by engineer. */
 "Comments" = "Комментарии";

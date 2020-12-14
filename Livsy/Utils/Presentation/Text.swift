@@ -18,10 +18,11 @@ enum Text {
         static let at = NSLocalizedString("at", comment: "")
         static let cancel = NSLocalizedString("Cancel", comment: "")
         static let close = NSLocalizedString("Close", comment: "")
+        static let back = NSLocalizedString("Back", comment: "")
         static let tryAgain = NSLocalizedString("Try again", comment: "")
         static let search = NSLocalizedString("Search", comment: "")
         static let save = NSLocalizedString("Save", comment: "")
-        static let openVideo = NSLocalizedString("▶ Tap the video to open", comment: "")
+        static let openVideo = NSLocalizedString("Tap the video to open", comment: "")
         static let yes = NSLocalizedString("Yes", comment: "")
         static let no = NSLocalizedString("No", comment: "")
         
