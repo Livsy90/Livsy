@@ -41,13 +41,11 @@ final class PostCommentRepliesRouter: PostCommentRepliesRoutingLogic, PostCommen
     }
     
     func dismissSelf() {
-        let transition:CATransition = CATransition()
-        transition.duration = 0.5
-        transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        transition.type = .push
-        transition.subtype = .fromBottom
-        viewController?.navigationController?.view.layer.add(transition, forKey: kCATransition)
-        viewController?.navigationController?.popViewController(animated: false)
+        UIView.transition(with: (viewController?.navigationController?.view)!, duration: 0.5, options: .transitionFlipFromLeft, animations: { [weak self] in
+            guard let self = self else { return }
+            self.viewController?.navigationController?.popViewController(animated: false)
+        })
+
     }
     
     func showAlert(with message: String) {

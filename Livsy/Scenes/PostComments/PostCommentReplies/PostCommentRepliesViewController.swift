@@ -22,19 +22,11 @@ final class PostCommentRepliesViewController: UIViewController {
     
     // MARK: - Private Properties
     
+    private var refreshControl: UIRefreshControl!
     private let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     private let activityIndicator = ActivityIndicator()
     private let effect = UIBlurEffect(style: .prominent)
     private let resizingMask: UIView.AutoresizingMask = [.flexibleWidth, .flexibleHeight]
-    private let arrowImageView: UIImageView = {
-        let config = UIImage.SymbolConfiguration(pointSize: 80, weight: .medium, scale: .large)
-        let image = UIImage(systemName: "chevron.up", withConfiguration: config)
-        let v = UIImageView(image: image)
-        v.contentMode = .scaleAspectFit
-        v.tintColor = .lightGray
-        return v
-    }()
-    
     private var repliesCollectionView = RepliesCollectionView()
     private var backgroundImageView: UIImageView = {
         let imgView = UIImageView()
@@ -86,10 +78,10 @@ final class PostCommentRepliesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = Text.Comments.repliesCapital
+        setupRefreshControl()
         setupTableView()
         showReplies(isReload: false, isSubmitted: false)
         addSwipeToPopGesture()
-        setupArrowImageView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -105,10 +97,17 @@ final class PostCommentRepliesViewController: UIViewController {
     
     // MARK: - Private Methods
     
+    private func setupRefreshControl() {
+        refreshControl = UIRefreshControl()
+        refreshControl.backgroundColor = .clear
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+    }
+    
     private func setupTableView() {
         backgroundImageView.image = router?.dataStore?.image ?? UIImage()
         view.addSubview(backgroundImageView)
-        backgroundImageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        backgroundImageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         tableView.showsHorizontalScrollIndicator = false
         tableView.showsVerticalScrollIndicator = false
         tableView.delegate = self
@@ -129,14 +128,6 @@ final class PostCommentRepliesViewController: UIViewController {
         
         tableView.backgroundView = backgroundView
         tableView.separatorEffect = UIVibrancyEffect(blurEffect: effect)
-    }
-    
-    private func setupArrowImageView() {
-        let size = 45
-        let screenWidth = self.view.frame.size.width
-        let frame = CGRect(x: (Int(screenWidth) / 2) - (size / 2), y: 70, width: size, height: size)
-        arrowImageView.frame = frame
-        self.view.addSubview(arrowImageView)
     }
     
     private func buildImageView() -> UIImageView {
@@ -227,6 +218,7 @@ extension PostCommentRepliesViewController: PostCommentRepliesDisplayLogic {
         let comments = router?.dataStore?.replies ?? []
         let isShouldInsertRow = viewModel.isOneCommentAppended && viewModel.isSubmited && !viewModel.isEditedByWeb
         activityIndicator.hideIndicator()
+        refreshControl.endRefreshing()
         isShouldInsertRow ? tableView.insertRows(at: [IndexPath(item: comments.count - 1, section: 1)], with: .right) : tableView.softReload()
         tableView.allowsSelection = false
         
@@ -282,22 +274,6 @@ extension PostCommentRepliesViewController: UITableViewDelegate {
         default:
             guard let commentReplies = router?.dataStore?.replies else { return Text.Comments.noReplies }
             return commentReplies.isEmpty ? Text.Comments.noReplies : Text.Comments.replies
-        }
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y < -100 {
-            UIView.animate(withDuration: 0.2) {
-                self.arrowImageView.frame.origin.y = self.topbarHeight + 10
-            }
-        } else {
-            UIView.animate(withDuration: 0.25) {
-                self.arrowImageView.frame.origin.y = -(self.topbarHeight + 10)
-            }
-        }
-        
-        if scrollView.contentOffset.y < -170 {
-            dismissSelf()
         }
     }
     

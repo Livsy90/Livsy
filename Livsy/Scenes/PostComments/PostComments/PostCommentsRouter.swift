@@ -34,13 +34,10 @@ final class PostCommentsRouter: PostCommentsRoutingLogic, PostCommentsDataPassin
     }
     
     func navigateToReplies(source: PostCommentsViewController, destination: PostCommentRepliesViewController) {
-        let transition:CATransition = CATransition()
-        transition.duration = 0.5
-        transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        transition.type = .push
-        transition.subtype = .fromTop
-        viewController?.navigationController?.view.layer.add(transition, forKey: kCATransition)
-        viewController?.navigationController?.pushViewController(destination, animated: false)
+        UIView.transition(with: (viewController?.navigationController?.view)!, duration: 0.5, options: .transitionFlipFromRight, animations: { [weak self] in
+            guard let self = self else { return }
+            self.viewController?.navigationController?.pushViewController(destination, animated: false)
+        })
     }
     
     func passDataToReplies(source: PostCommentsDataStore, destination: inout PostCommentRepliesDataStore) {
