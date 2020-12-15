@@ -36,7 +36,7 @@ final class PostRouter: PostRoutingLogic, PostDataPassing {
     
     func navigateToPostComments(source: PostViewController, destination: PostCommentsViewController) {
         let transition:CATransition = CATransition()
-        transition.duration = 0.5
+        transition.duration = 0.4
         transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         transition.type = .push
         transition.subtype = .fromTop

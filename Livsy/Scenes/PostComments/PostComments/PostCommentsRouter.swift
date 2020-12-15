@@ -65,7 +65,7 @@ final class PostCommentsRouter: PostCommentsRoutingLogic, PostCommentsDataPassin
     
     func dismissSelf(_ isBySwipe: Bool) {
         let transition:CATransition = CATransition()
-        transition.duration = isBySwipe ? 0.3 : 0.45
+        transition.duration = isBySwipe ? 0.3 : 0.4
         transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         transition.type = .push
         transition.subtype = isBySwipe ? .fromLeft : .fromBottom

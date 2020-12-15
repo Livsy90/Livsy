@@ -114,7 +114,7 @@ final class PostCommentRepliesViewController: UIViewController {
     }
     
     private func setupTableView() {
-        backgroundImageView.image = router?.dataStore?.image ?? UIImage()
+        backgroundImageView.image = router?.dataStore?.image.withHorizontallyFlippedOrientation() ?? UIImage()
         view.addSubview(backgroundImageView)
         backgroundImageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         tableView.showsHorizontalScrollIndicator = false
