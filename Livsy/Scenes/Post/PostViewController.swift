@@ -103,6 +103,7 @@ final class PostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        textView.delegate = self
         setupDataforUI()
     }
     
@@ -366,6 +367,10 @@ final class PostViewController: UIViewController {
         }
     }
     
+    private func isPostLink(urlStr: String) -> Bool {
+        urlStr.contains("topics") ? true : false
+    }
+    
     @objc private func routeToComments() {
         router?.routeToPostComments()
         let generator = UIImpactFeedbackGenerator(style: .light)
@@ -432,4 +437,21 @@ extension PostViewController: UIScrollViewDelegate {
     
 }
 
+extension PostViewController: UITextViewDelegate {
+    
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        let urlStr = URL.absoluteString
+        guard let urlComp = URLComponents(string: urlStr) else { return true }
+        guard let id = urlComp.path.components(separatedBy: "/").last else { return true }
+        
+        switch isPostLink(urlStr: urlStr) {
+        case true:
+            router?.routeToPost(with: id)
+            return false
+        default:
+            return true
+        }
+    }
+    
+}
 

@@ -14,6 +14,7 @@ protocol PostRoutingLogic {
     func showErrorAlert(with message: String, completion: @escaping (() -> Void))
     func dismissSelf()
     func sharePost()
+    func routeToPost(with id: String)
 }
 
 protocol PostDataPassing {
@@ -79,6 +80,13 @@ final class PostRouter: PostRoutingLogic, PostDataPassing {
         
         activityViewController.isModalInPresentation = true
         viewController?.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    func routeToPost(with id: String) {
+        let postViewController = PostViewController()
+        postViewController.isFromLink = true
+        postViewController.postID = Int(id) ?? 00
+        viewController?.navigationController?.pushViewController(postViewController, animated: true)
     }
     
 }
