@@ -9,6 +9,15 @@
 import UIKit
 
 extension UIView {
+    
+    static var reuseIdentifier: String {
+        return String(describing: self)
+    }
+    
+    func addSubviews(_ views: [UIView]) {
+        views.forEach({ self.addSubview($0)})
+    }
+    
     func anchor(top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?,  paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat) {
         
         translatesAutoresizingMaskIntoConstraints = false
@@ -40,7 +49,7 @@ extension UIView {
     
 }
 
-public extension UIView {
+extension UIView {
     func showAnimation(_ completionBlock: @escaping () -> Void) {
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()

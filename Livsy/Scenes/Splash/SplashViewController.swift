@@ -64,7 +64,7 @@ final class SplashViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .listBackground
+        view.backgroundColor = .orange
         view.addSubview(label)
         label.center = view.center
     }

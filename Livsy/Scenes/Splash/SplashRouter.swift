@@ -29,10 +29,27 @@ final class SplashRouter: SplashRoutingLogic, SplashDataPassing {
     }
     
     func navigateToTabBar(source: SplashViewController, destination: MainTabBarController) {
-        let navController = UINavigationController(rootViewController: destination)
-        navController.modalPresentationStyle = .fullScreen
-        navController.modalTransitionStyle = .crossDissolve
-        viewController?.navigationController?.pushViewController(destination, animated: true)
+//        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(destination)
+        viewController?.navigationController?.pushViewController(destination, animated: false)
     }
     
 }
+
+//
+//// SceneDelegate.swift or AppDelegate.swift
+//
+//func changeRootViewController(_ vc: UIViewController, animated: Bool = true) {
+//    guard let window = self.window else {
+//        return
+//    }
+//
+//    window.rootViewController = vc
+//
+//    // add animation
+//    UIView.transition(with: window,
+//                      duration: 0.5,
+//                      options: [.transitionFlipFromLeft],
+//                      animations: nil,
+//                      completion: nil)
+//
+//}
