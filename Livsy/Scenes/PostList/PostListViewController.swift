@@ -50,7 +50,7 @@ final class PostListViewController: UIViewController {
     private let activityIndicator = ActivityIndicator()
     private let searchController = UISearchController(searchResultsController: nil)
     private var refreshControl: UIRefreshControl!
-     var postCollectionView = PostListCollectionView()
+    private var postCollectionView = PostListCollectionView()
     private var page = 0
     private var searchTerms = ""
     private var isLoadMore = false
