@@ -38,6 +38,7 @@ final class PostListRouter: PostListRoutingLogic, PostListDataPassing {
     }
     
     func navigateToPost(source: PostListViewController, destination: PostViewController) {
+        destination.hidesBottomBarWhenPushed = true
         viewController?.navigationController?.pushViewController(destination, animated: true)
     }
     
