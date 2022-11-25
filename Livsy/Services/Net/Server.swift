@@ -9,7 +9,7 @@
 import UIKit
 
 struct Server {
-    static let urlString = "https://livsy.me/wp-json/"
+    static let urlString = "https://intentapp.ru/wp-json/"
     static func getBaseUrl(path: String) -> URL? {
         let url = "\(urlString)\(path)"
         let encodedURL = url.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed) ?? url

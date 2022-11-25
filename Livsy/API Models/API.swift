@@ -10,7 +10,7 @@ import Foundation
 
 struct API {
     static let scheme = "https"
-    static let host = "livsy.me"
+    static let host = "intentapp.ru"
 
     static let postList = "wp/v2/posts?_embed&page="
     static let pageList = "wp/v2/pages"
