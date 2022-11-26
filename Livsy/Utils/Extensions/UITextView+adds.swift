@@ -17,7 +17,8 @@ extension UITextView {
         let attrStr = try! NSMutableAttributedString(
             data: modifiedFont.data(using: .unicode, allowLossyConversion: true)!,
             options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue],
-            documentAttributes: nil)
+            documentAttributes: nil
+        )
         
         self.attributedText = resizeImageInHTMLString(attrStr: attrStr)
         self.textColor = color
@@ -50,9 +51,12 @@ extension UITextView {
                 
                 if iframeId.count > 0 {
                     
-                    let imgString = "<a href='https://www.youtube.com/watch?v=\(iframeId[0])'><img src=\"https://img.youtube.com/vi/" + iframeId[0] + "/maxresdefault.jpg\" alt=\"\" width=\"\(width)\" /></a>"
-                    
-                    let htmlString = "<h5>•‎ \(Text.Common.openVideo)\(imgString)</h5>"
+                    let videoPreviewImageString = "<a href='https://www.youtube.com/watch?v=\(iframeId[0])'><img src=\"https://img.youtube.com/vi/" + iframeId[0] + "/maxresdefault.jpg\" alt=\"\" width=\"\(width)\" /></a>"
+                    let playImage = UIImage(named: "play-icon") ?? UIImage()
+                    let data = playImage.pngData()
+                    let base64String = data?.base64EncodedString() ?? ""
+                    let playImageHTML = "<img src=\"data:image/png;base64,\(base64String)\">"
+                    let htmlString = "<table><tr><td></td><td rowspan=2>\(videoPreviewImageString)</td></tr><tr><td colspan=2 style=\"padding:25px\"><center>\(playImageHTML)</center></td></tr></table>"
                     
                     newText = newText.replacingOccurrences(of: iframeText, with: htmlString)
                 }
