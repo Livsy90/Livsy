@@ -52,7 +52,7 @@ struct ActivityIndicator {
     
 }
 
-class SpinnerView: UIView {
+final class SpinnerView: UIView {
     
     override var layer: CAShapeLayer {
         get {

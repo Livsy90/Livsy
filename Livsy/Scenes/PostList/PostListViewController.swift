@@ -306,10 +306,10 @@ extension PostListViewController: PostListDisplayLogic {
     
     func displayPostList(viewModel: PostListModels.PostList.ViewModel) {
         guard let posts = router?.dataStore?.postList else { return }
-        showPostList(posts) {
-            self.postCollectionView.isStopRefreshing = viewModel.isStopRereshing
-            self.activityIndicator.hideIndicator()
-            self.navigationController?.navigationBar.isUserInteractionEnabled = true
+        showPostList(posts) { [weak self] in
+            self?.postCollectionView.isStopRefreshing = viewModel.isStopRereshing
+            self?.activityIndicator.hideIndicator()
+            self?.navigationController?.navigationBar.isUserInteractionEnabled = true
         }
     }
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostCommentsCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+final class PostCommentsCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var comments = [PostComment]()
     var cellTappedCompletion: ((PostComment, [PostComment]) -> Void)?

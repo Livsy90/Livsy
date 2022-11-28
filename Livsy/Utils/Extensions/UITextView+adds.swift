@@ -55,8 +55,8 @@ extension UITextView {
                     let playImage = UIImage(named: "play-icon") ?? UIImage()
                     let data = playImage.pngData()
                     let base64String = data?.base64EncodedString() ?? ""
-                    let playImageHTML = "<img src=\"data:image/png;base64,\(base64String)\">"
-                    let htmlString = "<table><tr><td></td><td rowspan=2>\(videoPreviewImageString)</td></tr><tr><td colspan=2 style=\"padding:25px\"><center>\(playImageHTML)</center></td></tr></table>"
+                    let playImageHTML = "<img src=\"data:image/png;base64,\(base64String)\" width=\"50\" height=\"50\">"
+                    let htmlString = "<p><table><tr><td></td><td rowspan=2>\(videoPreviewImageString)</td></tr><tr><td colspan=2 style=\"padding:30px\"><center>\(playImageHTML)</center></td></tr></table></p></br></br>"
                     
                     newText = newText.replacingOccurrences(of: iframeText, with: htmlString)
                 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NetService {
+final class NetService {
     
     static let sharedInstanse: NetService = NetService()
     private let queue = DispatchQueue(label: "NetQueue", qos: .utility)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostListCollectionViewCell: UICollectionViewCell {
+final class PostListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Constants
     
@@ -119,7 +119,7 @@ class PostListCollectionViewCell: UICollectionViewCell {
     // MARK: - Functions
     
     func set(imageUrl: String?) {
-        mainImageView.set(imageURL: imageUrl)
+        mainImageView.set(imageURL: imageUrl, isThumbnail: true)
     }
     
     func setVisibilityOfFavoriteImageView(posts: [Post], index: Int) {

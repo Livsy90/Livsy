@@ -79,14 +79,14 @@ final class ProfileInteractor: ProfileBusinessLogic, ProfileDataStore {
         worker?.fetchUserInfo(completion: { [weak self] (response, error) in
             guard let self = self else { return }
             self.url = response?.avatarURLs.large.getSecureGravatar() ?? ""
-            self.avatar?.set(imageURL: response?.avatarURLs.large.getSecureGravatar())
+            self.avatar?.set(imageURL: response?.avatarURLs.large.getSecureGravatar(), isThumbnail: true)
             self.presenter?.presentAvatar(response: ProfileModels.Avatar.Response())
         })
     }
     
     func showPost(request: ProfileModels.PostPage.Request) {
         selectedPost = request.post
-        postImageView?.set(imageURL: request.post.imgURL)
+        postImageView?.set(imageURL: request.post.imgURL, isThumbnail: false)
         presenter?.presentPost(response: ProfileModels.PostPage.Response())
     }
     

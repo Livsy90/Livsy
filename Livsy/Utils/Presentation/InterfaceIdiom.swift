@@ -8,6 +8,6 @@
 
 import UIKit
 
-class InterfaceIdiom {
+final class InterfaceIdiom {
   static var isIpad: Bool { return UIDevice.current.userInterfaceIdiom == .pad }
 }

@@ -12,7 +12,7 @@ protocol TabBarReselectHandling {
     func handleReselect()
 }
 
-class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
+final class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()

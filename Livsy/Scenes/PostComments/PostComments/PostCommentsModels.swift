@@ -14,7 +14,7 @@ struct Comment {
     var replies: [Comment]
 }
 
-class Reply {
+final class Reply {
     var parentID: Int
     var replyId: Int
     var replyText: String

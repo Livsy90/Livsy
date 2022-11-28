@@ -68,6 +68,7 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
     func login(request: PostListModels.Login.Request) {
         worker?.login(login: request.username, password: request.password, completion: { [weak self] (response, error) in
             guard let self = self else { return }
+            print(UserDefaults.standard.token)
             
             if error == nil {
                 UserDefaults.standard.token = response?.token
@@ -138,7 +139,7 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
     }
     
     func showPost(request: PostListModels.PostPage.Request) {
-        imageView.set(imageURL: request.post.imgURL)
+        imageView.set(imageURL: request.post.imgURL, isThumbnail: false)
         selectedPost = request.post
         presenter?.presentPost(response: PostListModels.PostPage.Response())
     }

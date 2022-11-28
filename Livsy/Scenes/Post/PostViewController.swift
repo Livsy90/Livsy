@@ -396,7 +396,9 @@ extension PostViewController: PostDisplayLogic {
             showActivityIndicatorOnNavBarItem()
             setupUI()
             guard let post = router?.dataStore?.post else { return }
-            setText(post) { self.activityIndicator.hideIndicator() }
+            setText(post) { [weak self] in
+                self?.activityIndicator.hideIndicator()
+            }
             isFromLink = false
         case false:
             router?.showErrorAlert(with: Text.Post.postNotFound, completion: fetchPost)

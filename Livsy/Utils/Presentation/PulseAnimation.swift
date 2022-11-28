@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PulseAnimation: CALayer {
+final class PulseAnimation: CALayer {
 
     var animationGroup = CAAnimationGroup()
     var animationDuration: TimeInterval = 1.5

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomTextView: UITextView {
+final class CustomTextView: UITextView {
 
    override func addGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) {
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FavPostsCell: UITableViewCell {
+final class FavPostsCell: UITableViewCell {
     
    var loginCompletion: (() -> Void)?
     
@@ -59,7 +59,7 @@ class FavPostsCell: UITableViewCell {
     }
     
     func config(post: Post) {
-        mainImageView.set(imageURL: post.imgURL)
+        mainImageView.set(imageURL: post.imgURL, isThumbnail: true)
         titleLabel.text = post.title?.rendered.pureString()
     }
 

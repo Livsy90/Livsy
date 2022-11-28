@@ -59,7 +59,7 @@ final class PostInteractor: PostBusinessLogic, PostDataStore {
                 guard let self = self else { return }
                 let post = response ?? Post(id: 00, date: "", title: nil, excerpt: nil, imgURL: "", link: "", content: nil, author: 00)
                 self.post = post
-                self.imageView.set(imageURL: post.imgURL)
+                self.imageView.set(imageURL: post.imgURL, isThumbnail: false)
                 self.image = self.imageView.image ?? UIImage()
                 self.averageColor = self.image.averageColor ?? .blueButton
                 self.presenter?.presentPostPage(response: PostModels.PostPage.Response(error: error))

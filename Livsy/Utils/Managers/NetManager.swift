@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NetManager {
+final class NetManager {
     static let sharedInstanse = NetManager()
     private let net: NetService = NetService()
     private init(){}

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CommentInputTextView: UITextView, UITextViewDelegate {
+final class CommentInputTextView: UITextView, UITextViewDelegate {
     
     var textInputCompletion: ((Bool) -> Void)?
     var textInputLoginCompletion: (() -> Void)?

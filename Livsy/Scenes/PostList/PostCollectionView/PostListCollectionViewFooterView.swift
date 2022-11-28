@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class CollectionViewFooterView: UICollectionReusableView {
+public final class CollectionViewFooterView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
     }

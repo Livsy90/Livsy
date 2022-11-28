@@ -13,7 +13,7 @@ protocol CommentInputAccessoryViewDelegate {
     func routeToLoginScene()
 }
 
-class CommentInputAccessoryView: UIView {
+final class CommentInputAccessoryView: UIView {
     
     var delegate: CommentInputAccessoryViewDelegate?
     
