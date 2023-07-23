@@ -33,7 +33,7 @@ final class PostViewController: UIViewController {
     private var commentsButton = UIButton()
     private let activityIndicator = ActivityIndicator()
     private let loadingCommentsIndicator = UIActivityIndicatorView()
-    private let textView = CustomTextView()
+    private let textView = UITextViewFixed()
     private let scrollView = UIScrollView()
     private let postTitleLabel = UILabel()
     private let imageView = WebImageView()
@@ -131,7 +131,7 @@ final class PostViewController: UIViewController {
         textViewSetup()
         setupProgressView()
         fetchPostComments()
-        fetchPostAuthor()
+        fetchPostAuthor()        
     }
     
     private func setupHeader() {
@@ -243,6 +243,9 @@ final class PostViewController: UIViewController {
         textView.textColor = .bodyText
         textView.textAlignment = .left
         textView.alpha = 0
+        textView.didTappedOnAttachment = { [weak self] image in
+            print(image)
+        }
     }
     
     private func showActivityIndicatorOnNavBarItem() {

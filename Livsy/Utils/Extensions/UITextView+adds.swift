@@ -12,7 +12,10 @@ extension UITextView {
     
     func setHTMLFromString(htmlText: String, color: UIColor) {
         let rect = self.window?.frame
-        let modifiedFont = String(format:"<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(self.font!.pointSize)\">%@</span>",formatStringWithYTVideo(text: htmlText, with: Float(rect?.size.width ?? 375)))
+        let modifiedFont = String(
+            format:"<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(self.font!.pointSize)\">%@</span>",
+            formatStringWithYTVideo(text: htmlText, with: Float(rect?.size.width ?? 375))
+        )
         
         let attrStr = try! NSMutableAttributedString(
             data: modifiedFont.data(using: .unicode, allowLossyConversion: true)!,
@@ -51,12 +54,18 @@ extension UITextView {
                 
                 if iframeId.count > 0 {
                     
-                    let videoPreviewImageString = "<a href='https://www.youtube.com/watch?v=\(iframeId[0])'><img src=\"https://img.youtube.com/vi/" + iframeId[0] + "/maxresdefault.jpg\" alt=\"\" width=\"\(width)\" /></a>"
-                    let playImage = UIImage(named: "play-icon") ?? UIImage()
-                    let data = playImage.pngData()
-                    let base64String = data?.base64EncodedString() ?? ""
-                    let playImageHTML = "<img src=\"data:image/png;base64,\(base64String)\" width=\"50\" height=\"50\">"
-                    let htmlString = "<p><table><tr><td></td><td rowspan=2>\(videoPreviewImageString)</td></tr><tr><td colspan=2 style=\"padding:30px\"><center>\(playImageHTML)</center></td></tr></table></p></br></br>"
+                    let imgString = "<a href='https://www.youtube.com/watch?v=\(iframeId[0])'><img src=\"https://img.youtube.com/vi/" + iframeId[0] + "/maxresdefault.jpg\" alt=\"\" width=\"\(width)\" /></a>"
+                    
+                    let htmlString = "<h5>•‎ \(Text.Common.openVideo)\(imgString)</h5>"
+                    
+                    //                    newText = newText.replacingOccurrences(of: iframeText, with: htmlString)
+                    
+                    //                    let videoPreviewImageString = "<a href='https://www.youtube.com/watch?v=\(iframeId[0])'><img src=\"https://img.youtube.com/vi/" + iframeId[0] + "/maxresdefault.jpg\" alt=\"\" width=\"\(width)\" /></a>"
+                    //                    let playImage = UIImage(named: "play-icon") ?? UIImage()
+                    //                    let data = playImage.pngData()
+                    //                    let base64String = data?.base64EncodedString() ?? ""
+                    //                    let playImageHTML = "<img src=\"data:image/png;base64,\(base64String)\" width=\"50\" height=\"50\">"
+                    //                    let htmlString = "<p><table><tr><td></td><td rowspan=2>\(videoPreviewImageString)</td></tr><tr><td colspan=2 style=\"padding:30px\"><center>\(playImageHTML)</center></td></tr></table></p></br></br>"
                     
                     newText = newText.replacingOccurrences(of: iframeText, with: htmlString)
                 }
@@ -80,7 +89,15 @@ extension UITextView {
     
 }
 
-
-
-
-
+extension UITextView {
+    func indexOfTap(recognizer: UITapGestureRecognizer) -> Int {
+        var location: CGPoint = recognizer.location(in: self)
+        location.x -= textContainerInset.left
+        location.y -= textContainerInset.top
+        
+        let charIndex = layoutManager.characterIndex(for: location, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        
+        return charIndex
+    }
+    
+}
