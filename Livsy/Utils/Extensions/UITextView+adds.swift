@@ -13,7 +13,7 @@ extension UITextView {
     func setHTMLFromString(htmlText: String, color: UIColor) {
         let rect = self.window?.frame
         let modifiedFont = String(
-            format:"<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(self.font!.pointSize)\">%@</span>",
+            format: "<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(self.font!.pointSize)\">%@</span>",
             formatStringWithYTVideo(text: htmlText, with: Float(rect?.size.width ?? 375))
         )
         
@@ -52,20 +52,9 @@ extension UITextView {
             for iframeText in iframeTexts {
                 let iframeId = matches(for: "((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)", in: iframeText);
                 
-                if iframeId.count > 0 {
-                    
+                if !iframeId.isEmpty {
                     let imgString = "<a href='https://www.youtube.com/watch?v=\(iframeId[0])'><img src=\"https://img.youtube.com/vi/" + iframeId[0] + "/maxresdefault.jpg\" alt=\"\" width=\"\(width)\" /></a>"
-                    
-                    let htmlString = "<h5>•‎ \(Text.Common.openVideo)\(imgString)</h5>"
-                    
-                    //                    newText = newText.replacingOccurrences(of: iframeText, with: htmlString)
-                    
-                    //                    let videoPreviewImageString = "<a href='https://www.youtube.com/watch?v=\(iframeId[0])'><img src=\"https://img.youtube.com/vi/" + iframeId[0] + "/maxresdefault.jpg\" alt=\"\" width=\"\(width)\" /></a>"
-                    //                    let playImage = UIImage(named: "play-icon") ?? UIImage()
-                    //                    let data = playImage.pngData()
-                    //                    let base64String = data?.base64EncodedString() ?? ""
-                    //                    let playImageHTML = "<img src=\"data:image/png;base64,\(base64String)\" width=\"50\" height=\"50\">"
-                    //                    let htmlString = "<p><table><tr><td></td><td rowspan=2>\(videoPreviewImageString)</td></tr><tr><td colspan=2 style=\"padding:30px\"><center>\(playImageHTML)</center></td></tr></table></p></br></br>"
+                    let htmlString = "<p style=\"margin-top: -125px;\">•‎ \(Text.Common.openVideo)\(imgString)</p>"
                     
                     newText = newText.replacingOccurrences(of: iframeText, with: htmlString)
                 }
@@ -82,7 +71,9 @@ extension UITextView {
             let results = regex.matches(in: text, range: NSRange(location: 0, length: nsString.length))
             return results.map { nsString.substring(with: $0.range)}
         } catch let error {
+        #if DEBUG
             print("invalid regex: \(error.localizedDescription)")
+        #endif
             return []
         }
     }
@@ -101,3 +92,12 @@ extension UITextView {
     }
     
 }
+
+//                    newText = newText.replacingOccurrences(of: iframeText, with: htmlString)
+
+//                    let videoPreviewImageString = "<a href='https://www.youtube.com/watch?v=\(iframeId[0])'><img src=\"https://img.youtube.com/vi/" + iframeId[0] + "/maxresdefault.jpg\" alt=\"\" width=\"\(width)\" /></a>"
+//                    let playImage = UIImage(named: "play-icon") ?? UIImage()
+//                    let data = playImage.pngData()
+//                    let base64String = data?.base64EncodedString() ?? ""
+//                    let playImageHTML = "<img src=\"data:image/png;base64,\(base64String)\" width=\"50\" height=\"50\">"
+//                    let htmlString = "<p><table><tr><td></td><td rowspan=2>\(videoPreviewImageString)</td></tr><tr><td colspan=2 style=\"padding:30px\"><center>\(playImageHTML)</center></td></tr></table></p></br></br>"
