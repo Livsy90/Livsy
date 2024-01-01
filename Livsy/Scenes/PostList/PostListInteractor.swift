@@ -68,7 +68,10 @@ final class PostListInteractor: PostListBusinessLogic, PostListDataStore {
     func login(request: PostListModels.Login.Request) {
         worker?.login(login: request.username, password: request.password, completion: { [weak self] (response, error) in
             guard let self = self else { return }
+            
+            #if DEBUG
             print(UserDefaults.standard.token)
+            #endif
             
             if error == nil {
                 UserDefaults.standard.token = response?.token

@@ -47,14 +47,17 @@ extension UITextView {
         let iframeTexts = matches(for: ".*iframe.*", in: text)
         var newText = text
         
-        if iframeTexts.count > 0 {
+        if !iframeTexts.isEmpty {
             
             for iframeText in iframeTexts {
                 let iframeId = matches(for: "((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)", in: iframeText);
                 
                 if !iframeId.isEmpty {
-                    let imgString = "<a href='https://www.youtube.com/watch?v=\(iframeId[0])'><img src=\"https://img.youtube.com/vi/" + iframeId[0] + "/maxresdefault.jpg\" alt=\"\" width=\"\(width)\" /></a>"
-                    let htmlString = "<p style=\"margin-top: -125px;\">•‎ \(Text.Common.openVideo)\(imgString)</p>"
+                    let imgString = """
+                    <a href='https://www.youtube.com/watch?v=\(iframeId[0])'><img src=\"https://img.youtube.com/vi/\(iframeId[0])/maxresdefault.jpg" alt="" width="\(width)"/></a>
+                    """
+                    
+                    let htmlString = "<h5>•‎ \(Text.Common.openVideo)\(imgString)</h5>"
                     
                     newText = newText.replacingOccurrences(of: iframeText, with: htmlString)
                 }
