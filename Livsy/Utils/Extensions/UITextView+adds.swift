@@ -23,21 +23,27 @@ extension UITextView {
             documentAttributes: nil
         )
         
-        self.attributedText = resizeImageInHTMLString(attrStr: attrStr)
+        self.attributedText = configured(attrStr: attrStr)
         self.textColor = color
     }
     
-    private func resizeImageInHTMLString(attrStr: NSMutableAttributedString) -> NSMutableAttributedString {
+    private func configured(attrStr: NSMutableAttributedString) -> NSMutableAttributedString {
         attrStr.enumerateAttribute(NSAttributedString.Key.attachment, in: NSMakeRange(0, attrStr.length), options: .init(rawValue: 0), using: { (value, range, stop) in
             if let attachement = value as? NSTextAttachment {
                 let image = attachement.image(forBounds: attachement.bounds, textContainer: NSTextContainer(), characterIndex: range.location)!
                 let screenSize: CGRect = UIScreen.main.bounds
-                if image.size.width > screenSize.width - 50 {
-                    let newImage = image.resize(scaledToWidth: screenSize.width - 50)
-                    let newAttribut = NSTextAttachment()
+                let newImage = image.resize(scaledToWidth: screenSize.width - 50)
+                let newAttribut = NSTextAttachment()
+                let filename = attachement.fileWrapper?.preferredFilename ?? ""
+                
+                if filename.contains("maxresdefault.jpg") {
+                    let overlayed = newImage.withPlayButton()
+                    newAttribut.image = overlayed
+                } else {
                     newAttribut.image = newImage
-                    attrStr.addAttribute(NSAttributedString.Key.attachment, value: newAttribut, range: range)
                 }
+                
+                attrStr.addAttribute(NSAttributedString.Key.attachment, value: newAttribut, range: range)
             }
         })
         return attrStr
@@ -48,18 +54,14 @@ extension UITextView {
         var newText = text
         
         if !iframeTexts.isEmpty {
-            
-            for iframeText in iframeTexts {
+            iframeTexts.forEach { iframeText in
                 let iframeId = matches(for: "((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)", in: iframeText);
                 
                 if !iframeId.isEmpty {
                     let imgString = """
                     <a href='https://www.youtube.com/watch?v=\(iframeId[0])'><img src="https://img.youtube.com/vi/\(iframeId[0])/maxresdefault.jpg" alt="" width="\(width)"/></a>
                     """
-                    
-                    let htmlString = "<h5>•‎ \(Text.Common.openVideo)\(imgString)</h5>"
-                    
-                    newText = newText.replacingOccurrences(of: iframeText, with: htmlString)
+                    newText = newText.replacingOccurrences(of: iframeText, with: imgString)
                 }
             }
         }
@@ -96,11 +98,29 @@ extension UITextView {
     
 }
 
-//                    newText = newText.replacingOccurrences(of: iframeText, with: htmlString)
+fileprivate extension UIView {
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { rendererContext in
+            layer.render(in: rendererContext.cgContext)
+        }
+    }
+}
 
-//                    let videoPreviewImageString = "<a href='https://www.youtube.com/watch?v=\(iframeId[0])'><img src=\"https://img.youtube.com/vi/" + iframeId[0] + "/maxresdefault.jpg\" alt=\"\" width=\"\(width)\" /></a>"
-//                    let playImage = UIImage(named: "play-icon") ?? UIImage()
-//                    let data = playImage.pngData()
-//                    let base64String = data?.base64EncodedString() ?? ""
-//                    let playImageHTML = "<img src=\"data:image/png;base64,\(base64String)\" width=\"50\" height=\"50\">"
-//                    let htmlString = "<p><table><tr><td></td><td rowspan=2>\(videoPreviewImageString)</td></tr><tr><td colspan=2 style=\"padding:30px\"><center>\(playImageHTML)</center></td></tr></table></p></br></br>"
+fileprivate extension UIImage {
+    func withPlayButton() -> UIImage {
+        let bgimg = self
+        let bgimgview = UIImageView(image: bgimg)
+        bgimgview.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+
+        let frontimg = UIImage(named: "play-icon")
+        let frontimgview = UIImageView(image: frontimg)
+        frontimgview.frame = CGRect(x: 150, y: 300, width: 100, height: 100)
+        frontimgview.center = bgimgview.center
+        frontimgview.alpha = 0.7
+
+        bgimgview.addSubview(frontimgview)
+        
+        return bgimgview.asImage()
+    }
+}
